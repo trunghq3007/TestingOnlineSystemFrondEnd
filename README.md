@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 [![Build Status](https://travis-ci.org/mledour/angular-admin-lte.svg?branch=master)](https://travis-ci.org/mledour/angular-admin-lte)
 [![npm version](https://badge.fury.io/js/angular-admin-lte.svg)](https://badge.fury.io/js/angular-admin-lte)
 
@@ -46,3 +47,7 @@ $ npm run build:lib
 ## Todos
 
 * Vertical tabs
+=======
+# TestingOnlineSystemFrondEnd
+TestingOnlineSystemFrondEnd class GDP7
+>>>>>>> 863675dd54902b72a6259acb3ac21cb8633afba4
