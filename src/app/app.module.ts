@@ -8,6 +8,7 @@ import { AppmenuComponent } from './appmenu/appmenu.component';
 import { AppfooterComponent } from './appfooter/appfooter.component';
 import { AppsettingComponent } from './appsetting/appsetting.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { ViewListQuestionComponent } from './view-list-question/view-list-question.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     AppmenuComponent,
     AppfooterComponent,
     AppsettingComponent,
-    DashboardComponent
+    DashboardComponent,
+    ViewListQuestionComponent
   ],
   imports: [
     BrowserModule,
