@@ -10,6 +10,7 @@ import { AppsettingComponent } from './appsetting/appsetting.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ViewListQuestionComponent } from './view-list-question/view-list-question.component';
 import { HttpClientModule } from '@angular/common/http';
+import { CreateQuestionComponent } from './create-question/create-question.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { HttpClientModule } from '@angular/common/http';
     AppfooterComponent,
     AppsettingComponent,
     DashboardComponent,
-    ViewListQuestionComponent
+    ViewListQuestionComponent,
+    CreateQuestionComponent
   ],
   imports: [
     BrowserModule,
