@@ -9,6 +9,7 @@ import { AppfooterComponent } from './appfooter/appfooter.component';
 import { AppsettingComponent } from './appsetting/appsetting.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ViewListQuestionComponent } from './view-list-question/view-list-question.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { ViewListQuestionComponent } from './view-list-question/view-list-questi
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule
   ],
   providers: [],
