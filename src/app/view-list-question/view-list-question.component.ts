@@ -12,8 +12,13 @@ export class ViewListQuestionComponent implements OnInit {
   constructor(private http: HttpClient, private router: Router) { }
 
   ngOnInit() {
-    this.http.get<string>('http://localhost:65170/api/question').subscribe(value => {
+    this.http.get<string>('http://localhost:65170/api/question/').subscribe(value => {
       this.questions = JSON.parse(value);
+    });
+  }
+  deleteQuestion(questionId: string) {
+    this.http.delete('http://localhost:65170/api/question/' + questionId).subscribe(() => {
+      this.questions = this.questions.filter(question => question.Id !== questionId);
     });
   }
 
