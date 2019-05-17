@@ -11,6 +11,13 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { ViewListQuestionComponent } from './view-list-question/view-list-question.component';
 import { HttpClientModule } from '@angular/common/http';
 import { CreateQuestionComponent } from './create-question/create-question.component';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule, Routes } from '@angular/router';
+import { from } from 'rxjs';
+import { CreateAnswerComponent } from './create-answer/create-answer.component';
+import { EditQuestionComponent } from './edit-question/edit-question.component';
+
 
 @NgModule({
   declarations: [
@@ -21,12 +28,18 @@ import { CreateQuestionComponent } from './create-question/create-question.compo
     AppsettingComponent,
     DashboardComponent,
     ViewListQuestionComponent,
-    CreateQuestionComponent
+    CreateQuestionComponent,
+    CreateAnswerComponent,
+    EditQuestionComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    AppRoutingModule
+    CKEditorModule,
+    FormsModule,
+    ReactiveFormsModule,
+    AppRoutingModule,
+    // RouterModule.forRoot(routes)
   ],
   providers: [],
   bootstrap: [AppComponent]

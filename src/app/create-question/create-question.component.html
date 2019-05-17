@@ -1,148 +1,175 @@
-<h3 style="margin-left: 40%;">create-question</h3>
+<form novalidate [formGroup]="ctForm" class="row justify-content-md-center">
+  <h3 style="margin-left: 40%;">create-question</h3>
 
-<button style="margin-left: 80%;" type=" button" class="btn btn-danger">Back Home</button>
-<br>
-<br>
-<div class="col-md-8 col-md-offset-2">
-  <table class="table ">
-    <tbody>
-      <tr>
-        <td>Category</td>
-        <td>
-          <select class="selectpicker" data-live-search="true" style="width: 267px;height: 40px;">
-            <option data-tokens="ketchup mustard">Category 1</option>
-            <option data-tokens="mustard">Category 2</option>
-            <option data-tokens="frosting">Category3</option>
-          </select>
-        </td>
-        <td>Media</td>
-        <td>
-          <div class="input-group">
-            <div class="custom-file">
-              <input type="file" class="custom-file-input" id="inputGroupFile01"
-                aria-describedby="inputGroupFileAddon01">
-            </div>
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <td>Content</td>
-        <td>
-          <textarea style="width:267px;"></textarea>
-        </td>
-        <td>Suggestion</td>
-        <td>
-          <textarea style="width:267px;"></textarea>
-        </td>
-      </tr>
-      <tr>
-        <td>Level</td>
-        <td><select class="selectpicker" data-live-search="true" style="width: 267px;height: 40px;">
-            <option data-tokens="ketchup mustard">Medium</option>
-            <option data-tokens="mustard">Hight</option>
-            <option data-tokens="frosting">easy</option>
-          </select></td>
-        <td>Tags</td>
-        <td><select class="selectpicker" data-live-search="true" style="width: 267px;height: 40px;">
-            <option data-tokens="ketchup mustard">Tag 1</option>
-            <option data-tokens="mustard">Tag 2</option>
-            <option data-tokens="frosting">Tag 3</option>
-          </select></td>
-      </tr>
-      <tr>
-        <td>Question type</td>
-        <td><select class="selectpicker" data-live-search="true" style="width: 267px;height: 40px;">
-            <option data-tokens="ketchup mustard">Type 1</option>
-            <option data-tokens="mustard">Type 2</option>
-            <option data-tokens="frosting">Type 3</option>
-          </select></td>
-      </tr>
-
-    </tbody>
-  </table>
-  <h3 style="margin-left: 35%;">create-answer</h3>
+  <button style="margin-left: 80%;" type=" button" class="btn btn-danger">Back Home</button>
   <br>
-  <table class="table ">
-    <tbody>
-      <tr>
-        <td>Media</td>
-        <td>
-          <div class="input-group" style="width: 267px;height: 40px;">
-            <div class="custom-file">
-              <input type="file" class="custom-file-input" id="inputGroupFile01"
-                aria-describedby="inputGroupFileAddon01">
-            </div>
-          </div>
-        </td>
-        <td>Status</td>
-        <td>
-          <select class="selectpicker" data-live-search="true" style="width: 267px;height: 40px;">
-            <option data-tokens="ketchup mustard">Category 1</option>
-            <option data-tokens="mustard">Category 2</option>
-            <option data-tokens="frosting">Category3</option>
-          </select>
-        </td>
-      </tr>
-      <tr>
-        <td>Content</td>
-        <td>
-          <textarea style="width:267px;"></textarea>
-        </td>
-        <td>isTue</td>
-        <td>
-          <label class="checkbox-inline">
-            <input type="checkbox" value="">Option 1
-          </label>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  <button style="margin-left: 45%;" type=" button" class="btn btn-danger">Delete</button>
   <br>
 
-  <br>
-  <table class="table ">
-    <tbody>
-      <tr>
-        <td>Media</td>
-        <td>
-          <div class="input-group" style="width: 267px;height: 40px;">
-            <div class="custom-file">
-              <input type="file" class="custom-file-input" id="inputGroupFile01"
-                aria-describedby="inputGroupFileAddon01">
+  <div class="col-md-8 col-md-offset-2">
+    <table class="table ">
+      <tbody>
+        <tr>
+          <td>Category</td>
+          <td >
+            <fieldset formGroupName="Category">
+            <select style="width: 267px;height: 40px;"
+              formControlName="Id" >
+              <option value="0" *ngFor="let item of categoriesFormApi" value="{{item.Id}}">{{item.Name}}</option>
+             
+            </select>
+          </fieldset>
+            <!-- <select formControlName="CategoryId" style="width: 267px;height: 40px;">
+                <option value="1">hibernate</option>
+                <option value="2">spring</option>
+                <option value="3">C#</option>
+                <option value="4" selected>java</option>
+              </select> -->
+         
+          </td>
+          <!-- <td>Media</td>
+          <td>
+            <div class="input-group">
+              <div class="custom-file">
+                <input type="file" class="custom-file-input" id="inputGroupFile01"
+                  aria-describedby="inputGroupFileAddon01" formControlName="Media">
+              </div>
             </div>
-          </div>
-        </td>
-        <td>Status</td>
-        <td>
-          <select class="selectpicker" data-live-search="true" style="width: 267px;height: 40px;">
-            <option data-tokens="ketchup mustard">Category 1</option>
-            <option data-tokens="mustard">Category 2</option>
-            <option data-tokens="frosting">Category3</option>
-          </select>
-        </td>
-      </tr>
-      <tr>
-        <td>Content</td>
-        <td>
-          <textarea style="width:267px;"></textarea>
-        </td>
-        <td>isTue</td>
-        <td>
-          <label class="checkbox-inline">
-            <input type="checkbox" value="">Option 1
-          </label>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  <button style="margin-left: 45%;" type=" button" class="btn btn-danger">Delete</button>
-  <br>
-  <br>
+
+          </td> -->
+        </tr>
+        <tr>
+          <td>Question type</td>
+          <td><select class="selectpicker" data-live-search="true" style="width: 267px;height: 40px;"
+              formControlName="QuestionType" selected-value="1">
+              <option value="1" selected selected="true" data-tokens="ketchup mustard">Multiple choice</option>
+              <option value="2" data-tokens="mustard">Essay</option>
+            </select>
+           
+          </td>
+          <td>Suggestion</td>
+          <td>
+            <textarea formControlName="Suggestion" style="width:267px;"></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td>Level</td>
+          <td><select class="selectpicker" data-live-search="true" style="width: 267px;height: 40px;"
+              formControlName="Level">
+              <option value="1" data-tokens="ketchup mustard">Easy</option>
+              <option value="2" data-tokens="mustard">Medium</option>
+              <option value="3" data-tokens="frosting">Difficult</option>
+            </select>
+            <div *ngIf="Level.invalid && Level.touched">
+              <div class="alert alert-danger" role="alert">
+                <span *ngIf="Level.hasError('required')">
+                  Level is required
+                </span>
+              </div>
+            </div>
+          </td>
+          <td>Tags</td>
+          <td>
+
+
+            <select class="selectpicker" data-live-search="true" style="width: 267px;height: 60px;"
+              formControlName="TagId" multiple >
+              <option value="0">select one option</option>
+              <option *ngFor="let item of tagsFormApi" value="{{item.Id}}" data-tokens="ketchup mustard">{{item.Name}}</option>
+             
+            </select>
+
+
+          </td>
+        </tr>
+      <tbody>
+    </table>
+    <div class="row">
+      <div class="col-md-2 ">
+        <p>Content</p>
+      </div>
+      <div class="col-md-10 ">
+
+        <ckeditor formControlName="Content" [editor]="Editor" id="classic-editor" name="classic-editor"
+        
+        >
+        </ckeditor>
+      </div>
+      <br><br><br><br><br>
+            <div *ngIf="Content.invalid && Content.touched">
+        <div class="alert alert-danger" role="alert">
+          <span *ngIf="Content.hasError('required')">
+            Content is required
+          </span>
+        </div>
+      </div>
+      <!-- <div *ngIf="ContentAnswer.invalid && ContentAnswer.touched">
+        <div class="alert alert-danger" role="alert">
+          <span *ngIf="ContentAnswer.hasError('required')">
+            Content is required
+          </span>
+        </div>
+      </div> -->
+    </div>
+    <h3 style="margin-left: 35%;">create-answer</h3>
+    <br>
+    <!-- <app-create-answer></app-create-answer> -->
+
+
+
+    <br>
+    <br>
+
+    <div formArrayName="Answers" *ngFor="let item of ctForm.get('Answers').controls; let i = index;">
+      <div [formGroupName]="i">
+        <table class="table ">
+          <tbody>
+            <tr>
+              <td>Status</td>
+              <td>
+                <select formControlName="Status" class="selectpicker" data-live-search="true"
+                  style="width: 267px;height: 40px;">
+                  <option value="1" data-tokens="ketchup mustard">Active</option>
+                  <option value="2" data-tokens="mustard">disable</option>
+                </select>
+              </td>
+              <td>isTrue</td>
+              <td>
+                <label class="checkbox-inline">
+                  <input formControlName="IsTrue" type="checkbox">
+                </label>
+              </td>
+            </tr>
+            <tr>
+              <td>Content</td>
+              <td>
+                <ckeditor formControlName="Content" [editor]="Editor" id="classic-editor" name="classic-editor">
+                </ckeditor>
+                
+                <!-- <div *ngIf="Answers.Content.invalid && Answers.Content.touched">
+                  <div class="alert alert-danger" role="alert">
+                    <span *ngIf="i.Content.hasError('required')">
+                      Content Answer is required
+                    </span>
+                  </div>
+                </div> -->
+              </td>
+              
+            </tr>
+          </tbody>
+        </table>
+        <button style="margin-left: 45%;" type=" button" class="btn btn-danger"
+          (click)="removeAnswer(i)">Delete</button>
+        <br>
+        <br>
+      </div>
+    </div>
+  </div>
   <div class="row">
-    <div class="col-md-2 col-md-offset-4"><button type="button" class="btn btn-success">Add Answer</button></div>
-    <div class="col-md-1"><button type="button" class="btn btn-primary">Save</button></div>
+    <div class="col-md-2 col-md-offset-4"><button type="button" (click)="addAnswer()" class="btn btn-success">Add
+        Answer</button></div>
+    <div class="col-md-1"><button type="button" (click)="saveQuestion()" class="btn btn-primary">Save</button></div>
 
   </div>
-
-</div>
+</form>
+<!-- <p>value form</p>
+<pre>{{form.value|json}}</pre> -->
