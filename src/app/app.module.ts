@@ -17,6 +17,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { from } from 'rxjs';
 import { CreateAnswerComponent } from './create-answer/create-answer.component';
 import { EditQuestionComponent } from './edit-question/edit-question.component';
+import { DetailQuestionComponent } from './detail-question/detail-question.component';
+import { ImportQuestionComponent } from './import-question/import-question.component';
+import { ExportQuestionComponent } from './export-question/export-question.component';
 
 
 @NgModule({
@@ -30,7 +33,10 @@ import { EditQuestionComponent } from './edit-question/edit-question.component';
     ViewListQuestionComponent,
     CreateQuestionComponent,
     CreateAnswerComponent,
-    EditQuestionComponent
+    EditQuestionComponent,
+    DetailQuestionComponent,
+    ImportQuestionComponent,
+    ExportQuestionComponent
   ],
   imports: [
     BrowserModule,

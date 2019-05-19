@@ -22,6 +22,13 @@ export class ViewListQuestionComponent implements OnInit {
       this.questions = this.questions.filter(question => question.Id !== questionId);
     });
   }
+  navigateToEdit(Id: string) {
+    this.router.navigate(['EditQuestion/', Id, ]);
+  }
+  navigateToDetail(Id: string) {
+    this.router.navigate(['DetailQuestion/', Id, ]);
+  }
+
   onSearch() {
     const searchObject = {
       PageIndex: 1,
@@ -34,5 +41,9 @@ export class ViewListQuestionComponent implements OnInit {
     this.http.post<string>('http://localhost:65170/api/question?action=search', JSON.stringify(searchObject), httpOptions).subscribe(value => {
       this.questions = JSON.parse(value);
     });
+  }
+  bdown: boolean = false;
+  buttondown() {
+    this.bdown = !this.bdown;
   }
 }

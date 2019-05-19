@@ -48,7 +48,7 @@ export class EditQuestionComponent implements OnInit {
   get Answers(): FormArray {
     return this.ctForm.get('Answers') as FormArray;
   }
-  constructor(private http: HttpClient, private fb: FormBuilder, private router: Router,private activedRoute: ActivatedRoute) { }
+  constructor(private http: HttpClient, private fb: FormBuilder, private router: Router, private activedRoute: ActivatedRoute) { }
 
   createAnswer(): FormGroup {
     return this.fb.group({
@@ -77,6 +77,8 @@ export class EditQuestionComponent implements OnInit {
       this.categoriesFormApi = JSON.parse(value);
     });
   }
+
+
   saveQuestion() {
 
 
@@ -85,10 +87,10 @@ export class EditQuestionComponent implements OnInit {
 
     if (this.ctForm.valid) {
       const valueQuestion = this.ctForm.value;
-      const length  = valueQuestion.TagId.length;
-     const idTags = valueQuestion.TagId as array;
+      const length = valueQuestion.TagId.length;
+      const idTags = valueQuestion.TagId;
       let arrTags = [];
-      for (let i = 0 ; i < length; i++) {
+      for (let i = 0; i < length; i++) {
         console.log(idTags[i].Id);
         const tag = this.tagsFormApi.filter(s => s.Id == idTags[i]);
         arrTags = [...arrTags, ...tag];
@@ -113,42 +115,40 @@ export class EditQuestionComponent implements OnInit {
           }
 
         });
-   }
-
-
+    }
   }
-
-
-
   ngOnInit() {
     this.getApiTags();
     this.getApiCategories();
-    this.ctForm = this.fb.group(
-      {
-        Category: this.fb.group({
-          Id: '2',
-        }),
-        // Media: '',
-        QuestionType: '1',
-        Suggestion: '',
-        Level: '1',
-        Content: ['', [Validators.required]],
-        TagId: '',
-        Answers: this.fb.array(
-          [
-            this.createAnswer()
-          ]),
-      }
-    );
+
 
     //////
     const IdQuestion = this.activedRoute.snapshot.paramMap.get('Id')
     this.http.get<string>('http://localhost:65170/api/question/' + IdQuestion).subscribe(value => {
-      this.ctForm.patchValue( JSON.parse(value));
+
+      // this.ctForm.patchValue( JSON.parse(value));
+      const qs: Question = JSON.parse(value);
+      console.log(qs);
+      this.ctForm = this.fb.group(
+        {
+
+          Category: this.fb.group({
+            Id: qs.Category.Name,
+          }),
+          // Media: '',
+          QuestionType: '',
+          Suggestion: '',
+          Level: qs.Level,
+          Content: qs.Content,//[qs.Content, [Validators.required]]
+          TagId: '',
+          Answers: this.fb.array(
+            [
+              this.createAnswer()
+            ]),
+        }
+      );
     });
-}
 
-
-
+  }
 }
 

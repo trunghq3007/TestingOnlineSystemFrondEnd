@@ -85,7 +85,7 @@ export class CreateQuestionComponent implements OnInit {
     if (this.ctForm.valid) {
       let valueQuestion = this.ctForm.value;
       const length  = valueQuestion.TagId.length;
-     let idTags = valueQuestion.TagId as array;
+     let idTags = valueQuestion.TagId;
       let arrTags = [];
       for(let i = 0 ; i<length;i++){
         console.log(idTags[i].Id);
