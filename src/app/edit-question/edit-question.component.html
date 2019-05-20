@@ -12,20 +12,16 @@
           <tr>
             <td>Category</td>
             <td >
-              <fieldset formGroupName="Category">
-              <select style="width: 267px;height: 40px;"
-                formControlName="Id" >
+              <select style="width: 267px;height: 40px;" formControlName="CategoryId" >
                 <option *ngFor="let item of categoriesFormApi" value="{{item.Id}}">{{item.Name}}</option>
                
               </select>
-            </fieldset>
               <!-- <select formControlName="CategoryId" style="width: 267px;height: 40px;">
                   <option value="1">hibernate</option>
                   <option value="2">spring</option>
                   <option value="3">C#</option>
                   <option value="4" selected>java</option>
                 </select> -->
-           
             </td>
             <td>Suggestion</td>
             <td>
@@ -45,9 +41,9 @@
           <tr>
             <td>Question type</td>
             <td><select class="selectpicker" data-live-search="true" style="width: 267px;height: 40px;"
-                formControlName="QuestionType" selected-value="1">
-                <option value="1" selected selected="true" data-tokens="ketchup mustard">Multiple choice</option>
-                <option value="2" data-tokens="mustard">Essay</option>
+                formControlName="Type" >
+                <option value="0" selected selected="true" data-tokens="ketchup mustard">Multiple choice</option>
+                <option value="1" data-tokens="mustard">Essay</option>
               </select>
              
             </td>
@@ -61,19 +57,11 @@
                 <option value="2" data-tokens="mustard">Medium</option>
                 <option value="3" data-tokens="frosting">Difficult</option>
               </select>
-              <div *ngIf="Level.invalid && Level.touched" >
-                <div class="alert alert-danger " role="alert">
-                  <span *ngIf="Level.hasError('required')" >
-                    Level is required
-                  </span>
-                </div>
-              </div>
             </td>
             <td>Tags</td>
             <td>
               <select class="selectpicker" data-live-search="true" style="width: 267px;height: 60px;"
                 formControlName="TagId" multiple >
-                <option value="0">select one option</option>
                 <option *ngFor="let item of tagsFormApi" value="{{item.Id}}" data-tokens="ketchup mustard">{{item.Name}}</option>
                
               </select>
@@ -119,6 +107,7 @@
             <tbody>
               <tr>
                 <td style="width: 100px">Status</td>
+                <input formControlName="Id" type="text" disabled="disabled" class="hidden">
                 <td>
                   <select formControlName="Status" class="selectpicker" data-live-search="true"
                     style="width: 267px;height: 40px;">
@@ -157,7 +146,7 @@
     <div class="row">
       <div class="col-md-2 col-md-offset-5"><button type="button" (click)="addAnswer()" class="btn btn-success">Add
           Answer</button></div>
-      <div class="col-md-1"><button type="button" (click)="saveQuestion()" class="btn btn-primary">Save Question</button></div>
+      <div class="col-md-1"> <a href="http://localhost:4200/ViewListQuestion"> <button type="button" (click)="saveQuestion()" class="btn btn-primary">Save Question</button></a></div>
     </div>
   </div>
   </form>

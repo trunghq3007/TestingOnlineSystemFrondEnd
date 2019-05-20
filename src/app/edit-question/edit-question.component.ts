@@ -27,18 +27,6 @@ export class EditQuestionComponent implements OnInit {
   ctForm: FormGroup;
   //  submitted = false;
 
-  get QuestionType(): FormControl {
-    return this.ctForm.get('QuestionType') as FormControl;
-  }
-  get Suggestion(): FormControl {
-    return this.ctForm.get('Suggestion') as FormControl;
-  }
-  get Level(): FormControl {
-    return this.ctForm.get('Level') as FormControl;
-  }
-  get Tags(): FormControl {
-    return this.ctForm.get('Tags') as FormControl;
-  }
   get Content(): FormControl {
     return this.ctForm.get('Content') as FormControl;
   }
@@ -52,8 +40,9 @@ export class EditQuestionComponent implements OnInit {
 
   createAnswer(): FormGroup {
     return this.fb.group({
+      Id:'0',
       Media: '',
-      Status: '1',
+      Status: '',
       Content: ['', [Validators.required]],
       IsTrue: '',
     });
@@ -80,11 +69,7 @@ export class EditQuestionComponent implements OnInit {
 
 
   saveQuestion() {
-
-
-
     console.log(this.ctForm.value);
-
     if (this.ctForm.valid) {
       const valueQuestion = this.ctForm.value;
       const length = valueQuestion.TagId.length;
@@ -96,12 +81,12 @@ export class EditQuestionComponent implements OnInit {
         arrTags = [...arrTags, ...tag];
       }
       valueQuestion.Tags = arrTags;
-      valueQuestion.Category = this.categoriesFormApi.filter(s => s.Id == valueQuestion.Category.Id);
+      valueQuestion.Category = this.categoriesFormApi.filter(s => s.Id == valueQuestion.CategoryId);
       valueQuestion.Category = valueQuestion.Category.length > 0 ? valueQuestion.Category[0] : {};
       valueQuestion.Answers.map(s => s.IsTrue = s.IsTrue ? 1 : 0);
       console.log(valueQuestion);
-
-      this.http.post('http://localhost:65170/api/question/', JSON.stringify(valueQuestion), httpOptions)
+      const IdQuestion = this.activedRoute.snapshot.paramMap.get('Id')
+      this.http.put<string>('http://localhost:65170/api/question/' + IdQuestion, JSON.stringify(valueQuestion), httpOptions)
         .subscribe({
           next: (res) => {
             this.http.get<string>('http://localhost:65170/api/question/').subscribe(value => {
@@ -116,37 +101,47 @@ export class EditQuestionComponent implements OnInit {
 
         });
     }
+    // this.router.navigate(['/ViewQuestionList' ]);
   }
   ngOnInit() {
     this.getApiTags();
     this.getApiCategories();
+    this.ctForm = this.fb.group(
+      {
 
+        CategoryId: '',
+        // Media: '',
+        Type: '',
+        Suggestion: '',
+        Level: '',
+        Content: '',
+        TagId: '',
+        Answers: this.fb.array(
+          [
+
+          ]),
+      });
 
     //////
     const IdQuestion = this.activedRoute.snapshot.paramMap.get('Id')
     this.http.get<string>('http://localhost:65170/api/question/' + IdQuestion).subscribe(value => {
 
-      // this.ctForm.patchValue( JSON.parse(value));
       const qs: Question = JSON.parse(value);
-      console.log(qs);
-      this.ctForm = this.fb.group(
-        {
+      qs.CategoryId = qs.Category.Id;
+      if (qs.Tags && qs.Tags.length > 0) {
+        qs.Tags.forEach(s => qs.TagsId += ',' + s.Id);
+      }
 
-          Category: this.fb.group({
-            Id: qs.Category.Name,
-          }),
-          // Media: '',
-          QuestionType: '',
-          Suggestion: '',
-          Level: qs.Level,
-          Content: qs.Content,//[qs.Content, [Validators.required]]
-          TagId: '',
-          Answers: this.fb.array(
-            [
-              this.createAnswer()
-            ]),
+      if (qs.Answers && qs.Answers.length > 0) {
+        for (let i = 0; i < qs.Answers.length; i++) {
+          this.addAnswer();
+
+          let ansF = this.ctForm.get('Answers') as FormArray;
+          ansF.controls[i].patchValue(qs.Answers[i]);
         }
-      );
+      }
+      this.ctForm.patchValue(qs);
+
     });
 
   }

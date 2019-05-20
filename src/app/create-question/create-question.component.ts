@@ -21,11 +21,11 @@ export class CreateQuestionComponent implements OnInit {
   Questions: Question[] = [];
   answer: FormGroup;
   answers: FormArray;
-  tagsFormApi:[];
-  categoriesFormApi:[];
+  tagsFormApi: [];
+  categoriesFormApi: [];
   ctForm: FormGroup;
   //  submitted = false;
-  
+
   get QuestionType(): FormControl {
     return this.ctForm.get('QuestionType') as FormControl;
   }
@@ -61,41 +61,41 @@ export class CreateQuestionComponent implements OnInit {
     this.answers = this.ctForm.get('Answers') as FormArray;
     this.answers.push(this.createAnswer());
   };
-  removeAnswer(i){
+  removeAnswer(i) {
     this.answers = this.ctForm.get('Answers') as FormArray;
     this.answers.removeAt(i);
   }
-  
-  getApiTags(){
+
+  getApiTags() {
     this.http.get<string>('http://localhost:65170/api/tag/').subscribe(value => {
       this.tagsFormApi = JSON.parse(value);
     });
   }
-  getApiCategories(){
+  getApiCategories() {
     this.http.get<string>('http://localhost:65170/api/category/').subscribe(value => {
       this.categoriesFormApi = JSON.parse(value);
     });
   }
   saveQuestion() {
-    
-   
-    
+
+
+
     console.log(this.ctForm.value);
-    
+
     if (this.ctForm.valid) {
       let valueQuestion = this.ctForm.value;
-      const length  = valueQuestion.TagId.length;
-     let idTags = valueQuestion.TagId;
+      const length = valueQuestion.TagId.length;
+      let idTags = valueQuestion.TagId;
       let arrTags = [];
-      for(let i = 0 ; i<length;i++){
+      for (let i = 0; i < length; i++) {
         console.log(idTags[i].Id);
-        let tag = this.tagsFormApi.filter(s=>s.Id==idTags[i]);
-        arrTags = [...arrTags,...tag];
+        let tag = this.tagsFormApi.filter(s => s.Id == idTags[i]);
+        arrTags = [...arrTags, ...tag];
       }
       valueQuestion.Tags = arrTags;
-      valueQuestion.Category = this.categoriesFormApi.filter(s=>s.Id==valueQuestion.Category.Id);
-      valueQuestion.Category = valueQuestion.Category.length >0 ? valueQuestion.Category[0]:{};
-      valueQuestion.Answers.map(s=>s.IsTrue = s.IsTrue ? 1: 0);
+      valueQuestion.Category = this.categoriesFormApi.filter(s => s.Id == valueQuestion.Category.Id);
+      valueQuestion.Category = valueQuestion.Category.length > 0 ? valueQuestion.Category[0] : {};
+      valueQuestion.Answers.map(s => s.IsTrue = s.IsTrue ? 1 : 0);
       console.log(valueQuestion);
 
       this.http.post('http://localhost:65170/api/question/', JSON.stringify(valueQuestion), httpOptions)
@@ -112,7 +112,7 @@ export class CreateQuestionComponent implements OnInit {
           }
 
         });
-   }
+    }
 
 
   }
@@ -124,7 +124,7 @@ export class CreateQuestionComponent implements OnInit {
     this.getApiCategories();
     this.ctForm = this.fb.group(
       {
-        Category: this.fb.group({ 
+        Category: this.fb.group({
           Id: '2',
         }),
         // Media: '',
@@ -141,12 +141,12 @@ export class CreateQuestionComponent implements OnInit {
     );
 
     ////////
-//     const IdQuestion = this.route.snapshot.paramMap.get('id');
-//     this.http.get<string>('http://localhost:65170/api/question/' + IdQuestion).subscribe(value => {
-//       this.ctForm.patchValue( JSON.parse(value));
-//     });
-};
- 
-  
+    //     const IdQuestion = this.route.snapshot.paramMap.get('id');
+    //     this.http.get<string>('http://localhost:65170/api/question/' + IdQuestion).subscribe(value => {
+    //       this.ctForm.patchValue( JSON.parse(value));
+    //     });
+  };
+
+
 
 }

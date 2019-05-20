@@ -10,41 +10,21 @@ import { FormBuilder, FormGroup, FormControl, Validators, FormArray } from '@ang
   styleUrls: ['./detail-question.component.scss']
 })
 export class DetailQuestionComponent implements OnInit {
-  ctForm: FormGroup;
+
+  Question: Question;
 
   constructor(private http: HttpClient, private fb: FormBuilder, private router: Router, private activedRoute: ActivatedRoute) { }
-
+  question: Question;
   ngOnInit() {
-    // this.getApiTags();
-    // this.getApiCategories();
 
-
-    //////
     const IdQuestion = this.activedRoute.snapshot.paramMap.get('Id')
     this.http.get<string>('http://localhost:65170/api/question/' + IdQuestion).subscribe(value => {
-
+console.log(value);
       // this.ctForm.patchValue( JSON.parse(value));
-      const qs: Question = JSON.parse(value);
-      console.log(qs);
-      this.ctForm = this.fb.group(
-        {
+       this.Question = JSON.parse(value);
 
-          Category: this.fb.group({
-            Id: qs.Category.Name,
-          }),
-          // Media: '',
-          QuestionType: qs.QuestionType,
-          Suggestion: '',
-          Level: qs.Level,
-          Content: qs.Content,
-          TagId: qs.Tags,
-          // Answers: this.fb.array(
-          //   [
-          //     this.createAnswer()
-          //   ]),
-        }
-      );
-    });
-  }
+  });
+}}
 
-}
+
+
