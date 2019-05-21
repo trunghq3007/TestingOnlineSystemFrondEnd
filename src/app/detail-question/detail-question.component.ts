@@ -19,12 +19,13 @@ export class DetailQuestionComponent implements OnInit {
 
     const IdQuestion = this.activedRoute.snapshot.paramMap.get('Id')
     this.http.get<string>('http://localhost:65170/api/question/' + IdQuestion).subscribe(value => {
-console.log(value);
-      // this.ctForm.patchValue( JSON.parse(value));
-       this.Question = JSON.parse(value);
+      console.log(value);
+      //  this.ctForm.patchValue( JSON.parse(value));
+      this.Question = JSON.parse(value);
 
-  });
-}}
+    });
+  }
+}
 
 
 

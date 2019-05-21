@@ -1,0 +1,234 @@
+// import { Component, OnInit } from '@angular/core';
+
+// @Component({
+//   selector: 'app-category',
+//   templateUrl: './category.component.html',
+//   styleUrls: ['./category.component.scss']
+// })
+// export class CategoryComponent implements OnInit {
+
+//   constructor() { }
+
+//   ngOnInit() {
+//   }
+
+// }
+import 'hammerjs';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
+import { SelectionModel } from '@angular/cdk/collections';
+import { Category } from '../ICategory';
+import { FormBuilder, FormGroup, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
+
+import { ToastrService } from 'ngx-toastr';
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+
+};
+@Component({
+  selector: 'app-category',
+  templateUrl: './category.component.html',
+  styleUrls: ['./category.component.scss']
+})
+export class CategoryComponent implements OnInit {
+  categorys: Category[] = [];
+  cateInfo: Category;
+  cateId = '';
+  cateIdd='';
+  cateIdArray="";
+  insertForm: FormGroup;
+  public dataLength: number;
+  constructor(private http: HttpClient,
+    private router: Router,private toastr: ToastrService) { }
+  displayedColumn: string[] = ['select','Name', 'Description', 'Status', 'CreatedBy', 'CreatedDate','Action'];
+  dataSource  = new MatTableDataSource<Category>(this.categorys);
+
+  selection = new SelectionModel<Category>(true, []);
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+
+  FormatData(data) {
+    if (data) {
+      data.map(item => {
+        item.StatusName = item.Status === 1 ? 'Active' : 'Disable';
+      });
+      return data;
+    }
+  }
+  get Name(): FormControl {
+    return this.insertForm.get('Name') as FormControl;
+  }
+  get Description(): FormControl {
+    return this.insertForm.get('Description') as FormControl;
+  }
+  get Status(): FormControl {
+    return this.insertForm.get('Status') as FormControl;
+  }
+  ngOnInit() {
+    this.http.get<string>('http://localhost:65170/api/category').subscribe(value => {
+      this.dataSource.data = this.FormatData(JSON.parse(value));
+      console.log(value);
+     this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort;
+     
+    });
+    
+    this.insertForm = new FormGroup(
+      {
+        Name: new FormControl('', [Validators.required]),
+        Description: new FormControl('', [Validators.required]),
+        Status: new FormControl('', [Validators.required]),
+      }
+
+    );
+  }
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
+    
+  }
+  masterToggle() {
+    this.isAllSelected() ?
+      this.selection.clear() :
+      this.dataSource.data.forEach(row => this.selection.select(row));
+ 
+  }
+  removeSelectedRows() {
+    this.selection.selected.forEach(item => {
+     let index: number = this.dataSource.data.findIndex(d => d.Id === this.cateId);
+     console.log(item.Id);
+    //  this.dataSource.data.splice(index,1);
+     this.http.delete('http://localhost:65170/api/category/' + item.Id).subscribe(
+      res => {
+        
+        if (res == 1) {
+          this.dataSource.data = this.dataSource.data.filter(s=>s.Id!==item.Id);
+        }
+        else if (res == 0) {
+          confirm("Đang có câu hỏi trong Category");
+        }
+        else if(res==-1
+          
+          
+          )
+        {
+          confirm("Lỗi");
+        }
+
+      }
+
+    );
+     this.dataSource = new MatTableDataSource<Category>(this.dataSource.data);
+   });
+   this.selection = new SelectionModel<Category>(true, []);
+ }
+  checkboxLabel(row?: Category): string {
+    if (!row) {
+      return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
+    }
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.Name + 1}`;
+  }
+
+  onSubmit() {
+    const value = this.insertForm.value;
+  
+    console.log(value);
+    if (this.insertForm.valid) {
+
+      this.http.post('http://localhost:65170/api/category/', JSON.stringify(value), httpOptions)
+        .subscribe({
+          next: (res) => {
+            this.http.get<string>('http://localhost:65170/api/category').subscribe(value => {
+            this.dataSource.data = this.FormatData(JSON.parse(value));
+            this.toastr.success('Create success!', '');
+            });
+            
+
+          },
+
+          error: (err) => {
+            console.error(err);
+          }
+
+        });
+    }
+  }
+  detail(id: string) {
+    this.http.get<string>('http://localhost:65170/api/category/' + id)
+      .subscribe(s => {
+        this.cateInfo = JSON.parse(s);
+        
+        this.insertForm.patchValue(this.cateInfo);
+        console.log(this.cateInfo);
+        
+      });
+
+  }
+  delete(Id) {
+    this.cateId = Id;
+    console.log(this.cateId);
+
+  }
+
+  deleteCate() {
+    this.http.delete('http://localhost:65170/api/category/' + this.cateId).subscribe(
+      res => {
+        
+        if (res == 1) {
+          this.dataSource.data = this.dataSource.data.filter(s => s.Id !== this.cateId);
+          this.toastr.success('Delete success!', '');
+        }
+        
+        else if (res == 0) {
+          confirm("Đang có câu hỏi trong Category");
+        }
+        else 
+        {
+          confirm("Lỗi");
+        }
+
+      }
+
+    );
+
+  }
+ 
+  reset() {
+    this.insertForm.reset();
+  }
+  submitEdit(id) {
+    console.log(id);
+    const value = this.insertForm.value;
+    console.log(this.insertForm);
+    console.log(value);
+    if (this.insertForm.valid) {
+
+      this.http.put('http://localhost:65170/api/category/' + id, JSON.stringify(value), httpOptions)
+        .subscribe({
+          next: (res) => {
+            
+            this.http.get<string>('http://localhost:65170/api/category').subscribe(value => {
+              this.dataSource.data = this.FormatData(JSON.parse(value));
+              this.toastr.success('Update success!', '');
+            });
+            this.insertForm.reset();
+          },
+          error: (err) => {
+            console.error(err);
+
+          }
+        });
+
+
+    }
+}
+
+public doFilter = (value: string) => {
+  
+  
+    this.dataSource.filter = value.trim().toLocaleLowerCase();
+  }
+}

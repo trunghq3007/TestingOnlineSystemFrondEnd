@@ -20,6 +20,12 @@ import { EditQuestionComponent } from './edit-question/edit-question.component';
 import { DetailQuestionComponent } from './detail-question/detail-question.component';
 import { ImportQuestionComponent } from './import-question/import-question.component';
 import { ExportQuestionComponent } from './export-question/export-question.component';
+import { TagsComponent } from './tags/tags.component';
+import { CategoryComponent } from './category/category.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatTableModule, MatInputModule, MatCheckboxModule, MatPaginatorModule, MatFormFieldModule, MatButtonModule, MatSortModule } from '@angular/material';
+import { ToastrModule } from 'ngx-toastr';
+
 
 
 @NgModule({
@@ -36,7 +42,9 @@ import { ExportQuestionComponent } from './export-question/export-question.compo
     EditQuestionComponent,
     DetailQuestionComponent,
     ImportQuestionComponent,
-    ExportQuestionComponent
+    ExportQuestionComponent,
+    TagsComponent,
+    CategoryComponent
   ],
   imports: [
     BrowserModule,
@@ -45,6 +53,26 @@ import { ExportQuestionComponent } from './export-question/export-question.compo
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
+    BrowserAnimationsModule,
+    BrowserModule,
+    HttpClientModule,
+    CKEditorModule,
+    FormsModule,
+    //FlexLayoutModule,
+    ReactiveFormsModule,
+    AppRoutingModule,
+    MatTableModule,
+    MatCheckboxModule, MatPaginatorModule,
+    BrowserAnimationsModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatButtonModule,
+    MatSortModule,
+    // Ng2SearchPipeModule,
+    ToastrModule.forRoot({
+      timeOut: 1500,
+      positionClass: 'toast-top-right'
+    })
     // RouterModule.forRoot(routes)
   ],
   providers: [],

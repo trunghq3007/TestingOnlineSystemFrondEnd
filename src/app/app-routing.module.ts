@@ -6,10 +6,10 @@ import { EditQuestionComponent } from './edit-question/edit-question.component';
 import { DetailQuestionComponent } from './detail-question/detail-question.component';
 import { ImportQuestionComponent } from './import-question/import-question.component';
 import { ExportQuestionComponent } from './export-question/export-question.component';
-
+import { TagsComponent } from './tags/tags.component';
+import { CategoryComponent } from './category/category.component';
 
 // const routes: Routes = [];
-
 const routes: Routes = [
   {
     path: 'ViewListQuestion',
@@ -35,12 +35,21 @@ const routes: Routes = [
     path: 'ExportQuestion',
     component: ExportQuestionComponent
   },
+  {
+    path: 'Tags',
+    component: TagsComponent
+  },
+  {
+    path: 'Categorys',
+    component: CategoryComponent
+  },
+
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { 
+export class AppRoutingModule {
 
 }
