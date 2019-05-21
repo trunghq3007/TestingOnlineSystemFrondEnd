@@ -85,6 +85,7 @@ export class EditQuestionComponent implements OnInit {
       valueQuestion.Category = valueQuestion.Category.length > 0 ? valueQuestion.Category[0] : {};
       valueQuestion.Answers.map(s => s.IsTrue = s.IsTrue ? 1 : 0);
       console.log(valueQuestion);
+      debugger;
       const IdQuestion = this.activedRoute.snapshot.paramMap.get('Id')
       this.http.put<string>('http://localhost:65170/api/question/' + IdQuestion, JSON.stringify(valueQuestion), httpOptions)
         .subscribe({

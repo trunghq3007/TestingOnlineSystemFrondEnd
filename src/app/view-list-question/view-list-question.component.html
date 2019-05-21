@@ -98,7 +98,7 @@
               <td>{{c.CreatedBy}}</td>
               <td>{{c.CreatedDate| date: 'dd-MM-yyyy'}}</td>
               <td>{{c.Level}}</td>
-              <td  style="max-width:150px;">{{c.Content}}</td>
+              <td  style="max-width:150px;" [innerHtml]=c.Content ></td>
               <td>{{c.Tags}}</td>
               <td>
                 <span (click)="navigateToDetail(c.Id)" data-placement="top" title="Detail"><button class="btn btn-success btn-xs" data-title="Edit"
