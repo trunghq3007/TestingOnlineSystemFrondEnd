@@ -108,8 +108,7 @@ export class TagsComponent implements OnInit {
   removeSelectedRows() {
     this.selection.selected.forEach(item => {
       let index: number = this.dataSource.data.findIndex(d => d.Id === this.TagIdDelete);
-      // console.log(this.data.findIndex(d => d === item));
-      // this.dataSource.data.splice(index, 1);
+
       this.http.delete('http://localhost:65170/api/Tag/' + item.Id).subscribe(() => {
         this.dataSource.data = this.dataSource.data.filter(b => b.Id !== item.Id);
 
@@ -141,12 +140,7 @@ export class TagsComponent implements OnInit {
 
 
 
-    // this.http.delete('http://localhost:65170/api/Tag/' + TagId).subscribe(() => {
-    //   this.tags = this.tags.filter(b => b.Id !== TagId)
-    // }
 
-
-    //);
   }
   ///delete
   delete() {

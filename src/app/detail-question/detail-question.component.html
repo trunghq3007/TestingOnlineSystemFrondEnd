@@ -8,7 +8,7 @@
       Category:
     </div>
     <div class="col-md-10">
-      <!-- <p *ngIf="Question.Category">{{Question.Category.Name}}</p> -->
+      <p *ngIf="Question.Category">{{Question.Category.Name}}</p>
     </div>
     <br><br>
     <div class="col-md-2">
@@ -32,7 +32,7 @@
     <br><br>
 
     <div class="col-md-2">Update Date</div>
-    <div class="col-md-4">{{Question.UpdateDate| date: 'dd/MM/yyyy'}}</div>
+    <div class="col-md-4">{{Question.UpdatedDate| date: 'dd/MM/yyyy'}}</div>
     <div class="col-md-2">Update by:</div>
     <div class="col-md-4">{{Question.UpdatedBy}}</div>
     <br><br>
@@ -57,29 +57,23 @@
             </div>
             <div class="col-md-10">{{item.Status}}</div>
 
-
             <div class="col-md-2">Content:</div>
             <div class="col-md-10" [innerHtml]=item.Content></div>
             <div class="col-md-2">Istrue</div>
             <div class="col-md-10" >{{item.IsTrue}}</div>
             
-
             <div class="col-md-2">Createdate:</div>
             <div class="col-md-4"><span>.</span> <span>{{item.CreatedDate| date: 'dd/MM/yyyy'}}</span></div>
             <div class="col-md-2">Create by</div>
             <div class="col-md-4"><span>.</span> <span *ngIf="item.CreatedBy">{{item.CreatedBy}}</span></div>
+
             <div class="col-md-2">Update date</div>
-            <div class="col-md-4"> <span>.</span>  <span *ngIf="item.UpdatedDate">{{item.UpdatedDate| date: 'dd/MM/yyyy'}}</span> </div>  
+            <div class="col-md-4"> <span>.</span>  <span *ngIf="item.UpdatedDate">{{item.UpdatedDate|date: 'dd/MM/yyyy'}}</span> </div>  
             <div class="col-md-2">Update by:</div>
             <div class="col-md-4"> <span>.</span> <span *ngIf="item.UpdatedBy">{{item.UpdatedBy}}</span></div>     
-
-            
           </div>
-
         </div>
-
       </div>
     </div>
-
   </div>
 </div>

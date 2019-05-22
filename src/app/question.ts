@@ -8,7 +8,7 @@ export interface Question {
     Content: string;
     CreatedBy: string;
     UpdatedBy: string;
-    UpdateDate: string;
+    UpdatedDate: string;
     CreatedDate: string;
     Level: string;
     QuestionType: string;

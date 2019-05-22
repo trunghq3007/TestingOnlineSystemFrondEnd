@@ -36,14 +36,14 @@ export class CategoryComponent implements OnInit {
   categorys: Category[] = [];
   cateInfo: Category;
   cateId = '';
-  cateIdd='';
-  cateIdArray="";
+  cateIdd = '';
+  cateIdArray = "";
   insertForm: FormGroup;
   public dataLength: number;
   constructor(private http: HttpClient,
-    private router: Router,private toastr: ToastrService) { }
-  displayedColumn: string[] = ['select','Name', 'Description', 'Status', 'CreatedBy', 'CreatedDate','Action'];
-  dataSource  = new MatTableDataSource<Category>(this.categorys);
+    private router: Router, private toastr: ToastrService) { }
+  displayedColumn: string[] = ['select', 'Name', 'Description', 'Status', 'CreatedBy', 'CreatedDate', 'Action'];
+  dataSource = new MatTableDataSource<Category>(this.categorys);
 
   selection = new SelectionModel<Category>(true, []);
 
@@ -71,10 +71,10 @@ export class CategoryComponent implements OnInit {
     this.http.get<string>('http://localhost:65170/api/category').subscribe(value => {
       this.dataSource.data = this.FormatData(JSON.parse(value));
       console.log(value);
-     this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort;
-     
+      this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort;
+
     });
-    
+
     this.insertForm = new FormGroup(
       {
         Name: new FormControl('', [Validators.required]),
@@ -88,43 +88,42 @@ export class CategoryComponent implements OnInit {
     const numSelected = this.selection.selected.length;
     const numRows = this.dataSource.data.length;
     return numSelected === numRows;
-    
+
   }
   masterToggle() {
     this.isAllSelected() ?
       this.selection.clear() :
       this.dataSource.data.forEach(row => this.selection.select(row));
- 
+
   }
   removeSelectedRows() {
     this.selection.selected.forEach(item => {
-     let index: number = this.dataSource.data.findIndex(d => d.Id === this.cateId);
-     console.log(item.Id);
-    //  this.dataSource.data.splice(index,1);
-     this.http.delete('http://localhost:65170/api/category/' + item.Id).subscribe(
-      res => {
-        
-        if (res == 1) {
-          this.dataSource.data = this.dataSource.data.filter(s=>s.Id!==item.Id);
-        }
-        else if (res == 0) {
-          confirm("Đang có câu hỏi trong Category");
-        }
-        else if(res==-1
-          
-          
-          )
-        {
-          confirm("Lỗi");
+      let index: number = this.dataSource.data.findIndex(d => d.Id === this.cateId);
+      console.log(item.Id);
+      //  this.dataSource.data.splice(index,1);
+      this.http.delete('http://localhost:65170/api/category/' + item.Id).subscribe(
+        res => {
+
+          if (res == 1) {
+            this.dataSource.data = this.dataSource.data.filter(s => s.Id !== item.Id);
+          }
+          else if (res == 0) {
+            confirm("Đang có câu hỏi trong Category");
+          }
+          else if (res == -1
+
+
+          ) {
+            confirm("Lỗi");
+          }
+
         }
 
-      }
-
-    );
-     this.dataSource = new MatTableDataSource<Category>(this.dataSource.data);
-   });
-   this.selection = new SelectionModel<Category>(true, []);
- }
+      );
+      this.dataSource = new MatTableDataSource<Category>(this.dataSource.data);
+    });
+    this.selection = new SelectionModel<Category>(true, []);
+  }
   checkboxLabel(row?: Category): string {
     if (!row) {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
@@ -134,7 +133,7 @@ export class CategoryComponent implements OnInit {
 
   onSubmit() {
     const value = this.insertForm.value;
-  
+
     console.log(value);
     if (this.insertForm.valid) {
 
@@ -142,10 +141,10 @@ export class CategoryComponent implements OnInit {
         .subscribe({
           next: (res) => {
             this.http.get<string>('http://localhost:65170/api/category').subscribe(value => {
-            this.dataSource.data = this.FormatData(JSON.parse(value));
-            this.toastr.success('Create success!', '');
+              this.dataSource.data = this.FormatData(JSON.parse(value));
+              this.toastr.success('Create success!', '');
             });
-            
+
 
           },
 
@@ -160,10 +159,10 @@ export class CategoryComponent implements OnInit {
     this.http.get<string>('http://localhost:65170/api/category/' + id)
       .subscribe(s => {
         this.cateInfo = JSON.parse(s);
-        
+
         this.insertForm.patchValue(this.cateInfo);
         console.log(this.cateInfo);
-        
+
       });
 
   }
@@ -176,17 +175,16 @@ export class CategoryComponent implements OnInit {
   deleteCate() {
     this.http.delete('http://localhost:65170/api/category/' + this.cateId).subscribe(
       res => {
-        
+
         if (res == 1) {
           this.dataSource.data = this.dataSource.data.filter(s => s.Id !== this.cateId);
           this.toastr.success('Delete success!', '');
         }
-        
+
         else if (res == 0) {
           confirm("Đang có câu hỏi trong Category");
         }
-        else 
-        {
+        else {
           confirm("Lỗi");
         }
 
@@ -195,7 +193,7 @@ export class CategoryComponent implements OnInit {
     );
 
   }
- 
+
   reset() {
     this.insertForm.reset();
   }
@@ -209,7 +207,7 @@ export class CategoryComponent implements OnInit {
       this.http.put('http://localhost:65170/api/category/' + id, JSON.stringify(value), httpOptions)
         .subscribe({
           next: (res) => {
-            
+
             this.http.get<string>('http://localhost:65170/api/category').subscribe(value => {
               this.dataSource.data = this.FormatData(JSON.parse(value));
               this.toastr.success('Update success!', '');
@@ -224,11 +222,11 @@ export class CategoryComponent implements OnInit {
 
 
     }
-}
+  }
 
-public doFilter = (value: string) => {
-  
-  
+  public doFilter = (value: string) => {
+
+
     this.dataSource.filter = value.trim().toLocaleLowerCase();
   }
 }
