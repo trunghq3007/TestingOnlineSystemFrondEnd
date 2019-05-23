@@ -21,7 +21,7 @@ export class DetailQuestionComponent implements OnInit {
     this.http.get<string>('http://localhost:65170/api/question/' + IdQuestion).subscribe(value => {
       console.log(value);
       //  this.ctForm.patchValue( JSON.parse(value));
-      this.Question = JSON.parse(value);
+      this.Question = JSON.parse(value).Data;
 
     });
   }

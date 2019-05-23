@@ -4,6 +4,8 @@ import { FormBuilder, FormGroup, FormControl, Validators, FormArray } from '@ang
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Question } from '../question';
 import { Router, ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { ResultObject } from '../result-object';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -36,7 +38,7 @@ export class EditQuestionComponent implements OnInit {
   get Answers(): FormArray {
     return this.ctForm.get('Answers') as FormArray;
   }
-  constructor(private http: HttpClient, private fb: FormBuilder, private router: Router, private activedRoute: ActivatedRoute) { }
+  constructor(private http: HttpClient, private fb: FormBuilder, private router: Router, private activedRoute: ActivatedRoute, private toastr: ToastrService) { }
 
   createAnswer(): FormGroup {
     return this.fb.group({
@@ -85,20 +87,27 @@ export class EditQuestionComponent implements OnInit {
       valueQuestion.Category = valueQuestion.Category.length > 0 ? valueQuestion.Category[0] : {};
       valueQuestion.Answers.map(s => s.IsTrue = s.IsTrue ? 1 : 0);
       console.log(valueQuestion);
-      debugger;
       const IdQuestion = this.activedRoute.snapshot.paramMap.get('Id')
       this.http.put<string>('http://localhost:65170/api/question/' + IdQuestion, JSON.stringify(valueQuestion), httpOptions)
         .subscribe({
+
           next: (res) => {
-            this.http.get<string>('http://localhost:65170/api/question/').subscribe(value => {
-              this.Questions = JSON.parse(value);
-            });
+            const result: ResultObject = JSON.parse(res);
+            if (result.Success >= 1) {
+              //showw thành công
+              this.toastr.success('Edit success!', '');
+              
+            } else {
+              //showw that bai 
+              this.toastr.warning('Edit Fail!', '');
+            }
             this.ctForm.reset();
           },
 
           error: (err) => {
             console.error(err);
-          }
+          },
+ 
 
         });
     }
@@ -127,7 +136,7 @@ export class EditQuestionComponent implements OnInit {
     const IdQuestion = this.activedRoute.snapshot.paramMap.get('Id')
     this.http.get<string>('http://localhost:65170/api/question/' + IdQuestion).subscribe(value => {
 
-      const qs: Question = JSON.parse(value);
+      const qs: Question = JSON.parse(value).Data;
       qs.CategoryId = qs.Category.Id;
       if (qs.Tags && qs.Tags.length > 0) {
         qs.Tags.forEach(s => qs.TagsId += ',' + s.Id);

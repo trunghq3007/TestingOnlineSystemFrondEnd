@@ -1,7 +1,7 @@
 <form novalidate [formGroup]="ctForm" class="row justify-content-md-center">
     <h3 style="margin-left: 55%;">Create Question</h3>
   
-    <button style="margin-left: 80%;" type=" button" class="btn btn-danger"><a href="http://localhost:4200/ViewListQuestion">Back Home</a></button>
+    <button style="margin-left: 80%;" type=" button" class="btn btn-danger"><a routerLink="/ViewListQuestion">Back Home</a></button>
     <br>
     <br>
   <div class="row">
@@ -128,7 +128,7 @@
     <div class="row">
       <div class="col-md-2 col-md-offset-5"><button type="button" (click)="addAnswer()" class="btn btn-success">Add
           Answer</button></div>
-      <div class="col-md-1"><a href="http://localhost:4200/ViewListQuestion"><button type="button" (click)="saveQuestion()" class="btn btn-primary">Save Question</button></a></div>
+      <div class="col-md-1"><a routerLink="/ViewListQuestion"><button type="button" (click)="saveQuestion()" class="btn btn-primary">Save Question</button></a></div>
   
     </div>
   </div>

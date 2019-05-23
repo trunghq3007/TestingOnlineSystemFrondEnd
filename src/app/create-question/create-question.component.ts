@@ -3,6 +3,8 @@ import * as ClassicEditorBuild from '@ckeditor/ckeditor5-build-classic';
 import { FormBuilder, FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Question } from '../question';
+import { ResultObject } from '../result-object';
+import { ToastrService } from 'ngx-toastr';
 
 
 const httpOptions = {
@@ -47,7 +49,7 @@ export class CreateQuestionComponent implements OnInit {
   get Answers(): FormArray {
     return this.ctForm.get('Answers') as FormArray;
   }
-  constructor(private http: HttpClient, private fb: FormBuilder) { }
+  constructor(private http: HttpClient, private fb: FormBuilder, private toastr: ToastrService) { }
 
   createAnswer(): FormGroup {
     return this.fb.group({
@@ -98,12 +100,17 @@ export class CreateQuestionComponent implements OnInit {
       valueQuestion.Answers.map(s => s.IsTrue = s.IsTrue ? 1 : 0);
       console.log(valueQuestion);
 
-      this.http.post('http://localhost:65170/api/question/', JSON.stringify(valueQuestion), httpOptions)
+      this.http.post<string>('http://localhost:65170/api/question/', JSON.stringify(valueQuestion), httpOptions)
         .subscribe({
           next: (res) => {
-            this.http.get<string>('http://localhost:65170/api/question/').subscribe(value => {
-              this.Questions = JSON.parse(value);
-            });
+            const result: ResultObject = JSON.parse(res);
+            if (result.Success >= 1) {
+              //showw thành công
+              this.toastr.success('Create success!', '');
+            } else {
+              //showw that bai 
+              this.toastr.warning('Create Fail!', '');
+            }
             this.ctForm.reset();
           },
 
@@ -113,11 +120,7 @@ export class CreateQuestionComponent implements OnInit {
 
         });
     }
-
-
   }
-
-
 
   ngOnInit() {
     this.getApiTags();
@@ -146,7 +149,4 @@ export class CreateQuestionComponent implements OnInit {
     //       this.ctForm.patchValue( JSON.parse(value));
     //     });
   };
-
-
-
 }
