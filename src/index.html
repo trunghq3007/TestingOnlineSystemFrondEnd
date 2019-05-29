@@ -11,7 +11,8 @@
   
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
-  <app-root></app-root>
+  <app-root (onLogin)="initUser($event)"></app-root>
+  <!-- <app-root ></app-root> -->
 </body>
 <script src="assets/bower_components/jquery/dist/jquery.min.js"></script>
 <!-- jQuery UI 1.11.4 -->
