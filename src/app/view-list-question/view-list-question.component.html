@@ -26,7 +26,8 @@
 
             <tr  *ngFor="let c of questions">
               <td ><input type="checkbox" class="checkthis" /></td>
-              <td *ngIf="c.Category">{{c.Category.Name}}</td>
+            
+              <td > <p *ngIf="c.Category">{{c.Category.Name}}</p></td>
               <td>{{c.Content}}</td>
               <td>{{c.CreatedBy}}</td>
               <td>{{c.CreatedDate}}</td>
