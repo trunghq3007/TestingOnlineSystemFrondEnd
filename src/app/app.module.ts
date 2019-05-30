@@ -52,6 +52,8 @@ import { ListTestComponent } from './test/list-test/list-test.component';
 import { ListCreateComponent } from './test/list-create/list-create.component';
 import { ListDetailComponent } from './test/list-detail/list-detail.component';
 import { ListUpdateComponent } from './test/list-update/list-update.component';
+import { NgxTrimDirectiveModule } from 'ngx-trim-directive';
+
 
 @NgModule({
   declarations: [
@@ -105,6 +107,7 @@ import { ListUpdateComponent } from './test/list-update/list-update.component';
     CKEditorModule,
     MatTabsModule,
     ToastrModule.forRoot(),
+    NgxTrimDirectiveModule
   ],
   providers: [AuthenticationService],
   bootstrap: [AppComponent]
