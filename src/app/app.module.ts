@@ -43,6 +43,9 @@ import { LoginComponent } from './login/login.component';
 import { TagsComponent } from './tags/tags.component';
 import { CategoryComponent } from './category/category.component';
 import { Toast, ToastrModule } from 'ngx-toastr';
+import { ImportQuestionComponent } from './import-question/import-question.component';
+import { ExportQuestionComponent } from './export-question/export-question.component';
+import { EditQuestionComponent } from './edit-question/edit-question.component';
 
 @NgModule({
   declarations: [
@@ -66,6 +69,10 @@ import { Toast, ToastrModule } from 'ngx-toastr';
     ViewListQuestionComponent,
     TagsComponent,
     CategoryComponent,
+    ImportQuestionComponent,
+    ExportQuestionComponent,
+    CreateQuestionComponent,
+    EditQuestionComponent,
   ],
   imports: [
     BrowserModule,

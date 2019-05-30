@@ -7,14 +7,14 @@
         <button (click)="onSearch()" type="submit"><i class="fa fa-search"></i></button>
       </div>
       <div class=" col-md-6">
-        <div class="col-md-3 col-sm-3 col-xs-3"><a href="http://localhost:4200/ImportQuestion"> <button type="button"
-              class="btn btn-primary">Import</button></a></div>
-        <div class="col-md-3 col-sm-3 col-xs-3"><a href="http://localhost:4200/ExportQuestion"> <button type="button"
-              class="btn btn-primary">Export</button></a></div>
-        <div class="col-md-3 col-sm-3 col-xs-3"><a href="http://localhost:4200/Tags"><button type="button"
-              class="btn btn-primary">Create tag</button></a></div>
-        <div class="col-md-3 col-sm-3 col-xs-3"><a href="http://localhost:4200/CreateQuestion"> <button type="button"
-              class="btn btn-primary">Create</button></a></div>
+        <div class="col-md-3 col-sm-3 col-xs-3"> <button routerLink="/importquestion" type="button"
+              class="btn btn-primary">Import</button></div>
+        <div class="col-md-3 col-sm-3 col-xs-3"> <button routerLink="/exportquestion" type="button"
+              class="btn btn-primary">Export</button></div>
+        <div class="col-md-3 col-sm-3 col-xs-3"><button routerLink="/tag" type="button"
+              class="btn btn-primary">Create tag</button></div>
+        <div class="col-md-3 col-sm-3 col-xs-3"> <button routerLink="/createquestion" type="button"
+              class="btn btn-primary">Create</button></div>
 
       </div>
       <div class="modal-body">

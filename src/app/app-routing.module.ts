@@ -12,6 +12,8 @@ import { HomeComponent } from './home/home.component';
 import { ViewListQuestionComponent } from './view-list-question/view-list-question.component';
 import { TagsComponent } from './tags/tags.component';
 import { CategoryComponent } from './category/category.component';
+import { ImportQuestionComponent } from './import-question/import-question.component';
+import { ExportQuestionComponent } from './export-question/export-question.component';
 
 const routes: Routes = [
   {
@@ -30,6 +32,14 @@ const routes: Routes = [
   {
     path: 'tag',
     component: TagsComponent,
+  },
+  {
+    path: 'importquestion',
+    component: ImportQuestionComponent,
+  },
+  {
+    path: 'exportquestion',
+    component: ExportQuestionComponent,
   },
   {
     path: 'category',
