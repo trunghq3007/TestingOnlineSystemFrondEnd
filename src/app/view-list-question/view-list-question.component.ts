@@ -6,13 +6,15 @@ import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { ToastrService } from 'ngx-toastr';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { ResultObject } from '../result-object';
+
 @Component({
   selector: 'app-view-list-question',
   templateUrl: './view-list-question.component.html',
   styleUrls: ['./view-list-question.component.scss']
 })
 export class ViewListQuestionComponent implements OnInit {
-  const httpOptions = {
+   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
   searchString: string;
@@ -75,36 +77,36 @@ export class ViewListQuestionComponent implements OnInit {
   }
 
   exportQuestion() {
-    // this.http.post<string>('http://localhost:65170/api/question?action=export', { 'export': '1' }, this.httpOptions).subscribe(value => {
-    //   const res: ResultObject = JSON.parse(value);
-    //   if (res.Success >= 1) {
-    //     let a = document.createElement('a');
-    //     a.href = res.Message;
-    //     a.click();
-    //   } else {
-    //     confirm('export fail');
-    //   }
-    // });
+    this.http.post<string>('http://localhost:65170/api/question?action=export', { 'export': '1' }, this.httpOptions).subscribe(value => {
+      const res: ResultObject = JSON.parse(value);
+      if (res.Success >= 1) {
+        let a = document.createElement('a');
+        a.href = res.Message;
+        a.click();
+      } else {
+        confirm('export fail');
+      }
+    });
   }
 
 
   deleteQuestion() {
-    // this.http.delete('http://localhost:65170/api/question/' + this.questionId).subscribe(
-    //   res => {
+    this.http.delete<string>('http://localhost:65170/api/question/' + this.questionId).subscribe(
+      res => {
+
+        const result: ResultObject = JSON.parse(res);
+        if (result.Success >= 1) {
+          this.dataSource.data = this.dataSource.data.filter(s => s.Id !== this.questionId);
+          this.toastr.success('Delete success!', '');
+        }
+        else if (result.Success == 0) {
+          confirm('Đang có câu hỏi trong Category');
+        }
 
 
-    //     if (result.Success >= 1) {
-    //       this.dataSource.data = this.dataSource.data.filter(s => s.Id !== this.questionId);
-    //       this.toastr.success('Delete success!', '');
-    //     }
-    //     else if (res == 0) {
-    //       confirm('Đang có câu hỏi trong Category');
-    //     }
+      }
 
-
-    //   }
-
-    // );
+    );
 
   }
 
