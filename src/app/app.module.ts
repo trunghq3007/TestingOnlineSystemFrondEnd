@@ -16,7 +16,8 @@ import {
   MatExpansionModule,
   MatDatepickerModule,
   MatNativeDateModule,
-  MatSelectModule
+  MatSelectModule,
+  MatTabsModule
 } from '@angular/material';
 import { AuthenticationService } from '../app/_services/authentication.service';
 
@@ -41,8 +42,16 @@ import { UserUpdateComponent } from './user-update/user-update.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { TagsComponent } from './tags/tags.component';
+import { ExamListComponent } from './exam/exam-list/exam-list.component';
+import { CreateExamComponent } from './exam/create-exam/create-exam.component';
+import { ExamDetailComponent } from './exam/exam-detail/exam-detail.component';
+import { ExamUpdateComponent } from './exam/exam-update/exam-update.component';
 import { CategoryComponent } from './category/category.component';
 import { Toast, ToastrModule } from 'ngx-toastr';
+import { ListTestComponent } from './test/list-test/list-test.component';
+import { ListCreateComponent } from './test/list-create/list-create.component';
+import { ListDetailComponent } from './test/list-detail/list-detail.component';
+import { ListUpdateComponent } from './test/list-update/list-update.component';
 
 @NgModule({
   declarations: [
@@ -66,6 +75,14 @@ import { Toast, ToastrModule } from 'ngx-toastr';
     ViewListQuestionComponent,
     TagsComponent,
     CategoryComponent,
+    ExamListComponent,
+    CreateExamComponent,
+    ExamDetailComponent,
+    ExamUpdateComponent,
+    ListTestComponent,
+    ListCreateComponent,
+    ListDetailComponent,
+    ListUpdateComponent,
   ],
   imports: [
     BrowserModule,
@@ -86,6 +103,7 @@ import { Toast, ToastrModule } from 'ngx-toastr';
     MatNativeDateModule,
     MatSelectModule,
     CKEditorModule,
+    MatTabsModule,
     ToastrModule.forRoot(),
   ],
   providers: [AuthenticationService],
