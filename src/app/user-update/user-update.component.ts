@@ -73,13 +73,14 @@ export class UserUpdateComponent implements OnInit {
       this.RolesFormApi = JSON.parse(value);
     });
   }
+  phonenumber = "^[0-9]{4,12}$";
   emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$";
   ngOnInit() {
     this.getApiRoles();
     this.editform = this.fb.group({
       UserName: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(15)]],
       Email: ['', [Validators.required, Validators.email, Validators.pattern(this.emailPattern)]],
-      Phone: ['', [Validators.required]],
+      Phone: ['', [Validators.required, Validators.pattern]],
       Password: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],
       FullName: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(50)]],
       Address: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(50)]],
