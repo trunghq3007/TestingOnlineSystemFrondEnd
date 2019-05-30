@@ -9,6 +9,9 @@ import { UserCreateComponent } from './user-create/user-create.component';
 import { UserUpdateComponent } from './user-update/user-update.component';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
+import { ViewListQuestionComponent } from './view-list-question/view-list-question.component';
+import { TagsComponent } from './tags/tags.component';
+import { CategoryComponent } from './category/category.component';
 
 const routes: Routes = [
   {
@@ -19,6 +22,18 @@ const routes: Routes = [
     path: 'login',
     component: LoginComponent,
     pathMatch: 'full'
+  },
+  {
+    path: 'question',
+    component: ViewListQuestionComponent,
+  },
+  {
+    path: 'tag',
+    component: TagsComponent,
+  },
+  {
+    path: 'category',
+    component: CategoryComponent,
   },
   {
     path: 'success',

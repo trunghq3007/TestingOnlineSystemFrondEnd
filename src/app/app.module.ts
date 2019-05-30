@@ -31,7 +31,7 @@ import { ViewListQuestionComponent } from './view-list-question/view-list-questi
 import { CreateQuestionComponent } from './create-question/create-question.component';
 import * as ClassicEditor from '@ckeditor/ckeditor5-angular';
 import { GroupComponent } from './group/group.component';
-import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+
 import { GroupDetailComponent } from './group-detail/group-detail.component';
 import { UserGroupComponent } from './user-group/user-group.component';
 import { UserGroupAddComponent } from './user-group-add/user-group-add.component';
@@ -40,6 +40,9 @@ import { UserCreateComponent } from './user-create/user-create.component';
 import { UserUpdateComponent } from './user-update/user-update.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
+import { TagsComponent } from './tags/tags.component';
+import { CategoryComponent } from './category/category.component';
+import { Toast, ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -59,7 +62,10 @@ import { LoginComponent } from './login/login.component';
     UserCreateComponent,
     UserUpdateComponent,
     HomeComponent,
-    LoginComponent
+    LoginComponent,
+    ViewListQuestionComponent,
+    TagsComponent,
+    CategoryComponent,
   ],
   imports: [
     BrowserModule,
@@ -79,7 +85,8 @@ import { LoginComponent } from './login/login.component';
     MatDatepickerModule,
     MatNativeDateModule,
     MatSelectModule,
-    CKEditorModule
+    CKEditorModule,
+    ToastrModule.forRoot(),
   ],
   providers: [AuthenticationService],
   bootstrap: [AppComponent]

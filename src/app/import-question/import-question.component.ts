@@ -36,12 +36,10 @@ export class ImportQuestionComponent implements OnInit {
     this.http.post<string>  ('http://localhost:65170/api/question?action=import', formData)
       .subscribe(
         (res) => this.uploadResponse = res,
-<<<<<<< HEAD
+
         (err) => this.error = err,
 
-=======
-        (err) => this.error = err
->>>>>>> parent of f699ba1... nhvan
+
       );
 
 

@@ -40,11 +40,9 @@ export class ViewListQuestionComponent implements OnInit {
     this.getApiCategories();
     this.getApiTags();
     this.http.get<string>('http://localhost:65170/api/question/').subscribe(value => {
-<<<<<<< HEAD
+
       let source = JSON.parse(value).Data;
-=======
-      let source = JSON.parse(value);
->>>>>>> parent of f699ba1... nhvan
+
       let tagNames = '';
       for (let index = 0; index < source.length; index++) {
         let element = source[index];
@@ -75,48 +73,38 @@ export class ViewListQuestionComponent implements OnInit {
     console.log(this.questionId);
 
   }
-<<<<<<< HEAD
+
   exportQuestion() {
-    this.http.post<string>('http://localhost:65170/api/question?action=export', { 'export': '1' }, this.httpOptions).subscribe(value => {
-      const res: ResultObject = JSON.parse(value);
-      if (res.Success >= 1) {
-        let a = document.createElement('a');
-        a.href = res.Message;
-        a.click();
-      } else {
-        confirm('export fail');
-      }
-    });
+    // this.http.post<string>('http://localhost:65170/api/question?action=export', { 'export': '1' }, this.httpOptions).subscribe(value => {
+    //   const res: ResultObject = JSON.parse(value);
+    //   if (res.Success >= 1) {
+    //     let a = document.createElement('a');
+    //     a.href = res.Message;
+    //     a.click();
+    //   } else {
+    //     confirm('export fail');
+    //   }
+    // });
   }
 
-=======
->>>>>>> parent of f699ba1... nhvan
+
   deleteQuestion() {
-    this.http.delete('http://localhost:65170/api/question/' + this.questionId).subscribe(
-      res => {
+    // this.http.delete('http://localhost:65170/api/question/' + this.questionId).subscribe(
+    //   res => {
 
-<<<<<<< HEAD
-        if (result.Success >= 1) {
-          this.dataSource.data = this.dataSource.data.filter(s => s.Id !== this.questionId);
-          this.toastr.success('Delete success!', '');
-        }
-=======
-        if (res == 1) {
-          this.dataSource.data = this.dataSource.data.filter(s => s.Id !== this.questionId);
-          this.toastr.success('Delete success!', '');
-        }
 
-        else if (res == 0) {
-          confirm('Đang có câu hỏi trong Category');
-        }
->>>>>>> parent of f699ba1... nhvan
-        else {
-          confirm('Lỗi');
-        }
+    //     if (result.Success >= 1) {
+    //       this.dataSource.data = this.dataSource.data.filter(s => s.Id !== this.questionId);
+    //       this.toastr.success('Delete success!', '');
+    //     }
+    //     else if (res == 0) {
+    //       confirm('Đang có câu hỏi trong Category');
+    //     }
 
-      }
 
-    );
+    //   }
+
+    // );
 
   }
 
@@ -177,13 +165,10 @@ export class ViewListQuestionComponent implements OnInit {
 
     console.log(this.formFillter.value);
     this.http.post<string>('http://localhost:65170/api/question?action=fillter', JSON.stringify(this.formFillter.value), this.httpOptions).subscribe(value => {
-<<<<<<< HEAD
+
  
       let source = JSON.parse(value).Data;
-=======
-      debugger;
-    let source = JSON.parse(value);
->>>>>>> parent of f699ba1... nhvan
+
       let tagNames = '';
       for (let index = 0; index < source.length; index++) {
         let element = source[index];
