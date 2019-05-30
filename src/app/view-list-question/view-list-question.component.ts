@@ -44,7 +44,6 @@ export class ViewListQuestionComponent implements OnInit {
 
     this.http.get<string>('http://localhost:65170/api/question/').subscribe(value => {
       let source = JSON.parse(value).Data;
-      console.log(JSON.parse(value));
       let tagNames = '';
       for (let index = 0; index < source.length; index++) {
         let element = source[index];
@@ -72,7 +71,7 @@ export class ViewListQuestionComponent implements OnInit {
   exportQuestion() {
     this.http.post<string>('http://localhost:65170/api/question?action=export', { 'export': '1' }, this.httpOptions).subscribe(value => {
       const res: ResultObject = JSON.parse(value);
-      if (res.Success == 1) {
+      if (res.Success >= 1) {
         let a = document.createElement('a');
         a.href = res.Message;
         a.click();
@@ -88,14 +87,10 @@ export class ViewListQuestionComponent implements OnInit {
       res => {
         let result = JSON.parse(res);
 
-        if (result.Success == 1) {
+        if (result.Success >= 1) {
           this.dataSource.data = this.dataSource.data.filter(s => s.Id !== this.questionId);
           this.toastr.success('Delete success!', '');
         }
-
-        // else if (result.Success == 0) {
-        //   confirm('Đang có câu hỏi trong Category');
-        // }
         else {
           confirm('Không thể xóa câu hỏi vì đang  được sử dụng');
         }
@@ -131,12 +126,12 @@ export class ViewListQuestionComponent implements OnInit {
     return numSelected === numRows;
 
   }
-  masterToggle() {
-    this.isAllSelected() ?
-      this.selection.clear() :
-      this.dataSource.data.forEach(row => this.selection.select(row));
+  // masterToggle() {
+  //   this.isAllSelected() ?
+  //     this.selection.clear() :
+  //     this.dataSource.data.forEach(row => this.selection.select(row));
 
-  }
+  // }
   checkboxLabel(row?: Question): string {
     if (!row) {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
@@ -156,7 +151,7 @@ export class ViewListQuestionComponent implements OnInit {
   fillterClick() {
     console.log(this.formFillter.value);
     this.http.post<string>('http://localhost:65170/api/question?action=fillter', JSON.stringify(this.formFillter.value), this.httpOptions).subscribe(value => {
-      debugger;
+ 
       let source = JSON.parse(value).Data;
       let tagNames = '';
       for (let index = 0; index < source.length; index++) {

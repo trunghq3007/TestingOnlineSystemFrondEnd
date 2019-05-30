@@ -54,7 +54,7 @@
             <td>
               <select class="selectpicker" data-live-search="true" style="width: 267px;height: 60px;"
                 formControlName="TagId" multiple >
-                <option value="0">select one option</option>
+                
                 <option *ngFor="let item of tagsFormApi" value="{{item.Id}}" data-tokens="ketchup mustard">{{item.Name}}</option>              
               </select>
             </td>

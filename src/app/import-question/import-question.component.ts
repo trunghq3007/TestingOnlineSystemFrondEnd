@@ -40,7 +40,6 @@ export class ImportQuestionComponent implements OnInit {
         (res) => this.uploadResponse = res,
         (err) => this.error = err,
 
-        
       );
   }
 }
