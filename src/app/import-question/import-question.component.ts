@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { ResultObject } from '../result-object';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -16,7 +15,7 @@ export class ImportQuestionComponent implements OnInit {
   error: string;
   uploadResponse: string;
 
-  constructor(private http: HttpClient, private formBuilder: FormBuilder) { }
+  constructor(private http: HttpClient,private formBuilder: FormBuilder) { }
 
   ngOnInit() {
     this.form = this.formBuilder.group({
@@ -34,12 +33,18 @@ export class ImportQuestionComponent implements OnInit {
     const formData = new FormData();
     formData.append('file', this.form.get('avatar').value);
 
-    this.http.post<string>('http://localhost:65170/api/question?action=import', formData)
+    this.http.post<string>  ('http://localhost:65170/api/question?action=import', formData)
       .subscribe(
-
         (res) => this.uploadResponse = res,
+<<<<<<< HEAD
         (err) => this.error = err,
 
+=======
+        (err) => this.error = err
+>>>>>>> parent of f699ba1... nhvan
       );
+
+
   }
+
 }
