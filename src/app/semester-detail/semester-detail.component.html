@@ -1,0 +1,141 @@
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+    integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <h2 style="margin-left: 50%">THÔNG TIN KÌ THI</h2>
+    <br><br>
+<div class="row col-md-12" style="margin-left: 18%">
+        <!-- <div class="col-md-3"></div> -->
+        <div class=" col-md-2">
+                <ul class="nav .flex-column nav-tabs col-md-12">
+
+                              <li class="nav-item col-md-12 bg bg-info">
+                                <a [routerLink]="['/SemesterExamManager/detail',Id]" class="nav-link" href="#"> <span style="color: black">Thông tin kì thi</span></a>
+                              </li>
+                              <li class="nav-item col-md-12 bg bg-info">
+                                <a [routerLink]="['/SemesterExamManager/exams',Id] "class=" nav-link" href="#">Danh sách đề thi</a>
+                              </li>
+                              <li class="nav-item col-md-12 bg bg-info">
+                                <a class="nav-link" href="#">Danh sách bài thi</a>
+                              </li>
+                              <li class="nav-item col-md-12 bg bg-info">
+                                <a class="nav-link disabled" href="#" [routerLink]="['/SemesterExamManager/Report',Id]">Báo cáo </a>
+                              </li>
+                              <li class="nav-item col-md-12 bg bg-info">
+                                    <a  [routerLink]="['/SemesterExamManager/Thisinh',Id]" class="nav-link disabled" href="#">Danh Sách thí sinh </a>
+                                </li>
+                              
+
+                  </ul>
+        </div>
+
+    <div class="col-md-7" style="border: black 1px">
+
+        <form (ngSubmit)="navigateToEdit()" class="form-group" [formGroup]="formApply">
+    
+         
+            <!-- <ul class="sidebar-menu" data-widget="tree">
+                        <li class="header"></li>
+                        
+                        <li class="active treeview">
+                                <a [routerLink]="['/SemesterExamManager/detail',Id]">
+                                        <i class="fa fa-dashboard"></i> <span style="color: white">Thông tin kì thi</span>
+                                        
+                                    </a>
+                            
+                        </li>
+                        <li class=" treeview">
+                                <a  [routerLink]="['/SemesterExamManager/',Id]">
+                                    <i class="fa fa-dashboard"></i> <span style="color: white">Danh sách bài thi</span>
+                                    
+                                </a>
+                                
+                            </li>
+                            <li class=" treeview">
+                                    <a [routerLink]="['/SemesterExamManager/exams',Id]">
+                                        <i class="fa fa-dashboard"></i> <span style="color: white">danh sách đề thi</span>
+                                        
+                                    </a>
+                                    
+                                </li>
+                                <li class=" treeview">
+                                        <a [routerLink]="['/SemesterExamManager/Candiates',Id]">
+                                            <i class="fa fa-dashboard"></i> <span style="color: white">Danh sách thí sinh</span>
+                                        
+                                        </a>
+                                        
+                                    </li>
+                </ul> -->
+            <table>
+
+                <tr>
+                    <td><label>Tên kì thi</label></td>
+
+                    <td>
+                        <mat-form-field class="example-full-width">
+                            <input matInput formControlName="SemesterName">
+                        </mat-form-field>
+                        <div style="color: red" *ngIf="!SemesterName.valid && SemesterName.touched">
+                            <div *ngIf="SemesterName.hasError('required')">
+                                Name required
+                            </div>
+                            <div *ngIf="SemesterName.hasError('minlength')">
+                                Minlength {{SemesterName.getError('minlength').requiredLength}}
+                            </div>
+                        </div>
+
+
+                    </td>
+
+
+                </tr>
+                <tr>
+                    <td><label>Người tạo</label></td>
+                    <td>{{list.Creator}}</td>
+                </tr>
+                <tr>
+                    <td><label>Trạng thái</label></td>
+                    <td>{{list.status}}</td>
+
+                </tr>
+                <tr>
+                    <td><label>Thời gian thi</label></td>
+                    <td>
+                        <mat-form-field class="example-full-width">
+                            <input matInput formControlName="StartDay">
+                        </mat-form-field>
+                    </td>
+                    <td><i class="fas fa-calendar-alt"></i></td>
+                </tr>
+                <tr>
+                    <td><label>Thời gian kết thúc</label></td>
+                    <td>
+                        <mat-form-field class="example-full-width">
+                            <input matInput formControlName="EndDay">
+                        </mat-form-field>
+                    </td>
+                    <td><i class="fas fa-calendar-alt"></i></td>
+                </tr>
+                <tr>
+                    <td><label>Số người tham gia :</label></td>
+                    <td><label>{{list.NumberInvite}}</label></td>
+                </tr>
+
+                <tr>
+                    <td> <button type="button" (click)="GenerateCode()" class="taoma col-md-4">Tạo mã thi</button></td>
+                    <td>
+                        <mat-form-field class="example-full-width">
+                            <input disabled matInput value="{{list.Code}}">
+                        </mat-form-field>
+
+                    </td>
+                </tr>
+            </table>
+
+
+
+
+
+            <button type="submit" class="apply"> Apply</button>
+
+        </form>
+    </div>
+</div>

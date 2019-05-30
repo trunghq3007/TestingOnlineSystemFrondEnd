@@ -1,5 +1,24 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule, Routes } from '@angular/router';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import {
+  MatButtonModule,
+  MatSortModule,
+  MatCheckboxModule,
+  MatPaginatorModule,
+  MatInputModule,
+  MatFormFieldModule,
+  MatTableModule,
+  MatExpansionModule,
+  MatDatepickerModule,
+  MatNativeDateModule,
+  MatSelectModule
+} from '@angular/material';
+import { AuthenticationService } from '../app/_services/authentication.service';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -9,24 +28,18 @@ import { AppfooterComponent } from './appfooter/appfooter.component';
 import { AppsettingComponent } from './appsetting/appsetting.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ViewListQuestionComponent } from './view-list-question/view-list-question.component';
-import { HttpClientModule } from '@angular/common/http';
 import { CreateQuestionComponent } from './create-question/create-question.component';
+import * as ClassicEditor from '@ckeditor/ckeditor5-angular';
+import { GroupComponent } from './group/group.component';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RouterModule, Routes } from '@angular/router';
-import { from } from 'rxjs';
-import { CreateAnswerComponent } from './create-answer/create-answer.component';
-import { EditQuestionComponent } from './edit-question/edit-question.component';
-import { DetailQuestionComponent } from './detail-question/detail-question.component';
-import { ImportQuestionComponent } from './import-question/import-question.component';
-import { ExportQuestionComponent } from './export-question/export-question.component';
-import { TagsComponent } from './tags/tags.component';
-import { CategoryComponent } from './category/category.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatTableModule, MatInputModule, MatCheckboxModule, MatPaginatorModule, MatFormFieldModule, MatButtonModule, MatSortModule } from '@angular/material';
-import { ToastrModule } from 'ngx-toastr';
-
-
+import { GroupDetailComponent } from './group-detail/group-detail.component';
+import { UserGroupComponent } from './user-group/user-group.component';
+import { UserGroupAddComponent } from './user-group-add/user-group-add.component';
+import { UserComponent } from './user/user.component';
+import { UserCreateComponent } from './user-create/user-create.component';
+import { UserUpdateComponent } from './user-update/user-update.component';
+import { HomeComponent } from './home/home.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -38,44 +51,38 @@ import { ToastrModule } from 'ngx-toastr';
     DashboardComponent,
     ViewListQuestionComponent,
     CreateQuestionComponent,
-    CreateAnswerComponent,
-    EditQuestionComponent,
-    DetailQuestionComponent,
-    ImportQuestionComponent,
-    ExportQuestionComponent,
-    TagsComponent,
-    CategoryComponent
+    GroupComponent,
+    GroupDetailComponent,
+    UserGroupComponent,
+    UserGroupAddComponent,
+    UserComponent,
+    UserCreateComponent,
+    UserUpdateComponent,
+    HomeComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    CKEditorModule,
-    FormsModule,
-    ReactiveFormsModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    BrowserModule,
-    HttpClientModule,
-    CKEditorModule,
-    FormsModule,
-    //FlexLayoutModule,
-    ReactiveFormsModule,
-    AppRoutingModule,
-    MatTableModule,
-    MatCheckboxModule, MatPaginatorModule,
-    BrowserAnimationsModule,
-    MatInputModule,
-    MatFormFieldModule,
+    FormsModule, ReactiveFormsModule,
+    RouterModule,
     MatButtonModule,
+    MatTableModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatPaginatorModule,
     MatSortModule,
-    // Ng2SearchPipeModule,
-    ToastrModule.forRoot({
-      timeOut: 1500,
-      positionClass: 'toast-top-right'
-    })
-    // RouterModule.forRoot(routes)
+    MatCheckboxModule,
+    MatExpansionModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatSelectModule,
+    CKEditorModule
   ],
-  providers: [],
+  providers: [AuthenticationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+export class PizzaPartyAppModule { }

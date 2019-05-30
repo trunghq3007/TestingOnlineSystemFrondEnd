@@ -1,12 +1,8 @@
-<!--The content below is only a placeholder and can be replaced.-->
 
+    <app-appheader *ngIf="currentUser"></app-appheader>
+    <app-appmenu *ngIf="currentUser"></app-appmenu>
+    <router-outlet></router-outlet>
+    <!-- <app-home *ngIf="!currentUser"></app-home> -->
+    <app-appfooter *ngIf="currentUser"></app-appfooter>
+    <app-appsetting *ngIf="currentUser"></app-appsetting>
 
-
-<app-appheader></app-appheader>
-<app-appmenu></app-appmenu>
-<app-appfooter></app-appfooter>
-<router-outlet></router-outlet> 
-
-
-
-<app-appsetting></app-appsetting>

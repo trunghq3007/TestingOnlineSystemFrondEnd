@@ -1,0 +1,240 @@
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <ol class="breadcrumb">
+      <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+      <li class="active">Update User </li>
+    </ol>
+
+  </section>
+  <section class="content">
+    <div class="row">
+      <div class="container-fluid ">
+        <div class="header clearfix">
+          <h3>Update User</h3> <a class="btn btn-danger" routerLink="/user">Go Back</a>
+
+        </div>
+        <div class="content">
+
+          <form novalidate (ngSubmit)="onSubmit()" [formGroup]="editform">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">UserName</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control form-control-sm" formControlName="UserName">
+                    </div>
+                  </div>
+
+                  <div *ngIf="!UserName.valid && UserName.touched " class="form-group" style="color:red;" role="alert">
+                    <div *ngIf="UserName.hasError('required')">
+                      UserName is required
+                    </div>
+                    <div *ngIf="UserName.hasError('minlength')">
+                      User Name is required length
+                      {{UserName.getError('minlength').requiredLength}}
+                    </div>
+                    <div *ngIf="UserName.hasError('maxlength')">
+                      User Name must be less than
+                      {{UserName.getError('maxlength').requiredLength}}
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Password</label>
+                    <div class="col-sm-10">
+                      <input type="password" class="form-control form-control-sm" formControlName="Password">
+                    </div>
+                  </div>
+
+                  <div *ngIf="!Password.valid && Password.touched " style="color: red">
+                    <div *ngIf="Password.hasError('required')">
+                      Password is required
+                    </div>
+                    <div *ngIf="Password.hasError('minlength')">
+                      Password is required length
+                      {{Password.getError('minlength').requiredLength}}
+                    </div>
+                    <div *ngIf="Password.hasError('maxlength')">
+                      Password must be less than
+                      {{Password.getError('maxlength').requiredLength}}
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label for="inputPassword3" class="col-sm-2 control-label">Role</label>
+                    <div class="col-sm-10">
+                      <fieldset formGroupName="Roles">
+                        <select formControlName="RoleId" class="form-control select2 select2-hidden-accessible"
+                          style="width: 100%;" tabindex="-1" aria-hidden="true">
+                          <option value="0" *ngFor="let item of RolesFormApi" value="{{item.RoleId}}">{{item.RoleName}}
+                        </select>
+                      </fieldset>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">FullName</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control form-control-sm" formControlName="FullName">
+                    </div>
+                  </div>
+                  <div *ngIf="!FullName.valid && FullName.touched " style="color: red">
+                    <div *ngIf="FullName.hasError('required')">
+                      Full Name is required
+                    </div>
+                    <div *ngIf="FullName.hasError('minlength')">
+                      Full Name is required length
+                      {{FullName.getError('minlength').requiredLength}}
+                    </div>
+                    <div *ngIf="FullName.hasError('maxlength')">
+                      Full Name must be less than
+                      {{FullName.getError('maxlength').requiredLength}}
+                    </div>
+                  </div>
+
+
+                  <div class="form-group row">
+                    <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Phone</label>
+
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control form-control-sm" formControlName="Phone">
+                    </div>
+                  </div>
+                  <div *ngIf="!Phone.valid && Phone.touched " style="color: red">
+                    <div *ngIf="Phone.hasError('required')">
+                      Phone is required
+                    </div>
+                  </div>
+
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Email</label>
+                    <div class="col-md-10">
+                      <input class="form-control" type="email" name="email" [pattern]="emailPattern"
+                        id="example-email-input" formControlName="Email">
+                    </div>
+                    <div *ngIf="!Email.valid && Email.touched" style="color: red">
+                      <div *ngIf="Email?.errors && Email.errors['required']">
+                        Email is required
+                      </div>
+                      <div *ngIf="Email?.errors && Email.errors.pattern">
+                          Email is not correct email format
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Address</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control form-control-sm" formControlName="Address">
+                    </div>
+                    <div *ngIf="!Address.valid && Address.touched " style="color: red">
+                      <div *ngIf="Address.hasError('required')">
+                        Address is required
+                      </div>
+                      <div *ngIf="Address.hasError('minlength')">
+                        Address is required length
+                        {{Address.getError('minlength').requiredLength}}
+                      </div>
+                      <div *ngIf="Address.hasError('maxlength')">
+                        Address must be less than
+                        {{Address.getError('maxlength').requiredLength}}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Department</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control form-control-sm" formControlName="Department">
+                    </div>
+                    <div *ngIf="!Department.valid && Department.touched " style="color: red">
+                      <div *ngIf="Department.hasError('required')">
+                        Department is required
+                      </div>
+                      <div *ngIf="Department.hasError('minlength')">
+                        Department is required length
+                        {{Department.getError('minlength').requiredLength}}
+                      </div>
+                      <div *ngIf="Department.hasError('maxlength')">
+                        Department must be less than
+                        {{Department.getError('maxlength').requiredLength}}
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div class="form-group row">
+                    <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Position</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control form-control-sm" formControlName="Position">
+                    </div>
+                    <div *ngIf="!Position.valid && Position.touched " style="color: red">
+                      <div *ngIf="Position.hasError('required')">
+                        Position is required
+                      </div>
+                      <div *ngIf="Position.hasError('minlength')">
+                        Position is required length
+                        {{Position.getError('minlength').requiredLength}}
+                      </div>
+                      <div *ngIf="Position.hasError('maxlength')">
+                        Position must be less than
+                        {{Position.getError('maxlength').requiredLength}}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Avatar</label>
+                    <td>
+                      <div class="input-group" style="width: 267px;height: 40px;">
+                        <div class="custom-file col-sm-1">
+                          <input type="file" class="custom-file-input" id="inputGroupFile01"
+                            aria-describedby="inputGroupFileAddon01" formControlName="Avatar">
+                        </div>
+                      </div>
+                    </td>
+                  </div>
+                  <div class="form-group row">
+                    <label for="inputPassword3" class="col-sm-2 control-label">Status</label>
+                    <div class="col-sm-10">
+                      <select formControlName="Status" class="form-control select2 select2-hidden-accessible"
+                        style="width: 100%;" tabindex="-1" aria-hidden="true">
+                        <option value="true">True</option>
+                        <option value="false">False</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <label for="iNote" class="col-md-2 control-label">Note</label>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <div class="col-md-12">
+                    <ckeditor [editor]="Editor" id="classic-editor" name="classic-editor" formControlName="Note">
+                    </ckeditor>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div class="form-group row" style="margin-top: 3%">
+              <div class="col-10 offset-2">
+                <button type="submit" class="btn btn-primary" (click)="validateForm()">Update</button>
+              </div>
+            </div>
+          </form>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</div>
