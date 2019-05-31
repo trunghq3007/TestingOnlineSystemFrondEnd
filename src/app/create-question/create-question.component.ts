@@ -113,11 +113,7 @@ export class CreateQuestionComponent implements OnInit {
 
         });
     }
-
-
   }
-
-
 
   ngOnInit() {
     this.getApiTags();

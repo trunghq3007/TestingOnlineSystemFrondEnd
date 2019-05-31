@@ -15,7 +15,7 @@ export class ImportQuestionComponent implements OnInit {
   error: string;
   uploadResponse: string;
 
-  constructor(private http: HttpClient,private formBuilder: FormBuilder) { }
+  constructor(private http: HttpClient,private formBuilder: FormBuilder, private router: Router) { }
 
   ngOnInit() {
     this.form = this.formBuilder.group({

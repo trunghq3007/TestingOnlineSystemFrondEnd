@@ -16,8 +16,7 @@ import {
   MatExpansionModule,
   MatDatepickerModule,
   MatNativeDateModule,
-  MatSelectModule,
-  MatTabsModule
+  MatSelectModule
 } from '@angular/material';
 import { AuthenticationService } from '../app/_services/authentication.service';
 
@@ -42,18 +41,14 @@ import { UserUpdateComponent } from './user-update/user-update.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { TagsComponent } from './tags/tags.component';
-import { ExamListComponent } from './exam/exam-list/exam-list.component';
-import { CreateExamComponent } from './exam/create-exam/create-exam.component';
-import { ExamDetailComponent } from './exam/exam-detail/exam-detail.component';
-import { ExamUpdateComponent } from './exam/exam-update/exam-update.component';
 import { CategoryComponent } from './category/category.component';
 import { Toast, ToastrModule } from 'ngx-toastr';
-import { ListTestComponent } from './test/list-test/list-test.component';
-import { ListCreateComponent } from './test/list-create/list-create.component';
-import { ListDetailComponent } from './test/list-detail/list-detail.component';
-import { ListUpdateComponent } from './test/list-update/list-update.component';
-import { ViewListSemasterComponent } from './view-list-semaster/view-list-semaster.component';
-
+import { ImportQuestionComponent } from './import-question/import-question.component';
+import { ExportQuestionComponent } from './export-question/export-question.component';
+import { EditQuestionComponent } from './edit-question/edit-question.component';
+import{ ViewListSemasterComponent }from './view-list-semaster/view-list-semaster.component';
+import{ SemesterDetailComponent } from './semester-detail/semester-detail.component';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 @NgModule({
   declarations: [
     AppComponent,
@@ -76,15 +71,13 @@ import { ViewListSemasterComponent } from './view-list-semaster/view-list-semast
     ViewListQuestionComponent,
     TagsComponent,
     CategoryComponent,
-    ExamListComponent,
-    CreateExamComponent,
-    ExamDetailComponent,
-    ExamUpdateComponent,
-    ListTestComponent,
-    ListCreateComponent,
-    ListDetailComponent,
-    ListUpdateComponent,
-    ViewListSemasterComponent
+    ImportQuestionComponent,
+    ExportQuestionComponent,
+    CreateQuestionComponent,
+    EditQuestionComponent,
+    ViewListSemasterComponent,
+    SemesterDetailComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -105,7 +98,8 @@ import { ViewListSemasterComponent } from './view-list-semaster/view-list-semast
     MatNativeDateModule,
     MatSelectModule,
     CKEditorModule,
-    MatTabsModule,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule,
     ToastrModule.forRoot(),
   ],
   providers: [AuthenticationService],
