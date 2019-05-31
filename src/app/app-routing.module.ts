@@ -12,14 +12,11 @@ import { HomeComponent } from './home/home.component';
 import { ViewListQuestionComponent } from './view-list-question/view-list-question.component';
 import { TagsComponent } from './tags/tags.component';
 import { CategoryComponent } from './category/category.component';
-import { ExamListComponent } from './exam/exam-list/exam-list.component';
-import { CreateExamComponent } from './exam/create-exam/create-exam.component';
-import { ExamDetailComponent } from './exam/exam-detail/exam-detail.component';
-import { ExamUpdateComponent } from './exam/exam-update/exam-update.component';
-import { ListTestComponent } from './test/list-test/list-test.component';
-import { ListCreateComponent } from './test/list-create/list-create.component';
-import { ListDetailComponent } from './test/list-detail/list-detail.component';
-import { ListUpdateComponent } from './test/list-update/list-update.component';
+import { ImportQuestionComponent } from './import-question/import-question.component';
+import { ExportQuestionComponent } from './export-question/export-question.component';
+import { CreateQuestionComponent } from './create-question/create-question.component';
+import { EditQuestionComponent } from './edit-question/edit-question.component';
+import { DetailQuestionComponent } from './detail-question/detail-question.component';
 
 const routes: Routes = [
   {
@@ -38,6 +35,26 @@ const routes: Routes = [
   {
     path: 'tag',
     component: TagsComponent,
+  },
+  {
+    path: 'ImportQuestion',
+    component: ImportQuestionComponent,
+  },
+  {
+    path: 'ExportQuestion',
+    component: ExportQuestionComponent,
+  },
+  {
+    path: 'CreateQuestion',
+    component: CreateQuestionComponent,
+  },
+  {
+    path: 'DetailQuestion/:Id',
+    component: DetailQuestionComponent,
+  },
+  {
+    path: 'EditQuestion/:Id',
+    component: EditQuestionComponent,
   },
   {
     path: 'category',
@@ -64,32 +81,9 @@ const routes: Routes = [
     {
       path: 'update/:Id',
       component: UserUpdateComponent
-    },
-  ]},
-    {
-      path: 'exam',
-    children: [
-      {
-        path: '',
-        component: ExamListComponent,
-        pathMatch: 'full'
-      },
-      {
-        path: 'create',
-        component: CreateExamComponent,
-      },
-      {
-        path: ':examID',
-        component: ExamDetailComponent
-      },
-      {
-        path: 'update/:Id',
-        component: ExamUpdateComponent
-      },
-      
+    }
     ]
-    },
-    
+  },
   {
     path: 'group',
     children: [
@@ -121,34 +115,7 @@ const routes: Routes = [
         ]
       }
     ]
-  },
-  {
-    path:'test',
-    children: [
-      {
-        path: '',
-        component: ListTestComponent,
-        pathMatch: 'full'
-      },
-      {
-        path: 'create',
-        component: ListCreateComponent
-      },
-      {
-        path: ':examID',
-        component: ListDetailComponent
-      },
-      {
-        path: 'update/:Id',
-        component: ListUpdateComponent
-      }
-    ]
-  }
-
-
-
-
-];
+  }];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
