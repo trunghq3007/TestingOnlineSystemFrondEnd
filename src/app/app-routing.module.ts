@@ -14,6 +14,9 @@ import { TagsComponent } from './tags/tags.component';
 import { CategoryComponent } from './category/category.component';
 import { ImportQuestionComponent } from './import-question/import-question.component';
 import { ExportQuestionComponent } from './export-question/export-question.component';
+import { CreateQuestionComponent } from './create-question/create-question.component';
+import { EditQuestionComponent } from './edit-question/edit-question.component';
+import { DetailQuestionComponent } from './detail-question/detail-question.component';
 
 const routes: Routes = [
   {
@@ -34,12 +37,24 @@ const routes: Routes = [
     component: TagsComponent,
   },
   {
-    path: 'importquestion',
+    path: 'ImportQuestion',
     component: ImportQuestionComponent,
   },
   {
-    path: 'exportquestion',
+    path: 'ExportQuestion',
     component: ExportQuestionComponent,
+  },
+  {
+    path: 'CreateQuestion',
+    component: CreateQuestionComponent,
+  },
+  {
+    path: 'DetailQuestion/:Id',
+    component: DetailQuestionComponent,
+  },
+  {
+    path: 'EditQuestion/:Id',
+    component: EditQuestionComponent,
   },
   {
     path: 'category',

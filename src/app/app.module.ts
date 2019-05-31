@@ -46,6 +46,7 @@ import { Toast, ToastrModule } from 'ngx-toastr';
 import { ImportQuestionComponent } from './import-question/import-question.component';
 import { ExportQuestionComponent } from './export-question/export-question.component';
 import { EditQuestionComponent } from './edit-question/edit-question.component';
+import { DetailQuestionComponent } from './detail-question/detail-question.component';
 
 @NgModule({
   declarations: [
@@ -73,6 +74,7 @@ import { EditQuestionComponent } from './edit-question/edit-question.component';
     ExportQuestionComponent,
     CreateQuestionComponent,
     EditQuestionComponent,
+    DetailQuestionComponent,
   ],
   imports: [
     BrowserModule,
