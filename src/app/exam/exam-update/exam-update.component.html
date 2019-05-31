@@ -1,0 +1,134 @@
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <!-- <section class="content-header">
+    <h1>
+      Dashboard
+      <small>Control panel</small>
+    </h1>
+    <ol class="breadcrumb">
+      <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+      <li class="active">Dashboard</li>
+    </ol>
+
+  </section> -->
+
+  <!-- Main content -->
+  <section class="content">
+    <!-- Small boxes (Stat box) -->
+
+    <!-- /.row -->
+    <!-- Main row -->
+    <div class="row">
+      <!-- Left col -->
+
+      <!-- /.Left col -->
+      <!-- right col (We are only adding the ID to make the widgets sortable)-->
+
+
+      <div class="container-fluid ">
+
+
+        <div class="header clearfix">
+            <a class="btn btn-danger" href="" style="float: right;" routerLink="/exam">Go Back</a>
+
+        </div>
+        <div class="content">
+          <h1 style="margin-left: 45%;">Update Exam</h1>
+          <form novalidate (ngSubmit)="onSubmit()" [formGroup]="editForm">
+            <div class="formTest ">
+              <div class="col-md-6">
+                <div class="form-group row">
+                  <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Name Exam</label>
+                  <div class="col-sm-10">
+                    <input class="form-control" type="text" id="example-text-input" formControlName="NameExam">
+                  </div>
+                </div>
+                <div *ngIf="!NameExam.valid && NameExam.touched" style="color: red">
+                  <span *ngIf="NameExam.hasError('required')">
+                    Name exam is required
+                  </span>
+
+                </div>
+                <div class="form-group row">
+                  <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">CreateBy</label>
+                  <div class="col-sm-10">
+                    <input class="form-control" type="text" id="example-text-input" formControlName="CreateBy">
+                  </div>
+                </div>
+
+                <div *ngIf="!CreateBy.valid && CreateBy.touched " style="color: red">
+                  <div *ngIf="CreateBy.hasError('required')">
+                    CreateBy must be not null
+                  </div>
+
+
+                </div>
+                <div class="form-group row">
+                  <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Question Number</label>
+                  <div class="col-sm-10">
+                    <input class="form-control" type="number" id="example-text-input" formControlName="QuestionNumber">
+                  </div>
+                </div>
+
+                <div *ngIf="!QuestionNumber.valid && QuestionNumber.touched " style="color: red">
+                  <div *ngIf="QuestionNumber.hasError('required')">
+                    QuestionNumber must be not null
+                  </div>
+
+
+                </div>
+               
+
+              </div>
+              <div class="col-md-6">
+                <div class="form-group row">
+                  <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Status</label>
+                  <div class="col-sm-10">
+                    <select class="bootstrap-select" style="width: 100%; height: 35px;" formControlName="Status">
+                      <option value="false" selected="selected">Draft</option>
+                      <option value="true">public</option>
+
+                    </select>
+
+                  </div>
+                </div>
+                <div *ngIf="!Status.valid && Status.touched " style="color: red">
+                  <div *ngIf="Status.hasError('required')">
+                      Status must be not null
+                  </div>
+
+
+                </div>
+
+               
+
+               
+                <div class="form-group row">
+                  <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Note</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control form-control-sm" formControlName="Note">
+
+                  </div>
+                </div>
+
+                <div *ngIf="!Note.valid && Note.touched " style="color: red">
+                  <div *ngIf="Note.hasError('required')">
+                      Note must be not null
+                  </div>
+                </div>
+              </div>
+              <button type="submit" (click)="validateForm()" mat-flat-button color="primary" style="margin-bottom: 0%;">Save</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+
+
+      <!-- right col -->
+    </div>
+    <!-- /.row (main row) -->
+
+  </section>
+  <!-- /.content -->
+</div>
