@@ -43,7 +43,6 @@ export class ViewListSemasterComponent implements OnInit {
   }
 
   semesterExams: Isemaster[] = [];
-  semesterExams2: Isemaster[] = [];
   constructor(private semaster: FormBuilder, private fl: FormBuilder, private http: HttpClient, private router: Router, public dialog: MatDialog) { }
   displayedColumn: string[] = ['select', 'ID', 'SemesterName', 'StartDay', 'EndDay', 'Code', 'status', 'action'];
   dataSource = new MatTableDataSource<Isemaster>(this.semesterExams);
@@ -91,27 +90,7 @@ export class ViewListSemasterComponent implements OnInit {
       EndDay: [""]
     });
     this.http.get<string>('http://localhost:65170/SemesterExam').subscribe(value => {
-      this.semesterExams = JSON.parse(value).Data;
-      
-      for ( let item of this.semesterExams)
-      {
-        
-        // let a  :Isemaster
-        // a.Code= item.code;
-        
-        if(item.status == "0" ) item.status="Done";
-         
-        if(item.status == "1" ) item.status="public";
-         
-        if(item.status == "2" ) item.status="draft";
-        
-        
-        // console.log(item["status"]);
-      }
-     
-      console.log(this.semesterExams)
-      //  this.dataSource.data = JSON.parse(value).Data;
-      this.dataSource.data = this.semesterExams;
+      this.dataSource.data = JSON.parse(value).Data;
       console.log(value);
       console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
     });
@@ -155,8 +134,7 @@ export class ViewListSemasterComponent implements OnInit {
           next: (res) => {
             this.http.get<string>('http://localhost:65170/SemesterExam').subscribe(value => {
               this.dataSource.data = JSON.parse(value);
-              console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
-              
+              console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);             
             });
             this.list();
             confirm('Create success!');
