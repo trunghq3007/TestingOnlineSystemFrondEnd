@@ -52,6 +52,7 @@ import { ListTestComponent } from './test/list-test/list-test.component';
 import { ListCreateComponent } from './test/list-create/list-create.component';
 import { ListDetailComponent } from './test/list-detail/list-detail.component';
 import { ListUpdateComponent } from './test/list-update/list-update.component';
+import { ViewListSemasterComponent } from './view-list-semaster/view-list-semaster.component';
 
 @NgModule({
   declarations: [
@@ -83,6 +84,7 @@ import { ListUpdateComponent } from './test/list-update/list-update.component';
     ListCreateComponent,
     ListDetailComponent,
     ListUpdateComponent,
+    ViewListSemasterComponent
   ],
   imports: [
     BrowserModule,
