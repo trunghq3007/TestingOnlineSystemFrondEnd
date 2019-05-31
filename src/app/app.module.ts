@@ -106,7 +106,11 @@ import { NgxTrimDirectiveModule } from 'ngx-trim-directive';
     MatSelectModule,
     CKEditorModule,
     MatTabsModule,
-    ToastrModule.forRoot(),
+    ToastrModule.forRoot({
+      timeOut:3000,
+      positionClass:'toast-bottom-right',
+      messageClass:'toast-message'
+    }),
     NgxTrimDirectiveModule
   ],
   providers: [AuthenticationService],
