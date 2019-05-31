@@ -14,7 +14,8 @@ import { TagsComponent } from './tags/tags.component';
 import { CategoryComponent } from './category/category.component';
 import { ImportQuestionComponent } from './import-question/import-question.component';
 import { ExportQuestionComponent } from './export-question/export-question.component';
-
+import{SemesterDetailComponent} from './semester-detail/semester-detail.component';
+import{ViewListSemasterComponent} from './view-list-semaster/view-list-semaster.component';
 const routes: Routes = [
   {
     path: '',
@@ -100,7 +101,24 @@ const routes: Routes = [
         ]
       }
     ]
-  }];
+  },
+  {
+    path:'semester',
+    children:[
+      {
+        path:'',
+        component:ViewListSemasterComponent,
+      },
+      {
+        path:':Id',
+        component:SemesterDetailComponent
+      }
+   
+    ]
+    
+    
+  }
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

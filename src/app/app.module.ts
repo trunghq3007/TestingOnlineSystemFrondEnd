@@ -46,7 +46,9 @@ import { Toast, ToastrModule } from 'ngx-toastr';
 import { ImportQuestionComponent } from './import-question/import-question.component';
 import { ExportQuestionComponent } from './export-question/export-question.component';
 import { EditQuestionComponent } from './edit-question/edit-question.component';
-
+import{ ViewListSemasterComponent }from './view-list-semaster/view-list-semaster.component';
+import{ SemesterDetailComponent } from './semester-detail/semester-detail.component';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 @NgModule({
   declarations: [
     AppComponent,
@@ -73,6 +75,9 @@ import { EditQuestionComponent } from './edit-question/edit-question.component';
     ExportQuestionComponent,
     CreateQuestionComponent,
     EditQuestionComponent,
+    ViewListSemasterComponent,
+    SemesterDetailComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -93,6 +98,8 @@ import { EditQuestionComponent } from './edit-question/edit-question.component';
     MatNativeDateModule,
     MatSelectModule,
     CKEditorModule,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule,
     ToastrModule.forRoot(),
   ],
   providers: [AuthenticationService],
