@@ -72,17 +72,16 @@ export class UserCreateComponent implements OnInit {
       this.RolesFormApi = JSON.parse(value);
     });
   }
-  phonenumber = "^[0-9]{4,12}$";
   emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$";
   ngOnInit() {
     this.getApiRoles();
     this.createForm = this.fb.group({
-      UserName: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(25)]],
+      UserName: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(15)]],
       Email: ['', [Validators.required, Validators.email, Validators.pattern(this.emailPattern)]],
-      Phone: ['', [Validators.required], Validators.pattern(this.phonenumber)],
-      Password: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(15)]],
+      Phone: ['', [Validators.required]],
+      Password: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],
       FullName: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(50)]],
-      Address: ['', [Validators.required]],
+      Address: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(50)]],
       Department: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(30)]],
       Position: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(30)]],
       Roles: this.fb.group({

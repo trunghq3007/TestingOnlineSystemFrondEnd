@@ -111,7 +111,7 @@ export class TagsComponent implements OnInit {
 
       this.http.delete('http://localhost:65170/api/Tag/' + item.Id).subscribe(() => {
         this.dataSource.data = this.dataSource.data.filter(b => b.Id !== item.Id);
-         
+
       }
 
 
