@@ -48,6 +48,7 @@ export class ExamDetailComponent implements OnInit {
   questions: questions[] = [];
   detailExams: detailExam[] = [];
   searchString: string;
+  numberQuestion:number;
   filterForm: FormGroup;
   dataSource = new MatTableDataSource<questions>(this.questions);
   dataSourcedetail = new MatTableDataSource<detailExam>(this.detailExams);
@@ -146,6 +147,22 @@ export class ExamDetailComponent implements OnInit {
 
     });
 
+  }
+  AddMutiple(){
+    let Arr=[];
+    const examID = this.ac.snapshot.paramMap.get('examID');
+    this.selection.selected.forEach(item=>{
+      // Arr+=  examID+','+item.Id+',';
+     Arr.push( { ExamId: examID, QuestionId: item.Id }) ;
+    })
+    
+    console.log(JSON.stringify(Arr));
+    this.http.post<string>('http://localhost:65170/api/ExamQuestions/?action=AddMutiple',JSON.stringify(Arr),httpOptions).subscribe((e)=>{
+
+    })
+  }
+  random(){
+    // this.http.post<string>('')
   }
   onSearch() {
     this.http.get<string>('http://localhost:65170/api/Question?searchString=' + this.searchString).subscribe(value => {

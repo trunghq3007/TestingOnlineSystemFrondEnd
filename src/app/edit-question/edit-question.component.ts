@@ -54,7 +54,7 @@ export class EditQuestionComponent implements OnInit {
   removeAnswer(i) {
     this.answers = this.ctForm.get('Answers') as FormArray;
     this.answers.removeAt(i);
-  }
+  }3
 
   getApiTags() {
     this.http.get<string>('http://localhost:65170/api/tag/').subscribe(value => {
@@ -85,7 +85,6 @@ export class EditQuestionComponent implements OnInit {
       valueQuestion.Category = valueQuestion.Category.length > 0 ? valueQuestion.Category[0] : {};
       valueQuestion.Answers.map(s => s.IsTrue = s.IsTrue ? 1 : 0);
       console.log(valueQuestion);
-      debugger;
       const IdQuestion = this.activedRoute.snapshot.paramMap.get('Id')
       this.http.put<string>('http://localhost:65170/api/question/' + IdQuestion, JSON.stringify(valueQuestion), httpOptions)
         .subscribe({
@@ -127,7 +126,7 @@ export class EditQuestionComponent implements OnInit {
     const IdQuestion = this.activedRoute.snapshot.paramMap.get('Id')
     this.http.get<string>('http://localhost:65170/api/question/' + IdQuestion).subscribe(value => {
 
-      const qs: Question = JSON.parse(value);
+      const qs: Question = JSON.parse(value).Data;
       qs.CategoryId = qs.Category.Id;
       if (qs.Tags && qs.Tags.length > 0) {
         qs.Tags.forEach(s => qs.TagsId += ',' + s.Id);
