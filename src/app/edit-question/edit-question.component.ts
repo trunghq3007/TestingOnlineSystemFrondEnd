@@ -8,7 +8,6 @@ const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
-
 @Component({
   selector: 'app-edit-question',
   templateUrl: './edit-question.component.html',
@@ -40,7 +39,7 @@ export class EditQuestionComponent implements OnInit {
 
   createAnswer(): FormGroup {
     return this.fb.group({
-      Id:'0',
+      Id: '0',
       Media: '',
       Status: '',
       Content: ['', [Validators.required]],
@@ -54,7 +53,7 @@ export class EditQuestionComponent implements OnInit {
   removeAnswer(i) {
     this.answers = this.ctForm.get('Answers') as FormArray;
     this.answers.removeAt(i);
-  }3
+  }
 
   getApiTags() {
     this.http.get<string>('http://localhost:65170/api/tag/').subscribe(value => {
@@ -66,7 +65,6 @@ export class EditQuestionComponent implements OnInit {
       this.categoriesFormApi = JSON.parse(value);
     });
   }
-
 
   saveQuestion() {
     console.log(this.ctForm.value);
@@ -106,9 +104,9 @@ export class EditQuestionComponent implements OnInit {
   ngOnInit() {
     this.getApiTags();
     this.getApiCategories();
+    this.initCkeditor();
     this.ctForm = this.fb.group(
       {
-
         CategoryId: '',
         // Media: '',
         Type: '',
@@ -123,7 +121,7 @@ export class EditQuestionComponent implements OnInit {
       });
 
     //////
-    const IdQuestion = this.activedRoute.snapshot.paramMap.get('Id')
+    const IdQuestion = this.activedRoute.snapshot.paramMap.get('id')
     this.http.get<string>('http://localhost:65170/api/question/' + IdQuestion).subscribe(value => {
 
       const qs: Question = JSON.parse(value).Data;
@@ -144,6 +142,14 @@ export class EditQuestionComponent implements OnInit {
 
     });
 
+  }
+
+  initCkeditor(){
+    ClassicEditorBuild.create(document.querySelector('.editor'), {
+      ckfinder: {
+        uploadUrl: 'http://localhost:65170/Upload/UploadCkeditor'
+      }
+    });
   }
 }
 

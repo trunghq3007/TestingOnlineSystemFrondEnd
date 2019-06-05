@@ -59,6 +59,7 @@ import { ListCreateComponent } from './test/list-create/list-create.component';
 import { ListDetailComponent } from './test/list-detail/list-detail.component';
 import { ListUpdateComponent } from './test/list-update/list-update.component';
 import { ViewListSemasterComponent } from './view-list-semaster/view-list-semaster.component';
+import { DetailQuestionComponent } from './detail-question/detail-question.component';
 @NgModule({
   declarations: [
     ExamListComponent,
@@ -86,7 +87,6 @@ import { ViewListSemasterComponent } from './view-list-semaster/view-list-semast
     UserUpdateComponent,
     HomeComponent,
     LoginComponent,
-    ViewListQuestionComponent,
     TagsComponent,
     CategoryComponent,
     ImportQuestionComponent,
@@ -95,6 +95,7 @@ import { ViewListSemasterComponent } from './view-list-semaster/view-list-semast
     EditQuestionComponent,
     ViewListSemasterComponent,
     SemesterDetailComponent,
+    DetailQuestionComponent,
 
   ],
   imports: [
