@@ -39,6 +39,7 @@ export class CategoryComponent implements OnInit {
   cateIdd = '';
   cateIdArray = "";
   insertForm: FormGroup;
+  unamePattern = "^[A-Za-z-vxyàáâãèéêìíòóôõùúýỳỹỷỵựửữừứưụủũợởỡờớơộổỗồốọỏịỉĩệểễềếẹẻẽặẳẵằắăậẩẫầấạảđ₫]+[A-Za-z0-9a-z-vxyàáâãèéêìíòóôõùúýỳỹỷỵựửữừứưụủũợởỡờớơộổỗồốọỏịỉĩệểễềếẹẻẽặẳẵằắăậẩẫầấạảđ₫.''/ ]*$";
   public dataLength: number;
   constructor(private http: HttpClient,
     private router: Router, private toastr: ToastrService) { }
@@ -67,17 +68,25 @@ export class CategoryComponent implements OnInit {
   get Status(): FormControl {
     return this.insertForm.get('Status') as FormControl;
   }
-  ngOnInit() {
+  getlist()
+  {
     this.http.get<string>('http://localhost:65170/api/category').subscribe(value => {
       this.dataSource.data = this.FormatData(JSON.parse(value));
       console.log(value);
       this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort;
-
     });
-
+  }
+  ngOnInit() {
+    
+    this.http.get<string>('http://localhost:65170/api/category').subscribe(value => {
+      this.dataSource.data = this.FormatData(JSON.parse(value));
+      console.log(value);
+      this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort;
+    });
+    
     this.insertForm = new FormGroup(
       {
-        Name: new FormControl('', [Validators.required]),
+        Name: new FormControl('', [Validators.required],),
         Description: new FormControl('', [Validators.required]),
         Status: new FormControl('', [Validators.required]),
       }
@@ -88,41 +97,12 @@ export class CategoryComponent implements OnInit {
     const numSelected = this.selection.selected.length;
     const numRows = this.dataSource.data.length;
     return numSelected === numRows;
-
   }
   masterToggle() {
     this.isAllSelected() ?
       this.selection.clear() :
       this.dataSource.data.forEach(row => this.selection.select(row));
 
-  }
-  removeSelectedRows() {
-    this.selection.selected.forEach(item => {
-      let index: number = this.dataSource.data.findIndex(d => d.Id === this.cateId);
-      console.log(item.Id);
-      //  this.dataSource.data.splice(index,1);
-      this.http.delete('http://localhost:65170/api/category/' + item.Id).subscribe(
-        res => {
-
-          if (res == 1) {
-            this.dataSource.data = this.dataSource.data.filter(s => s.Id !== item.Id);
-          }
-          else if (res == 0) {
-            confirm("Đang có câu hỏi trong Category");
-          }
-          else if (res == -1
-
-
-          ) {
-            confirm("Lỗi");
-          }
-
-        }
-
-      );
-      this.dataSource = new MatTableDataSource<Category>(this.dataSource.data);
-    });
-    this.selection = new SelectionModel<Category>(true, []);
   }
   checkboxLabel(row?: Category): string {
     if (!row) {
@@ -144,14 +124,10 @@ export class CategoryComponent implements OnInit {
               this.dataSource.data = this.FormatData(JSON.parse(value));
               this.toastr.success('Create success!', '');
             });
-
-
           },
-
           error: (err) => {
             console.error(err);
           }
-
         });
     }
   }
@@ -162,16 +138,12 @@ export class CategoryComponent implements OnInit {
 
         this.insertForm.patchValue(this.cateInfo);
         console.log(this.cateInfo);
-
       });
-
   }
   delete(Id) {
     this.cateId = Id;
     console.log(this.cateId);
-
   }
-
   deleteCate() {
     this.http.delete('http://localhost:65170/api/category/' + this.cateId).subscribe(
       res => {
@@ -187,13 +159,9 @@ export class CategoryComponent implements OnInit {
         else {
           confirm("Lỗi");
         }
-
       }
-
     );
-
   }
-
   reset() {
     this.insertForm.reset();
   }
@@ -203,11 +171,9 @@ export class CategoryComponent implements OnInit {
     console.log(this.insertForm);
     console.log(value);
     if (this.insertForm.valid) {
-
       this.http.put('http://localhost:65170/api/category/' + id, JSON.stringify(value), httpOptions)
         .subscribe({
           next: (res) => {
-
             this.http.get<string>('http://localhost:65170/api/category').subscribe(value => {
               this.dataSource.data = this.FormatData(JSON.parse(value));
               this.toastr.success('Update success!', '');
@@ -216,17 +182,32 @@ export class CategoryComponent implements OnInit {
           },
           error: (err) => {
             console.error(err);
-
           }
         });
-
-
     }
   }
 
   public doFilter = (value: string) => {
-
-
     this.dataSource.filter = value.trim().toLocaleLowerCase();
+  }
+  removeSelectedRows1() {
+    let arrId = '';
+    this.selection.selected.forEach(item => {
+      arrId += item.Id + ',';
+    });
+    arrId = arrId.substring(0, arrId.length - 1);
+    this.http.post('http://localhost:65170/api/Category?action=delete', JSON.stringify(arrId), httpOptions).subscribe((e) => {
+      console.log(typeof (e));
+      if (+e >= 1) {
+        this.toastr.success('Delete all success!', 'List Tag!');
+       this.getlist();
+      } else if (+e == 0) {
+        this.toastr.warning('Delete all false!', '!');
+      } else {
+        this.toastr.warning('Something wrong!', '!');
+      }
+    }
+    );
+    this.selection = new SelectionModel<Category>(true, []);
   }
 }

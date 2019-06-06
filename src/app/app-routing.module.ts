@@ -20,6 +20,15 @@ import { ListTestComponent } from './test/list-test/list-test.component';
 import { ListCreateComponent } from './test/list-create/list-create.component';
 import { ListDetailComponent } from './test/list-detail/list-detail.component';
 import { ListUpdateComponent } from './test/list-update/list-update.component';
+import { ViewListSemasterComponent } from './view-list-semaster/view-list-semaster.component';
+import { QuestionRouting } from './question-router';
+import { ViewListSemasterComponent } from './view-list-semaster/view-list-semaster.component';
+import { SemesterDetailComponent } from './semester-detail/semester-detail.component';
+import { ManagerSemesterExamTestComponent } from './manager-semester-exam-test/manager-semester-exam-test.component';
+import { ViewListSemastertotestComponent } from './view-list-semastertotest/view-list-semastertotest.component';
+import { ViewlistTestbySemesterComponent } from './viewlist-testby-semester/viewlist-testby-semester.component';
+import { ThiChitietbaithiComponent } from './thi-chitietbaithi/thi-chitietbaithi.component';
+import { ThiThiComponent } from './thi-thi/thi-thi.component';
 
 const routes: Routes = [
   {
@@ -30,10 +39,6 @@ const routes: Routes = [
     path: 'login',
     component: LoginComponent,
     pathMatch: 'full'
-  },
-  {
-    path: 'question',
-    component: ViewListQuestionComponent,
   },
   {
     path: 'tag',
@@ -65,9 +70,10 @@ const routes: Routes = [
       path: 'update/:Id',
       component: UserUpdateComponent
     },
-  ]},
-    {
-      path: 'exam',
+    ]
+  },
+  {
+    path: 'exam',
     children: [
       {
         path: '',
@@ -86,10 +92,9 @@ const routes: Routes = [
         path: 'update/:Id',
         component: ExamUpdateComponent
       },
-      
+
     ]
-    },
-    
+  },
   {
     path: 'group',
     children: [
@@ -121,9 +126,93 @@ const routes: Routes = [
         ]
       }
     ]
+<<<<<<< .mine
+  }
+=======
   },
+>>>>>>> .theirs
+  ,
   {
-    path:'test',
+    path: 'SemesterExamManager',
+
+    children:
+      [
+        {
+          path: '',
+          component: ViewListSemasterComponent,
+          pathMatch: 'full'
+        }
+        ,
+
+        {
+          path: 'detail/:Id',
+          children:
+            [
+              // {
+              //   path: ':Id',
+              //   component: SemesterDetailComponent
+              // }
+              // ,
+              {
+                path: 'test',
+                component: ManagerSemesterExamTestComponent
+
+              }
+            ]
+
+        },
+
+      ]
+  }
+  ,
+  {
+    path: 'thi',
+
+    children:
+      [
+        {
+          path: '',
+          component: ViewListSemastertotestComponent,
+
+
+
+        }
+        ,
+        {
+          path: ':Id',
+
+          children:
+            [
+              {
+                path: '',
+                component: ViewlistTestbySemesterComponent,
+              }
+              ,
+              {
+                path: ':TestId',
+                
+                children :
+                [
+                  {
+                    path : '',
+                    component: ThiChitietbaithiComponent,
+                  }
+                  ,
+                  {
+                    path: 'thi',
+                    component: ThiThiComponent
+                  }
+                ]
+              }
+            ]
+        }
+      ]
+
+
+  }
+];
+  {
+    path: 'test',
     children: [
       {
         path: '',
@@ -144,14 +233,27 @@ const routes: Routes = [
       }
     ]
   }
-
-
+  ,
+  {
+    path: 'SemesterExamManager',
+    component: ViewListSemasterComponent
+  }
 
 
 ];
 
+
+
+
+const fullRoutes = [...routes, ...QuestionRouting];
+console.log(fullRoutes);
+<<<<<<< .mine
+
+=======
+
+>>>>>>> .theirs
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(fullRoutes)],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

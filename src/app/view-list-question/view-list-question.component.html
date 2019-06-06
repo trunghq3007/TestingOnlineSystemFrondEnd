@@ -1,27 +1,32 @@
 
 <div class="row">
+  <br><br><br><br>
   <div class="col-md-10 col-md-offset-1">
     <div>
       <div class="col-md-4  col-md-offset-2">
-        <input class="col-md-4" [(ngModel)]="searchString" type="text" placeholder="Search..">
-        <button (click)="onSearch()" type="submit"><i class="fa fa-search"></i></button>
+        <mat-form-field fxFlex="30%">
+          <input matInput class="form-control border-secondary py-2" type="text" (keyup)="doFilter($event.target.value)" placeholder="Search" style="height: 20px">
+        </mat-form-field>
       </div>
       <div class=" col-md-6">
-        <div class="col-md-3 col-sm-3 col-xs-3"> <button routerLink="/importquestion" type="button"
-              class="btn btn-primary">Import</button></div>
-        <div class="col-md-3 col-sm-3 col-xs-3"> <button routerLink="/exportquestion" type="button"
-              class="btn btn-primary">Export</button></div>
-        <div class="col-md-3 col-sm-3 col-xs-3"><button routerLink="/tag" type="button"
-              class="btn btn-primary">Create tag</button></div>
-        <div class="col-md-3 col-sm-3 col-xs-3"> <button routerLink="/createquestion" type="button"
-              class="btn btn-primary">Create</button></div>
+        <div class="col-md-3 col-sm-3 col-xs-3"> <a  routerLink="/ImportQuestion"> <button  type="button"
+              class="btn btn-primary">Import</button></a></div>
+        <div class="col-md-3 col-sm-3 col-xs-3"> <a routerLink="/ExportQuestion"> <button  type="button"
+              class="btn btn-primary">Export</button></a></div>
+        <div class="col-md-3 col-sm-3 col-xs-3"> <a routerLink="/tag"> <button  type="button"
+              class="btn btn-primary">Create tag</button></a></div>
+        <div class="col-md-3 col-sm-3 col-xs-3"> <a routerLink="/CreateQuestion"> <button  type="button"
+              class="btn btn-primary">Create</button></a> </div>
 
       </div>
-      <div class="modal-body">
-        <div class="form-group">
-          <input class="form-control " type="text" placeholder="Mohsin">
+      
+        <div class="col-md-10 col-md-offset-2" style=" height: 2em;">
+          <div class="col-md-11"><b>Filter</b> </div>
+          <div class="col-md-1"><span (click)="buttondown()" style="float: right"
+              class="glyphicon glyphicon-chevron-down"></span></div>
         </div>
-        <div *ngIf="bdown" class="col-md-10 col-md-offset-1">
+        <!-- *ngIf="bdown"  -->
+        <div *ngIf="bdown" class="col-md-10 col-md-offset-1 row">
           <form [formGroup]="formFillter">
             <table id="mytable" class="table table-bordred table-striped ">
               <tbody>
@@ -80,11 +85,11 @@
           </form>
 
         </div>
-      </div>
-      <div class="modal-footer ">
+      
+      <!-- <div class="modal-footer ">
         <button type="button" class="btn btn-warning btn-lg" style="width: 100%;"><span
             class="glyphicon glyphicon-ok-sign"></span> Update</button>
-      </div>
+      </div> -->
     </div>
 
     <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
@@ -138,7 +143,7 @@
 
         <td mat-cell *matCellDef="let element">
           <span (click)="navigateToDetail(element.Id)" data-placement="top" title="Detail"><button
-              class="btn btn-success btn-xs" data-title="Edit" data-target="#detail"><span
+              class="btn btn-success btn-xs" data-title="Detai" data-target="#detail"><span
                 class="glyphicon glyphicon-list"></span></button></span>
 
           <span (click)="navigateToEdit(element.Id)" data-placement="top" title="Edit"><button
@@ -160,7 +165,7 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumn;"></tr>
 
     </table>
-    <mat-paginator [pageSizeOptions]="[5,10,15]" showFirstLastButtons></mat-paginator>
+    <mat-paginator [pageSizeOptions]="[1,10,15]" showFirstLastButtons></mat-paginator>
 
   </div>
   <!-- /.modal-dialog -->
@@ -181,7 +186,7 @@
 
       </div>
       <div class="modal-footer ">
-        <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-ok-sign"></span> Yes</button>
+        <button (click)="deleteQuestion()" type="button" class="btn btn-success"><span class="glyphicon glyphicon-ok-sign"></span> Yes</button>
         <button type="button" class="btn btn-default" data-dismiss="modal"><span
             class="glyphicon glyphicon-remove"></span> No</button>
       </div>

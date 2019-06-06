@@ -16,10 +16,10 @@ import {
   MatExpansionModule,
   MatDatepickerModule,
   MatNativeDateModule,
-  MatSelectModule,
-  MatTabsModule
+  MatSelectModule
 } from '@angular/material';
 import { AuthenticationService } from '../app/_services/authentication.service';
+import {MatTabsModule} from '@angular/material/tabs';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -42,19 +42,41 @@ import { UserUpdateComponent } from './user-update/user-update.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { TagsComponent } from './tags/tags.component';
+import { CategoryComponent } from './category/category.component';
+import { Toast, ToastrModule } from 'ngx-toastr';
+import { ImportQuestionComponent } from './import-question/import-question.component';
+import { ExportQuestionComponent } from './export-question/export-question.component';
+import { EditQuestionComponent } from './edit-question/edit-question.component';
+import { ManagerSemesterExamTestComponent } from './manager-semester-exam-test/manager-semester-exam-test.component';
+import { SemesterDetailComponent } from './semester-detail/semester-detail.component';
+import { ViewListSemasterComponent } from './view-list-semaster/view-list-semaster.component';
+import { ViewListSemastertotestComponent } from './view-list-semastertotest/view-list-semastertotest.component';
+import { ViewlistTestbySemesterComponent } from './viewlist-testby-semester/viewlist-testby-semester.component';
+import { ThiChitietbaithiComponent } from './thi-chitietbaithi/thi-chitietbaithi.component';
+import { ThiThiComponent } from './thi-thi/thi-thi.component';
+
+import{ SemesterDetailComponent } from './semester-detail/semester-detail.component';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { ExamListComponent } from './exam/exam-list/exam-list.component';
 import { CreateExamComponent } from './exam/create-exam/create-exam.component';
 import { ExamDetailComponent } from './exam/exam-detail/exam-detail.component';
 import { ExamUpdateComponent } from './exam/exam-update/exam-update.component';
-import { CategoryComponent } from './category/category.component';
-import { Toast, ToastrModule } from 'ngx-toastr';
 import { ListTestComponent } from './test/list-test/list-test.component';
 import { ListCreateComponent } from './test/list-create/list-create.component';
 import { ListDetailComponent } from './test/list-detail/list-detail.component';
 import { ListUpdateComponent } from './test/list-update/list-update.component';
-
+import { ViewListSemasterComponent } from './view-list-semaster/view-list-semaster.component';
+import { DetailQuestionComponent } from './detail-question/detail-question.component';
 @NgModule({
   declarations: [
+    ExamListComponent,
+    CreateExamComponent,
+    ExamDetailComponent,
+    ExamUpdateComponent,
+    ListTestComponent,
+    ListCreateComponent,
+    ListUpdateComponent,
+    ListDetailComponent,
     AppComponent,
     AppheaderComponent,
     AppmenuComponent,
@@ -72,19 +94,26 @@ import { ListUpdateComponent } from './test/list-update/list-update.component';
     UserUpdateComponent,
     HomeComponent,
     LoginComponent,
-    ViewListQuestionComponent,
     TagsComponent,
     CategoryComponent,
-    ExamListComponent,
-    CreateExamComponent,
-    ExamDetailComponent,
-    ExamUpdateComponent,
-    ListTestComponent,
-    ListCreateComponent,
-    ListDetailComponent,
-    ListUpdateComponent,
+    ImportQuestionComponent,
+    ExportQuestionComponent,
+    CreateQuestionComponent,
+    EditQuestionComponent,
+    ManagerSemesterExamTestComponent,
+    SemesterDetailComponent,
+    ViewListSemasterComponent,
+    ViewListSemastertotestComponent,
+    ViewlistTestbySemesterComponent,
+    ThiChitietbaithiComponent,
+    ThiThiComponent,
+    ViewListSemasterComponent,
+    SemesterDetailComponent,
+    DetailQuestionComponent,
+
   ],
   imports: [
+    MatTabsModule,
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
@@ -103,7 +132,8 @@ import { ListUpdateComponent } from './test/list-update/list-update.component';
     MatNativeDateModule,
     MatSelectModule,
     CKEditorModule,
-    MatTabsModule,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule,
     ToastrModule.forRoot(),
   ],
   providers: [AuthenticationService],

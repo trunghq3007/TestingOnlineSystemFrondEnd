@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ChangeDetectionStrategy} from '@angular/core';
 // import { Isemester } from '../isemaster';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -17,6 +17,9 @@ const httpOptions = {
 })
 export class SemesterDetailComponent implements OnInit {
 
+  
+  public dateTime: Date;
+  public dateTime1: Date;
   list: Isemaster = {} as Isemaster;// a tiep
   CodeSource: string;
   count: number = 0;
@@ -34,7 +37,8 @@ export class SemesterDetailComponent implements OnInit {
   get Code(): FormControl {
     return this.formApply.get('Code') as FormControl
   }
-
+  date1 = new FormControl(new Date(this.list.StartDay));
+  date2 = new FormControl(new Date(this.list.EndDay));
   // get status(): FormControl {
   // return this.formApply.get('status') as FormControl
   // }
