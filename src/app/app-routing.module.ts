@@ -20,6 +20,7 @@ import { ListTestComponent } from './test/list-test/list-test.component';
 import { ListCreateComponent } from './test/list-create/list-create.component';
 import { ListDetailComponent } from './test/list-detail/list-detail.component';
 import { ListUpdateComponent } from './test/list-update/list-update.component';
+import { ExamDetailQuestionComponent } from './exam/exam-detail-question/exam-detail-question.component';
 
 const routes: Routes = [
   {
@@ -81,6 +82,10 @@ const routes: Routes = [
       {
         path: ':examID',
         component: ExamDetailComponent
+      },
+      {
+        path: 'examquestion/:examID',
+        component: ExamDetailQuestionComponent
       },
       {
         path: 'update/:Id',

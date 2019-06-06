@@ -49,7 +49,7 @@ export class ListUpdateComponent implements OnInit {
   validateForm() {
     if (this.form.invalid) {
       this.form.get('TestTime').markAsTouched();
-      this.form.get('NumberTime').markAsTouched();
+      this.form.get('TotalTest').markAsTouched();
       this.form.get('ExamId').markAsTouched();
       this.form.get('SemasterExamId').markAsTouched();
       this.form.get('TestName').markAsTouched();
@@ -59,21 +59,23 @@ export class ListUpdateComponent implements OnInit {
       return;
     }
     // do something else
-  }
-
+}
+  regTotal="^[0-9]{1,2}$";
+  regPassScore="^[0-9]{1,3}$"
+  
   ngOnInit() {
     this.form = this.insert.group({
       ExamId: ['', [Validators.required]],
-      SemasterExamId: [''],
-      TestName: ['', [Validators.required]],
-      // StartDate: ['', ],
-      // EndDate: ['', ],
+      SemasterExamId: ['',[Validators.required]],
+      TestName: ['', [Validators.required,Validators.maxLength(50)]],
+      
       CreateBy: ['', [Validators.required]],
-
-      PassScore: ['', [Validators.required, Validators.min(1)]],
-      TotalTest: ['', [Validators.required]],
+      
+      PassScore: ['', [Validators.required,Validators.pattern]],
+      TotalTest: ['', [Validators.required,Validators.pattern]],
       Status: ['', [Validators.required]],
-      TestTime: ['', [Validators.required]],
+      TestTime: ['', [Validators.required,Validators.pattern]],
+
 
     });
     this.http.get<string>('http://localhost:65170/api/exam').subscribe(
