@@ -16,7 +16,7 @@
         </div>
         <div class="content">
 
-          <form novalidate (ngSubmit)="onSubmit()" [formGroup]="editform">
+          <form novalidate (ngSubmit)="onSubmit(inputName.value)" [formGroup]="editform">
             <div class="row">
                 <div class="col-md-12">
                     <div class="col-md-6">
@@ -25,7 +25,7 @@
                         <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">UserName*</label>
                         <div class="col-sm-10">
                           <input type="text" class="form-control form-control-sm" formControlName="UserName"
-                            placeholder="UserName">
+                            placeholder="UserName" #inputName>
                         </div>
                         <div *ngIf="!UserName.valid && UserName.touched " class="form-group" style="color:red;"
                           role="alert">
@@ -54,10 +54,10 @@
                             Password is required
                           </div>
                           <div *ngIf="Password.hasError('minlength')">
-                            Password is required length 5-15 characters
+                            Password is required length 5-100 characters
                           </div>
                           <div *ngIf="Password.hasError('maxlength')">
-                            Password must be less than 15 characters
+                            Password must be less than 100 characters
                           </div>
                         </div>
                       </div>
@@ -65,12 +65,10 @@
                     <div class="form-group row">
                       <label for="inputPassword3" class="col-sm-2 control-label">Role*</label>
                       <div class="col-sm-10">
-                        <fieldset formGroupName="Roles">
                           <select formControlName="RoleId" class="form-control select2 select2-hidden-accessible"
                             style="width: 100%;" tabindex="-1" aria-hidden="true">
-                            <option value="0" *ngFor="let item of RolesFormApi" value="{{item.RoleId}}">{{item.RoleName}}
+                            <option  *ngFor="let item of RolesFormApi" value={{item.RoleId}}  >{{item.RoleName}}
                           </select>
-                        </fieldset>
                       </div>
                     </div>
                     <!-- FullName -->
@@ -192,7 +190,7 @@
                       </td>
                     </div>
                     <div class="form-group row">
-                      <label for="inputPassword3" class="col-sm-2 control-label">Status</label>
+                      <label for="inputPassword3" class="col-sm-2 control-label">Status*</label>
                       <div class="col-sm-10">
                         <select formControlName="Status" class="form-control select2 select2-hidden-accessible"
                           style="width: 100%;" tabindex="-1" aria-hidden="true">

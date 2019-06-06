@@ -18,7 +18,8 @@ export class UserCreateComponent implements OnInit {
   user: User[] = [];
   public Editor = ClassicEditorBuild;
   createForm: FormGroup;
-  RolesFormApi: [];
+  RolesFormApi: User[] = [];
+  check: string;
 
   get UserName(): FormControl {
     return this.createForm.get('UserName') as FormControl;
@@ -79,9 +80,9 @@ export class UserCreateComponent implements OnInit {
     this.createForm = this.fb.group({
       UserName: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(25)]],
       Email: ['', [Validators.required, Validators.email, Validators.pattern(this.emailPattern)]],
-      Phone: ['', [Validators.required,Validators.pattern(this.phonenumber)]],
-      Password: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(15)]],
-      FullName: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(50)]],
+      Phone: ['', [Validators.required, Validators.pattern(this.phonenumber)]],
+      Password: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],
+      FullName: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(50)]],
       Address: ['', [Validators.required]],
       Department: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(30)]],
       Position: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(30)]],
@@ -95,8 +96,8 @@ export class UserCreateComponent implements OnInit {
       Note: ['']
     });
   }
-
-  onSubmit() {
+  
+  onSubmit(userName) {
     console.log(this.createForm.value);
     if (this.createForm.valid) {
       const value = this.createForm.value;
@@ -104,21 +105,31 @@ export class UserCreateComponent implements OnInit {
       value.Role = value.Roles.length > 0 ? value.Roles[0] : null;
       value.RoleId = value.Role.RoleId;
       console.log(value);
-      this.http.post<string>('http://localhost:65170/api/user', JSON.stringify(value), httpOptions).subscribe({
-        next: (res) => {
-          const result: ResultObject = JSON.parse(res);
-          if (result.Success >= 1) {
-            confirm('Create success!');
-          } else {
-            confirm('Create Fail!');
-          }
-          this.createForm.reset();
-        },
-        error: (err) => {
-          console.log(err);
+
+      this.http.get<string>('http://localhost:65170/api/User/?userName=' + userName).subscribe(res => {
+        this.check = res;
+        console.log(this.check);
+        if (this.check == 'False') {
+          this.http.post<string>('http://localhost:65170/api/user', JSON.stringify(value), httpOptions).subscribe({
+            next: (res) => {
+              const result: ResultObject = JSON.parse(res);
+              if (result.Success >= 1) {
+                confirm('Create success!');
+              } else {
+                confirm('Create Fail!');
+              }
+              this.createForm.reset();
+            },
+            error: (err) => {
+              console.log(err);
+            }
+          });
+        }
+        else {
+          confirm("User name is exist");
         }
       });
-    }
+      }
   }
 
 
