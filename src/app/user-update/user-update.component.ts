@@ -73,7 +73,7 @@ export class UserUpdateComponent implements OnInit {
       this.RolesFormApi = JSON.parse(value);
     });
   }
-
+  passwordPattern ="^[a-z0-9_@A-Z]*$";
   phonenumber = "^[0-9]{1,12}$";
   emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$";
   ngOnInit() {
@@ -82,7 +82,7 @@ export class UserUpdateComponent implements OnInit {
       UserName: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(25)]],
       Email: ['', [Validators.required, Validators.email, Validators.pattern(this.emailPattern)]],
       Phone: ['', [Validators.required, Validators.pattern]],
-      Password: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],
+      Password: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(100),Validators.pattern(this.passwordPattern)]],
       FullName: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(50)]],
       Address: ['', [Validators.required]],
       Department: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(30)]],
