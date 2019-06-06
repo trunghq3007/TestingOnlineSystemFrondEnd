@@ -1,3 +1,4 @@
+
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatPaginator, MatTableDataSource, MatSort, MatDialog } from '@angular/material';
@@ -11,13 +12,12 @@ import { Isemaster } from '../isemaster';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
-
 @Component({
-  selector: 'app-viewlist-testby-semester',
-  templateUrl: './viewlist-testby-semester.component.html',
-  styleUrls: ['./viewlist-testby-semester.component.scss']
+  selector: 'app-manager-semester-exam-test',
+  templateUrl: './manager-semester-exam-test.component.html',
+  styleUrls: ['./manager-semester-exam-test.component.scss']
 })
-export class ViewlistTestbySemesterComponent implements OnInit {
+export class ManagerSemesterExamTestComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatPaginator) paginator2: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -41,7 +41,7 @@ export class ViewlistTestbySemesterComponent implements OnInit {
   dataSource = new MatTableDataSource<Testbysemester>(this.Tests);
   dataSource2 = new MatTableDataSource<Testbysemester>(this.Tests2);
   constructor(private semaster: FormBuilder, private fb: FormBuilder, private http: HttpClient, private router: Router, public dialog: MatDialog, public activateRoute: ActivatedRoute) { }
-  displayedColumn: string[] = ['select', 'Id', 'TestName', 'Status', 'TestTime', 'NumberTime', 'Action'];
+  displayedColumn: string[] = ['select', 'Id', 'TestName', 'Status', 'TestTime', 'NumberTime'];
   ngOnInit() {
     this.http.get<string>('http://localhost:65170/api/SemesterExam/' + this.Id + '?IsGetTests').subscribe(value => {
       this.dataSource.data = JSON.parse(value);
@@ -49,21 +49,23 @@ export class ViewlistTestbySemesterComponent implements OnInit {
       console.log(value);
       console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
     });
-
+    
 
 
   }
-  ADD() {
+  ADD()
+  
+  {
 
     this.http.get<string>('http://localhost:65170/api/SemesterExam/' + this.Id + '?IsgetTestsnotadd')
-      .subscribe(value => {
-        this.dataSource2.data = JSON.parse(value);
-        console.log(this.dataSource2);
-        console.log(" data source 2 :" + this.dataSource2.data);
-        console.log(value);
-        this.dataSource2.paginator = this.paginator2, this.dataSource2.sort = this.sort2;
+    .subscribe(value => {
+      this.dataSource2.data = JSON.parse(value);
+      console.log(this.dataSource2);
+      console.log(" data source 2 :" + this.dataSource2.data);
+      console.log(value);
+      this.dataSource2.paginator = this.paginator2, this.dataSource2.sort = this.sort2;
 
-      })
+    })
 
 
 
@@ -89,9 +91,4 @@ export class ViewlistTestbySemesterComponent implements OnInit {
       this.dataSource.data.forEach(row => this.selection.select(row));
   }
 
-  // Id:number;
-  // TestName : string;
-  // Status :string;
-
-  // TestTime: string;
 }
