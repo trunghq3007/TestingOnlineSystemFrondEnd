@@ -70,10 +70,14 @@ export class TagsComponent implements OnInit {
       (this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
     });
   }
+
+ 
+
   constructor(private activatedRoute: ActivatedRoute, private http: HttpClient, private toastr: ToastrService) { }
 
   ngOnInit() {
     this.refreshTable();
+    
 
     this.ctForm = new FormGroup(
       {
@@ -155,7 +159,7 @@ export class TagsComponent implements OnInit {
           next: (res) => {
             this.http.get<string>('http://localhost:65170/api/Tag/').subscribe(value => {
               this.dataSource.data = this.FormatData(JSON.parse(value));
-              this.toastr.success('Create success!', ' Tag!');
+              this.toastr.info('Create success!', ' Tag!');
             });
             this.ctForm.reset();
           },
