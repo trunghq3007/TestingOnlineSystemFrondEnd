@@ -14,9 +14,16 @@
 @import "assets/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css";
 @import "assets/bower_components/bootstrap-daterangepicker/daterangepicker.css";
 @import "assets/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css";
-
+@import "~ng-pick-datetime/assets/style/picker.min.css";
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+
+
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/mixins';
+@import '~ngx-toastr/toastr-bs4-alert';
 
 body { 
   font-family: Roboto, Arial, sans-serif;

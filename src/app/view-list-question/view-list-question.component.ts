@@ -14,7 +14,7 @@ import { ResultObject } from '../result-object';
   styleUrls: ['./view-list-question.component.scss']
 })
 export class ViewListQuestionComponent implements OnInit {
-   httpOptions = {
+  httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
   searchString: string;
@@ -54,9 +54,9 @@ export class ViewListQuestionComponent implements OnInit {
             tagNames += tag[i].Name + ', ';
           }
         }
-        if(element.Level ==1) element.LevelString="Easy";
-        if(element.Level ==2) element.LevelString="Medium";
-        if(element.Level ==3) element.LevelString="Difficult";
+        if (element.Level == 1) element.LevelString = "Easy";
+        if (element.Level == 2) element.LevelString = "Medium";
+        if (element.Level == 3) element.LevelString = "Difficult";
         element.TagNames = tagNames;
       };
       this.dataSource.data = source;
@@ -92,8 +92,7 @@ export class ViewListQuestionComponent implements OnInit {
 
   deleteQuestion() {
     this.http.delete<string>('http://localhost:65170/api/question/' + this.questionId).subscribe(
-      res => {
-
+      res => { 
         const result: ResultObject = JSON.parse(res);
         if (result.Success >= 1) {
           this.dataSource.data = this.dataSource.data.filter(s => s.Id !== this.questionId);
@@ -102,20 +101,14 @@ export class ViewListQuestionComponent implements OnInit {
         else if (result.Success == 0) {
           confirm('Đang có câu hỏi trong Category');
         }
-
-
       }
-
     );
-
   }
-
-
   navigateToEdit(Id: string) {
-    this.router.navigate(['EditQuestion/', Id,]);
+    this.router.navigate(['question',Id, 'update']);
   }
   navigateToDetail(Id: string) {
-    this.router.navigate(['DetailQuestion/', Id,]);
+    this.router.navigate(['question',Id, 'detail']);
   }
 
   onSearch() {
@@ -163,18 +156,18 @@ export class ViewListQuestionComponent implements OnInit {
     });
   }
   fillterClick() {
-    
+
 
     console.log(this.formFillter.value);
     this.http.post<string>('http://localhost:65170/api/question?action=fillter', JSON.stringify(this.formFillter.value), this.httpOptions).subscribe(value => {
 
- 
+
       let source = JSON.parse(value).Data;
 
       let tagNames = '';
       for (let index = 0; index < source.length; index++) {
         let element = source[index];
-  
+
         let tag = element.Tags;
         if (tag && tag.length > 0) {
           for (let i = 0; i < tag.length; i++) {
@@ -186,6 +179,11 @@ export class ViewListQuestionComponent implements OnInit {
       this.dataSource.data = source;
       this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort;
     });
+  }
+  public doFilter = (value: string) => {
+
+
+    this.dataSource.filter = value.trim().toLocaleLowerCase();
   }
 
 }

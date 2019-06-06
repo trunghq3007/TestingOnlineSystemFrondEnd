@@ -12,8 +12,16 @@ import { HomeComponent } from './home/home.component';
 import { ViewListQuestionComponent } from './view-list-question/view-list-question.component';
 import { TagsComponent } from './tags/tags.component';
 import { CategoryComponent } from './category/category.component';
-import { ImportQuestionComponent } from './import-question/import-question.component';
-import { ExportQuestionComponent } from './export-question/export-question.component';
+import { ExamListComponent } from './exam/exam-list/exam-list.component';
+import { CreateExamComponent } from './exam/create-exam/create-exam.component';
+import { ExamDetailComponent } from './exam/exam-detail/exam-detail.component';
+import { ExamUpdateComponent } from './exam/exam-update/exam-update.component';
+import { ListTestComponent } from './test/list-test/list-test.component';
+import { ListCreateComponent } from './test/list-create/list-create.component';
+import { ListDetailComponent } from './test/list-detail/list-detail.component';
+import { ListUpdateComponent } from './test/list-update/list-update.component';
+import { ViewListSemasterComponent } from './view-list-semaster/view-list-semaster.component';
+import { QuestionRouting } from './question-router';
 import { ViewListSemasterComponent } from './view-list-semaster/view-list-semaster.component';
 import { SemesterDetailComponent } from './semester-detail/semester-detail.component';
 import { ManagerSemesterExamTestComponent } from './manager-semester-exam-test/manager-semester-exam-test.component';
@@ -33,20 +41,8 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'question',
-    component: ViewListQuestionComponent,
-  },
-  {
     path: 'tag',
     component: TagsComponent,
-  },
-  {
-    path: 'importquestion',
-    component: ImportQuestionComponent,
-  },
-  {
-    path: 'exportquestion',
-    component: ExportQuestionComponent,
   },
   {
     path: 'category',
@@ -73,7 +69,30 @@ const routes: Routes = [
     {
       path: 'update/:Id',
       component: UserUpdateComponent
-    }
+    },
+    ]
+  },
+  {
+    path: 'exam',
+    children: [
+      {
+        path: '',
+        component: ExamListComponent,
+        pathMatch: 'full'
+      },
+      {
+        path: 'create',
+        component: CreateExamComponent,
+      },
+      {
+        path: ':examID',
+        component: ExamDetailComponent
+      },
+      {
+        path: 'update/:Id',
+        component: ExamUpdateComponent
+      },
+
     ]
   },
   {
@@ -107,7 +126,11 @@ const routes: Routes = [
         ]
       }
     ]
+<<<<<<< .mine
   }
+=======
+  },
+>>>>>>> .theirs
   ,
   {
     path: 'SemesterExamManager',
@@ -188,9 +211,49 @@ const routes: Routes = [
 
   }
 ];
+  {
+    path: 'test',
+    children: [
+      {
+        path: '',
+        component: ListTestComponent,
+        pathMatch: 'full'
+      },
+      {
+        path: 'create',
+        component: ListCreateComponent
+      },
+      {
+        path: ':examID',
+        component: ListDetailComponent
+      },
+      {
+        path: 'update/:Id',
+        component: ListUpdateComponent
+      }
+    ]
+  }
+  ,
+  {
+    path: 'SemesterExamManager',
+    component: ViewListSemasterComponent
+  }
 
+
+];
+
+
+
+
+const fullRoutes = [...routes, ...QuestionRouting];
+console.log(fullRoutes);
+<<<<<<< .mine
+
+=======
+
+>>>>>>> .theirs
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(fullRoutes)],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

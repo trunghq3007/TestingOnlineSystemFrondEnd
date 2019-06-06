@@ -19,6 +19,7 @@ import {
   MatSelectModule
 } from '@angular/material';
 import { AuthenticationService } from '../app/_services/authentication.service';
+import {MatTabsModule} from '@angular/material/tabs';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -54,8 +55,28 @@ import { ViewlistTestbySemesterComponent } from './viewlist-testby-semester/view
 import { ThiChitietbaithiComponent } from './thi-chitietbaithi/thi-chitietbaithi.component';
 import { ThiThiComponent } from './thi-thi/thi-thi.component';
 
+import{ SemesterDetailComponent } from './semester-detail/semester-detail.component';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+import { ExamListComponent } from './exam/exam-list/exam-list.component';
+import { CreateExamComponent } from './exam/create-exam/create-exam.component';
+import { ExamDetailComponent } from './exam/exam-detail/exam-detail.component';
+import { ExamUpdateComponent } from './exam/exam-update/exam-update.component';
+import { ListTestComponent } from './test/list-test/list-test.component';
+import { ListCreateComponent } from './test/list-create/list-create.component';
+import { ListDetailComponent } from './test/list-detail/list-detail.component';
+import { ListUpdateComponent } from './test/list-update/list-update.component';
+import { ViewListSemasterComponent } from './view-list-semaster/view-list-semaster.component';
+import { DetailQuestionComponent } from './detail-question/detail-question.component';
 @NgModule({
   declarations: [
+    ExamListComponent,
+    CreateExamComponent,
+    ExamDetailComponent,
+    ExamUpdateComponent,
+    ListTestComponent,
+    ListCreateComponent,
+    ListUpdateComponent,
+    ListDetailComponent,
     AppComponent,
     AppheaderComponent,
     AppmenuComponent,
@@ -73,7 +94,6 @@ import { ThiThiComponent } from './thi-thi/thi-thi.component';
     UserUpdateComponent,
     HomeComponent,
     LoginComponent,
-    ViewListQuestionComponent,
     TagsComponent,
     CategoryComponent,
     ImportQuestionComponent,
@@ -87,8 +107,13 @@ import { ThiThiComponent } from './thi-thi/thi-thi.component';
     ViewlistTestbySemesterComponent,
     ThiChitietbaithiComponent,
     ThiThiComponent,
+    ViewListSemasterComponent,
+    SemesterDetailComponent,
+    DetailQuestionComponent,
+
   ],
   imports: [
+    MatTabsModule,
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
@@ -107,6 +132,8 @@ import { ThiThiComponent } from './thi-thi/thi-thi.component';
     MatNativeDateModule,
     MatSelectModule,
     CKEditorModule,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule,
     ToastrModule.forRoot(),
   ],
   providers: [AuthenticationService],

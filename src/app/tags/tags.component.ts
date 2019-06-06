@@ -13,7 +13,10 @@ import { ToastrService } from 'ngx-toastr';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
+
 @Component({
+
+
   selector: 'app-tags',
   templateUrl: './tags.component.html',
   styleUrls: ['./tags.component.scss']
@@ -58,19 +61,19 @@ export class TagsComponent implements OnInit {
   }
 
 
-  constructor(private activatedRoute: ActivatedRoute, private http: HttpClient, private toastr: ToastrService) { }
+///get data
 
-  ngOnInit() {
-
-
+  refreshTable() {
     this.http.get<string>('http://localhost:65170/api/Tag').subscribe(value => {
       this.dataSource.data = this.FormatData(JSON.parse(value));
       console.log(this.FormatData(JSON.parse(value)));
       (this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
-
     });
+  }
+  constructor(private activatedRoute: ActivatedRoute, private http: HttpClient, private toastr: ToastrService) { }
 
-
+  ngOnInit() {
+    this.refreshTable();
 
     this.ctForm = new FormGroup(
       {
@@ -80,21 +83,20 @@ export class TagsComponent implements OnInit {
 
       }
     );
-
-    //edit//
-
-
   }
+
   isAllSelected() {
     const numSelected = this.selection.selected.length;
     const numRows = this.dataSource.data.length;
     return numSelected === numRows;
   }
+
   masterToggle() {
     this.isAllSelected() ?
       this.selection.clear() :
       this.dataSource.data.forEach(row => this.selection.select(row));
   }
+
   checkboxLabel(row?: Tag): string {
     if (!row) {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
@@ -103,71 +105,47 @@ export class TagsComponent implements OnInit {
   }
 
 
-  //
-  //delete all
+
+  //delete all check box
   removeSelectedRows() {
+    let arrId = '';
     this.selection.selected.forEach(item => {
-      let index: number = this.dataSource.data.findIndex(d => d.Id === this.TagIdDelete);
-
-      this.http.delete('http://localhost:65170/api/Tag/' + item.Id).subscribe(() => {
-        this.dataSource.data = this.dataSource.data.filter(b => b.Id !== item.Id);
-
-      }
-
-
-
-      );
-
-      this.dataSource = new MatTableDataSource<Tag>(this.dataSource.data);
+      arrId += item.Id + ',';
     });
-    this.toastr.warning('Delete all success!', 'List Tag!');
 
+    arrId = arrId.substring(0, arrId.length - 1);
+    this.http.post('http://localhost:65170/api/Tag?action=delete', JSON.stringify(arrId), httpOptions).subscribe((e) => {
+      console.log(typeof (e));
+      if (+e >= 1) {
+        this.toastr.success('Delete all success!', 'List Tag!');
+        this.refreshTable();
+      } else if (+e == 0) {
+        this.toastr.success('Delete all false!', 'List Tag!');
+      } else {
+        this.toastr.success('Something wrong!', 'List Tag!');
+      }
+    }
+    );
     this.selection = new SelectionModel<Tag>(true, []);
   }
 
 
-
-
-  //end
-
-
-
-
-  //lay id
+ //delete Tags
   deleteTag(TagId: string) {
-
     this.TagIdDelete = TagId;
-
-
-
-
   }
-  ///delete
+
   delete() {
-    console.log(this.TagIdDelete)
     this.http.delete('http://localhost:65170/api/Tag/' + this.TagIdDelete).subscribe(() => {
       this.dataSource.data = this.dataSource.data.filter(b => b.Id !== this.TagIdDelete);
-
-
+      this.toastr.success('Delete success!', 'List Tag!');
     }
-
-
-
-
-
-
-
     );
-    this.toastr.success('Delete success!', 'List Tag!');
 
   }
 
 
-
-
-
-  //create
-
+  //create Tags
   onSubmit() {
     if (this.ctForm.valid) {
       const value = this.ctForm.value;
@@ -177,42 +155,25 @@ export class TagsComponent implements OnInit {
           next: (res) => {
             this.http.get<string>('http://localhost:65170/api/Tag/').subscribe(value => {
               this.dataSource.data = this.FormatData(JSON.parse(value));
-              this.toastr.info('Create success!', ' Tag!');
+              this.toastr.success('Create success!', ' Tag!');
             });
             this.ctForm.reset();
           },
-
           error: (err) => {
             console.error(err);
           }
-
         });
-
-
-
     }
-
-
   }
-
-
-
-  //edit
-
+  /// Edit Tags
 
   onEdit(TagId: string) {
-
-
     this.http.get<string>('http://localhost:65170/api/Tag/' + TagId).subscribe(value => {
       const tag = JSON.parse(value);
       const StatusName = tag.Status === 1 ? 'Active' : 'Disable';
       this.tag = { ...JSON.parse(value), StatusName };
       this.ctForm.patchValue(this.tag);
-
     });
-
-
-
   }
 
   reset() {
@@ -234,7 +195,7 @@ export class TagsComponent implements OnInit {
             next: (res) => {
               this.http.get<string>('http://localhost:65170/api/Tag/').subscribe(value => {
                 this.dataSource.data = this.FormatData(JSON.parse(value));
-                this.toastr.success('Edit success!', 'List Tag!');
+                this.toastr.info('Edit success!', 'List Tag!');
               });
 
             },
@@ -246,13 +207,7 @@ export class TagsComponent implements OnInit {
           }
 
         );
-
-
-
-
     }
-
-
   }
   public doFilter = (value: string) => {
     this.dataSource.filter = value.trim().toLocaleLowerCase();

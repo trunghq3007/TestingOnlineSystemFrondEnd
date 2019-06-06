@@ -49,7 +49,7 @@ export class ViewListSemasterComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   selection = new SelectionModel<Isemaster>(true, []);
-  
+
   //Chon tat ca checkbox
   isAllSelected() {
     const numSelected = this.selection.selected.length;
@@ -97,7 +97,8 @@ export class ViewListSemasterComponent implements OnInit {
   }
   list() {
     this.http.get<string>('http://localhost:65170/SemesterExam').subscribe(value => {
-      this.dataSource.data = JSON.parse(value);
+      this.dataSource.data = JSON.parse(value).Data;
+      console.log(value);
       console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
     });
   }
@@ -111,13 +112,7 @@ export class ViewListSemasterComponent implements OnInit {
               console.log(value);
               console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
             });
-
             this.semesterExams = this.semesterExams.filter(s => s.ID !== id);
-
-
-            // else if (res == false) {
-            //   confirm("Is Public not Hide");
-            // }
             this.list();
           });
     }
@@ -132,32 +127,26 @@ export class ViewListSemasterComponent implements OnInit {
 
   onSubmit() {
     const value = this.ctForm.value;
-  
     console.log(value);
     if (this.ctForm.valid) {
-
       this.http.post('http://localhost:65170/SemesterExam/Post', JSON.stringify(value), httpOptions)
         .subscribe({
           next: (res) => {
             this.http.get<string>('http://localhost:65170/SemesterExam').subscribe(value => {
-            this.dataSource.data = JSON.parse(value);
-            console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
-            confirm('Create success!')
+              this.dataSource.data = JSON.parse(value);
+              console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);             
             });
+            this.list();
+            confirm('Create success!');
           },
           error: (err) => {
             console.error(err);
           }
         });
-        this.http.get<string>('http://localhost:65170/SemesterExam').subscribe(value => {
-          this.dataSource.data = JSON.parse(value);
-          console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
-      });
     }
   }
   onSubmit2() {
     console.log("submit 2 work");
-
     console.log("submit 2 workdd");
     const value2 = this.ctForm2.value;
     console.log(value2);
@@ -167,19 +156,18 @@ export class ViewListSemasterComponent implements OnInit {
       next: (res) => {
         let result: any = JSON.stringify(res);
         if (result.Success == 1) {
-
           this.http.get<string>('http://localhost:65170/SemesterExam').subscribe(value2 => {
             this.dataSource.data = JSON.parse(value2);
-            console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
+            console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);        
           });
         }
+        this.list();
+        confirm('Clone success!');
       },
       error: (err) => {
         console.log(err);
       }
     });
-
-
   }
   onFilter() {
     const value = this.filterForm.value;
