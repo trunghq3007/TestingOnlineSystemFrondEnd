@@ -72,6 +72,13 @@ export class ViewListSemasterComponent implements OnInit {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.ID + 1}`;
   }
 
+  error: any = { isError: false,  errorMessage: '' };
+  compareTwoDates() {
+    if (new Date(this.ctForm.controls['EndDay'].value) < new Date(this.ctForm.controls['StartDay'].value)) {
+      this.error = { isError: true, errorMessage: 'End Date cant before start date !' };
+    }
+  }
+
   ngOnInit() {
     this.ctForm = this.semaster.group({
       SemesterName: ['', [Validators.required]],
@@ -134,7 +141,7 @@ export class ViewListSemasterComponent implements OnInit {
           next: (res) => {
             this.http.get<string>('http://localhost:65170/SemesterExam').subscribe(value => {
               this.dataSource.data = JSON.parse(value);
-              console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);             
+              console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
             });
             this.list();
             confirm('Create success!');
@@ -158,7 +165,7 @@ export class ViewListSemasterComponent implements OnInit {
         if (result.Success == 1) {
           this.http.get<string>('http://localhost:65170/SemesterExam').subscribe(value2 => {
             this.dataSource.data = JSON.parse(value2);
-            console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);        
+            console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
           });
         }
         this.list();

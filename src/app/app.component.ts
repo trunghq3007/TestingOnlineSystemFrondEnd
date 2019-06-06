@@ -22,6 +22,7 @@ export class AppComponent {
     // if (this.currentUser != null) {
     this.currentUserSubscription = this.authenticationService.currentUser.subscribe(user => {
    4
+      
       this.currentUser = user;
     });
     // }

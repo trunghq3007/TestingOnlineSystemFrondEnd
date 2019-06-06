@@ -14,7 +14,7 @@
 
     <div class="col-md-10 col-md-offset-2">
         <div class="container col-md-12">
-            <div style="padding: 10px;">
+            <div style="padding: 10px 10px 10px 0;">
                 <input [(ngModel)]="searchString" (keyup.enter)="onSearch()" type="text" placeholder="Search.."
                     name="search">
                 <button (click)="onSearch()" type="submit"><i class="fa fa-search"></i></button>
@@ -112,13 +112,13 @@
                         <button class="btn btn-primary btn-xs" data-title="Create" data-toggle="modal"
                             data-target="#clone"
                             (click)="clone(element.ID, element.SemesterName,element.StartDay,element.EndDay)"><i
-                                class="fas fa-clone"></i></button>
+                                class="fa fa-clone"></i></button>
 
                         <button class="btn btn-success btn-xs" [routerLink]="['/semester',element.ID]"><i
-                                class="fas fa-info-circle"><a></a></i></button>
+                                class="fa fa-info-circle"><a></a></i></button>
 
                         <button class="btn btn-danger btn-xs" (click)="delete(element.ID)"><i
-                                class="fas fa-minus-circle"></i></button>
+                                class="fa fa-minus-circle"></i></button>
                     </td>
                 </ng-container>
 
@@ -156,8 +156,11 @@
                 </div>
                 <div class="magin">
                     <b style="margin-right: 12%">EndDay</b>
-                    <input type="date" name="date" formControlName="EndDay">
+                    <input type="date" name="date" formControlName="EndDay" (blur)="compareTwoDates()">
                 </div>
+                <div style="margin-left: 38%; color: red" *ngIf="error.isError">
+                    {{ error.errorMessage }}
+                 </div>
                 <div class="magin">
                     <b style="margin-right: 14%">Status</b>
                     <select formControlName="status">
