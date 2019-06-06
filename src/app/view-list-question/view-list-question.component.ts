@@ -92,8 +92,7 @@ export class ViewListQuestionComponent implements OnInit {
 
   deleteQuestion() {
     this.http.delete<string>('http://localhost:65170/api/question/' + this.questionId).subscribe(
-      res => {
-
+      res => { 
         const result: ResultObject = JSON.parse(res);
         if (result.Success >= 1) {
           this.dataSource.data = this.dataSource.data.filter(s => s.Id !== this.questionId);
@@ -106,10 +105,10 @@ export class ViewListQuestionComponent implements OnInit {
     );
   }
   navigateToEdit(Id: string) {
-    this.router.navigate(['EditQuestion/', Id,]);
+    this.router.navigate(['question',Id, 'update']);
   }
   navigateToDetail(Id: string) {
-    this.router.navigate(['DetailQuestion/', Id,]);
+    this.router.navigate(['question',Id, 'detail']);
   }
 
   onSearch() {

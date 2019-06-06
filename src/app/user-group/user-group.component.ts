@@ -5,6 +5,7 @@ import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { GroupUser } from '../group-user';
 import { ResultObject } from '../result-object';
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -17,8 +18,12 @@ export class UserGroupComponent implements OnInit {
   usergroups: GroupUser[] = [];
   usergroup: GroupUser = undefined;
   userId = '';
-
-  constructor(private http: HttpClient, private router: Router, private activatedRoute: ActivatedRoute) { }
+  check: string;
+  ObjFormGroup:FormGroup;
+  get GroupName(): FormControl {
+    return this.ObjFormGroup.get('GroupName') as FormControl;
+  }
+  constructor(private fb: FormBuilder,private http: HttpClient, private router: Router, private activatedRoute: ActivatedRoute) { }
   displayedColumn: string[] = ['select', 'UserId', 'UserName', 'FullName', 'Action'];
   dataSource = new MatTableDataSource<GroupUser>(this.usergroups);
   selection = new SelectionModel<GroupUser>(true, []);
@@ -26,8 +31,11 @@ export class UserGroupComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-
+ 
   ngOnInit() {
+    this.ObjFormGroup = this.fb.group({
+      GroupName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]]});
+
     const GroupId = this.activatedRoute.snapshot.paramMap.get('groupId');
 
     this.http.get<string>('http://localhost:65170/api/Group/' + GroupId).subscribe(value => {
@@ -108,6 +116,11 @@ export class UserGroupComponent implements OnInit {
   }
   submitEdit(groupName) {
     if (confirm('Are you sure you want to save this group name?')) {
+    this.http.get<string>('http://localhost:65170/api/Group/?groupName=' + groupName).subscribe(res => {
+    this.check =res;
+    console.log(this.check);
+    if(this.check == 'False')
+    {
       // console.log(groupName);
       const GroupId = this.activatedRoute.snapshot.paramMap.get('groupId');
       // console.log(GroupId);
@@ -125,7 +138,15 @@ export class UserGroupComponent implements OnInit {
         }
       });
     }
+    else{
+      confirm("Group name is exist");
+    }
+    });
+    
+   
   }
+  }
+  
 }
 
 
