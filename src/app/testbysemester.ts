@@ -11,7 +11,7 @@ export interface Testbysemester {
     CreateBy :string;
     PassScore :string;
     TestName : string;
-    NumberTime:string;
+    TotalTest:number;
     TestTime: string;
     
 }
