@@ -18,9 +18,8 @@ export class UserUpdateComponent implements OnInit {
   user: User[] = [];
   public Editor = ClassicEditorBuild;
   editform: FormGroup;
-  RolesFormApi:  User[] = [];
+  RolesFormApi: User[] = [];
   rolename: string;
-  check: string;
   constructor(private fb: FormBuilder, private http: HttpClient, private ac: ActivatedRoute) { }
 
   get UserName(): FormControl {
@@ -103,7 +102,7 @@ export class UserUpdateComponent implements OnInit {
       this.user = JSON.parse(value);
       this.editform.patchValue(JSON.parse(value));
     });
-   
+
   }
 
   onSubmit(userName) {
@@ -117,40 +116,31 @@ export class UserUpdateComponent implements OnInit {
       let temp = this.RolesFormApi.filter(s => s.RoleId == value.RoleId);
       value.Role = temp.length > 0 ? temp[0] : null;
       console.log(value);
-      this.http.get<string>('http://localhost:65170/api/User/?userName=' + userName).subscribe(res => {
-        this.check = res;
-        console.log(this.check);
-        if (this.check == 'False') {
-          this.http.put('http://localhost:65170/api/User/' + formData.UserId, formData, httpOptions).subscribe({
-            next: (res) => {
-              console.log(res);
-              confirm('Update success!');
-            },
-            error: (err) => {
-              console.log(err);
-              confirm("Update fail!");
-            }
-          });
+      this.http.put('http://localhost:65170/api/User/' + formData.UserId, formData, httpOptions).subscribe({
+        next: (res) => {
+          console.log(res);
+          confirm('Update success!');
+        },
+        error: (err) => {
+          console.log(err);
+          confirm("Update fail!");
         }
-        else{
-          confirm("Username is exist!")
-        }
-    });
-  }
-}
-  validateForm() {
-    if (this.editform.invalid) {
-      this.editform.get('UserName').markAsTouched();
-      this.editform.get('FullName').markAsTouched();
-      this.editform.get('Email').markAsTouched();
-      this.editform.get('Address').markAsTouched();
-      this.editform.get('Department').markAsTouched();
-      this.editform.get('Position').markAsTouched();
-      this.editform.get('Phone').markAsTouched();
-      this.editform.get('Password').markAsTouched();
-      this.editform.get('RoleId').markAsTouched();
-      return;
+      });
     }
   }
+validateForm() {
+  if (this.editform.invalid) {
+    this.editform.get('UserName').markAsTouched();
+    this.editform.get('FullName').markAsTouched();
+    this.editform.get('Email').markAsTouched();
+    this.editform.get('Address').markAsTouched();
+    this.editform.get('Department').markAsTouched();
+    this.editform.get('Position').markAsTouched();
+    this.editform.get('Phone').markAsTouched();
+    this.editform.get('Password').markAsTouched();
+    this.editform.get('RoleId').markAsTouched();
+    return;
+  }
+}
 
 }

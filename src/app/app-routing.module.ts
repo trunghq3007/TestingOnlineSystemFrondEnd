@@ -22,7 +22,7 @@ import { ListDetailComponent } from './test/list-detail/list-detail.component';
 import { ListUpdateComponent } from './test/list-update/list-update.component';
 import { ViewListSemasterComponent } from './view-list-semaster/view-list-semaster.component';
 import { QuestionRouting } from './question-router';
-import { ViewListSemasterComponent } from './view-list-semaster/view-list-semaster.component';
+
 import { SemesterDetailComponent } from './semester-detail/semester-detail.component';
 import { ManagerSemesterExamTestComponent } from './manager-semester-exam-test/manager-semester-exam-test.component';
 import { ViewListSemastertotestComponent } from './view-list-semastertotest/view-list-semastertotest.component';
@@ -62,10 +62,6 @@ const routes: Routes = [
       path: 'create',
       component: UserCreateComponent
     },
-    // {
-    //   path: ':UserId',
-    //   component: UserDetailComponent
-    // },
     {
       path: 'update/:Id',
       component: UserUpdateComponent
@@ -113,7 +109,6 @@ const routes: Routes = [
           {
             path: '',
             component: GroupComponent,
-            // pathMatch: 'full'
           },
           {
             path: ':groupId',
@@ -126,12 +121,7 @@ const routes: Routes = [
         ]
       }
     ]
-<<<<<<< .mine
-  }
-=======
   },
->>>>>>> .theirs
-  ,
   {
     path: 'SemesterExamManager',
 
@@ -209,8 +199,7 @@ const routes: Routes = [
       ]
 
 
-  }
-];
+  },
   {
     path: 'test',
     children: [
@@ -232,8 +221,7 @@ const routes: Routes = [
         component: ListUpdateComponent
       }
     ]
-  }
-  ,
+  },
   {
     path: 'SemesterExamManager',
     component: ViewListSemasterComponent
@@ -242,16 +230,12 @@ const routes: Routes = [
 
 ];
 
+  
 
 
 
 const fullRoutes = [...routes, ...QuestionRouting];
 console.log(fullRoutes);
-<<<<<<< .mine
-
-=======
-
->>>>>>> .theirs
 @NgModule({
   imports: [RouterModule.forRoot(fullRoutes)],
   exports: [RouterModule]

@@ -16,7 +16,7 @@
         </div>
         <div class="content">
 
-          <form novalidate (ngSubmit)="onSubmit(inputName.value)" [formGroup]="editform">
+          <form novalidate (ngSubmit)="onSubmit()" [formGroup]="editform">
             <div class="row">
                 <div class="col-md-12">
                     <div class="col-md-6">
@@ -24,8 +24,7 @@
                       <div class="form-group row">
                         <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">UserName*</label>
                         <div class="col-sm-10">
-                          <input type="text" class="form-control form-control-sm" formControlName="UserName"
-                            placeholder="UserName" #inputName>
+                            <label class="form-control form-control-sm" formControlName="UserName" >{{UserName.value}}</label> 
                         </div>
                         <div *ngIf="!UserName.valid && UserName.touched " class="form-group" style="color:red;"
                           role="alert">
