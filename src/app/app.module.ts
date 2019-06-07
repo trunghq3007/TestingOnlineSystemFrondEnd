@@ -67,6 +67,7 @@ import { ListDetailComponent } from './test/list-detail/list-detail.component';
 import { ListUpdateComponent } from './test/list-update/list-update.component';
 import { ViewListSemasterComponent } from './view-list-semaster/view-list-semaster.component';
 import { DetailQuestionComponent } from './detail-question/detail-question.component';
+import { RoleComponent } from './role/role.component';
 @NgModule({
   declarations: [
     ExamListComponent,
@@ -110,6 +111,7 @@ import { DetailQuestionComponent } from './detail-question/detail-question.compo
     ViewListSemasterComponent,
     SemesterDetailComponent,
     DetailQuestionComponent,
+    RoleComponent,
 
   ],
   imports: [

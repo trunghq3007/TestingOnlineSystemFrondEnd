@@ -116,13 +116,14 @@ export class UserGroupComponent implements OnInit {
   }
   submitEdit(groupName) {
     if (confirm('Are you sure you want to save this group name?')) {
-    this.http.get<string>('http://localhost:65170/api/Group/?groupName=' + groupName).subscribe(res => {
+      const GroupId = this.activatedRoute.snapshot.paramMap.get('groupId');
+    this.http.get<string>('http://localhost:65170/api/Group/?groupName=' + groupName + '&groupId=' + GroupId).subscribe(res => {
     this.check =res;
     console.log(this.check);
     if(this.check == 'False')
     {
       // console.log(groupName);
-      const GroupId = this.activatedRoute.snapshot.paramMap.get('groupId');
+      
       // console.log(GroupId);
       this.http.put<string>('http://localhost:65170/api/Group/?id=' + GroupId + '&groupname=' + groupName, httpOptions).subscribe({
         next: (res) => {
