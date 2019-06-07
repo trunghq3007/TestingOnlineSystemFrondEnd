@@ -22,13 +22,31 @@ export class RoleComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
   ngOnInit() {
+    this.listRole();
+
+  }
+  listRole(){
     this.http.get<string>('http://localhost:65170/api/Role').subscribe(value => {
       this.dataSource.data = JSON.parse(value);
       console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
     });
-
   }
   getId(id) {
     this.RoleId = id;
+  }
+  DeleteRole(Id: string) {
+    if(confirm('you want to delete record')){
+      this.http.delete<string>('http://localhost:65170/api/Role/?id=' + Id).subscribe(res => {
+      let result = JSON.parse(res);
+      if (result.Success == 1) {
+        this.roles = this.roles.filter(b => b.RoleId !== Id);
+        confirm('Delete success!');
+        this.listRole();
+      } else {
+        confirm('Delete failed!');
+      }
+    });
+    }
+    
   }
 }
