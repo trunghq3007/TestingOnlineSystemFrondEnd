@@ -75,7 +75,7 @@ export class UserUpdateComponent implements OnInit {
   }
   passwordPattern ="^[a-z0-9_@A-Z]*$";
   phonenumber = "^[0-9]{1,12}$";
-  emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$";
+  emailPattern = "^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$";
   ngOnInit() {
     this.getApiRoles();
     this.editform = this.fb.group({
@@ -123,7 +123,7 @@ export class UserUpdateComponent implements OnInit {
         },
         error: (err) => {
           console.log(err);
-          confirm("Update fail!");
+          confirm("Error!Update fail!");
         }
       });
     }
