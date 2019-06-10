@@ -29,11 +29,15 @@ import { ViewListSemastertotestComponent } from './view-list-semastertotest/view
 import { ViewlistTestbySemesterComponent } from './viewlist-testby-semester/viewlist-testby-semester.component';
 import { ThiChitietbaithiComponent } from './thi-chitietbaithi/thi-chitietbaithi.component';
 import { ThiThiComponent } from './thi-thi/thi-thi.component';
-
+import {RoleComponent} from './role/role.component';
 const routes: Routes = [
   {
     path: '',
     component: HomeComponent
+  },
+  {
+    path: 'Role',
+    component: RoleComponent
   },
   {
     path: 'login',
