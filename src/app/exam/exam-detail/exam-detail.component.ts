@@ -127,7 +127,7 @@ export class ExamDetailComponent implements OnInit {
       next: 
       (response) => {
         
-        if(response==1){
+        if(response==true){
           const examID = this.ac.snapshot.paramMap.get('examID');
           this.http.get<string>('http://localhost:65170/api/ExamQuestions/' + examID).subscribe(
             value => {
@@ -135,7 +135,7 @@ export class ExamDetailComponent implements OnInit {
               console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
             });
           confirm('success');
-        }else if(response==0){
+        }else if(response==false){
           confirm('question exist in exam');
         }
         
