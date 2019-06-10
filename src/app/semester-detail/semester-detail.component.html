@@ -32,38 +32,7 @@
         <form (ngSubmit)="navigateToEdit()" class="form-group" [formGroup]="formApply">
     
          
-            <!-- <ul class="sidebar-menu" data-widget="tree">
-                        <li class="header"></li>
-                        
-                        <li class="active treeview">
-                                <a [routerLink]="['/SemesterExamManager/detail',Id]">
-                                        <i class="fa fa-dashboard"></i> <span style="color: white">Thông tin kì thi</span>
-                                        
-                                    </a>
-                            
-                        </li>
-                        <li class=" treeview">
-                                <a  [routerLink]="['/SemesterExamManager/',Id]">
-                                    <i class="fa fa-dashboard"></i> <span style="color: white">Danh sách bài thi</span>
-                                    
-                                </a>
-                                
-                            </li>
-                            <li class=" treeview">
-                                    <a [routerLink]="['/SemesterExamManager/exams',Id]">
-                                        <i class="fa fa-dashboard"></i> <span style="color: white">danh sách đề thi</span>
-                                        
-                                    </a>
-                                    
-                                </li>
-                                <li class=" treeview">
-                                        <a [routerLink]="['/SemesterExamManager/Candiates',Id]">
-                                            <i class="fa fa-dashboard"></i> <span style="color: white">Danh sách thí sinh</span>
-                                        
-                                        </a>
-                                        
-                                    </li>
-                </ul> -->
+         
             <table>
 
                 <tr>
@@ -99,20 +68,43 @@
                 <tr>
                     <td><label>Thời gian thi</label></td>
                     <td>
-                        <mat-form-field class="example-full-width">
-                            <input matInput formControlName="StartDay">
-                        </mat-form-field>
+                    
+                            <input placeholder="{{list.StartDay}}" [(ngModel)]="dateTime" [owlDateTime]="dt2" formControlName="StartDay">
+
+                        
+<!-- 
+                        <mat-form-field>
+                            <input matInput [matDatepicker]="picker1"  formControlName="StartDay">
+                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                            <mat-datepicker #picker1></mat-datepicker>
+                          </mat-form-field> -->
                     </td>
-                    <td><i class="fas fa-calendar-alt"></i></td>
+                    <td>
+                        <span class="example-trigger" [owlDateTimeTrigger]="dt2">
+                            <i class="fas fa-calendar-alt"></i>
+                        </span>
+                        <owl-date-time #dt2></owl-date-time>
+                    </td>
                 </tr>
                 <tr>
                     <td><label>Thời gian kết thúc</label></td>
                     <td>
-                        <mat-form-field class="example-full-width">
-                            <input matInput formControlName="EndDay">
-                        </mat-form-field>
+
+                            <input placeholder="{{list.EndDay}}" [(ngModel)]="dateTime1" [owlDateTime]="dt3" formControlName="EndDay">
+                     
+
+                        <!-- <mat-form-field>
+                                <input matInput [matDatepicker]="picker2"  formControlName="EndDay" >
+                                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                <mat-datepicker #picker2></mat-datepicker>
+                              </mat-form-field> -->
                     </td>
-                    <td><i class="fas fa-calendar-alt"></i></td>
+                    <td>
+                        <span class="example-trigger" [owlDateTimeTrigger]="dt3">
+                            <i class="fas fa-calendar-alt"></i>
+                        </span>
+                        <owl-date-time #dt3></owl-date-time>
+                    </td>
                 </tr>
                 <tr>
                     <td><label>Số người tham gia :</label></td>
@@ -130,12 +122,22 @@
                 </tr>
             </table>
 
-
-
-
-
             <button type="submit" class="apply"> Apply</button>
 
         </form>
     </div>
 </div>
+
+<!-- <div class="example-wrapper">
+	<h2>Trigger Picker by a Iconhihi</h2>
+	<label class="example-input-wrapper">
+        Date Time
+        <input placeholder="Date Time:" [(ngModel)]="dateTime" [owlDateTime]="dt2">
+        <span class="example-trigger" [owlDateTimeTrigger]="dt2">
+            <i class="fas fa-calendar-alt"></i>
+        </span>
+        <owl-date-time #dt2></owl-date-time>
+    </label>
+
+    <h4>Value From Picker: {{dateTime}}</h4>
+</div> -->

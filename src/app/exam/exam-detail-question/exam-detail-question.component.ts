@@ -17,7 +17,8 @@ export interface detailExam {
   Status: number;
   CreatedBy: string;
   CreatedDate: Date;
-
+  CategoryName: string;
+  Space:string;
 }
 @Component({
   selector: 'app-exam-detail-question',
@@ -34,7 +35,7 @@ export class ExamDetailQuestionComponent implements OnInit {
   dataSource = new MatTableDataSource<detailExam>(this.detailExams);
 
   @ViewChild(MatSort) sort: MatSort;
-  displayedColumns: string[] = ['select', 'QuesId', 'nameExam', 'Content', 'Level', 'Suggestion', 'CreatedBy', 'CreatedDate', 'Action'];
+  displayedColumns: string[] = ['select', 'QuesId','Category', 'nameExam', 'Content', 'Level', 'Space', 'CreatedBy', 'CreatedDate', 'Action'];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 

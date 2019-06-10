@@ -20,6 +20,8 @@ import { ListTestComponent } from './test/list-test/list-test.component';
 import { ListCreateComponent } from './test/list-create/list-create.component';
 import { ListDetailComponent } from './test/list-detail/list-detail.component';
 import { ListUpdateComponent } from './test/list-update/list-update.component';
+import { ViewListSemasterComponent } from './view-list-semaster/view-list-semaster.component';
+import { QuestionRouting } from './question-router';
 import { ExamDetailQuestionComponent } from './exam/exam-detail-question/exam-detail-question.component';
 
 const routes: Routes = [
@@ -31,10 +33,6 @@ const routes: Routes = [
     path: 'login',
     component: LoginComponent,
     pathMatch: 'full'
-  },
-  {
-    path: 'question',
-    component: ViewListQuestionComponent,
   },
   {
     path: 'tag',
@@ -66,9 +64,10 @@ const routes: Routes = [
       path: 'update/:Id',
       component: UserUpdateComponent
     },
-  ]},
-    {
-      path: 'exam',
+    ]
+  },
+  {
+    path: 'exam',
     children: [
       {
         path: '',
@@ -91,10 +90,9 @@ const routes: Routes = [
         path: 'update/:Id',
         component: ExamUpdateComponent
       },
-      
+
     ]
-    },
-    
+  },
   {
     path: 'group',
     children: [
@@ -149,14 +147,22 @@ const routes: Routes = [
       }
     ]
   }
-
-
+  ,
+  {
+    path: 'SemesterExamManager',
+    component: ViewListSemasterComponent
+  }
 
 
 ];
 
+
+
+
+const fullRoutes = [...routes, ...QuestionRouting];
+console.log(fullRoutes);
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(fullRoutes)],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
