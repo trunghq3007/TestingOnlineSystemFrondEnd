@@ -17,6 +17,7 @@ export class ViewListQuestionComponent implements OnInit {
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
+ 
   searchString: string;
   questionId = '';
   Question: Question[] = [];
@@ -39,12 +40,11 @@ export class ViewListQuestionComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   ngOnInit() {
+
     this.getApiCategories();
     this.getApiTags();
     this.http.get<string>('http://localhost:65170/api/question/').subscribe(value => {
-
       let source = JSON.parse(value).Data;
-
       let tagNames = '';
       for (let index = 0; index < source.length; index++) {
         let element = source[index];
@@ -63,13 +63,6 @@ export class ViewListQuestionComponent implements OnInit {
       this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort;
     });
   }
-
-  // deleteQuestion(questionId: string) {
-  //   this.http.delete('http://localhost:65170/api/question/' + questionId).subscribe(() => {
-  //     this.dataSource.data = this.dataSource.data.filter(question => question.Id !== questionId);
-  //   });
-  // }
-  // delete
   delete(Id) {
     this.questionId = Id;
     console.log(this.questionId);
@@ -92,23 +85,27 @@ export class ViewListQuestionComponent implements OnInit {
 
   deleteQuestion() {
     this.http.delete<string>('http://localhost:65170/api/question/' + this.questionId).subscribe(
-      res => { 
+      res => {
         const result: ResultObject = JSON.parse(res);
         if (result.Success >= 1) {
           this.dataSource.data = this.dataSource.data.filter(s => s.Id !== this.questionId);
           this.toastr.success('Delete success!', '');
+
         }
         else if (result.Success == 0) {
+
           confirm('Đang có câu hỏi trong Category');
+
         }
+
       }
     );
   }
   navigateToEdit(Id: string) {
-    this.router.navigate(['question',Id, 'update']);
+    this.router.navigate(['/question', Id, 'update']);
   }
   navigateToDetail(Id: string) {
-    this.router.navigate(['question',Id, 'detail']);
+    this.router.navigate(['/question', Id, 'detail']);
   }
 
   onSearch() {
@@ -133,12 +130,7 @@ export class ViewListQuestionComponent implements OnInit {
     return numSelected === numRows;
 
   }
-  // masterToggle() {
-  //   this.isAllSelected() ?
-  //     this.selection.clear() :
-  //     this.dataSource.data.forEach(row => this.selection.select(row));
 
-  // }
   checkboxLabel(row?: Question): string {
     if (!row) {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
@@ -155,12 +147,10 @@ export class ViewListQuestionComponent implements OnInit {
       this.categoriesFormApi = JSON.parse(value);
     });
   }
+
   fillterClick() {
-
-
     console.log(this.formFillter.value);
     this.http.post<string>('http://localhost:65170/api/question?action=fillter', JSON.stringify(this.formFillter.value), this.httpOptions).subscribe(value => {
-
 
       let source = JSON.parse(value).Data;
 
