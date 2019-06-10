@@ -91,28 +91,7 @@ export class ExamDetailComponent implements OnInit {
       });
   }
 
-  addQuestion(Id) {
-    const examID = this.ac.snapshot.paramMap.get('examID');
 
-    let Data = { ExamId: examID, QuestionId: Id };
-    this.http.post<string>('http://localhost:65170/api/ExamQuestions', JSON.stringify(Data), httpOptions).subscribe({
-      next:
-        (err) => {
-
-
-          this.listQuestion();
-          confirm('success');
-
-
-        },
-      error: (err) => {
-        console.log(err);
-        confirm('false')
-      }
-
-    });
-
-  }
   AddMutiple() {
     let Arr = [];
     const examID = this.ac.snapshot.paramMap.get('examID');

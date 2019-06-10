@@ -35,7 +35,7 @@ export class ListCreateComponent implements OnInit {
   isMember = false;
   isManager = false;
   isAdmin = false;
-  nameuser:string;
+
   exams:exam[]=[];
   form: FormGroup;
   semasters:semaster[]=[];
@@ -74,7 +74,7 @@ regTotal="^[0-9]{1,2}$";
 regPassScore="^[0-9]{1,3}$"
 
   ngOnInit() {
-    this.nameuser=this.currentUser.FullName;
+    
     this.form = this.insert.group({
       ExamId: ['', [Validators.required]],
       SemasterExamId: ['',[Validators.required]],

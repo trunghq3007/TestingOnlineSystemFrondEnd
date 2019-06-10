@@ -3,6 +3,10 @@ import * as ClassicEditorBuild from '@ckeditor/ckeditor5-build-classic';
 import { FormBuilder, FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Question } from '../question';
+import { Router } from '@angular/router';
+import { ResultObject } from '../result-object';
+import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
+import EasyImage from '@ckeditor/ckeditor5-easy-image/src/easyimage';
 
 
 const httpOptions = {
@@ -19,6 +23,8 @@ export class CreateQuestionComponent implements OnInit {
   public Editor = ClassicEditorBuild;
   public componentEvents: string[] = [];
   Questions: Question[] = [];
+
+  EditorQuestion: { getData; setData; };
   answer: FormGroup;
   answers: FormArray;
   tagsFormApi: [];
@@ -47,8 +53,12 @@ export class CreateQuestionComponent implements OnInit {
   get Answers(): FormArray {
     return this.ctForm.get('Answers') as FormArray;
   }
-  constructor(private http: HttpClient, private fb: FormBuilder) { }
+  constructor(private http: HttpClient, private fb: FormBuilder, private router: Router) { }
 
+  public onChange({ editor }: ChangeEvent) {
+    const data = editor.getData();
+    console.log(data);
+  }
   createAnswer(): FormGroup {
     return this.fb.group({
       Media: '',
@@ -77,11 +87,10 @@ export class CreateQuestionComponent implements OnInit {
     });
   }
   saveQuestion() {
-
-
-
+    this.ctForm.value.Content= this.EditorQuestion.getData();
     console.log(this.ctForm.value);
-
+    debugger;
+    console.log(this.ctForm.value.Content)
     if (this.ctForm.valid) {
       let valueQuestion = this.ctForm.value;
       const length = valueQuestion.TagId.length;
@@ -98,21 +107,27 @@ export class CreateQuestionComponent implements OnInit {
       valueQuestion.Answers.map(s => s.IsTrue = s.IsTrue ? 1 : 0);
       console.log(valueQuestion);
 
-      this.http.post('http://localhost:65170/api/question/', JSON.stringify(valueQuestion), httpOptions)
+      this.http.post<string>('http://localhost:65170/api/question/', JSON.stringify(valueQuestion), httpOptions)
         .subscribe({
           next: (res) => {
+            const result: ResultObject = JSON.parse(res);
             this.http.get<string>('http://localhost:65170/api/question/').subscribe(value => {
               this.Questions = JSON.parse(value);
             });
+            if (result.Success >= 1) {
+              confirm("Create success");
+            } else {
+              confirm("Create Fail!");
+            }
             this.ctForm.reset();
           },
 
           error: (err) => {
             console.error(err);
           }
-
         });
     }
+    this.router.navigate(['question']);
   }
 
   ngOnInit() {
@@ -127,7 +142,7 @@ export class CreateQuestionComponent implements OnInit {
         QuestionType: '1',
         Suggestion: '',
         Level: '1',
-        Content: ['', [Validators.required]],
+        Content: '',
         TagId: '',
         Answers: this.fb.array(
           [
@@ -135,14 +150,23 @@ export class CreateQuestionComponent implements OnInit {
           ]),
       }
     );
-
-    ////////
-    //     const IdQuestion = this.route.snapshot.paramMap.get('id');
-    //     this.http.get<string>('http://localhost:65170/api/question/' + IdQuestion).subscribe(value => {
-    //       this.ctForm.patchValue( JSON.parse(value));
-    //     });
+    this.initCkeditor(this.Content, '#creater-question');
   };
 
+  initCkeditor(data, selector) {
 
+    ClassicEditorBuild.create(document.querySelector(selector), {
+      ckfinder: {
+        uploadUrl: 'http://localhost:65170/Upload/UploadCkeditor',
+      },
+    }).then(newEditor => {
+      this.EditorQuestion = newEditor;
+      this.EditorQuestion.setData(data);
+    })
+      .catch(error => {
+        console.log("error");
+      });
+    ;
 
+  }
 }

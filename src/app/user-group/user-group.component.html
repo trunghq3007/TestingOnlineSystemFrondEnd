@@ -4,7 +4,24 @@
 <div class="md-form mt-0" style="width: 100%;margin-left: 20%">
   
   <div *ngIf="usergroup; else noGroup" class="form-inline mr-auto" >
-    <label>Group name: </label><input  style="height: 30px;" value="{{usergroup.GroupName}}" #inputName />
+    <form novalidate  [formGroup]="ObjFormGroup">
+    <label>Group name: </label><input  style="height: 30px;" value="{{usergroup.GroupName}}" #inputName formControlName="GroupName" />
+    
+    <div *ngIf="!GroupName.valid && GroupName.dirty" class="form-group" style="color:red;" role="alert">
+      <div *ngIf="GroupName.hasError('required')">
+        GroupName is required
+      </div>
+      <div *ngIf="GroupName.hasError('minlength')">
+        User Name is required length
+        {{GroupName.getError('minlength').requiredLength}}
+      </div>
+      <div *ngIf="GroupName.hasError('maxlength')">
+        User Name must be less than
+        {{GroupName.getError('maxlength').requiredLength}}
+      </div>
+    </div>
+  </form>
+
     <button (click)="submitEdit(inputName.value)" type="button" style="margin-left: 34%; width: 80px; height: 34px;" class="btn btn-primary">Save</button>
       <button  (click)="clickToRoute()" type="submit" style="margin-left: 2%" class="btn btn-primary">Add
         user</button>
