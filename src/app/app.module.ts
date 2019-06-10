@@ -69,6 +69,7 @@ import { ViewListSemasterComponent } from './view-list-semaster/view-list-semast
 import { DetailQuestionComponent } from './detail-question/detail-question.component';
 import { RoleComponent } from './role/role.component';
 import { ExamDetailQuestionComponent } from './exam/exam-detail-question/exam-detail-question.component';
+import { ThiKetquathiComponent } from './thi-ketquathi/thi-ketquathi.component';
 
 @NgModule({
   declarations: [
@@ -116,6 +117,8 @@ import { ExamDetailQuestionComponent } from './exam/exam-detail-question/exam-de
     RoleComponent,
 
     ExamDetailQuestionComponent,
+
+    ThiKetquathiComponent,
   ],
   imports: [
     MatTabsModule,
