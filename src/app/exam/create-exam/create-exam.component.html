@@ -13,7 +13,7 @@
           Name exam:
         </label>
         <div class="col-10">
-          <input class="form-control" type="text" [pattern]="regex" id="example-text-input" formControlName="NameExam">
+          <input class="form-control"  type="text"  id="example-text-input" formControlName="NameExam">
         </div>
       </div>
       <div *ngIf="!NameExam.valid && NameExam.touched" style="color: red">
@@ -23,12 +23,8 @@
         <span *ngIf="NameExam.hasError('maxLength')">
           Name exam maxlength 50 character
         </span>
-        <span *ngIf="NameExam.hasError('minLength')">
-          Name exam minlength 5 character
-        </span>
-        <span *ngIf="NameExam.hasError('pattern')">
-          Name not special characters
-        </span>
+      
+       
 
       </div>
       <div class="form-group row">
@@ -39,7 +35,7 @@
             <input class="form-control" type="" formControlName="createBy" id="example-email-input">
           </div> -->
         <div class="col-10">
-          <input class="form-control" type="text" id="example-text-input" formControlName="CreateBy">
+          <input type="text"  [readonly]="true" value="{{currentUser.FullName}}" class="form-control"  id="example-text-input" formControlName="CreateBy">
           <!-- <select class="bootstrap-select" style="width: 100%; height: 35px;" >
               <option value="admin" selected="selected">admin</option>
               <option value="manager">manager</option>
@@ -48,12 +44,12 @@
         </div>
 
       </div>
-      <div *ngIf="!CreateBy.valid && CreateBy.touched" style="color: red">
+      <!-- <div *ngIf="!CreateBy.valid && CreateBy.touched" style="color: red">
         <span *ngIf="CreateBy.hasError('required')">
           Create by is required
         </span>
       
-      </div>
+      </div> -->
       <div class="form-group row">
         <label for="example-url-fb" class="col-2 col-form-label">
           Question number:
@@ -63,7 +59,7 @@
             formControlName="QuestionNumber" id="example-url-fb">
         </div>
       </div>
-      <div *ngIf="!QuestionNumber.valid && QuestionNumber.touched" style="color: red">
+      <!-- <div *ngIf="!QuestionNumber.valid && QuestionNumber.touched" style="color: red">
         <div *ngIf="QuestionNumber.hasError('required')">
           Question number is required
         </div>
@@ -72,7 +68,7 @@
         </div>
      
 
-      </div>
+      </div> -->
       <!-- <div class="form-group row">
           <label >Status</label>
           <select  [value]='false'  disabled="disabled"   class="form-control"  formControlName="status">

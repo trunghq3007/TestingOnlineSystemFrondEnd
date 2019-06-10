@@ -49,13 +49,13 @@ import { ExportQuestionComponent } from './export-question/export-question.compo
 import { EditQuestionComponent } from './edit-question/edit-question.component';
 import { ManagerSemesterExamTestComponent } from './manager-semester-exam-test/manager-semester-exam-test.component';
 import { SemesterDetailComponent } from './semester-detail/semester-detail.component';
-import { ViewListSemasterComponent } from './view-list-semaster/view-list-semaster.component';
+
 import { ViewListSemastertotestComponent } from './view-list-semastertotest/view-list-semastertotest.component';
 import { ViewlistTestbySemesterComponent } from './viewlist-testby-semester/viewlist-testby-semester.component';
 import { ThiChitietbaithiComponent } from './thi-chitietbaithi/thi-chitietbaithi.component';
 import { ThiThiComponent } from './thi-thi/thi-thi.component';
 
-import{ SemesterDetailComponent } from './semester-detail/semester-detail.component';
+
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { ExamListComponent } from './exam/exam-list/exam-list.component';
 import { CreateExamComponent } from './exam/create-exam/create-exam.component';
@@ -68,6 +68,8 @@ import { ListUpdateComponent } from './test/list-update/list-update.component';
 import { ViewListSemasterComponent } from './view-list-semaster/view-list-semaster.component';
 import { DetailQuestionComponent } from './detail-question/detail-question.component';
 import { RoleComponent } from './role/role.component';
+import { ExamDetailQuestionComponent } from './exam/exam-detail-question/exam-detail-question.component';
+
 @NgModule({
   declarations: [
     ExamListComponent,
@@ -113,6 +115,7 @@ import { RoleComponent } from './role/role.component';
     DetailQuestionComponent,
     RoleComponent,
 
+    ExamDetailQuestionComponent,
   ],
   imports: [
     MatTabsModule,

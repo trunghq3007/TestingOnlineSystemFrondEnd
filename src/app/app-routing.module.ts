@@ -22,6 +22,7 @@ import { ListDetailComponent } from './test/list-detail/list-detail.component';
 import { ListUpdateComponent } from './test/list-update/list-update.component';
 import { ViewListSemasterComponent } from './view-list-semaster/view-list-semaster.component';
 import { QuestionRouting } from './question-router';
+import { ExamDetailQuestionComponent } from './exam/exam-detail-question/exam-detail-question.component';
 
 import { SemesterDetailComponent } from './semester-detail/semester-detail.component';
 import { ManagerSemesterExamTestComponent } from './manager-semester-exam-test/manager-semester-exam-test.component';
@@ -87,6 +88,10 @@ const routes: Routes = [
       {
         path: ':examID',
         component: ExamDetailComponent
+      },
+      {
+        path: 'examquestion/:examID',
+        component: ExamDetailQuestionComponent
       },
       {
         path: 'update/:Id',
@@ -233,10 +238,6 @@ const routes: Routes = [
 
 
 ];
-
-  
-
-
 
 const fullRoutes = [...routes, ...QuestionRouting];
 console.log(fullRoutes);

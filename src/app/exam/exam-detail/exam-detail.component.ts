@@ -9,7 +9,7 @@ const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 export interface questions {
-  Id: number;
+  QuesId: number;
   Content: string;
   Level: number;
   Suggestion: string;
@@ -20,20 +20,9 @@ export interface questions {
   CreatedDate: Date;
   UpdatedBy: string;
   UpdatedDate: Date;
-  Category_Id: number;
+  CategoryName: string;
 }
-export interface detailExam {
-  QuesId: number;
-  nameExam: string;
-  Content: string;
-  Level: number;
-  Suggestion: string;
- Type:number;
-  Status: number;
-  CreatedBy: string;
-  CreatedDate: Date;
- 
-}
+
 
 
 
@@ -46,19 +35,20 @@ export class ExamDetailComponent implements OnInit {
   // userForm: FormGroup;
   listfilter: {} = {};
   questions: questions[] = [];
-  detailExams: detailExam[] = [];
+
   searchString: string;
-  numberQuestion:number;
+  examID = this.ac.snapshot.paramMap.get('examID');
+  numberQuestion: number;
   filterForm: FormGroup;
   dataSource = new MatTableDataSource<questions>(this.questions);
-  dataSourcedetail = new MatTableDataSource<detailExam>(this.detailExams);
+
 
   @ViewChild(MatSort) sort: MatSort;
-  displayedColumns: string[] = ['select','Id', 'Content', 'Level', 'Suggestion', 'Type', 'CreatedBy', 'CreatedDate', 'Action'];
-  displayedColumnDetail: string[] = ['QuesId','nameExam', 'Content', 'Level', 'Suggestion', 'CreatedBy', 'CreatedDate', 'Action'];
+  displayedColumns: string[] = ['select', 'Id', 'Category', 'Content', 'Level', 'Suggestion', 'Type', 'CreatedBy', 'CreatedDate', 'Action'];
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
+
   selection = new SelectionModel<questions>(true, []);
-  selectionDetail = new SelectionModel<detailExam>(true, []);
   constructor(private http: HttpClient, private ac: ActivatedRoute, private fb: FormBuilder) { }
   get StartDate(): FormControl {
     return this.filterForm.get('CreatedDate') as FormControl;
@@ -72,6 +62,7 @@ export class ExamDetailComponent implements OnInit {
   get Type(): FormControl {
     return this.filterForm.get('Type') as FormControl;
   }
+
   ngOnInit() {
     this.filterForm = this.fb.group({
       CreatedDate: [''],
@@ -81,19 +72,7 @@ export class ExamDetailComponent implements OnInit {
       Type: ['']
 
     });
-    this.http.get<string>('http://localhost:65170/api/ExamQuestions').subscribe(
-      value => {
-        this.dataSource.data = JSON.parse(value);
-        console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
-      });
-    //detail exam + examID
-    const examID = this.ac.snapshot.paramMap.get('examID');
-    this.http.get<string>('http://localhost:65170/api/ExamQuestions/' + examID).subscribe(
-      value => {
-        this.dataSourcedetail.data = JSON.parse(value);
-        console.log(JSON.parse(value));
-        console.log(this.dataSourcedetail.paginator = this.paginator, this.dataSourcedetail.sort = this.sort);
-      });
+    this.listQuestion();
 
     this.http.post<string>('http://localhost:65170/api/ExamQuestions/?action=getfillter', {}).subscribe(
       value => {
@@ -101,71 +80,54 @@ export class ExamDetailComponent implements OnInit {
         console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
       });
     this.dataSource.sort = this.sort;
-  }
-  deleteQuestion(QuesId) {
-    console.log(QuesId);
-    this.http.delete('http://localhost:65170/api/ExamQuestions/' +QuesId).subscribe
-      (
-        value => {
-          const examID = this.ac.snapshot.paramMap.get('examID');
-          this.http.get<string>('http://localhost:65170/api/ExamQuestions/' + examID).subscribe(
-      value => {
-        this.dataSourcedetail.data = JSON.parse(value);
-        console.log(JSON.parse(value));
-        console.log(this.dataSourcedetail.paginator = this.paginator, this.dataSourcedetail.sort = this.sort);
-      });
-  
-        
-        });
 
   }
-  addQuestion(Id) {
+  listQuestion() {
     const examID = this.ac.snapshot.paramMap.get('examID');
+    this.http.get<string>('http://localhost:65170/api/ExamQuestions/' + examID + '?action=GetAll').subscribe(
+      value => {
+        this.dataSource.data = JSON.parse(value);
+        console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
+      });
+  }
 
-    let Data = { ExamId: examID, QuestionId: Id };
-    this.http.post<string>('http://localhost:65170/api/ExamQuestions', JSON.stringify(Data), httpOptions).subscribe({
-      next: 
-      (response) => {
-        
-        if(response==1){
-          const examID = this.ac.snapshot.paramMap.get('examID');
-          this.http.get<string>('http://localhost:65170/api/ExamQuestions/' + examID).subscribe(
-            value => {
-              this.dataSourcedetail.data = JSON.parse(value);
-              console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
-            });
-          confirm('success');
-        }else if(response==0){
-          confirm('question exist in exam');
-        }
-        
-      },
-      error: (err) => {
-        console.log(err);
-        confirm('false')
-      }
+
+  AddMutiple() {
+    let Arr = [];
+    const examID = this.ac.snapshot.paramMap.get('examID');
+    this.selection.selected.forEach(item => {
+      Arr.push({ ExamId: examID, QuestionId: item.QuesId });
+    })
+    console.log(Arr);
+    console.log(JSON.stringify(Arr));
+    this.http.post<string>('http://localhost:65170/api/ExamQuestions/?action=AddMutiple', JSON.stringify(Arr), httpOptions).subscribe((error) => {
+
+      confirm('inserted' + ' ' + error + ' ' + 'records in Exam');
+      this.listQuestion();
 
     });
-
   }
-  AddMutiple(){
-    let Arr=[];
-    const examID = this.ac.snapshot.paramMap.get('examID');
-    this.selection.selected.forEach(item=>{
-      // Arr+=  examID+','+item.Id+',';
-     Arr.push( { ExamId: examID, QuestionId: item.Id }) ;
-    })
-    
-    console.log(JSON.stringify(Arr));
-    this.http.post<string>('http://localhost:65170/api/ExamQuestions/?action=AddMutiple',JSON.stringify(Arr),httpOptions).subscribe((e)=>{
 
-    })
-  }
-  random(){
-    // this.http.post<string>('')
+  random() {
+    if (this.numberQuestion < 0) {
+      confirm('random number is greater than 0');
+    } else if (isNaN(this.numberQuestion)) {
+      confirm('random number must is number');
+    } else {
+      const examID = this.ac.snapshot.paramMap.get('examID');
+      let Arr = { Total: this.numberQuestion, ExamId: examID };
+      this.http.post<string>('http://localhost:65170/api/ExamQuestions?action=random', JSON.stringify(Arr), httpOptions).subscribe((error) => {
+
+        confirm('inserted' + ' ' + error + ' ' + 'records in Exam');
+        this.listQuestion();
+
+        console.log(error)
+      });
+    }
+
   }
   onSearch() {
-    this.http.get<string>('http://localhost:65170/api/Question?searchString=' + this.searchString).subscribe(value => {
+    this.http.get<string>('http://localhost:65170/api/ExamQuestions?searchString=' + this.searchString).subscribe(value => {
       this.dataSource.data = JSON.parse(value);
       console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
     });
@@ -193,7 +155,7 @@ export class ExamDetailComponent implements OnInit {
     if (!row) {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.Id + 1}`;
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.QuesId + 1}`;
   }
 
 
