@@ -76,7 +76,7 @@ export class CreateExamComponent implements OnInit {
   ngOnInit() {
     this.getApiCategory();
     this.examForm = this.fb.group({
-      NameExam: ['', [Validators.required, Validators.maxLength(50), Validators.minLength(5)]],
+      NameExam: ['', [Validators.required, Validators.maxLength(50)]],
       CreateBy: [this.currentUser.FullName],
       QuestionNumber: ['', [Validators.required, Validators.pattern]],
       //status: ['', [{value: 'false', disabled: true}]],
@@ -110,9 +110,9 @@ export class CreateExamComponent implements OnInit {
   }
   onSubmit() {
     
-    console.log(this.examForm.value);
+    
     if (this.examForm.valid) {
-     
+      console.log(this.examForm.value);
       const value = this.examForm.value;
       value.Category = this.CategoryFormApi.filter(s => s.Id == value.CategoryId);
       value.Category = value.Category.length > 0 ? value.Category[0] : null;

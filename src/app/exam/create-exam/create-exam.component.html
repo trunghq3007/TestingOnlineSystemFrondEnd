@@ -13,7 +13,7 @@
           Name exam:
         </label>
         <div class="col-10">
-          <input class="form-control" type="text" [pattern]="regex" id="example-text-input" formControlName="NameExam">
+          <input class="form-control"  type="text"  id="example-text-input" formControlName="NameExam">
         </div>
       </div>
       <div *ngIf="!NameExam.valid && NameExam.touched" style="color: red">
@@ -23,9 +23,7 @@
         <span *ngIf="NameExam.hasError('maxLength')">
           Name exam maxlength 50 character
         </span>
-        <span *ngIf="NameExam.hasError('minLength')">
-          Name exam minlength 5 character
-        </span>
+      
        
 
       </div>

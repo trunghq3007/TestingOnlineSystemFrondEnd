@@ -64,7 +64,7 @@ export class ExamUpdateComponent  implements OnInit {
   ngOnInit() {
     this.getApiCategory();
     this.editForm = this.fb.group({
-      NameExam: ['', [Validators.required, Validators.pattern, Validators.maxLength(50), Validators.minLength(5)]],
+      NameExam: ['', [Validators.required, Validators.maxLength(50)]],
       CreateBy: ['', [Validators.required]],
       QuestionNumber: ['', [Validators.required, Validators.pattern]],
       //status: ['', [{value: 'false', disabled: true}]],
