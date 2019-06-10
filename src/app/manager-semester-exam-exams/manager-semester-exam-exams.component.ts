@@ -24,7 +24,7 @@ export class ManagerSemesterExamExamsComponent implements OnInit {
   a: any;
   check: number = 0;
   Id = this.activateRoute.snapshot.paramMap.get('Id');
-  searchString  : string= "";
+  searchString: string = "";
 
   displayedColumn: string[] = ['select', 'Id', 'NameExam', 'CreateBy', 'QuestionNumber', 'Status']
   dataSource = new MatTableDataSource<Exam>(this.ListExams);
@@ -35,14 +35,14 @@ export class ManagerSemesterExamExamsComponent implements OnInit {
   selection = new SelectionModel<Exam>(true, []);
   onSearch() {
 
-    console.log('http://localhost:65170/api/SemesterExam/?searchString='+this.searchString+'&id='+this.Id+'&searchExams')
-    this.http.get<string>('http://localhost:65170/api/SemesterExam/?searchString='+this.searchString+'&id='+this.Id+'&searchExams').subscribe(
+    console.log('http://localhost:65170/api/SemesterExam/?searchString=' + this.searchString + '&id=' + this.Id + '&searchExams')
+    this.http.get<string>('http://localhost:65170/api/SemesterExam/?searchString=' + this.searchString + '&id=' + this.Id + '&searchExams').subscribe(
       value => {
         console.log(this.searchString);
-        this.dataSource.data= JSON.parse(value);
+        this.dataSource.data = JSON.parse(value);
         console.log(value);
-        });
-      }
+      });
+  }
   isAllSelected() {
     const numSelected = this.selection.selected.length;
     const numRows = this.dataSource.data.length;
@@ -87,7 +87,7 @@ export class ManagerSemesterExamExamsComponent implements OnInit {
 
       this.dataSource.data = JSON.parse(value);
       console.log(this.dataSource);
-      
+
     });
   }
   AddExam() {

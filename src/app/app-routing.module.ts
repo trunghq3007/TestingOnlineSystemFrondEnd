@@ -23,10 +23,21 @@ import { ListUpdateComponent } from './test/list-update/list-update.component';
 import { ViewListSemasterComponent } from './view-list-semaster/view-list-semaster.component';
 import { QuestionRouting } from './question-router';
 
+import { SemesterDetailComponent } from './semester-detail/semester-detail.component';
+import { ManagerSemesterExamTestComponent } from './manager-semester-exam-test/manager-semester-exam-test.component';
+import { ViewListSemastertotestComponent } from './view-list-semastertotest/view-list-semastertotest.component';
+import { ViewlistTestbySemesterComponent } from './viewlist-testby-semester/viewlist-testby-semester.component';
+import { ThiChitietbaithiComponent } from './thi-chitietbaithi/thi-chitietbaithi.component';
+import { ThiThiComponent } from './thi-thi/thi-thi.component';
+import {RoleComponent} from './role/role.component';
 const routes: Routes = [
   {
     path: '',
     component: HomeComponent
+  },
+  {
+    path: 'Role',
+    component: RoleComponent
   },
   {
     path: 'login',
@@ -55,10 +66,6 @@ const routes: Routes = [
       path: 'create',
       component: UserCreateComponent
     },
-    // {
-    //   path: ':UserId',
-    //   component: UserDetailComponent
-    // },
     {
       path: 'update/:Id',
       component: UserUpdateComponent
@@ -106,7 +113,6 @@ const routes: Routes = [
           {
             path: '',
             component: GroupComponent,
-            // pathMatch: 'full'
           },
           {
             path: ':groupId',
@@ -119,6 +125,84 @@ const routes: Routes = [
         ]
       }
     ]
+  },
+  {
+    path: 'SemesterExamManager',
+
+    children:
+      [
+        {
+          path: '',
+          component: ViewListSemasterComponent,
+          pathMatch: 'full'
+        }
+        ,
+
+        {
+          path: 'detail/:Id',
+          children:
+            [
+              // {
+              //   path: ':Id',
+              //   component: SemesterDetailComponent
+              // }
+              // ,
+              {
+                path: 'test',
+                component: ManagerSemesterExamTestComponent
+
+              }
+            ]
+
+        },
+
+      ]
+  }
+  ,
+  {
+    path: 'thi',
+
+    children:
+      [
+        {
+          path: '',
+          component: ViewListSemastertotestComponent,
+
+
+
+        }
+        ,
+        {
+          path: ':Id',
+
+          children:
+            [
+              {
+                path: '',
+                component: ViewlistTestbySemesterComponent,
+              }
+              ,
+              {
+                path: ':TestId',
+                
+                children :
+                [
+                  {
+                    path : '',
+                    component: ThiChitietbaithiComponent,
+                  }
+                  ,
+                  {
+                    path: 'thi',
+                    component: ThiThiComponent
+                  }
+                ]
+              }
+            ]
+        }
+      ]
+
+
   },
   {
     path: 'test',
@@ -141,8 +225,7 @@ const routes: Routes = [
         component: ListUpdateComponent
       }
     ]
-  }
-  ,
+  },
   {
     path: 'SemesterExamManager',
     component: ViewListSemasterComponent
@@ -151,6 +234,7 @@ const routes: Routes = [
 
 ];
 
+  
 
 
 
