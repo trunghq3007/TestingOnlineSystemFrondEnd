@@ -66,11 +66,9 @@
           <p>Content</p>
         </div>
         <div class="col-md-10" style="margin-left: -23px; width: 703px!important;">
-  
-          <ckeditor formControlName="Content" [editor]="Editor" id="classic-editor" name="classic-editor"
-          
-          >
-          </ckeditor>
+          <input formControlName="Content" (change)="onChange($event)"  id="creater-question" name="classic-editor" />  
+            <!-- <ckeditor formControlName="Content" id="creater-question" [editor]="Editor" id="classic-editor" name="classic-editor">
+                </ckeditor> -->
         </div>
         <br><br><br><br><br>
               <div *ngIf="Content.invalid && Content.touched">
@@ -112,8 +110,10 @@
             <tr>
               <td ><p style="margin-right:64px;">Content</p></td>
               <td colspan="4">
-                <ckeditor formControlName="Content" [editor]="Editor" id="classic-editor" name="classic-editor">
+                <!-- <input formControlName="Content"  id="editor-question" name="classic-editor" />   -->
+                <ckeditor formControlName="Content" [editor]="Editor" name="classic-editor">
                 </ckeditor>
+                
               </td>
               <td><button style="margin-left: 45%;" type=" button" class="btn btn-danger"
                 (click)="removeAnswer(i)">Delete</button>
@@ -126,9 +126,9 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-md-2 col-md-offset-5"><button type="button" (click)="addAnswer()" class="btn btn-success">Add
-          Answer</button></div>
-      <div class="col-md-1"><a routerLink="/question"><button type="button" (click)="saveQuestion()" class="btn btn-primary">Save Question</button></a></div>
+      <div class="col-md-2 col-md-offset-5"><button type="button" (click)="addAnswer()" class="btn btn-success" >Add
+          Answer</button> </div>
+      <div class="col-md-1"><a ><button type="button" (click)="saveQuestion()" class="btn btn-primary" >Save Question</button></a></div>
   
     </div>
   </div>

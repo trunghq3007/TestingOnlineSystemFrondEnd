@@ -17,4 +17,5 @@ export interface User {
     Role: any;
     RoleId: string;
     GroupName: string;
+    RoleName: string;
 }

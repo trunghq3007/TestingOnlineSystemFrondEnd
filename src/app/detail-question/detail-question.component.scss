@@ -26,4 +26,17 @@
   .mat-table-sticky:last-child {
     border-left: 1px solid #e0e0e0;
   }
+  img{
+    width: 150px;
+  }
+
+  td p figure img{
+  
+    width: 150px;
+  
+  }
+  :host ::ng-deep img { 
+    max-width: 400px;
+  }
+  
  

@@ -47,6 +47,13 @@ import { Toast, ToastrModule } from 'ngx-toastr';
 import { ImportQuestionComponent } from './import-question/import-question.component';
 import { ExportQuestionComponent } from './export-question/export-question.component';
 import { EditQuestionComponent } from './edit-question/edit-question.component';
+import { ManagerSemesterExamTestComponent } from './manager-semester-exam-test/manager-semester-exam-test.component';
+import { SemesterDetailComponent } from './semester-detail/semester-detail.component';
+import { ViewListSemasterComponent } from './view-list-semaster/view-list-semaster.component';
+import { ViewListSemastertotestComponent } from './view-list-semastertotest/view-list-semastertotest.component';
+import { ViewlistTestbySemesterComponent } from './viewlist-testby-semester/viewlist-testby-semester.component';
+import { ThiChitietbaithiComponent } from './thi-chitietbaithi/thi-chitietbaithi.component';
+import { ThiThiComponent } from './thi-thi/thi-thi.component';
 
 import{ SemesterDetailComponent } from './semester-detail/semester-detail.component';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
@@ -60,6 +67,7 @@ import { ListDetailComponent } from './test/list-detail/list-detail.component';
 import { ListUpdateComponent } from './test/list-update/list-update.component';
 import { ViewListSemasterComponent } from './view-list-semaster/view-list-semaster.component';
 import { DetailQuestionComponent } from './detail-question/detail-question.component';
+import { RoleComponent } from './role/role.component';
 @NgModule({
   declarations: [
     ExamListComponent,
@@ -93,9 +101,17 @@ import { DetailQuestionComponent } from './detail-question/detail-question.compo
     ExportQuestionComponent,
     CreateQuestionComponent,
     EditQuestionComponent,
+    ManagerSemesterExamTestComponent,
+    SemesterDetailComponent,
+    ViewListSemasterComponent,
+    ViewListSemastertotestComponent,
+    ViewlistTestbySemesterComponent,
+    ThiChitietbaithiComponent,
+    ThiThiComponent,
     ViewListSemasterComponent,
     SemesterDetailComponent,
     DetailQuestionComponent,
+    RoleComponent,
 
   ],
   imports: [

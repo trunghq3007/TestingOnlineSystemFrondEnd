@@ -16,12 +16,15 @@ export class DetailQuestionComponent implements OnInit {
   constructor(private http: HttpClient, private fb: FormBuilder, private router: Router, private activedRoute: ActivatedRoute) { }
   question: Question;
   ngOnInit() {
-
-    const IdQuestion = this.activedRoute.snapshot.paramMap.get('Id')
+    debugger;
+    const IdQuestion = this.activedRoute.snapshot.paramMap.get('id')
+    // const IdQuestion = this.activedRoute.snapshot.paramMap.get('Id')
     this.http.get<string>('http://localhost:65170/api/question/' + IdQuestion).subscribe(value => {
+
       console.log(value);
-      //  this.ctForm.patchValue( JSON.parse(value));
+
       this.Question = JSON.parse(value).Data;
+
 
     });
   }
