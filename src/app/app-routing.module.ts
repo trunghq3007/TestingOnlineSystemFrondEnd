@@ -230,10 +230,6 @@ const routes: Routes = [
 
 ];
 
-  
-
-
-
 const fullRoutes = [...routes, ...QuestionRouting];
 console.log(fullRoutes);
 @NgModule({
