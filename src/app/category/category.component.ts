@@ -24,7 +24,7 @@ export class CategoryComponent implements OnInit {
   cateIdd = '';
   cateIdArray = "";
   insertForm: FormGroup;
-  unamePattern = "^[A-Za-z-vxyàáâãèéêìíòóôõùúýỳỹỷỵựửữừứưụủũợởỡờớơộổỗồốọỏịỉĩệểễềếẹẻẽặẳẵằắăậẩẫầấạảđ₫]+[A-Za-z0-9a-z-vxyàáâãèéêìíòóôõùúýỳỹỷỵựửữừứưụủũợởỡờớơộổỗồốọỏịỉĩệểễềếẹẻẽặẳẵằắăậẩẫầấạảđ₫.''/# ]*$";
+  unamePattern = "^[A-Za-z-vxyàáâãèéêìíòóôõùúýỳỹỷỵựửữừứưụủũợởỡờớơộổỗồốọỏịỉĩệểễềếẹẻẽặẳẵằắăậẩẫầấạảđ₫]+[A-Za-z0-9a-z-vxyàáâãèéêìíòóôõùúýỳỹỷỵựửữừứưụủũợởỡờớơộổỗồốọỏịỉĩệểễềếẹẻẽặẳẵằắăậẩẫầấạảđ₫.''/ ]*$";
   public dataLength: number;
   constructor(private http: HttpClient,
     private router: Router, private toastr: ToastrService) { }
@@ -55,7 +55,7 @@ export class CategoryComponent implements OnInit {
   }
   getlist()
   {
-    this.http.get<string>('http://localhost:65170/api/category',httpOptions).subscribe(value => {
+    this.http.get<string>('http://localhost:65170/api/category').subscribe(value => {
       this.dataSource.data = this.FormatData(JSON.parse(value));
       console.log(value);
       this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort;
@@ -63,7 +63,7 @@ export class CategoryComponent implements OnInit {
   }
   ngOnInit() {
     
-    this.http.get<string>('http://localhost:65170/api/category',httpOptions).subscribe(value => {
+    this.http.get<string>('http://localhost:65170/api/category').subscribe(value => {
       this.dataSource.data = this.FormatData(JSON.parse(value));
       console.log(value);
       this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort;
@@ -139,8 +139,7 @@ export class CategoryComponent implements OnInit {
         }
 
         else if (res == 0) {
-
-          this.toastr.success('Đang có câu hỏi trong Category', '');
+          confirm("Đang có câu hỏi trong Category");
         }
         else {
           confirm("Lỗi");
@@ -185,12 +184,12 @@ export class CategoryComponent implements OnInit {
     this.http.post('http://localhost:65170/api/Category?action=delete', JSON.stringify(arrId), httpOptions).subscribe((e) => {
       console.log(typeof (e));
       if (+e >= 1) {
-        this.toastr.success('Delete all success!', '');
+        this.toastr.success('Delete all success!', 'List Tag!');
        this.getlist();
       } else if (+e == 0) {
-        this.toastr.warning('Delete all false!', '');
+        this.toastr.warning('Delete all false!', '!');
       } else {
-        this.toastr.warning('Something wrong!', '');
+        this.toastr.warning('Something wrong!', '!');
       }
     }
     );
