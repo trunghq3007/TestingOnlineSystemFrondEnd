@@ -71,6 +71,9 @@ import { DetailQuestionComponent } from './detail-question/detail-question.compo
 import { RoleComponent } from './role/role.component';
 import { ExamDetailQuestionComponent } from './exam/exam-detail-question/exam-detail-question.component';
 import { ThiKetquathiComponent } from './thi-ketquathi/thi-ketquathi.component';
+import { RoleActionAddComponent } from './role-action-add/role-action-add.component';
+import { RoleActionComponent } from './roleaction/roleaction.component';
+
 
 @NgModule({
   declarations: [
@@ -117,9 +120,13 @@ import { ThiKetquathiComponent } from './thi-ketquathi/thi-ketquathi.component';
     DetailQuestionComponent,
     RoleComponent,
 
-    ExamDetailQuestionComponent,
+   ExamDetailQuestionComponent,
 
-    ThiKetquathiComponent,
+   ThiKetquathiComponent,
+
+    RoleActionAddComponent,
+
+    RoleActionComponent,
   ],
   imports: [
     MatTabsModule,
