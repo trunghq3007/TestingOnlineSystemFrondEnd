@@ -72,10 +72,13 @@ export class ViewListSemasterComponent implements OnInit {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.ID + 1}`;
   }
 
-  error: any = { isError: false,  errorMessage: '' };
+  error: any = { isError: false, errorMessage: '' };
   compareTwoDates() {
     if (new Date(this.ctForm.controls['EndDay'].value) < new Date(this.ctForm.controls['StartDay'].value)) {
       this.error = { isError: true, errorMessage: 'End Date cant before start date !' };
+    }
+    else {
+      this.error = { isError: false, errorMessage: '' };
     }
   }
 
