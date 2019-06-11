@@ -58,17 +58,19 @@ export class GroupComponent implements OnInit {
     }
   }
   listgroup() {
-    this.http.get<string>('http://localhost:65170/api/Group').subscribe(value => {
+    const permission = localStorage.getItem('currentPermission');
+    const http: HttpHeaders = new HttpHeaders({ 'permission': permission });
+    this.http.get<string>('http://localhost:65170/api/Group', { headers: http }).subscribe(value => {
       this.dataSource.data = JSON.parse(value).Data;
       console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
     });
   }
   ngOnInit() {
-
-    this.http.get<string>('http://localhost:65170/api/Group').subscribe(value => {
-      this.dataSource.data = JSON.parse(value).Data;
-      console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
-    });
+    this.listgroup();
+    // this.http.get<string>('http://localhost:65170/api/Group').subscribe(value => {
+    //   this.dataSource.data = JSON.parse(value).Data;
+    //   console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
+    // });
     this.createForm = this.fb.group({
       GroupName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(20)]],
       Creator: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],

@@ -92,43 +92,43 @@ export class ExamDetailComponent implements OnInit {
   }
 
   addQuestion(Id) {
-    const examID = this.ac.snapshot.paramMap.get('examID');
+//     const examID = this.ac.snapshot.paramMap.get('examID');
 
-    let Data = { ExamId: examID, QuestionId: Id };
-    this.http.post<string>('http://localhost:65170/api/ExamQuestions', JSON.stringify(Data), httpOptions).subscribe({
-<<<<<<< .mine
-      next: 
-      (response) => {
+//     let Data = { ExamId: examID, QuestionId: Id };
+//     this.http.post<string>('http://localhost:65170/api/ExamQuestions', JSON.stringify(Data), httpOptions).subscribe({
+// <<<<<<< .mine
+//       next: 
+//       (response) => {
         
-        if(response==1){
-          const examID = this.ac.snapshot.paramMap.get('examID');
-          this.http.get<string>('http://localhost:65170/api/ExamQuestions/' + examID).subscribe(
-            value => {
-              this.dataSourcedetail.data = JSON.parse(value);
-              console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
-            });
-=======
-      next:
-        (err) => {
+//         if(response==1){
+//           const examID = this.ac.snapshot.paramMap.get('examID');
+//           this.http.get<string>('http://localhost:65170/api/ExamQuestions/' + examID).subscribe(
+//             value => {
+//               this.dataSourcedetail.data = JSON.parse(value);
+//               console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
+//             });
+// =======
+//       next:
+//         (err) => {
 
 
-          this.listQuestion();
+//           this.listQuestion();
 
 
 
 
 
->>>>>>> .theirs
-          confirm('success');
+// >>>>>>> .theirs
+//           confirm('success');
 
 
-        },
-      error: (err) => {
-        console.log(err);
-        confirm('false')
-      }
+//         },
+//       error: (err) => {
+//         console.log(err);
+//         confirm('false')
+//       }
 
-    });
+//     });
 
   }
   AddMutiple() {
