@@ -127,7 +127,7 @@ export class ExamDetailComponent implements OnInit {
       next: 
       (response) => {
         
-        if(yresponse==1){
+        if(response==1){
           const examID = this.ac.snapshot.paramMap.get('examID');
           this.http.get<string>('http://localhost:65170/api/ExamQuestions/' + examID).subscribe(
             value => {
