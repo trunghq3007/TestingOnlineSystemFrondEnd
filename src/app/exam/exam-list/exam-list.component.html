@@ -44,12 +44,7 @@
                   </mat-option>
                 </mat-select>
               </mat-form-field>
-              <!-- <mat-form-field class="col-md-4">
-                <mat-label>CreateAt</mat-label>
-                <input matInput [matDatepicker]="picker" placeholder="Choose a date" formControlName="CreateAt">
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
-              </mat-form-field> -->
+              
               <mat-form-field class="col-md-4">
                 <mat-label>CreateBy</mat-label>
                 <mat-select formControlName="CreateBy">
@@ -177,8 +172,10 @@
                 data-toggle="modal" data-target="#delete"><span class="glyphicon glyphicon-trash"></span></button>
             </span>
             <span data-placement="top" data-toggle="tooltip" title="Export">
-              <button (click)="exportExam(element.Id)" class="btn btn-success btn-xs" data-title="Export"
-                data-toggle="modal" data-target="#export"><span class="glyphicon glyphicon-print"></span></button>
+              <!-- <button (click)="exportExam(element.Id)" class="btn btn-success btn-xs" data-title="Export"
+                data-toggle="modal" data-target="#export"><span class="glyphicon glyphicon-print"></span></button> -->
+              <button [routerLink]="['export',element.Id]" class="btn btn-success btn-xs" >
+              <span class="glyphicon glyphicon-print"></span></button>
             </span>
           </td>
   

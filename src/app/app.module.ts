@@ -71,6 +71,7 @@ import { DetailQuestionComponent } from './detail-question/detail-question.compo
 import { RoleComponent } from './role/role.component';
 import { ExamDetailQuestionComponent } from './exam/exam-detail-question/exam-detail-question.component';
 import { ThiKetquathiComponent } from './thi-ketquathi/thi-ketquathi.component';
+import { ExportExamComponent } from './exam/exam-list/export-exam/export-exam.component';
 
 @NgModule({
   declarations: [
@@ -120,6 +121,8 @@ import { ThiKetquathiComponent } from './thi-ketquathi/thi-ketquathi.component';
     ExamDetailQuestionComponent,
 
     ThiKetquathiComponent,
+
+    ExportExamComponent,
   ],
   imports: [
     MatTabsModule,

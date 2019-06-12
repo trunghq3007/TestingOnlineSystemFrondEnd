@@ -145,7 +145,7 @@ export class ExamListComponent implements OnInit {
       (
         res => {
         this.listexams();
-        this.toasr.warning('Export Successfully','Exam.Export');
+        this.toasr.success('Export Successfully','Exam.Export');
        
       });
     }

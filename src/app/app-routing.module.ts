@@ -32,6 +32,7 @@ import { ThiChitietbaithiComponent } from './thi-chitietbaithi/thi-chitietbaithi
 import { ThiThiComponent } from './thi-thi/thi-thi.component';
 import {RoleComponent} from './role/role.component';
 import{ ThiKetquathiComponent } from './thi-ketquathi/thi-ketquathi.component';
+import { ExportExamComponent } from './exam/exam-list/export-exam/export-exam.component';
 const routes: Routes = [
   {
     path: '',
@@ -83,6 +84,10 @@ const routes: Routes = [
         pathMatch: 'full'
       },
       {
+        path:'export/:Id',
+        component: ExportExamComponent
+      },
+      {
         path: 'create',
         component: CreateExamComponent,
       },
@@ -97,7 +102,7 @@ const routes: Routes = [
       {
         path: 'update/:Id',
         component: ExamUpdateComponent
-      },
+      }
 
     ]
   },
