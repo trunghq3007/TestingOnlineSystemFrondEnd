@@ -5,4 +5,6 @@ export interface Iresult {
     FullName:String;
     SemesterName:String;
     Email:String;
+    Score:String;
+    Category:String;
 }
