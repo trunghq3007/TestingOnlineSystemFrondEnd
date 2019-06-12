@@ -36,7 +36,6 @@ import { from } from 'rxjs';
 import { ListExamUserComponent } from './list-exam-user/list-exam-user.component';
 import { DetailExamCustomerComponent } from './detail-exam-customer/detail-exam-customer.component';
 
-import { RoleComponent } from './role/role.component';
 import { ThiKetquathiComponent } from './thi-ketquathi/thi-ketquathi.component';
 import { RoleActionComponent } from './roleaction/roleaction.component';
 import { RoleActionAddComponent } from './role-action-add/role-action-add.component';
