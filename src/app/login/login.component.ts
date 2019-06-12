@@ -83,8 +83,6 @@ export class LoginComponent implements OnInit {
               // debugger;
               console.log(JSON.parse(val));
             });
-
-
           } else {
             // check looix
           }
