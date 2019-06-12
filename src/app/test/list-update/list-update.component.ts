@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -41,7 +42,7 @@ export class ListUpdateComponent implements OnInit {
   exams: exam[] = [];
   form: FormGroup;
   semasters: semaster[] = [];
-  constructor(private insert: FormBuilder, private http: HttpClient, private ac: ActivatedRoute) {
+  constructor(private insert: FormBuilder, private http: HttpClient, private ac: ActivatedRoute,private toar:ToastrService) {
 
   }
 
@@ -134,13 +135,14 @@ export class ListUpdateComponent implements OnInit {
       this.http.put
         ('http://localhost:65170/api/Test/' + formData.Id, formData)
         .subscribe({
-          next: (res) => {
-            console.log(res);
-            confirm('Update success!');
+        
+          next: (response) => {
+              this.toar.success('success',' Update Test');
+          
           },
           error: (err) => {
-            console.log(err);
-            console.log('false');
+            this.toar.warning('false',' Update Test');
+            
           }
         });
      

@@ -23,7 +23,7 @@ export class ExamUpdateComponent  implements OnInit {
   
   editForm: FormGroup;
   number = "^([1-9][0-9]{0,3}|^2000)$";
-  regex = "^[A-Za-z0-9\s _]+$";
+  //regex = "^[A-Za-z0-9\s _]+$";
   CategoryFormApi = [];
   categoryname: string;
 
@@ -97,7 +97,7 @@ export class ExamUpdateComponent  implements OnInit {
       this.editForm.get('CreateBy').markAsTouched();
       this.editForm.get('QuestionNumber').markAsTouched();
       this.editForm.get('SpaceQuestionNumber').markAsTouched();
-       this.editForm.get('CategoryId').markAsTouched();
+       //this.editForm.get('CategoryId').markAsTouched();
        return;
 
     }

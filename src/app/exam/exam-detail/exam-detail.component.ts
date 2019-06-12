@@ -4,7 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Exam } from 'src/app/exam';
 import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
-import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -40,6 +41,7 @@ export class ExamDetailComponent implements OnInit {
   examID = this.ac.snapshot.paramMap.get('examID');
   numberQuestion: number;
   filterForm: FormGroup;
+  randomForm: FormGroup;
   dataSource = new MatTableDataSource<questions>(this.questions);
 
 
@@ -49,7 +51,7 @@ export class ExamDetailComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   selection = new SelectionModel<questions>(true, []);
-  constructor(private http: HttpClient, private ac: ActivatedRoute, private fb: FormBuilder) { }
+  constructor(private http: HttpClient, private ac: ActivatedRoute, private fb: FormBuilder, private toar: ToastrService) { }
   get StartDate(): FormControl {
     return this.filterForm.get('CreatedDate') as FormControl;
   }
@@ -62,15 +64,30 @@ export class ExamDetailComponent implements OnInit {
   get Type(): FormControl {
     return this.filterForm.get('Type') as FormControl;
   }
-
+  get TypeQuestion(): FormControl {
+    return this.randomForm.get('Type') as FormControl;
+  }
+  get QuestionCategory(): FormControl {
+    return this.randomForm.get('CategoryName') as FormControl;
+  }
+  get RandomNumber(): FormControl {
+    return this.randomForm.get('Total') as FormControl;
+  }
+  regTotal="^[0-9]{1,2}$";
   ngOnInit() {
     this.filterForm = this.fb.group({
-      CreatedDate: [''],
-      Category: [''],
+      // CreatedDate: [''],
+      // Category: [''],
       Level: [''],
       CreatedBy: [''],
       Type: ['']
 
+    });
+    this.randomForm = this.fb.group({
+      Type: ['',Validators.required],
+      CategoryName: ['',Validators.required],
+      Total: ['',[Validators.required,Validators.pattern]],
+      ExamId: [this.examID]
     });
     this.listQuestion();
 
@@ -141,7 +158,8 @@ export class ExamDetailComponent implements OnInit {
     console.log(JSON.stringify(Arr));
     this.http.post<string>('http://localhost:65170/api/ExamQuestions/?action=AddMutiple', JSON.stringify(Arr), httpOptions).subscribe((error) => {
 
-      confirm('inserted' + ' ' + error + ' ' + 'records in Exam');
+      this.toar.success('inserted' + ' ' + error + ' ' + 'records in Exam', ' Question Number');
+
       this.listQuestion();
 
     });
@@ -149,15 +167,17 @@ export class ExamDetailComponent implements OnInit {
 
   random() {
     if (this.numberQuestion < 0) {
-      confirm('random number is greater than 0');
+      this.toar.warning('random number is greater than 0', ' Question Number');
+      // confirm('random number is greater than 0');
     } else if (isNaN(this.numberQuestion)) {
-      confirm('random number must is number');
+      this.toar.warning('random number must is number', ' Question Number')
+      // confirm('random number must is number');
     } else {
       const examID = this.ac.snapshot.paramMap.get('examID');
       let Arr = { Total: this.numberQuestion, ExamId: examID };
       this.http.post<string>('http://localhost:65170/api/ExamQuestions?action=random', JSON.stringify(Arr), httpOptions).subscribe((error) => {
-
-        confirm('inserted' + ' ' + error + ' ' + 'records in Exam');
+        this.toar.success('inserted' + ' ' + error + ' ' + 'records in Exam', ' Question Number');
+        // confirm('inserted' + ' ' + error + ' ' + 'records in Exam');
         this.listQuestion();
 
         console.log(error)
@@ -165,6 +185,32 @@ export class ExamDetailComponent implements OnInit {
     }
 
   }
+  onSubmit() {
+
+
+    if (this.randomForm.valid) {
+      const examID = this.ac.snapshot.paramMap.get('examID');
+      const value = this.randomForm.value;
+      this.http.post<string>('http://localhost:65170/api/ExamQuestions?action=random', JSON.stringify(value), httpOptions).subscribe((error) => {
+        this.toar.success('inserted' + ' ' + error + ' ' + 'records in Exam', ' Question Number');
+        // confirm('inserted' + ' ' + error + ' ' + 'records in Exam');
+        this.listQuestion();
+
+        console.log(error)
+      });
+      console.log(this.randomForm.value);
+    }
+  }
+  validateForm() {
+    if (this.randomForm.invalid) {
+      this.randomForm.get('Type').markAsTouched();
+      this.randomForm.get('CategoryName').markAsTouched();
+      this.randomForm.get('Total').markAsTouched();
+     
+      return;
+    }
+  }
+ 
   onSearch() {
     this.http.get<string>('http://localhost:65170/api/ExamQuestions?searchString=' + this.searchString).subscribe(value => {
       this.dataSource.data = JSON.parse(value);

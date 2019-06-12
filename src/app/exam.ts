@@ -1,3 +1,5 @@
+import { Category } from './ICategory';
+
 export interface Exam {
 
     Id: number,
@@ -9,7 +11,8 @@ export interface Exam {
     CreateAt: Date,
 
     Categorys: object,
-    Category: any,
+    Category: Category,
     CategoryId: string,
     Note: string,
+    NameCategory: string,
 }
