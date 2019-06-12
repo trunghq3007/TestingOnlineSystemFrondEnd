@@ -15,17 +15,8 @@
       <div style="padding: 10px;">
         <input [(ngModel)]="searchString" type="text" placeholder="Search..">
         <button (click)="onSearch()" type="submit"><i class="fa fa-search"></i></button>
-        <div class="container col-md-12">
-            <span data-placement="top" data-toggle="tooltip"><button class="btn btn-primary " routerLink="/exam/create" data-title="Create"
-                    data-toggle="modal" data-target="#create" style="margin-left: 90.5%;margin-bottom: 5px;"
-                    id="Create"><span>Create</span></button></span>
-                    
-        </div>
         <hr />
-       
-            
       </div>
-      
       <div class="col-md-12">
         <form action="" [formGroup]="filterExam" (ngSubmit)="onSubmit()">
           <mat-accordion>

@@ -3,9 +3,6 @@ import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Exam } from 'src/app/exam';
 import { MatTableDataSource } from '@angular/material';
-import { User } from 'src/app/user';
-import { Subscription } from 'rxjs';
-import { AuthenticationService } from 'src/app/_services/authentication.service';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -30,29 +27,11 @@ export class semaster{
   styleUrls: ['./list-create.component.scss']
 })
 export class ListCreateComponent implements OnInit {
-  currentUser: User;
-  currentUserSubscription: Subscription;
-  isMember = false;
-  isManager = false;
-  isAdmin = false;
-
   exams:exam[]=[];
   form: FormGroup;
   semasters:semaster[]=[];
-
-  constructor(private insert: FormBuilder, private http: HttpClient, private authenticationService: AuthenticationService) {
-    this.currentUserSubscription = this.authenticationService.currentUser.subscribe(user => {
-      this.currentUser = JSON.parse(user);
-    });
-    if (this.currentUser.RoleId == '1') {
-      this.isAdmin = true;
-    }
-    if (this.currentUser.RoleId == '2') {
-      this.isManager = true;
-    }
-    if (this.currentUser.RoleId == '3') {
-      this.isMember = true;
-    }
+  constructor(private insert: FormBuilder, private http: HttpClient) {
+    
   }
 
 
@@ -74,13 +53,12 @@ regTotal="^[0-9]{1,2}$";
 regPassScore="^[0-9]{1,3}$"
 
   ngOnInit() {
-    
     this.form = this.insert.group({
       ExamId: ['', [Validators.required]],
       SemasterExamId: ['',[Validators.required]],
       TestName: ['', [Validators.required,Validators.maxLength(50)]],
       
-      CreateBy: [this.currentUser],
+      CreateBy: ['', [Validators.required]],
       
       PassScore: ['', [Validators.required,Validators.pattern]],
       TotalTest: ['', [Validators.required,Validators.pattern]],

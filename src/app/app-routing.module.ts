@@ -31,6 +31,9 @@ import { ViewlistTestbySemesterComponent } from './viewlist-testby-semester/view
 import { ThiChitietbaithiComponent } from './thi-chitietbaithi/thi-chitietbaithi.component';
 import { ThiThiComponent } from './thi-thi/thi-thi.component';
 import {RoleComponent} from './role/role.component';
+import{ ThiKetquathiComponent } from './thi-ketquathi/thi-ketquathi.component';
+import {RoleActionComponent} from './roleaction/roleaction.component';
+import { RoleActionAddComponent} from './role-action-add/role-action-add.component';
 const routes: Routes = [
   {
     path: '',
@@ -38,7 +41,19 @@ const routes: Routes = [
   },
   {
     path: 'Role',
-    component: RoleComponent
+    children: [{
+      path: '',
+      component: RoleComponent,
+    },
+    {
+      path: ':RoleId',
+      component: RoleActionComponent
+    },
+    {
+      path: 'RoleActionAdd/:RoleId',
+      component: RoleActionAddComponent
+    }
+  ]
   },
   {
     path: 'login',
@@ -91,7 +106,7 @@ const routes: Routes = [
       },
       {
         path: 'examquestion/:examID',
-        component: ExamDetailQuestionComponent
+         component: ExamDetailQuestionComponent
       },
       {
         path: 'update/:Id',
@@ -106,7 +121,7 @@ const routes: Routes = [
       {
         path: '',
         component: GroupComponent,
-        // pathMatch: 'full'
+        pathMatch: 'full'
       },
       {
         path: ':groupId',
@@ -145,19 +160,9 @@ const routes: Routes = [
 
         {
           path: 'detail/:Id',
-          children:
-            [
-              // {
-              //   path: ':Id',
-              //   component: SemesterDetailComponent
-              // }
-              // ,
-              {
-                path: 'test',
-                component: ManagerSemesterExamTestComponent
-
-              }
-            ]
+         
+                component: SemesterDetailComponent
+             
 
         },
 
@@ -200,6 +205,10 @@ const routes: Routes = [
                   {
                     path: 'thi',
                     component: ThiThiComponent
+                  },
+                  {
+                    path:'ketqua',
+                   component:ThiKetquathiComponent
                   }
                 ]
               }

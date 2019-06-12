@@ -2,14 +2,10 @@ export interface Exam {
 
     Id: number,
     NameExam: string,
-    CreateBy: string,
+    CreateBy: number,
     QuestionNumber: number,
     Status: boolean,
-    SpaceQuestionNumber: number,
+    TypeExam: string,
     CreateAt: Date,
-
-    Categorys: object,
-    Category: any,
-    CategoryId: string,
-    Note: string,
+    Note: string
 }

@@ -2,9 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { User } from 'src/app/user';
-import { Subscription } from 'rxjs';
-import { AuthenticationService } from 'src/app/_services/authentication.service';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -28,7 +25,7 @@ export class test {
   PassScore: number;
   TestName: string;
   TotalTest: number;
-  TestTime: number;
+  TestTime:number;
 }
 export class semaster {
   ID: number;
@@ -40,35 +37,19 @@ export class semaster {
   styleUrls: ['./list-update.component.scss']
 })
 export class ListUpdateComponent implements OnInit {
-  currentUser: User;
-  currentUserSubscription: Subscription;
-  isMember = false;
-  isManager = false;
-  isAdmin = false;
-  tests: test[] = [];
+  tests:test[]=[];
   exams: exam[] = [];
   form: FormGroup;
   semasters: semaster[] = [];
-  constructor(private insert: FormBuilder, private http: HttpClient, private ac: ActivatedRoute, private authenticationService: AuthenticationService) {
-    this.currentUserSubscription = this.authenticationService.currentUser.subscribe(user => {
-      this.currentUser = JSON.parse(user);
-    });
-    if (this.currentUser.RoleId == '1') {
-      this.isAdmin = true;
-    }
-    if (this.currentUser.RoleId == '2') {
-      this.isManager = true;
-    }
-    if (this.currentUser.RoleId == '3') {
-      this.isMember = true;
-    }
+  constructor(private insert: FormBuilder, private http: HttpClient, private ac: ActivatedRoute) {
+
   }
 
 
   validateForm() {
     if (this.form.invalid) {
       this.form.get('TestTime').markAsTouched();
-      this.form.get('TotalTest').markAsTouched();
+      this.form.get('NumberTime').markAsTouched();
       this.form.get('ExamId').markAsTouched();
       this.form.get('SemasterExamId').markAsTouched();
       this.form.get('TestName').markAsTouched();
@@ -79,22 +60,20 @@ export class ListUpdateComponent implements OnInit {
     }
     // do something else
   }
-  regTotal = "^[0-9]{1,2}$";
-  regPassScore = "^[0-9]{1,3}$"
 
   ngOnInit() {
     this.form = this.insert.group({
       ExamId: ['', [Validators.required]],
-      SemasterExamId: ['', [Validators.required]],
-      TestName: ['', [Validators.required, Validators.maxLength(50)]],
+      SemasterExamId: [''],
+      TestName: ['', [Validators.required]],
+      // StartDate: ['', ],
+      // EndDate: ['', ],
+      CreateBy: ['', [Validators.required]],
 
-      CreateBy: [this.currentUser],
-
-      PassScore: ['', [Validators.required, Validators.pattern]],
-      TotalTest: ['', [Validators.required, Validators.pattern]],
+      PassScore: ['', [Validators.required, Validators.min(1)]],
+      TotalTest: ['', [Validators.required]],
       Status: ['', [Validators.required]],
-      TestTime: ['', [Validators.required, Validators.pattern]],
-
+      TestTime: ['', [Validators.required]],
 
     });
     this.http.get<string>('http://localhost:65170/api/exam').subscribe(
@@ -110,7 +89,7 @@ export class ListUpdateComponent implements OnInit {
     const TestID = this.ac.snapshot.paramMap.get('Id');
     this.http.get<string>('http://localhost:65170/api/test/' + TestID).subscribe(value => {
       this.tests = JSON.parse(value);
-
+     
       this.form.patchValue(JSON.parse(value));
     });
   }
@@ -164,7 +143,7 @@ export class ListUpdateComponent implements OnInit {
             console.log('false');
           }
         });
-
+     
       console.log(this.form.value);
 
     }
