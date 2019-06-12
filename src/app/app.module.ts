@@ -74,6 +74,13 @@ import { RoleComponent } from './role/role.component';
 import { NgxTrimDirectiveModule } from 'ngx-trim-directive';
 import { ListExamUserComponent } from './list-exam-user/list-exam-user.component';
 import { DetailExamCustomerComponent } from './detail-exam-customer/detail-exam-customer.component';
+import { ExamDetailQuestionComponent } from './exam/exam-detail-question/exam-detail-question.component';
+import { ThiKetquathiComponent } from './thi-ketquathi/thi-ketquathi.component';
+import { RoleActionAddComponent } from './role-action-add/role-action-add.component';
+import { RoleActionComponent } from './roleaction/roleaction.component';
+import { AuthGuard } from './_guards/auth.guard';
+import { CookieService } from 'ngx-cookie-service';
+
 @NgModule({
   declarations: [
     ExamListComponent,
@@ -122,6 +129,14 @@ import { DetailExamCustomerComponent } from './detail-exam-customer/detail-exam-
     DetailExamCustomerComponent,
     // ExamDetailQuestionComponent,
     // ThiKetquathiComponent,
+
+   ExamDetailQuestionComponent,
+
+   ThiKetquathiComponent,
+
+    RoleActionAddComponent,
+
+    RoleActionComponent,
   ],
   imports: [
     MatTabsModule,
@@ -148,7 +163,11 @@ import { DetailExamCustomerComponent } from './detail-exam-customer/detail-exam-
     ToastrModule.forRoot(),
     NgxTrimDirectiveModule
   ],
-  providers: [AuthenticationService],
+  providers: [
+    AuthenticationService,
+    AuthGuard,
+    CookieService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

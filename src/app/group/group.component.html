@@ -14,6 +14,10 @@
                 data-title="Create" data-toggle="modal" data-target="#create"
                 id="Create"><span>Create</span></button></span>
           </div>
+          <div class="container col-md-6" style="padding: 2% 0 2% 0">
+            <span ><button class="btn btn-primary" style="float: right;" (click)="logout()"
+                ><span>Logout</span></button></span>
+          </div>
           <hr />
         </div>
         <div class="col-md-12">
@@ -121,6 +125,7 @@
                   (click)="getId(element.GroupId)">
                   <span class="glyphicon glyphicon-trash"></span>
                 </button></span>
+
             </td>
           </ng-container>
 

@@ -15,8 +15,17 @@
       <div style="padding: 10px;">
         <input [(ngModel)]="searchString" type="text" placeholder="Search..">
         <button (click)="onSearch()" type="submit"><i class="fa fa-search"></i></button>
+        <div class="container col-md-12">
+            <span data-placement="top" data-toggle="tooltip"><button class="btn btn-primary " routerLink="/exam/create" data-title="Create"
+                    data-toggle="modal" data-target="#create" style="margin-left: 90.5%;margin-bottom: 5px;"
+                    id="Create"><span>Create</span></button></span>
+                    
+        </div>
         <hr />
+       
+            
       </div>
+      
       <div class="col-md-12">
         <form action="" [formGroup]="filterExam" (ngSubmit)="onSubmit()">
           <mat-accordion>
@@ -144,6 +153,16 @@
         <ng-container matColumnDef="QuestionNumber">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Question Number </th>
           <td mat-cell *matCellDef="let element"> {{element.QuestionNumber}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="SpaceQuestionNumber">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> SpaceQuestion Number </th>
+          <td mat-cell *matCellDef="let element"> {{element.SpaceQuestionNumber}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="NameCategory">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Name Category </th>
+          <td mat-cell *matCellDef="let element"> {{element.NameCategory}} </td>
         </ng-container>
         <!-- Department column-->
         <ng-container matColumnDef="Status">
