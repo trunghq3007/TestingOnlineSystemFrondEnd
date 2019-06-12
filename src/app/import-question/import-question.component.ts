@@ -34,15 +34,14 @@ export class ImportQuestionComponent implements OnInit {
     const formData = new FormData();
     formData.append('file', this.form.get('avatar').value);
 
-    this.http.post<string>('http://localhost:65170/upload/importquestion', formData)
+    this.http.post<ResultObject>('http://localhost:65170/upload/importquestion', formData)
       .subscribe(
         (res) => {
-          const result: ResultObject = JSON.parse(res);
-          if (result.Success >= 1) {
+          if (res.Success >= 1) {
             confirm("Import Success");
           }
           else {
-            confirm("Import Fail");
+            confirm("Import Fail"+ res.Message);
           }
         },
 
@@ -51,7 +50,7 @@ export class ImportQuestionComponent implements OnInit {
 
 
       );
-
+      this.router.navigate(['question']);
 
   }
 
