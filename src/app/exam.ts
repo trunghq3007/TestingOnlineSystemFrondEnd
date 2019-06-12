@@ -8,4 +8,6 @@ export interface Exam {
     TypeExam: string,
     CreateAt: Date,
     Note: string
+    StartDate:Date;
+    TestName:string;
 }

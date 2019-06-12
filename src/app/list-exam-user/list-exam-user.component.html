@@ -1,0 +1,46 @@
+<h1 style="margin-left: 300px">View List Bài Thi</h1>
+<div class="content-master-hot bxslider" *ngFor="let st of semester" style="margin-left: 300px">
+  
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 box-info-home"  style="margin-top:  10px" >
+        <div class="list-exam" data-toggle="tooltip" data-placement="top" title="" data-original-title="Exam_Technical_BTNB_Final_18_01">
+            <div class="col-md-3 no-padding " style="margin-top: 0">
+                <div class="event-icon">
+                    <h4>
+                        <b>
+                           {{st.StartDate| date:'MM'}}
+                        </b>
+                        <span></span>
+                    </h4>
+                    <p class="exam-calendar-date text-center">
+                        <b>{{st.StartDate| date:'dd'}}</b>
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-9 col-xs-9 margin-top-10 padding-left-15 pull-left" style="overflow: hidden">
+                    <a  routerLink="/DetailExamCustomer/{{st.Id}}">
+                        <span class="exam-title">
+                           {{st.TestName}}
+                        </span>
+                    </a>
+                    
+                <div class="box-label-exam">
+                    <div class="col-md-12 col-xs-12 no-padding">
+                        <span>Đăng ký tự do</span>
+                    </div>
+                    <div class="hidden-sm no-padding margin-top-5">
+                        <p class="col-md-6 col-xs-6 no-padding">
+                            <i class="fa fa-calendar"></i>
+                            {{st.StartDate| date:'dd/MM/yyyy'}}
+                        </p>
+                        <p class="col-md-6 col-xs-6 no-padding  padding-left-20 pull-left">
+                            <i class="fa fa-calendar"></i>
+                            {{st.EndDate| date:'dd/MM/yyyy'}}
+                        </p>
+                    </div>
+  
+                </div>
+            </div>
+        </div>
+    </div>
+   
+  </div>

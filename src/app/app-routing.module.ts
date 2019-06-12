@@ -22,7 +22,7 @@ import { ListDetailComponent } from './test/list-detail/list-detail.component';
 import { ListUpdateComponent } from './test/list-update/list-update.component';
 import { ViewListSemasterComponent } from './view-list-semaster/view-list-semaster.component';
 import { QuestionRouting } from './question-router';
-import { ExamDetailQuestionComponent } from './exam/exam-detail-question/exam-detail-question.component';
+
 
 import { SemesterDetailComponent } from './semester-detail/semester-detail.component';
 import { ManagerSemesterExamTestComponent } from './manager-semester-exam-test/manager-semester-exam-test.component';
@@ -31,12 +31,33 @@ import { ViewlistTestbySemesterComponent } from './viewlist-testby-semester/view
 import { ThiChitietbaithiComponent } from './thi-chitietbaithi/thi-chitietbaithi.component';
 import { ThiThiComponent } from './thi-thi/thi-thi.component';
 import {RoleComponent} from './role/role.component';
-import{ ThiKetquathiComponent } from './thi-ketquathi/thi-ketquathi.component';
+
+import { from } from 'rxjs';
+import { ListExamUserComponent } from './list-exam-user/list-exam-user.component';
+import { DetailExamCustomerComponent } from './detail-exam-customer/detail-exam-customer.component';
+
 const routes: Routes = [
   {
     path: '',
-    component: HomeComponent
+    
+    children:[{
+      path:'',
+      component: HomeComponent,
+    },
+    {
+      path:'semestercustomer/:id',
+      component:ListExamUserComponent,
+    },
+    {
+      path:'DetailExamCustomer/:id',
+      component:DetailExamCustomerComponent,
+    }
+  
+   
+  ]
+
   },
+
   {
     path: 'Role',
     component: RoleComponent
@@ -90,10 +111,7 @@ const routes: Routes = [
         path: ':examID',
         component: ExamDetailComponent
       },
-      {
-        path: 'examquestion/:examID',
-        component: ExamDetailQuestionComponent
-      },
+     
       {
         path: 'update/:Id',
         component: ExamUpdateComponent
@@ -192,10 +210,7 @@ const routes: Routes = [
                     path: 'thi',
                     component: ThiThiComponent
                   },
-                  {
-                    path:'ketqua',
-                    component:ThiKetquathiComponent
-                  }
+                  
                 ]
               }
             ]

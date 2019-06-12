@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { AuthenticationService } from '../_services/authentication.service';
 import { Subscription } from 'rxjs';
 import { User } from '../user';
+import { Isemaster } from '../isemaster';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-home',
@@ -22,9 +24,12 @@ export class HomeComponent implements OnInit {
   currentSlide = 0;
   tests;
   semesterExamCode = '';
-  isAuthentication = false;
+ 
+  semester:Isemaster;
+  semesters :Isemaster [] = [];
 
-  constructor(private http: HttpClient, private router: Router, private authenticationService: AuthenticationService) {
+  constructor(private http: HttpClient, private router: Router, private authenticationService: AuthenticationService,
+    private toasr: ToastrService) {
     this.changeSlide();
     this.currentUserSubscription = this.authenticationService.currentUser.subscribe(user => {
       this.currentUser = user;
@@ -33,6 +38,13 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.http.get<string>('http://localhost:65170/api/SemesterCustomer').subscribe(
+      value => {
+
+        this.semesters = JSON.parse(value).Data;
+        console.log(value);
+      });
+      
 
   }
   changeSlide() {
@@ -58,13 +70,17 @@ export class HomeComponent implements OnInit {
   }
 
   showSemesterTest() {
-    if (this.semesterExamCode !== '') {
-      this.http
-        .get(`http://localhost:8080/semester-code/${this.semesterExamCode}`)
-        .subscribe(ob => {
-          console.log(ob);
-          this.tests = ob;
-        });
+    if (this.semesterExamCode == '') {
+       this.toasr.warning('You Must Input Code');
+    }else if(this.semesterExamCode !== '') {
+      this.http.get<string>('http://localhost:65170/api/SemesterCustomer?code=' + this.semesterExamCode)
+      .subscribe(value => {
+        this.semesters = JSON.parse(value).Data;
+        console.log(value);
+      }     
+      );
+    }else{
+    this.toasr.error('luong an loz');
     }
   }
 
@@ -82,5 +98,6 @@ export class HomeComponent implements OnInit {
     this.authenticationService.gotoLogin = true;
     this.router.navigate(['login']);
   }
+
 
 }
