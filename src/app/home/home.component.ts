@@ -4,7 +4,10 @@ import { Router } from '@angular/router';
 import { AuthenticationService } from '../_services/authentication.service';
 import { Subscription } from 'rxjs';
 import { User } from '../user';
-
+export class semaster{
+  ID:number;
+  SemesterName:string
+}
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -14,6 +17,7 @@ export class HomeComponent implements OnInit {
   currentUser: User;
   currentUserSubscription: Subscription;
   gotoLogin: boolean;
+  semasters:semaster[]=[];
   image = [
     '../../assets/image/slider1.png',
     '../../assets/image/slider2.png',
@@ -23,7 +27,7 @@ export class HomeComponent implements OnInit {
   tests;
   semesterExamCode = '';
   isAuthentication = false;
-
+  SemasterExamCode: string;
   constructor(private http: HttpClient, private router: Router, private authenticationService: AuthenticationService) {
     this.changeSlide();
     this.currentUserSubscription = this.authenticationService.currentUser.subscribe(user => {
@@ -82,5 +86,11 @@ export class HomeComponent implements OnInit {
     this.authenticationService.gotoLogin = true;
     this.router.navigate(['login']);
   }
+  onSearch() {
+    this.http.get<string>('http://localhost:65170/api/SemasterExam?searchString=' + this.SemasterExamCode).subscribe(value => {
+      this.semasters = JSON.parse(value)  ;
+    });
+  }
+ 
 
 }

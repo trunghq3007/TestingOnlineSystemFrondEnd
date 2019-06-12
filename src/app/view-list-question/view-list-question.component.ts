@@ -147,6 +147,10 @@ export class ViewListQuestionComponent implements OnInit {
       this.categoriesFormApi = JSON.parse(value);
     });
   }
+  resetFilter(){
+    this.formFillter.reset();
+    this.fillterClick();
+  }
 
   fillterClick() {
     console.log(this.formFillter.value);
