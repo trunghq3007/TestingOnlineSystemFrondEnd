@@ -16,8 +16,7 @@ const httpOptions = {
 export class CreateExamComponent implements OnInit {
 
   public Editor = ClassicEditorBuild;
-  // submited = false;
-  // disabled = false;
+  
   examForm: FormGroup;
   number = "^([1-9][0-9]{0,3}|^2000)$";
   regex = "^[A-Za-z0-9\s_]+$";
@@ -84,7 +83,7 @@ export class CreateExamComponent implements OnInit {
 
       return;
     }
-    // do something else
+  
   }
   onSubmit() {
     
@@ -106,7 +105,7 @@ export class CreateExamComponent implements OnInit {
           console.log(err);
           confirm("Insert false!");
           console.log('false');
-          //this.examForm.reset();
+          
         }
         
         

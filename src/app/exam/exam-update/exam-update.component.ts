@@ -22,7 +22,7 @@ export class ExamUpdateComponent implements OnInit {
       
       return;
     }
-    // do something else
+   
 }
   get NameExam(): FormControl {
     return this.editForm.get('NameExam') as FormControl;
