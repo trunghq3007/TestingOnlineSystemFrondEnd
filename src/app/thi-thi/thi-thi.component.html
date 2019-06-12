@@ -8,13 +8,13 @@
     <div class="col-md-4 header">
       <span>Tổng số câu hỏi:{{testProcessings.TestName}}</span>
     </div>
+    <!-- <div class="col-md-4 header">
+      -----------------------------------------------
+    </div> -->
     <div class="col-md-4 header">
-      a
-    </div>
-    <div class="col-md-4 header">
-      <span class="magin-right magin-left">{{testProcessings.TestTime}}</span>
+      <span class="magin-right magin-left">{{ remainingTime }}</span>
       <i class='far fa-clock magin-right' style='font-size:30px'></i>
-      <button type="button" class="btn btn-primary">Submit</button>
+      <button type="button" class="btn btn-primary" (click)="summit()" [routerLink]="['/thi/2/2/ketqua']">Submit</button>
     </div>
   </div>
   <div class="col-md-12">
@@ -32,30 +32,40 @@
           <button type="button" class="btn btn-secondary"></button>
           <span>Câu hỏi chưa trả lời</span>
         </div>
-         <div class="col-md-12" *ngFor="let item of testProcessings">
-         <button class="btn btn-secondary">{{item.Index}}</button>
-        </div> 
+          <div class="col-md-12" *ngIf="this.reload == true">
+              <div class="col-md-1"  *ngFor= "let item of testProcessings.Questions ; let i = index">
+                  <button class="btn btn-success " *ngIf="containsObject(item,this.array2)">{{i}}</button>
+                  <button class="btn btn-secondary " *ngIf="!containsObject(item,this.array2)">{{i}}</button>
+              </div>
+          </div>
       </div>
-      
+
       <div class="col-md-8 content">
-        <div class="border border-secondary" style="min-height: 300px">
+        <div class="border border-secondary" style="min-height: 450px">
           <div class="col-md-12">
-              <h1>câu hỏi :{{this.i}} :</h1>   <h1> {{this.questionContent}}</h1> 
+              <h1>câu hỏi {{this.i}} :</h1>   <h1 [innerHTML]="this.questionContent"></h1>
           </div>
          <div class="col-md-12">
-            <mat-checkbox [checked]="checkItem1" (click)="check1()"> {{this.answerContent1}}</mat-checkbox> 
+            <mat-checkbox [checked]="checkItem1" (click)="check1()" >
+              <p [innerHTML]="this.answerContent1" class="answer"></p>
+            </mat-checkbox>
          </div>
          <div class="col-md-12">
-            <mat-checkbox [checked]="checkItem2" (click)="check2()"> {{this.answerContent2}}</mat-checkbox> 
+            <mat-checkbox [checked]="checkItem2" (click)="check2()">
+              <p [innerHTML]="this.answerContent2" class="answer">
+            </mat-checkbox>
          </div>
          <div class="col-md-12">
-            <mat-checkbox [checked]= "checkItem3" (click)="check3()"> {{this.answerContent3}} </mat-checkbox> 
+            <mat-checkbox [checked]= "checkItem3" (click)="check3()">
+              <p [innerHTML]="this.answerContent3" class="answer">
+            </mat-checkbox>
          </div>
          <div class="col-md-12">
-            <mat-checkbox [checked]="checkItem4" (click)="check4()"> {{this.answerContent4}}</mat-checkbox> 
+            <mat-checkbox [checked]="checkItem4" (click)="check4()">
+              <p [innerHTML]="this.answerContent4" class="answer">
+            </mat-checkbox>
          </div>
-         
-        
+
         </div>
         <div class="magin-top">
           <button type="button" class="btn btn-primary" (click)="Prev()">Prev</button>
@@ -63,4 +73,20 @@
         </div>
       </div>
     </div>
+
+
+
+
+  
+
+<!-- <div class="group-actions">
+  <button (click)="start()">Start</button>
+  <button (click)="stop()">Stop</button>
+  <button (click)="reset()">Reset</button>
+</div> -->
+<div class="timer">
+  <span class="timer-text">{{ remainingTime }}</span>
+</div>
+<p>{{ message }}</p>
+
   </div>

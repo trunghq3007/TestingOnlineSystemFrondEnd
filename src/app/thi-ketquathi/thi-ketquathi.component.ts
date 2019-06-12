@@ -33,6 +33,12 @@ get Email(): FormControl {
 get SemesterName(): FormControl {
   return this.formApply.get('SemesterName') as FormControl
 }
+get Score(): FormControl {
+  return this.formApply.get('Score') as FormControl
+}
+get Category(): FormControl {
+  return this.formApply.get('Category') as FormControl
+}
 
   constructor( private result:FormBuilder ,private activatedRoute: ActivatedRoute, private http: HttpClient, private router: Router) { }
 
@@ -42,6 +48,8 @@ get SemesterName(): FormControl {
       FullName: [''],
       Email: [''],
       SemesterName: [''],
+      Score: [''],
+      Category: [''],
     });
 
     this.http
