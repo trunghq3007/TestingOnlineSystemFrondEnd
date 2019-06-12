@@ -41,7 +41,7 @@ export class ImportQuestionComponent implements OnInit {
             confirm('Import Success');
           }
           else {
-            confirm('Import Fail');
+            confirm('Import Fail!  ' + res.Message);
           }
         },
 
@@ -50,7 +50,7 @@ export class ImportQuestionComponent implements OnInit {
 
 
       );
-
+    this.router.navigate(['question']);
 
   }
 

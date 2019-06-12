@@ -80,6 +80,7 @@ import { RoleActionAddComponent } from './role-action-add/role-action-add.compon
 import { RoleActionComponent } from './roleaction/roleaction.component';
 import { AuthGuard } from './_guards/auth.guard';
 import { CookieService } from 'ngx-cookie-service';
+import { ExportExamComponent } from './exam/exam-list/export-exam/export-exam.component';
 
 @NgModule({
   declarations: [
@@ -137,6 +138,8 @@ import { CookieService } from 'ngx-cookie-service';
     RoleActionAddComponent,
 
     RoleActionComponent,
+
+    ExportExamComponent,
   ],
   imports: [
     MatTabsModule,

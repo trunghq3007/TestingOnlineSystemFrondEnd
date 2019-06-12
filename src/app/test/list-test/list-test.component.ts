@@ -82,6 +82,18 @@ export class ListTestComponent implements OnInit {
       });
       this.dataSource.sort = this.sort;
   }
+  detail(testID) {
+
+    this.http.get<string>('http://localhost:65170/api/test/' + testID).subscribe
+      (
+        value => {
+         
+          this.tests=JSON.parse(value);
+          //console.log(this.examInfo);
+
+        }
+      );
+  }
   navigateToEdit(Id: string) {
     this.router.navigate(['/test', 'update', Id,]);
   }

@@ -40,6 +40,7 @@ import { ThiKetquathiComponent } from './thi-ketquathi/thi-ketquathi.component';
 import { RoleActionComponent } from './roleaction/roleaction.component';
 import { RoleActionAddComponent } from './role-action-add/role-action-add.component';
 import { AuthGuard } from './_guards/auth.guard';
+import { ExportExamComponent } from './exam/exam-list/export-exam/export-exam.component';
 const routes: Routes = [
   {
     path: '',
@@ -118,6 +119,10 @@ const routes: Routes = [
         pathMatch: 'full'
       },
       {
+        path:'export/:Id',
+        component: ExportExamComponent
+      },
+      {
         path: 'create',
         component: CreateExamComponent,
       },
@@ -129,7 +134,7 @@ const routes: Routes = [
       {
         path: 'update/:Id',
         component: ExamUpdateComponent
-      },
+      }
 
     ], canActivate: [AuthGuard]
   },
