@@ -1,0 +1,28 @@
+<div class="wrapper">
+    <div class="thongtin" *ngIf="list">
+        <h2>Thông tin bài thi</h2>
+        <ul class="ds-1">
+            <li>Tên bài thi : <span>{{list.TestName}}</span></li>
+            <li>Chủ đề thi : <span>{{list.CategoryName}}</span></li>
+            <li>Tổng số câu hỏi : <span>{{list.QuestionNumber}}</span></li>
+            <li>
+  
+                <table class="ds-2">
+                    <tr>
+                        <td>Số câu trắc nghiệm : <span>{{list.NumberChoiceQuestion}}</span></td>
+                        <td>Tổng điểm : <span>{{list.TotalScore}}</span></td>
+                    </tr>
+                    <tr>
+                        <td>Số câu tự luận : <span>{{list.NumberStatementQuestion}}</span></td>
+                        <td>Tổng điểm : <span>{{list.TotalScore}}</span></td>
+                    </tr>
+                </table>
+  
+  
+            </li>
+            <li>Thời gian làm bài:<span>{{list.TestTime}}</span> phút</li>
+            <li><button type="submit" class="apply"> Bắt đầu</button></li>
+        </ul>
+    </div>
+  
+  </div>

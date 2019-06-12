@@ -2,16 +2,14 @@
 <div class="navbar navbar-inverse navbar-fixed-top opaque-navbar" *ngIf="!currentUser">
   <div class="container-fluid">
     <div class="navbar-header logo">
-      <a [routerLink]="['']" routerLinkActive="active"
-        ><img src="../../assets/image/logo_vn_white.png" height="35px"
-      /></a>
+      <a [routerLink]="['']" routerLinkActive="active"><img src="../../assets/image/logo_vn_white.png"
+          height="35px" /></a>
     </div>
     <ul class="nav navbar-nav pull-right" style="margin-right: 5%">
       <li><a>Home</a></li>
       <li>
-        <a class="btn" [routerLink]="['login']" routerLinkActive="active"
-          ><span><i class="fa fa-user fa-fw"></i></span>Sign in</a
-        >
+        <a class="btn" [routerLink]="['login']" routerLinkActive="active"><span><i
+              class="fa fa-user fa-fw"></i></span>Sign in</a>
       </li>
     </ul>
   </div>
@@ -21,10 +19,7 @@
 <div>
   <div class="slide-container">
     <ng-container *ngFor="let img of image; index as i">
-      <div
-        class="mySlides"
-        [ngStyle]="{ display: currentSlide === i + 1 ? 'block' : 'none' }"
-      >
+      <div class="mySlides" [ngStyle]="{ display: currentSlide === i + 1 ? 'block' : 'none' }">
         <div class="numbertext">{{ i + 1 }} / 3</div>
         <img [src]="img" style="width:100%" />
       </div>
@@ -32,47 +27,43 @@
   </div>
   <br />
   <div style="text-align:center">
-    <span
-      class="dot"
-      onclick="currentSlide(1)"
-      [ngClass]="{ active: currentSlide === 1 }"
-    ></span>
-    <span
-      class="dot"
-      onclick="currentSlide(1)"
-      [ngClass]="{ active: currentSlide === 2 }"
-    ></span>
-    <span
-      class="dot"
-      onclick="currentSlide(1)"
-      [ngClass]="{ active: currentSlide === 3 }"
-    ></span>
+    <span class="dot" onclick="currentSlide(1)" [ngClass]="{ active: currentSlide === 1 }"></span>
+    <span class="dot" onclick="currentSlide(1)" [ngClass]="{ active: currentSlide === 2 }"></span>
+    <span class="dot" onclick="currentSlide(1)" [ngClass]="{ active: currentSlide === 3 }"></span>
   </div>
 </div>
 
 <!-- End Slide -->
 <br />
 
-<div class="container">
+<div class="container"  style="margin-left: 10px;margin-top: 50px" >
   <div class="row">
     <div class="col-md-2"></div>
     <div class="input-group col-md-8">
-      <input
-        type="text"
-        class="form-control"
-        placeholder="Semester code"
-        [value]="semesterExamCode"
-        (change)="change($event.target)"
-      />
+      <input type="text" class="form-control" placeholder="Semester code" [value]="semesterExamCode"
+        (change)="change($event.target)" />
       <div class="input-group-btn">
         <button type="button" class="btn btn-info" (click)="showSemesterTest()">
           Show
         </button>
       </div>
     </div>
-    <div class="col-md-2"></div>
+
+    
+    <div class="col-md-2 column productbox"  *ngFor="let item of semesters" >
+      <img src="http://placehold.it/460x250/e67e22/ffffff&text=HTML5" class="img-responsive">
+      <div class="producttitle">{{item.SemesterName}}</div>
+      <div class="productprice">
+        <div class="pull-right"><a routerLink="/semestercustomer/{{item.ID}}" class="btn btn-danger btn-sm" role="button">BUY</a></div>
+        <div class="pricetext">{{item.StartDay| date: 'dd/MM/yyyy'}}</div>
+      </div>
+    </div>
+    
   </div>
-<!-- 
+
+  
+
+  <!-- 
   <ng-container *ngIf="tests?.data.length > 0">
     <br />
     <div class="form-test">
@@ -117,9 +108,27 @@
   <div style="height:65px;"></div>
 </ng-container> -->
 
-<!-- Footer -->
-<footer class="justify-content-c">
-  <br>
-  <hr>
-  <div class="text-center text-muted">Copyright &copy; 2019 by GDP07</div>
-</footer>
+
+
+
+
+
+  <!-- <div class="col-md-2 column productbox">
+  <img src="http://placehold.it/460x250/e67e22/ffffff&text=HTML5" class="img-responsive">
+  <div class="producttitle">Product 3</div>
+  <div class="productprice"><div class="pull-right"><a href="#" class="btn btn-danger btn-sm" role="button">BUY</a></div><div class="pricetext">£8.95</div></div>
+</div>
+<div class="col-md-2 column productbox">
+  <img src="http://placehold.it/460x250/e67e22/ffffff&text=HTML5" class="img-responsive">
+  <div class="producttitle">Product 4</div>
+  <div class="productprice"><div class="pull-right"><a href="#" class="btn btn-danger btn-sm" role="button">BUY</a></div><div class="pricetext">£8.95</div></div>
+</div>  -->
+
+
+
+  <!-- Footer -->
+  <footer class="justify-content-c">
+    <br>
+    <hr>
+    <div class="text-center text-muted">Copyright &copy; 2019 by GDP07</div>
+  </footer>

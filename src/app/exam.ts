@@ -1,11 +1,20 @@
+import { Category } from './ICategory';
+
 export interface Exam {
 
     Id: number,
     NameExam: string,
-    CreateBy: number,
+    CreateBy: string,
     QuestionNumber: number,
     Status: boolean,
-    TypeExam: string,
+    SpaceQuestionNumber: number,
     CreateAt: Date,
-    Note: string
+
+    Categorys: object,
+    Category: Category,
+    CategoryId: string,
+    Note: string,
+    NameCategory: string,
+    StartDate:Date;
+    TestName:string;
 }

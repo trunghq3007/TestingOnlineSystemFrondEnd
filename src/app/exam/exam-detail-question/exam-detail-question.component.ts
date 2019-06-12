@@ -4,6 +4,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -40,7 +41,7 @@ export class ExamDetailQuestionComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   selection = new SelectionModel<detailExam>(true, []);
-  constructor(private http: HttpClient, private ac: ActivatedRoute, private fb: FormBuilder) { }
+  constructor(private http: HttpClient, private ac: ActivatedRoute, private fb: FormBuilder,private toar:ToastrService) { }
 
   ngOnInit() {
     this.listQuestionDetail();
@@ -76,8 +77,10 @@ export class ExamDetailQuestionComponent implements OnInit {
    
     this.http.post<string>('http://localhost:65170/api/ExamQuestions?action=DeleteMutiple', JSON.stringify(Arr), httpOptions).subscribe(value => {
 
+this.toar.success('deleted' + ' ' + value + ' ' + 'records in Exam',' Question Number');
+
       this.listQuestionDetail();
-      confirm('success');
+     
     })
   }
   isAllSelected() {

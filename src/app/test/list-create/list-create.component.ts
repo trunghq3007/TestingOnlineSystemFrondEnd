@@ -3,6 +3,7 @@ import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Exam } from 'src/app/exam';
 import { MatTableDataSource } from '@angular/material';
+import { ToastrService } from 'ngx-toastr';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -30,7 +31,7 @@ export class ListCreateComponent implements OnInit {
   exams:exam[]=[];
   form: FormGroup;
   semasters:semaster[]=[];
-  constructor(private insert: FormBuilder, private http: HttpClient) {
+  constructor(private insert: FormBuilder, private http: HttpClient,private toar:ToastrService) {
     
   }
 
@@ -118,10 +119,12 @@ regPassScore="^[0-9]{1,3}$"
       const value = this.form.value;
       this.http.post('http://localhost:65170/api/Test', JSON.stringify(value),httpOptions).subscribe({
         next: (response) => {
-         confirm('success')
+          this.toar.success('success',' Create Test');
+        
         },
         error: (err) => {
-          confirm('false')
+          this.toar.warning('false',' Create Test');
+          
         }
 
       });
