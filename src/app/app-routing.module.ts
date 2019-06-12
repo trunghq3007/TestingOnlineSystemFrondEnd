@@ -21,11 +21,64 @@ import { ListCreateComponent } from './test/list-create/list-create.component';
 import { ListDetailComponent } from './test/list-detail/list-detail.component';
 import { ListUpdateComponent } from './test/list-update/list-update.component';
 import { ViewListSemasterComponent } from './view-list-semaster/view-list-semaster.component';
+import { QuestionRouting } from './question-router';
 
+
+import { SemesterDetailComponent } from './semester-detail/semester-detail.component';
+import { ManagerSemesterExamTestComponent } from './manager-semester-exam-test/manager-semester-exam-test.component';
+import { ViewListSemastertotestComponent } from './view-list-semastertotest/view-list-semastertotest.component';
+import { ViewlistTestbySemesterComponent } from './viewlist-testby-semester/viewlist-testby-semester.component';
+import { ThiChitietbaithiComponent } from './thi-chitietbaithi/thi-chitietbaithi.component';
+import { ThiThiComponent } from './thi-thi/thi-thi.component';
+import {RoleComponent} from './role/role.component';
+
+import { from } from 'rxjs';
+import { ListExamUserComponent } from './list-exam-user/list-exam-user.component';
+import { DetailExamCustomerComponent } from './detail-exam-customer/detail-exam-customer.component';
+
+import { RoleComponent } from './role/role.component';
+import { ThiKetquathiComponent } from './thi-ketquathi/thi-ketquathi.component';
+import { RoleActionComponent } from './roleaction/roleaction.component';
+import { RoleActionAddComponent } from './role-action-add/role-action-add.component';
+import { AuthGuard } from './_guards/auth.guard';
+import { ExportExamComponent } from './exam/exam-list/export-exam/export-exam.component';
 const routes: Routes = [
   {
     path: '',
-    component: HomeComponent
+    
+    children:[{
+      path:'',
+      component: HomeComponent,
+    },
+    {
+      path:'semestercustomer/:id',
+      component:ListExamUserComponent,
+    },
+    {
+      path:'DetailExamCustomer/:id',
+      component:DetailExamCustomerComponent,
+    }
+  
+   
+  ]
+
+  },
+
+  {
+    path: 'Role',
+    children: [{
+      path: '',
+      component: RoleComponent,
+    },
+    {
+      path: ':RoleId',
+      component: RoleActionComponent
+    },
+    {
+      path: 'RoleActionAdd/:RoleId',
+      component: RoleActionAddComponent
+    }
+    ], canActivate: [AuthGuard]
   },
   {
     path: 'login',
@@ -33,20 +86,16 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'question',
-    component: ViewListQuestionComponent,
-  },
-  {
     path: 'tag',
-    component: TagsComponent,
+    component: TagsComponent, canActivate: [AuthGuard]
   },
   {
     path: 'category',
-    component: CategoryComponent,
+    component: CategoryComponent, canActivate: [AuthGuard]
   },
   {
     path: 'success',
-    component: GroupComponent
+    component: GroupComponent, canActivate: [AuthGuard]
   },
   {
     path: 'user',
@@ -58,22 +107,23 @@ const routes: Routes = [
       path: 'create',
       component: UserCreateComponent
     },
-    // {
-    //   path: ':UserId',
-    //   component: UserDetailComponent
-    // },
     {
       path: 'update/:Id',
       component: UserUpdateComponent
     },
-  ]},
-    {
-      path: 'exam',
+    ], canActivate: [AuthGuard]
+  },
+  {
+    path: 'exam',
     children: [
       {
         path: '',
         component: ExamListComponent,
         pathMatch: 'full'
+      },
+      {
+        path:'export/:Id',
+        component: ExportExamComponent
       },
       {
         path: 'create',
@@ -83,21 +133,21 @@ const routes: Routes = [
         path: ':examID',
         component: ExamDetailComponent
       },
+     
       {
         path: 'update/:Id',
         component: ExamUpdateComponent
-      },
-      
-    ]
-    },
-    
+      }
+
+    ], canActivate: [AuthGuard]
+  },
   {
     path: 'group',
     children: [
       {
         path: '',
         component: GroupComponent,
-        // pathMatch: 'full'
+        pathMatch: 'full'
       },
       {
         path: ':groupId',
@@ -109,7 +159,6 @@ const routes: Routes = [
           {
             path: '',
             component: GroupComponent,
-            // pathMatch: 'full'
           },
           {
             path: ':groupId',
@@ -121,10 +170,80 @@ const routes: Routes = [
           }
         ]
       }
-    ]
+    ], canActivate: [AuthGuard]
   },
   {
-    path:'test',
+    path: 'SemesterExamManager',
+
+    children:
+      [
+        {
+          path: '',
+          component: ViewListSemasterComponent,
+          pathMatch: 'full'
+        }
+        ,
+
+        {
+          path: 'detail/:Id',
+
+          component: SemesterDetailComponent
+
+
+        },
+
+      ], canActivate: [AuthGuard]
+  }
+  ,
+  {
+    path: 'thi',
+
+    children:
+      [
+        {
+          path: '',
+          component: ViewListSemastertotestComponent,
+
+
+
+        }
+        ,
+        {
+          path: ':Id',
+
+          children:
+            [
+              {
+                path: '',
+                component: ViewlistTestbySemesterComponent,
+              }
+              ,
+              {
+                path: ':TestId',
+
+                children:
+                  [
+                    {
+                      path: '',
+                      component: ThiChitietbaithiComponent,
+                    }
+                    ,
+                    {
+                      path: 'thi',
+                      component: ThiThiComponent
+                    },
+                    {
+                      path: 'ketqua',
+                      component: ThiKetquathiComponent
+                    }
+                  ]
+              }
+            ]
+        }
+      ], canActivate: [AuthGuard]
+  },
+  {
+    path: 'test',
     children: [
       {
         path: '',
@@ -143,19 +262,18 @@ const routes: Routes = [
         path: 'update/:Id',
         component: ListUpdateComponent
       }
-    ]
-  }
-,
+    ], canActivate: [AuthGuard]
+  },
   {
-    path :'SemesterExamManager',
-    component : ViewListSemasterComponent
+    path: 'SemesterExamManager',
+    component: ViewListSemasterComponent, canActivate: [AuthGuard]
   }
-
-
 ];
 
+const fullRoutes = [...routes, ...QuestionRouting];
+console.log(fullRoutes);
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(fullRoutes)],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

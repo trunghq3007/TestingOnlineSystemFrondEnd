@@ -18,8 +18,8 @@ export class UserUpdateComponent implements OnInit {
   user: User[] = [];
   public Editor = ClassicEditorBuild;
   editform: FormGroup;
-  RolesFormApi: [];
-
+  RolesFormApi: User[] = [];
+  rolename: string;
   constructor(private fb: FormBuilder, private http: HttpClient, private ac: ActivatedRoute) { }
 
   get UserName(): FormControl {
@@ -73,22 +73,21 @@ export class UserUpdateComponent implements OnInit {
       this.RolesFormApi = JSON.parse(value);
     });
   }
+  passwordPattern ="^[a-z0-9_@A-Z]*$";
   phonenumber = "^[0-9]{1,12}$";
-  emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$";
+  emailPattern = "^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$";
   ngOnInit() {
     this.getApiRoles();
     this.editform = this.fb.group({
       UserName: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(25)]],
       Email: ['', [Validators.required, Validators.email, Validators.pattern(this.emailPattern)]],
       Phone: ['', [Validators.required, Validators.pattern]],
-      Password: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(15)]],
+      Password: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(100),Validators.pattern(this.passwordPattern)]],
       FullName: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(50)]],
       Address: ['', [Validators.required]],
       Department: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(30)]],
       Position: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(30)]],
-      Roles: this.fb.group({
-        RoleId: [''],
-      }),
+      RoleId: [''],
       Status: [''],
       Avatar: [''],
       CreatedDate: [''],
@@ -96,24 +95,26 @@ export class UserUpdateComponent implements OnInit {
       Note: ['']
     });
     const userId = this.ac.snapshot.paramMap.get('Id');
+    this.http.get<string>('http://localhost:65170/api/User/?idUser=' + userId).subscribe(value => {
+      this.rolename = value;
+    });
     this.http.get<string>('http://localhost:65170/api/User/?userid=' + userId).subscribe(value => {
       this.user = JSON.parse(value);
-      console.log(this.user);
       this.editform.patchValue(JSON.parse(value));
     });
+
   }
 
-  onSubmit() {
+  onSubmit(userName) {
     const value = this.editform.value;
-    console.log(this.editform.value);
     if (this.editform.valid) {
       const formData = {
         ...this.user,
         ...value
       };
-      value.Roles = this.RolesFormApi.filter(s => s.RoleId == value.Roles.RoleId);
-      value.Role = value.Roles.length > 0 ? value.Roles[0] : null;
-      value.RoleId = value.Role.RoleId;
+      debugger;
+      let temp = this.RolesFormApi.filter(s => s.RoleId == value.RoleId);
+      value.Role = temp.length > 0 ? temp[0] : null;
       console.log(value);
       this.http.put('http://localhost:65170/api/User/' + formData.UserId, formData, httpOptions).subscribe({
         next: (res) => {
@@ -122,25 +123,24 @@ export class UserUpdateComponent implements OnInit {
         },
         error: (err) => {
           console.log(err);
-          console.log('false');
+          confirm("Error!Update fail!");
         }
       });
-      console.log(this.editform.value);
     }
   }
-  validateForm() {
-    if (this.editform.invalid) {
-      this.editform.get('UserName').markAsTouched();
-      this.editform.get('FullName').markAsTouched();
-      this.editform.get('Email').markAsTouched();
-      this.editform.get('Address').markAsTouched();
-      this.editform.get('Department').markAsTouched();
-      this.editform.get('Position').markAsTouched();
-      this.editform.get('Phone').markAsTouched();
-      this.editform.get('Password').markAsTouched();
-      this.editform.get('RoleId').markAsTouched();
-      return;
-    }
+validateForm() {
+  if (this.editform.invalid) {
+    this.editform.get('UserName').markAsTouched();
+    this.editform.get('FullName').markAsTouched();
+    this.editform.get('Email').markAsTouched();
+    this.editform.get('Address').markAsTouched();
+    this.editform.get('Department').markAsTouched();
+    this.editform.get('Position').markAsTouched();
+    this.editform.get('Phone').markAsTouched();
+    this.editform.get('Password').markAsTouched();
+    this.editform.get('RoleId').markAsTouched();
+    return;
   }
+}
 
 }

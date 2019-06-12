@@ -15,17 +15,34 @@ export class ExamListComponent implements OnInit {
   filterExam: FormGroup;
   listExam: {} = {};
   exams: Exam[] = [];
+<<<<<<< HEAD
   searchString: string;
   filter: [];
   detailexam: any = {};
   examInfo: Exam []=[];
   displayedColumn: string[] = ['select', 'NameExam', 'CreateBy', 'QuestionNumber', 'Status','SpaceQuestionNumber', 'CreateAt', 'Note', 'Action'];
+=======
+
+  searchString: string;
+  filter: [];
+  examInfo: Exam;
+  displayedColumn: string[] = ['select', 'NameExam', 'CreateBy', 'QuestionNumber', 'SpaceQuestionNumber', 'NameCategory', 'Status', 'CreateAt', 'Note', 'Action'];
+>>>>>>> 3a22d0e1d607d2052c63feaff1cfa052f781835c
   dataSource = new MatTableDataSource<Exam>(this.exams);
   selection = new SelectionModel<Exam>(true, []);
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   constructor(private http: HttpClient, private router: Router
     , private toasr: ToastrService, private fb: FormBuilder) { }
+<<<<<<< HEAD
+=======
+
+
+
+
+
+
+>>>>>>> 3a22d0e1d607d2052c63feaff1cfa052f781835c
   onSubmit() {
     {
       const httpOptions = { 
@@ -33,13 +50,18 @@ export class ExamListComponent implements OnInit {
       };
       if (this.filterExam.valid) {
         const value = this.filterExam.value;
-        this.http.post<string>('http://localhost:65170/api/Exam?action=filter', JSON.stringify(value),httpOptions).subscribe({
+        this.http.post<string>('http://localhost:65170/api/Exam?action=filter', JSON.stringify(value), httpOptions).subscribe({
           next: (res) => {
+<<<<<<< HEAD
             console.log(value);
+=======
+
+
+>>>>>>> 3a22d0e1d607d2052c63feaff1cfa052f781835c
             this.dataSource.data = JSON.parse(res);
           },
           error: (err) => {
-           
+
             console.log('false');
           }
 
@@ -52,16 +74,21 @@ export class ExamListComponent implements OnInit {
   listexams() {
     this.http.get<string>('http://localhost:65170/api/Exam').subscribe(
       value => {
-       
-        this.dataSource.data = JSON.parse(value);
         this.exams = JSON.parse(value);
+        for (let i = 0; i < this.exams.length; i++) {
+          if(this.exams[i].Category != null){
+            console.log(this.exams[i].Category);
+            this.exams[i].NameCategory = this.exams[i].Category.Name;
+          }
+        }
+        this.dataSource.data = this.exams;
         console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
 
       });
   }
 
   ngOnInit() {
-    this.http.post<string>('http://localhost:65170/api/Exam?action=getfilter',{}).subscribe(
+    this.http.post<string>('http://localhost:65170/api/Exam?action=getfilter', {}).subscribe(
       value => {
 
         this.listExam = JSON.parse(value);
@@ -89,7 +116,7 @@ export class ExamListComponent implements OnInit {
         }
       );
   }
-  detailQuestion(examID){
+  detailQuestion(examID) {
 
     this.http.get<string>('http://localhost:65170/api/ExamQuestions/' + examID).subscribe
       (
@@ -109,7 +136,7 @@ export class ExamListComponent implements OnInit {
       console.log(value);
       console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
     });
-  
+
     // const value = this.filterExam.value;
     // this.http.post<string>('http://localhost:65170/api/Exam?action=getfilter', JSON.stringify(value)).subscribe(value => {
     //   this.dataSource.data = JSON.parse(value);
@@ -127,7 +154,7 @@ export class ExamListComponent implements OnInit {
     const numRows = this.dataSource.data.length;
     return numSelected === numRows;
   }
- 
+
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
@@ -135,26 +162,27 @@ export class ExamListComponent implements OnInit {
       this.selection.clear() :
       this.dataSource.data.forEach(row => this.selection.select(row));
   }
-  navigateToEdit(examID :string){
-    this.router.navigate([ '/exam', 'update',examID,]);
+  navigateToEdit(examID: string) {
+    this.router.navigate(['/exam', 'update', examID,]);
   }
-  
-  
-  exportExam(examID:number) {
-    if(confirm('you want to export record')){
-      this.http.get<string>('http://localhost:65170/api/Exam/' + examID+'?action=export').subscribe
-      (
-        res => {
-        this.listexams();
-        this.toasr.warning('Export Successfully','Exam.Export');
-       
-      });
+
+
+  exportExam(examID: number) {
+    if (confirm('you want to export record')) {
+      this.http.get<string>('http://localhost:65170/api/Exam/' + examID + '?action=export').subscribe
+        (
+          res => {
+            this.listexams();
+            this.toasr.warning('Export Successfully', 'Exam.Export');
+
+          });
     }
   }
-  
-  deleteExam(examID:number) {
-    if(confirm('you want to delete record')){
+
+  deleteExam(examID: number) {
+    if (confirm('you want to delete record')) {
       this.http.delete('http://localhost:65170/api/Exam/' + examID).subscribe
+<<<<<<< HEAD
       (
         res => {
         if (res ==true) {
@@ -171,6 +199,20 @@ export class ExamListComponent implements OnInit {
         
        
       });
+=======
+        (
+          res => {
+            if (res == true) {
+              this.exams = this.exams.filter(ex => ex.Id !== examID);
+            }
+            else if (res == false) {
+              confirm("Is Public not Delete");
+            }
+            this.listexams();
+            this.toasr.warning('Delete Successfully', 'Exam.Delete');
+
+          });
+>>>>>>> 3a22d0e1d607d2052c63feaff1cfa052f781835c
     }
   }
 

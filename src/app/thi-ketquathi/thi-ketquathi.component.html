@@ -1,0 +1,102 @@
+
+
+    <div class="warapper">
+        <div class="ketqua">
+            <h2>KẾT QUẢ THI</h2>
+            <form class="form-group" [formGroup]="formApply">
+
+           
+                <table class="information">
+                    <tr>
+                        <td>
+                            Tên bài thi:  <mat-form-field class="example-full-width">
+                                <input matInput formControlName="TestName">
+                            </mat-form-field>
+                        </td>
+                        <td class="td1">
+                            Tên kì thi:<mat-form-field class="example-full-width">
+                                <input matInput formControlName="SemesterName">
+                            </mat-form-field>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Tên thí sinh: <mat-form-field class="example-full-width">
+                                <input matInput formControlName="FullName">
+                            </mat-form-field>
+                        </td>
+                        <td class="td1">
+                            Email: <mat-form-field class="example-full-width">
+                                <input matInput formControlName="Email">
+                            </mat-form-field>
+                        </td>
+                    </tr>
+    
+    
+                </table>
+                <table class="tb2" >
+           
+          
+                <tr>
+                    <td>Lần 1: </td>
+                    <td class="td2" >
+                            <div class="progress">
+                                    <div class="progress-bar"  role="progressbar" aria-valuenow="20"
+                                    aria-valuemin="0" aria-valuemax="100" style="width:20%">
+                                      20%
+                                    </div>
+                                  </div>
+                    </td>
+                </tr>
+                <!-- <tr>
+                    <td>Lần 2: </td>
+                    <td class="td2">
+                            <div class="progress">
+                                    <div class="progress-bar" role="progressbar" aria-valuenow="70"
+                                    aria-valuemin="0" aria-valuemax="100" style="width:70%">
+                                      70%
+                                    </div>
+                                  </div>
+                    </td>
+                </tr> -->
+            </table>
+            <table class="tb3">
+                <tr>
+                    <td>Lần thi</td>
+                    <td>Ngày thi</td>
+                    <td>Ðiểm thi</td>
+                    <td>Xếp loại</td>
+                    <td>Trạng thái</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>10/10/2019</td>
+                    <td><mat-form-field class="example-full-width">
+                        <input matInput formControlName="Score">
+                    </mat-form-field></td>
+                    <td><mat-form-field class="example-full-width">
+                        <input matInput formControlName="Category">
+                    </mat-form-field></td>
+                    <td>Ðã thi</td>
+                </tr>
+                <!-- <tr>
+
+                    <td>2</td>
+                    <td>10/10/2019</td>
+                    <td>80</td>
+                    <td>Ðỗ</td>
+                    <td>Ðã thi</td>
+                </tr> -->
+            </table>
+        </form>
+        </div>
+   
+        <table class="tb4">
+            <tr>
+                <td><button type="submit" class="apply"> Thi lại</button></td>
+                <td class="quaylai"><button type="submit" class="apply"> Quay lại</button></td>
+            </tr>
+        </table>
+   
+</div>
+

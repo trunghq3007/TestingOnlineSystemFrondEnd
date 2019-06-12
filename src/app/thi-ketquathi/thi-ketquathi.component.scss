@@ -1,0 +1,55 @@
+h2{
+    text-align: center;
+}
+.wrapper{
+    display:flex;
+    height: 100vh;
+    text-align: center;
+    background-color: white;
+   
+}
+table.information{
+    margin:50px auto;
+    
+}
+.td1{
+    
+    padding-left: 140px;
+}
+table.tb2{
+ height: 100px;
+    width: 80%;
+    margin:50px auto;
+    padding: 50px 50px;
+  
+    
+}
+.tb3{
+    border: 1px solid;
+    margin: 0 auto;
+  width: 80%;
+  height: 150px;
+}
+button.apply {
+    margin-right: 50px;
+    margin-top: 40px;
+    width: 75px;
+    height: 35px;
+    border: none;
+    background-color: #337ab7;
+    color: #fffc;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    float: right;
+}
+.tb4{
+    margin: 0 auto;
+}
+.quaylai{
+    padding-left:700px;
+}
+.td2{
+   margin: 0 auto;
+    width: 80%;
+}
