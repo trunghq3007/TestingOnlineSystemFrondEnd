@@ -17,7 +17,7 @@ export class ViewListQuestionComponent implements OnInit {
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
-
+ 
   searchString: string;
   questionId = '';
   Question: Question[] = [];
@@ -40,6 +40,7 @@ export class ViewListQuestionComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   ngOnInit() {
+
     this.getApiCategories();
     this.getApiTags();
     this.http.get<string>('http://localhost:65170/api/question/').subscribe(value => {
@@ -53,7 +54,7 @@ export class ViewListQuestionComponent implements OnInit {
             tagNames += tag[i].Name + ', ';
           }
         }
-        if (element.Level == 1) element.LevelString = "Easy";3
+        if (element.Level == 1) element.LevelString = "Easy";
         if (element.Level == 2) element.LevelString = "Medium";
         if (element.Level == 3) element.LevelString = "Difficult";
         element.TagNames = tagNames;
@@ -61,7 +62,6 @@ export class ViewListQuestionComponent implements OnInit {
       this.dataSource.data = source;
       this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort;
     });
-
   }
   delete(Id) {
     this.questionId = Id;
@@ -69,22 +69,17 @@ export class ViewListQuestionComponent implements OnInit {
 
   }
 
-
   exportQuestion() {
-    debugger;
-
-    this.http.get<ResultObject>('http://localhost:65170/upload/exportQuestion', this.httpOptions).subscribe(value => {
-      if (value.Success >= 1 && value.Status===200) {
+    this.http.post<string>('http://localhost:65170/api/question?action=export', { 'export': '1' }, this.httpOptions).subscribe(value => {
+      const res: ResultObject = JSON.parse(value);
+      if (res.Success >= 1) {
         let a = document.createElement('a');
-        a.href = 'http://localhost:65170/upload/DownloadFileExport?fileName=' + value.Message;
+        a.href = res.Message;
         a.click();
       } else {
         confirm('export fail');
       }
     });
-    err =>{
-      if(err.status == 404){ console.log("404 founded")}
-    }
   }
 
 

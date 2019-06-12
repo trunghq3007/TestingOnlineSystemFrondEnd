@@ -19,7 +19,7 @@ export class ExamListComponent implements OnInit {
   searchString: string;
   filter: [];
   examInfo: Exam;
-  displayedColumn: string[] = ['select', 'NameExam', 'CreateBy', 'QuestionNumber', 'Status', 'CreateAt', 'Note', 'Action'];
+  displayedColumn: string[] = ['select', 'NameExam', 'CreateBy', 'QuestionNumber', 'SpaceQuestionNumber','Status', 'CreateAt', 'Note', 'Action'];
   dataSource = new MatTableDataSource<Exam>(this.exams);
   selection = new SelectionModel<Exam>(true, []);
   @ViewChild(MatPaginator) paginator: MatPaginator;

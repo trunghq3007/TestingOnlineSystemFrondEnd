@@ -9,9 +9,9 @@
         </mat-form-field>
       </div>
       <div class=" col-md-6">
-        <div class="col-md-3 col-sm-3 col-xs-3" routerLink="/question/import">  <button  type="button"
-              class="btn btn-primary">Import</button></div>
-        <div class="col-md-3 col-sm-3 col-xs-3"> <button  (click)="exportQuestion()" type="button" 
+        <div class="col-md-3 col-sm-3 col-xs-3"> <a  routerLink="/question/import"> <button  type="button"
+              class="btn btn-primary">Import</button></a></div>
+        <div class="col-md-3 col-sm-3 col-xs-3"> <button  type="button" (click)="exportQuestion()"
               class="btn btn-primary">Export</button></div>
         <div class="col-md-3 col-sm-3 col-xs-3"> <a routerLink="/tag"> <button  type="button"
               class="btn btn-primary">Create tag</button></a></div>
@@ -161,7 +161,7 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumn;"></tr>
 
     </table>
-    <mat-paginator [pageSizeOptions]="[5,10,15]" showFirstLastButtons></mat-paginator>
+    <mat-paginator [pageSizeOptions]="[1,10,15]" showFirstLastButtons></mat-paginator>
 
   </div>
   <!-- /.modal-dialog -->

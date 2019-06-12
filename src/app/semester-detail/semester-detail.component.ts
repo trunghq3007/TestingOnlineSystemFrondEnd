@@ -42,10 +42,6 @@ export class SemesterDetailComponent implements OnInit {
   // get status(): FormControl {
   // return this.formApply.get('status') as FormControl
   // }
-  minDate = new Date(2019, 1, 1);
-  maxDate = new Date(2020,1,1);
-  minDate2 = new Date(this.list.StartDay);
-  maxDate2 = new Date(this.list.StartDay);
   constructor(private semester: FormBuilder , private activatedRoute: ActivatedRoute, private http: HttpClient, private router: Router) { }
 
   ngOnInit() {
@@ -135,11 +131,6 @@ export class SemesterDetailComponent implements OnInit {
     console.log(this.CodeSource)
 
   }
-  error: any = { isError: false,  errorMessage: '' };
-  compareTwoDates() {
-    if (new Date(this.formApply.controls['EndDay'].value) < new Date(this.formApply.controls['StartDay'].value)) {
-      this.error = { isError: true, errorMessage: 'End Date cant before start date !' };
-    }
-  }
+
 
 }

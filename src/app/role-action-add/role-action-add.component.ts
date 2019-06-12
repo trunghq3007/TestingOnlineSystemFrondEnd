@@ -1,0 +1,80 @@
+import { RoleActionAdd } from '../role-action-add';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Router, ActivatedRoute } from '@angular/router';
+import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
+import { SelectionModel } from '@angular/cdk/collections';
+import { RoleComponent } from '../role/role.component';
+import { ResultObject } from '../result-object';
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
+@Component({
+  selector: 'app-role-action-add',
+  templateUrl: './role-action-add.component.html',
+  styleUrls: ['./role-action-add.component.scss']
+})
+export class RoleActionAddComponent implements OnInit {
+
+  roleactionadds: RoleActionAdd[] = [];
+  roleactionadd: RoleActionAdd = undefined;
+  actionId = '';
+  check: string;
+  ObjFormGroup: FormGroup;
+  roleId: string;
+  get RoleName(): FormControl {
+    return this.ObjFormGroup.get('RoleName') as FormControl;
+  }
+  constructor(private fb: FormBuilder, private http: HttpClient, private router: Router, private activatedRoute: ActivatedRoute) {
+
+  }
+  displayedColumn: string[] = ['ActionId', 'ActionName', 'Description', 'Action'];
+  dataSource = new MatTableDataSource<RoleActionAdd>(this.roleactionadds);
+  selection = new SelectionModel<RoleActionAdd>(true, []);
+
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+
+  ngOnInit() {
+    const RoleId = this.activatedRoute.snapshot.paramMap.get('RoleId');
+    console.log(RoleId);
+    this.http.get<string>('http://localhost:65170/api/RoleAction/?idRole=' + RoleId).subscribe(value => {
+      this.dataSource.data = JSON.parse(value).Data;
+      console.log(this.roleactionadds);
+      this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort;
+    });
+  }
+  clickToGoBack() {
+    const RoleId = this.activatedRoute.snapshot.paramMap.get('RoleId');
+    this.router.navigate(['Role/', RoleId]);
+  }
+
+  AddActionToRole(actionId) {
+    if (confirm('Are you sure you to add this action?')) {
+      const RoleId = this.activatedRoute.snapshot.paramMap.get('RoleId');
+      console.log(this.actionId);
+      console.log(RoleId);
+      //  this.dataSource.data.splice(index,1);
+      this.http.post<string>('http://localhost:65170/api/RoleAction/?idAction= ' + actionId
+        + '&idRole=' + RoleId, httpOptions).subscribe(
+          value => {
+            const result: ResultObject = JSON.parse(value);
+            if (result.Success >= 1) {
+              confirm('Create success!');
+              this.http.get<string>('http://localhost:65170/api/RoleAction/?idRole=' + RoleId).subscribe(value => {
+                this.dataSource.data = JSON.parse(value).Data;
+                console.log(this.roleactionadds);
+                this.dataSource = new MatTableDataSource<RoleActionAdd>(this.dataSource.data);
+              });
+            } else {
+              confirm('Create Fail!');
+            }
+
+          }
+        );
+      
+    }
+  }
+}

@@ -50,6 +50,7 @@ import { EditQuestionComponent } from './edit-question/edit-question.component';
 import { ManagerSemesterExamTestComponent } from './manager-semester-exam-test/manager-semester-exam-test.component';
 import { SemesterDetailComponent } from './semester-detail/semester-detail.component';
 
+
 import { ViewListSemastertotestComponent } from './view-list-semastertotest/view-list-semastertotest.component';
 import { ViewlistTestbySemesterComponent } from './viewlist-testby-semester/viewlist-testby-semester.component';
 import { ThiChitietbaithiComponent } from './thi-chitietbaithi/thi-chitietbaithi.component';
@@ -70,6 +71,9 @@ import { DetailQuestionComponent } from './detail-question/detail-question.compo
 import { RoleComponent } from './role/role.component';
 import { ExamDetailQuestionComponent } from './exam/exam-detail-question/exam-detail-question.component';
 import { ThiKetquathiComponent } from './thi-ketquathi/thi-ketquathi.component';
+import { RoleActionAddComponent } from './role-action-add/role-action-add.component';
+import { RoleActionComponent } from './roleaction/roleaction.component';
+
 
 @NgModule({
   declarations: [
@@ -116,9 +120,13 @@ import { ThiKetquathiComponent } from './thi-ketquathi/thi-ketquathi.component';
     DetailQuestionComponent,
     RoleComponent,
 
-    ExamDetailQuestionComponent,
+   ExamDetailQuestionComponent,
 
-    ThiKetquathiComponent,
+   ThiKetquathiComponent,
+
+    RoleActionAddComponent,
+
+    RoleActionComponent,
   ],
   imports: [
     MatTabsModule,

@@ -91,7 +91,9 @@ onSubmit(){
     });
   }
 }
-
+clickToRoute() {
+  this.router.navigate(['Role/', this.RoleId]);
+}
 validateForm() {
   if (this.createForm.invalid) {
     this.createForm.get('RoleName').markAsTouched();
