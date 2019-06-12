@@ -3,6 +3,9 @@ import { Form, NgForm, FormGroup, FormBuilder, Validators, FormControl } from '@
 import { Exam } from 'src/app/exam';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import * as ClassicEditorBuild from '@ckeditor/ckeditor5-build-classic';
+import { User } from 'src/app/user';
+import { Subscription } from 'rxjs';
+import { AuthenticationService } from 'src/app/_services/authentication.service';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -14,14 +17,34 @@ const httpOptions = {
   styleUrls: ['./create-exam.component.scss']
 })
 export class CreateExamComponent implements OnInit {
-
+  currentUser: User;
+  currentUserSubscription: Subscription;
+  isMember = false;
+  isManager = false;
+  isAdmin = false;
+  name:string;
   public Editor = ClassicEditorBuild;
-  
+  // submited = false;
+  // disabled = false;
   examForm: FormGroup;
   number = "^([1-9][0-9]{0,3}|^2000)$";
-  regex = "^[A-Za-z0-9\s_]+$";
+  // regex = "^[A-Za-z0-9@/._#] +$";
+
   CategoryFormApi = [];
-  constructor(private fb: FormBuilder, private http: HttpClient) { }
+  constructor(private fb: FormBuilder, private http: HttpClient, private authenticationService: AuthenticationService) {
+    this.currentUserSubscription = this.authenticationService.currentUser.subscribe(user => {
+      this.currentUser = JSON.parse(user);
+    });
+    if (this.currentUser.RoleId == '1') {
+      this.isAdmin = true;
+    }
+    if (this.currentUser.RoleId == '2') {
+      this.isManager = true;
+    }
+    if (this.currentUser.RoleId == '3') {
+      this.isMember = true;
+    }
+   }
   get NameExam(): FormControl {
     return this.examForm.get('NameExam') as FormControl;
   }
@@ -53,8 +76,8 @@ export class CreateExamComponent implements OnInit {
   ngOnInit() {
     this.getApiCategory();
     this.examForm = this.fb.group({
-      NameExam: ['', [Validators.required, Validators.pattern, Validators.maxLength(50), Validators.minLength(5)]],
-      CreateBy: ['', [Validators.required]],
+      NameExam: ['', [Validators.required, Validators.maxLength(50)]],
+      CreateBy: [this.currentUser.FullName],
       QuestionNumber: ['', [Validators.required, Validators.pattern]],
       //status: ['', [{value: 'false', disabled: true}]],
       Status: [''],
@@ -66,7 +89,7 @@ export class CreateExamComponent implements OnInit {
 
 
     });
-
+    console.log(this.currentUser);
   }
   getApiCategory() {
     this.http.get<string>('http://localhost:65170/api/Category/').subscribe(value => {
@@ -83,17 +106,18 @@ export class CreateExamComponent implements OnInit {
 
       return;
     }
-  
+    // do something else
   }
   onSubmit() {
     
-    console.log(this.examForm.value);
+    
     if (this.examForm.valid) {
-     
+      console.log(this.examForm.value);
       const value = this.examForm.value;
       value.Category = this.CategoryFormApi.filter(s => s.Id == value.CategoryId);
       value.Category = value.Category.length > 0 ? value.Category[0] : null;
-      this.http.post<string>('http://localhost:65170/api/Exam/', JSON.stringify(value), httpOptions).subscribe({
+     
+      this.http.post<string>('http://localhost:65170/api/Exam', JSON.stringify(value), httpOptions).subscribe({
         next: (res) => {
           console.log(res);
           confirm("Insert success!");
@@ -105,9 +129,8 @@ export class CreateExamComponent implements OnInit {
           console.log(err);
           confirm("Insert false!");
           console.log('false');
-          
+          //this.examForm.reset();
         }
-        
         
       });
     }
