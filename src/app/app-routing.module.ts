@@ -34,6 +34,7 @@ import { RoleComponent } from './role/role.component';
 import { ThiKetquathiComponent } from './thi-ketquathi/thi-ketquathi.component';
 import { RoleActionComponent } from './roleaction/roleaction.component';
 import { RoleActionAddComponent } from './role-action-add/role-action-add.component';
+import { AuthGuard } from './_guards/auth.guard';
 const routes: Routes = [
   {
     path: '',
@@ -53,7 +54,7 @@ const routes: Routes = [
       path: 'RoleActionAdd/:RoleId',
       component: RoleActionAddComponent
     }
-    ]
+    ], canActivate: [AuthGuard]
   },
   {
     path: 'login',
@@ -62,15 +63,15 @@ const routes: Routes = [
   },
   {
     path: 'tag',
-    component: TagsComponent,
+    component: TagsComponent, canActivate: [AuthGuard]
   },
   {
     path: 'category',
-    component: CategoryComponent,
+    component: CategoryComponent, canActivate: [AuthGuard]
   },
   {
     path: 'success',
-    component: GroupComponent
+    component: GroupComponent, canActivate: [AuthGuard]
   },
   {
     path: 'user',
@@ -86,7 +87,7 @@ const routes: Routes = [
       path: 'update/:Id',
       component: UserUpdateComponent
     },
-    ]
+    ], canActivate: [AuthGuard]
   },
   {
     path: 'exam',
@@ -113,7 +114,7 @@ const routes: Routes = [
         component: ExamUpdateComponent
       },
 
-    ]
+    ], canActivate: [AuthGuard]
   },
   {
     path: 'group',
@@ -144,7 +145,7 @@ const routes: Routes = [
           }
         ]
       }
-    ]
+    ], canActivate: [AuthGuard]
   },
   {
     path: 'SemesterExamManager',
@@ -166,7 +167,7 @@ const routes: Routes = [
 
         },
 
-      ]
+      ], canActivate: [AuthGuard]
   }
   ,
   {
@@ -214,9 +215,7 @@ const routes: Routes = [
               }
             ]
         }
-      ]
-
-
+      ], canActivate: [AuthGuard]
   },
   {
     path: 'test',
@@ -238,14 +237,12 @@ const routes: Routes = [
         path: 'update/:Id',
         component: ListUpdateComponent
       }
-    ]
+    ], canActivate: [AuthGuard]
   },
   {
     path: 'SemesterExamManager',
-    component: ViewListSemasterComponent
+    component: ViewListSemasterComponent, canActivate: [AuthGuard]
   }
-
-
 ];
 
 const fullRoutes = [...routes, ...QuestionRouting];

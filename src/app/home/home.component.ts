@@ -37,7 +37,7 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    console.log(sessionStorage.getItem('currentPermission'));
   }
   changeSlide() {
     this.currentSlide++;

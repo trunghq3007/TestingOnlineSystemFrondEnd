@@ -73,7 +73,8 @@ import { ExamDetailQuestionComponent } from './exam/exam-detail-question/exam-de
 import { ThiKetquathiComponent } from './thi-ketquathi/thi-ketquathi.component';
 import { RoleActionAddComponent } from './role-action-add/role-action-add.component';
 import { RoleActionComponent } from './roleaction/roleaction.component';
-
+import { AuthGuard } from './_guards/auth.guard';
+import { CookieService } from 'ngx-cookie-service';
 
 @NgModule({
   declarations: [
@@ -152,7 +153,11 @@ import { RoleActionComponent } from './roleaction/roleaction.component';
     OwlNativeDateTimeModule,
     ToastrModule.forRoot(),
   ],
-  providers: [AuthenticationService],
+  providers: [
+    AuthenticationService,
+    AuthGuard,
+    CookieService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
