@@ -15,34 +15,27 @@ export class ExamListComponent implements OnInit {
   filterExam: FormGroup;
   listExam: {} = {};
   exams: Exam[] = [];
-  
   searchString: string;
   filter: [];
-  examInfo: Exam;
-  displayedColumn: string[] = ['select', 'NameExam', 'CreateBy', 'QuestionNumber', 'Status', 'CreateAt', 'Note', 'Action'];
+  detailexam: any = {};
+  examInfo: Exam []=[];
+  displayedColumn: string[] = ['select', 'NameExam', 'CreateBy', 'QuestionNumber', 'Status','SpaceQuestionNumber', 'CreateAt', 'Note', 'Action'];
   dataSource = new MatTableDataSource<Exam>(this.exams);
   selection = new SelectionModel<Exam>(true, []);
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   constructor(private http: HttpClient, private router: Router
     , private toasr: ToastrService, private fb: FormBuilder) { }
-
- 
-
-
-    
-    
   onSubmit() {
     {
-      const httpOptions = {
+      const httpOptions = { 
         headers: new HttpHeaders({ 'Content-Type': 'application/json' })
       };
       if (this.filterExam.valid) {
         const value = this.filterExam.value;
         this.http.post<string>('http://localhost:65170/api/Exam?action=filter', JSON.stringify(value),httpOptions).subscribe({
           next: (res) => {
-            
-           
+            console.log(value);
             this.dataSource.data = JSON.parse(res);
           },
           error: (err) => {
@@ -70,6 +63,7 @@ export class ExamListComponent implements OnInit {
   ngOnInit() {
     this.http.post<string>('http://localhost:65170/api/Exam?action=getfilter',{}).subscribe(
       value => {
+
         this.listExam = JSON.parse(value);
       });
     this.filterExam = this.fb.group({
@@ -77,7 +71,8 @@ export class ExamListComponent implements OnInit {
       CreateBy: ['',],
       QuestionNumber: ['',],
       Status: '',
-      CreateAt: ['',],
+      CreateAt: '',
+      TypeExam: ['']
     });
     this.listexams();
     this.dataSource.sort = this.sort;
@@ -87,7 +82,9 @@ export class ExamListComponent implements OnInit {
     this.http.get<string>('http://localhost:65170/api/Exam/' + examID).subscribe
       (
         value => {
-          this.examInfo = JSON.parse(value);
+         
+          this.examInfo=JSON.parse(value);
+          //console.log(this.examInfo);
 
         }
       );
@@ -103,9 +100,13 @@ export class ExamListComponent implements OnInit {
       );
   }
   onFilter() {
+    const httpOptions = { 
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    };
     const value = this.filterExam.value;
-    this.http.post<string>('http://localhost:65170/api/Exam/?action=filter', JSON.stringify(value)).subscribe(value => {
+    this.http.post<string>('http://localhost:65170/api/Exam/?action=filter', JSON.stringify(value),httpOptions).subscribe(value => {
       this.dataSource.data = JSON.parse(value);
+      console.log(value);
       console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
     });
   
@@ -158,12 +159,16 @@ export class ExamListComponent implements OnInit {
         res => {
         if (res ==true) {
           this.exams = this.exams.filter(ex => ex.Id !== examID);
+         
         }
         else if (res == false) {
           confirm("Is Public not Delete");
-        } 
+          this.toasr.error('Delete failed','Exam.Delete');
+        } else{
+          this.toasr.success('Delete Successfully','Exam.Delete');
+        }
         this.listexams();
-        this.toasr.warning('Delete Successfully','Exam.Delete');
+        
        
       });
     }
