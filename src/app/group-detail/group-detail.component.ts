@@ -6,6 +6,7 @@ import { GroupUser } from '../group-user';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import { http } from '../http-header';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -42,11 +43,11 @@ export class GroupDetailComponent implements OnInit {
 
   ngOnInit() {
     const GroupId = this.activatedRoute.snapshot.paramMap.get('groupId');
-    this.http.get<string>('http://localhost:65170/api/Group/' + GroupId).subscribe(value => {
+    this.http.get<string>('http://localhost:65170/api/Group/' + GroupId, { headers: http }).subscribe(value => {
       this.groups = JSON.parse(value).Data;
       console.log(this.groups);
     });
-    this.http.get<string>('http://localhost:65170/api/UserGroup/' + GroupId).subscribe(value => {
+    this.http.get<string>('http://localhost:65170/api/UserGroup/' + GroupId, { headers: http }).subscribe(value => {
       this.dataSource.data = JSON.parse(value).Data;
       console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
     });
@@ -54,20 +55,21 @@ export class GroupDetailComponent implements OnInit {
       Position: [''],
       Department: ['']
     });
-    this.http.get<string>('http://localhost:65170/api/UserGroup/' + GroupId).subscribe(value => {
+    this.http.get<string>('http://localhost:65170/api/UserGroup/' + GroupId, { headers: http }).subscribe(value => {
       this.PositionApi = JSON.parse(value).Data;
     });
-    this.http.get<string>('http://localhost:65170/api/UserGroup/' + GroupId).subscribe(value => {
+    this.http.get<string>('http://localhost:65170/api/UserGroup/' + GroupId, { headers: http }).subscribe(value => {
       this.DepartmentApi = JSON.parse(value).Data;
     });
   }
 
   onSearch() {
     const GroupId = this.activatedRoute.snapshot.paramMap.get('groupId');
-    this.http.get<string>('http://localhost:65170/api/UserGroup/?id=' + GroupId + '&searchString=' + this.searchString).subscribe(value => {
-      this.dataSource.data = JSON.parse(value).Data;
-      console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
-    });
+    this.http.get<string>('http://localhost:65170/api/UserGroup/?id=' + GroupId
+      + '&searchString=' + this.searchString, { headers: http }).subscribe(value => {
+        this.dataSource.data = JSON.parse(value).Data;
+        console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
+      });
   }
 
   onFilter() {
@@ -75,7 +77,7 @@ export class GroupDetailComponent implements OnInit {
     const value = this.filterForm.value;
     console.log(value);
     this.http.post<string>('http://localhost:65170/api/UserGroup/?action=filter&id=' + GroupId, JSON.stringify(value),
-      httpOptions).subscribe(value => {
+    { headers: http }).subscribe(value => {
         this.dataSource.data = JSON.parse(value).Data;
       });
   }
