@@ -3,10 +3,12 @@ import { Router } from '@angular/router';
 import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { FormBuilder, FormGroup, Validators, FormControl, ValidationErrors } from '@angular/forms';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Group } from '../group';
 import { ResultObject } from '../result-object';
 import { http } from '../http-header';
+import { Message } from '@angular/compiler/src/i18n/i18n_ast';
+
 
 
 const httpOptions = {
@@ -114,14 +116,21 @@ export class GroupComponent implements OnInit {
     this.groupId = id;
   }
   onDelete() {
-    this.http.delete<string>('http://localhost:65170/api/Group/' + this.groupId, { headers: http }).subscribe(res => {
-      let result = JSON.parse(res);
-      if (result.Success == 1) {
-        this.groups = this.groups.filter(b => b.GroupId !== this.groupId);
-        confirm('Delete success!');
-        this.listgroup();
-      } else {
-        confirm('Delete failed!');
+    this.http.delete<string>('http://localhost:65170/api/Group/' + this.groupId).subscribe({
+      next: (res) => {
+        let result = JSON.parse(res);
+        if (result.Success == 1) {
+          this.groups = this.groups.filter(b => b.GroupId !== this.groupId);
+          confirm('Delete success!');
+          this.listgroup();
+        } else {
+          confirm('Delete failed!');
+        }
+      },
+      error: (err: HttpErrorResponse) => {
+        console.log(err);
+        //alert("Bạn không có quyền!");
+        alert({ err: Message });
       }
     });
   }
@@ -176,8 +185,7 @@ export class GroupComponent implements OnInit {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.GroupId + 1}`;
   }
 
-  logout()
-  {
+  logout() {
     sessionStorage.removeItem('currentPermission');
     this.router.navigate(['']);
   }

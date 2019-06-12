@@ -30,13 +30,12 @@ import { ViewListSemastertotestComponent } from './view-list-semastertotest/view
 import { ViewlistTestbySemesterComponent } from './viewlist-testby-semester/viewlist-testby-semester.component';
 import { ThiChitietbaithiComponent } from './thi-chitietbaithi/thi-chitietbaithi.component';
 import { ThiThiComponent } from './thi-thi/thi-thi.component';
-import {RoleComponent} from './role/role.component';
+import { RoleComponent } from './role/role.component';
 
 import { from } from 'rxjs';
 import { ListExamUserComponent } from './list-exam-user/list-exam-user.component';
 import { DetailExamCustomerComponent } from './detail-exam-customer/detail-exam-customer.component';
 
-import { RoleComponent } from './role/role.component';
 import { ThiKetquathiComponent } from './thi-ketquathi/thi-ketquathi.component';
 import { RoleActionComponent } from './roleaction/roleaction.component';
 import { RoleActionAddComponent } from './role-action-add/role-action-add.component';
@@ -44,25 +43,23 @@ import { AuthGuard } from './_guards/auth.guard';
 const routes: Routes = [
   {
     path: '',
-    
-    children:[{
-      path:'',
+    children: [{
+      path: '',
       component: HomeComponent,
     },
     {
-      path:'semestercustomer/:id',
-      component:ListExamUserComponent,
+      path: 'semestercustomer/:id',
+      component: ListExamUserComponent,
     },
     {
-      path:'DetailExamCustomer/:id',
-      component:DetailExamCustomerComponent,
+      path: 'DetailExamCustomer/:id',
+      component: DetailExamCustomerComponent,
     }
-  
-   
-  ]
 
+
+    ]
   },
-
+  // { path: 'error', component: ErrorsComponent },
   {
     path: 'Role',
     children: [{
@@ -128,7 +125,7 @@ const routes: Routes = [
         path: ':examID',
         component: ExamDetailComponent
       },
-     
+
       {
         path: 'update/:Id',
         component: ExamUpdateComponent
