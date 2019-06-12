@@ -5,6 +5,7 @@ import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
 import { AuthenticationService } from '../_services/authentication.service';
 import { first } from 'rxjs/operators';
 import { ObjectResult } from '../object-result';
+import { CookieService } from 'ngx-cookie-service';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -30,24 +31,40 @@ export class LoginComponent implements OnInit {
     return this.loginForm.get('rememberMe') as FormControl;
   }
   constructor(private fb: FormBuilder, private http: HttpClient,
-    private router: Router, private route: ActivatedRoute, private authenticationService: AuthenticationService) {
-    // if (this.authenticationService.currentUserValue) {
-    //   this.router.navigate(['/login']);
-    // }
+    private router: Router, private route: ActivatedRoute, private authenticationService: AuthenticationService, private cookieService: CookieService) {
+     if (sessionStorage.getItem('currentPermission')) {
+       this.router.navigate(['']);
+     }
   }
 
   ngOnInit() {
-    this.loginForm = this.fb.group({
-      username: this.fb.control('', [
-        Validators.required,
-        Validators.maxLength(15)
-      ]),
-      password: this.fb.control('', [
-        Validators.required,
-        Validators.maxLength(15)
-      ]),
-      rememberMe: this.fb.control(false)
-    });
+    if(this.cookieService.check('username'))
+    {
+      this.loginForm = this.fb.group({
+        username: this.fb.control(this.cookieService.get('username'), [
+          Validators.required,
+          Validators.maxLength(15)
+        ]),
+        password: this.fb.control(this.cookieService.get('password'), [
+          Validators.required,
+          Validators.maxLength(15)
+        ]),
+        rememberMe: this.fb.control(true)
+      });
+    }else
+    {
+      this.loginForm = this.fb.group({
+        username: this.fb.control('', [
+          Validators.required,
+          Validators.maxLength(15)
+        ]),
+        password: this.fb.control('', [
+          Validators.required,
+          Validators.maxLength(15)
+        ]),
+        rememberMe: this.fb.control(false)
+      });
+    }
   }
   // onSubmit() {
   //   this.submitted = true;
@@ -68,13 +85,15 @@ export class LoginComponent implements OnInit {
   //   console.log(this.loading);
   // }
   onSubmit() {
+    this.submitted = true;
+    this.loading = true;
     if (this.loginForm.valid) {
       const value = this.loginForm.value;
       this.http.post<ObjectResult>('http://localhost:65170/api/Login', JSON.stringify(value), httpOptions).subscribe({
         next: (res) => {
           if (res.Success === 1) {
-            localStorage.setItem('currentPermission', res.Data);
-            const sessionId = localStorage.getItem('currentPermission');
+            sessionStorage.setItem('currentPermission', res.Data);
+            const sessionId = sessionStorage.getItem('currentPermission');
             // debugger;
             const httpOptions1 = {
               headers: new HttpHeaders({ 'Content-Type': 'application/json', 'permission': sessionId  })
@@ -83,10 +102,21 @@ export class LoginComponent implements OnInit {
               // debugger;
               console.log(JSON.parse(val));
             });
-
-
+            // add cookie
+            if(this.rememberMe.value == true)
+            {
+              this.cookieService.set('username', this.username.value);
+              this.cookieService.set('password', this.password.value);
+            }
+            else {
+              this.cookieService.delete('username');
+              this.cookieService.delete('password');
+            }
+            //
+            this.router.navigate(['group']);
           } else {
             // check looix
+            this.loading = false;
           }
         },
         error: (err) => {

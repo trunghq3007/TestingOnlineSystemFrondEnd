@@ -69,11 +69,17 @@ import { ListUpdateComponent } from './test/list-update/list-update.component';
 import { ViewListSemasterComponent } from './view-list-semaster/view-list-semaster.component';
 import { DetailQuestionComponent } from './detail-question/detail-question.component';
 import { RoleComponent } from './role/role.component';
+// import { ExamDetailQuestionComponent } from './exam/exam-detail-question/exam-detail-question.component';
+// import { ThiKetquathiComponent } from './thi-ketquathi/thi-ketquathi.component';
+import { NgxTrimDirectiveModule } from 'ngx-trim-directive';
+import { ListExamUserComponent } from './list-exam-user/list-exam-user.component';
+import { DetailExamCustomerComponent } from './detail-exam-customer/detail-exam-customer.component';
 import { ExamDetailQuestionComponent } from './exam/exam-detail-question/exam-detail-question.component';
 import { ThiKetquathiComponent } from './thi-ketquathi/thi-ketquathi.component';
 import { RoleActionAddComponent } from './role-action-add/role-action-add.component';
 import { RoleActionComponent } from './roleaction/roleaction.component';
-
+import { AuthGuard } from './_guards/auth.guard';
+import { CookieService } from 'ngx-cookie-service';
 
 @NgModule({
   declarations: [
@@ -119,6 +125,10 @@ import { RoleActionComponent } from './roleaction/roleaction.component';
     SemesterDetailComponent,
     DetailQuestionComponent,
     RoleComponent,
+    ListExamUserComponent,
+    DetailExamCustomerComponent,
+    // ExamDetailQuestionComponent,
+    // ThiKetquathiComponent,
 
    ExamDetailQuestionComponent,
 
@@ -151,8 +161,13 @@ import { RoleActionComponent } from './roleaction/roleaction.component';
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
     ToastrModule.forRoot(),
+    NgxTrimDirectiveModule
   ],
-  providers: [AuthenticationService],
+  providers: [
+    AuthenticationService,
+    AuthGuard,
+    CookieService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
