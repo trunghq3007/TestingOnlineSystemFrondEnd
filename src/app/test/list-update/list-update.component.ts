@@ -88,10 +88,11 @@ export class ListUpdateComponent implements OnInit {
 
       });
     const TestID = this.ac.snapshot.paramMap.get('Id');
-    this.http.get<string>('http://localhost:65170/api/test/' + TestID).subscribe(value => {
+    this.http.get<string>('http://localhost:65170/api/test/'+TestID+ '?action=DetailUpdate' ).subscribe(value => {
       this.tests = JSON.parse(value);
      
       this.form.patchValue(JSON.parse(value));
+      console.log(JSON.parse(value) );
     });
   }
   get exam(): FormControl {

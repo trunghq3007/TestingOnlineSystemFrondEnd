@@ -77,7 +77,7 @@ export class CreateExamComponent implements OnInit {
     this.getApiCategory();
     this.examForm = this.fb.group({
       NameExam: ['', [Validators.required, Validators.maxLength(50)]],
-      CreateBy: [this.currentUser.FullName],
+      CreateBy: ['',Validators.required],
       QuestionNumber: ['', [Validators.required, Validators.pattern]],
       //status: ['', [{value: 'false', disabled: true}]],
       Status: [''],

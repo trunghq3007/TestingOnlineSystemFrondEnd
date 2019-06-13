@@ -23,7 +23,7 @@ export class ExamUpdateComponent  implements OnInit {
   
   editForm: FormGroup;
   number = "^([1-9][0-9]{0,3}|^2000)$";
-  regex = "^[A-Za-z0-9\s _]+$";
+  //regex = "^[A-Za-z0-9\s _]+$";
   CategoryFormApi = [];
   categoryname: {};
   
@@ -89,6 +89,8 @@ export class ExamUpdateComponent  implements OnInit {
       //   this.exam.CategoryId= this.exam.Category.Id;
       // }
       this.editForm.patchValue(this.exam);
+
+      
     });
   }
 

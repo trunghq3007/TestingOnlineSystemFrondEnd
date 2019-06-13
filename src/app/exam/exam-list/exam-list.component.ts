@@ -160,14 +160,15 @@ export class ExamListComponent implements OnInit {
       this.http.delete('http://localhost:65170/api/Exam/' + examID).subscribe
         (
           res => {
-            if (res == true) {
+            if (res == 2) {
               this.exams = this.exams.filter(ex => ex.Id !== examID);
+              this.toasr.success('Delete Successfully', 'Exam.Delete');
             }
             else if (res == false) {
-              confirm("Is Public not Delete");
+              this.toasr.error('Delete Successfully', 'Exam.Delete');
             }
             this.listexams();
-            this.toasr.warning('Delete Successfully', 'Exam.Delete');
+           
 
           });
     }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
+import { ResultObject } from 'src/app/result-object';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -18,8 +19,9 @@ exam:string;
     const examID = this.ac.snapshot.paramMap.get('Id');
     this.http.get<string>('http://localhost:65170/api/Exam/' + examID+'?action=exportExam').subscribe({
       next: (res) => {
-        this.exam= JSON.parse(res) ;
         console.log(res);
+        const res1 :ResultObject = JSON.parse(res);
+        this.exam= res1.Message;
        
        
       },
@@ -29,6 +31,9 @@ exam:string;
       }
 
     });
+    setTimeout(()=>{
+      window.print();
+    },10000);
   }
 
 }

@@ -4,6 +4,9 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 import { Exam } from 'src/app/exam';
 import { MatTableDataSource } from '@angular/material';
 import { ToastrService } from 'ngx-toastr';
+import { AuthenticationService } from 'src/app/_services/authentication.service';
+import { User } from 'src/app/user';
+import { Subscription } from 'rxjs';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -28,11 +31,16 @@ export class semaster{
   styleUrls: ['./list-create.component.scss']
 })
 export class ListCreateComponent implements OnInit {
+  currentUser: User;
+  currentUserSubscription: Subscription;
+  isMember = false;
+  isManager = false;
+  isAdmin = false;
   exams:exam[]=[];
   form: FormGroup;
   semasters:semaster[]=[];
-  constructor(private insert: FormBuilder, private http: HttpClient,private toar:ToastrService) {
-    
+  constructor(private insert: FormBuilder, private http: HttpClient,private toar:ToastrService, private authenticationService: AuthenticationService) {
+   
   }
 
 

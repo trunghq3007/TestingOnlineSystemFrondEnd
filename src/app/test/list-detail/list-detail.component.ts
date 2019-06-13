@@ -25,7 +25,7 @@ export class ListDetailComponent implements OnInit {
 
   ngOnInit() {
     const testID = this.ac.snapshot.paramMap.get('testID');
-     this.http.get<string>('http://localhost:65170/api/test/'+testID  ).subscribe
+     this.http.get<string>('http://localhost:65170/api/test/'+testID +'?action=detail'  ).subscribe
      (
        value =>{
          this.dataSource.data = JSON.parse(value);
