@@ -18,7 +18,7 @@ export class ExamListComponent implements OnInit {
 
   searchString: string;
   filter: [];
-  examInfo: Exam;
+  examInfo: Exam []=[];
   displayedColumn: string[] = ['select', 'NameExam', 'CreateBy', 'QuestionNumber', 'SpaceQuestionNumber', 'NameCategory', 'Status', 'CreateAt', 'Note', 'Action'];
   dataSource = new MatTableDataSource<Exam>(this.exams);
   selection = new SelectionModel<Exam>(true, []);
@@ -88,12 +88,11 @@ export class ExamListComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
   detail(examID) {
-
     this.http.get<string>('http://localhost:65170/api/Exam/' + examID).subscribe
       (
         value => {
-          this.examInfo = JSON.parse(value);
-
+          this.examInfo = JSON.parse(value).Data;
+          console.log(this.examInfo);
         }
       );
   }

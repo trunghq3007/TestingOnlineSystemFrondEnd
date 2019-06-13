@@ -221,16 +221,18 @@
               <div class="box-header with-border">
                 <b>
                   <h3 class="text-center"></h3>
-                  <div class="pull-left" style="margin-left: 5%" *ngIf="examInfo">
+                  <div class="pull-left" style="margin-left: 5%"  *ngFor="let item of examInfo">
   
-                    <p>ID: {{examInfo.Id}} </p>
-                    <p>NameExam: {{examInfo.NameExam}}</p>
-                    <p>QuestionNumber: {{examInfo.QuestionNumber}}</p>
-                    <p>CreateBy: {{examInfo.CreateBy}}</p>
-                    <p>CreateAt: {{examInfo.CreateAt |date}}</p>
-                    <p>Status: {{examInfo.Status?"Public":"Draft"}}</p>
-                    <p>Note: {{examInfo.Note}}</p>
-                    <button [routerLink]="['/exam', examInfo.Id]" class="btn btn-default" data-dismiss="modal">Update
+                    <p>ID: {{item.Id}} </p>
+                    <p>NameExam: {{item.NameExam}}</p>
+                    <p>QuestionNumber: {{item.QuestionNumber}}</p>
+                    <p>CreateBy: {{item.CreateBy}}</p>
+                    <p>CreateAt: {{item.CreateAt |date}}</p>
+                    <p>SpaceQuestionNumber: {{item.SpaceQuestionNumber}}</p>
+                    <p>Status: {{item.Status?"Public":"Draft"}}</p>
+                    <p>Note: {{item.Note}}</p>
+                    <p>Category Name: {{item.NameCategory}}</p>
+                    <button [routerLink]="['/exam', item.Id]" class="btn btn-default" data-dismiss="modal">Update
                       Question</button>
                   </div>
                   <div class="pull-right" style="padding-right: 5%">

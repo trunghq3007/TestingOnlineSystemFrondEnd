@@ -110,8 +110,8 @@
               </button>
             </span>
             <span data-placement="top" data-toggle="tooltip" title="Detail">
-                <button  class="btn btn-success btn-xs"
-                data-title="Detail" data-toggle="modal" data-target="#detail"><span
+                <button [routerLink]="['/test',element.Id]" class="btn btn-success btn-xs"
+                data-title="Detail"   data-target="#detail"><span
                 class="glyphicon glyphicon-list-alt"></span></button>
               </span>
               <span data-placement="top" (click)="navigateToEdit(element.Id)" data-toggle="tooltip" title="Update">
@@ -138,7 +138,4 @@
 </div>
 
 
-
-
- 
 

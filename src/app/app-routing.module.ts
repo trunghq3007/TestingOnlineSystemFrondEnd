@@ -116,6 +116,28 @@ const routes: Routes = [
     ]
   },
   {
+    path: 'test',
+    children: [
+      {
+        path: '',
+        component: ListTestComponent,
+        pathMatch: 'full'
+      },
+      {
+        path: 'create',
+        component: ListCreateComponent
+      },
+      {
+        path: ':testID',
+        component: ListDetailComponent
+      },
+      {
+        path: 'update/:Id',
+        component: ListUpdateComponent
+      }
+    ], //canActivate: [AuthGuard]
+  },
+  {
     path: 'group',
     children: [
       {
