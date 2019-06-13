@@ -92,6 +92,7 @@ export class ListUpdateComponent implements OnInit {
       this.tests = JSON.parse(value);
      
       this.form.patchValue(JSON.parse(value));
+      console.log(JSON.parse(value) );
     });
   }
   get exam(): FormControl {

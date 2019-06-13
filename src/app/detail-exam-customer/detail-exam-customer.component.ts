@@ -13,6 +13,10 @@ const httpOptions = {
 export class DetailExamCustomerComponent implements OnInit {
   list: DetailExam;
   constructor(private http: HttpClient, private router: Router, private activedRoute: ActivatedRoute) { }
+  
+  chuoi : string;
+  
+
 
   ngOnInit() {
  
@@ -23,6 +27,7 @@ export class DetailExamCustomerComponent implements OnInit {
         this.list = JSON.parse(value);
         console.log(IdQuestion);
         console.log(value);
+        this.chuoi = '/thi/1/'+IdQuestion+'/thi' ;
       });
   }
 

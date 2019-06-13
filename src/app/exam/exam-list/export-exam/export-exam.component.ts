@@ -29,6 +29,9 @@ exam:string;
       }
 
     });
+    setTimeout(()=>{
+      window.print();
+    },10000);
   }
 
 }
