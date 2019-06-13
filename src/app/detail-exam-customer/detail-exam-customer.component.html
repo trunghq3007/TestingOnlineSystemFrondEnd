@@ -1,28 +1,33 @@
-<div class="wrapper">
-    <div class="thongtin" *ngIf="list">
-        <h2>Thông tin bài thi</h2>
-        <ul class="ds-1">
-            <li>Tên bài thi : <span>{{list.TestName}}</span></li>
-            <li>Chủ đề thi : <span>{{list.CategoryName}}</span></li>
-            <li>Tổng số câu hỏi : <span>{{list.QuestionNumber}}</span></li>
-            <li>
-  
-                <table class="ds-2">
-                    <tr>
-                        <td>Số câu trắc nghiệm : <span>{{list.NumberChoiceQuestion}}</span></td>
-                        <td>Tổng điểm : <span>{{list.TotalScore}}</span></td>
-                    </tr>
-                    <tr>
-                        <td>Số câu tự luận : <span>{{list.NumberStatementQuestion}}</span></td>
-                        <td>Tổng điểm : <span>{{list.TotalScore}}</span></td>
-                    </tr>
-                </table>
-  
-  
-            </li>
-            <li>Thời gian làm bài:<span>{{list.TestTime}}</span> phút</li>
-            <li><button type="submit" class="apply" [routerLink]="['/thi/1/1/thi']"> Bắt đầu</button></li>
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+<div class="container">
+  <div class="row"  style="margin-left: 20%;margin-top: 70px">
+    
+    <div class="col-md-3" style="width: 30%;margin-top: -25px;"  *ngIf="list">
+        <ul class="nav nav-pills nav-stacked">
+           <a [routerLink]="[this.chuoi ]"><li class="active"><i class="fa fa-sign-in" style="text-align: center"></i>Vào Thi</li></a> 
+    
+            <li><i class="fa fa-list-alt fa-fw" ></i>Chủ đề thi:{{list.CategoryName}}</li>
+            
+            <li><i class="fa fa-file-o fa-fw"></i>Tổng số câu hỏi:{{list.QuestionNumber}}</li>
+            <li><i class="fa fa-bar-chart-o fa-fw"></i>Số câu trắc nhiệm:{{list.NumberChoiceQuestion}}</li>
+            <li><i class="fa fa-table fa-fw"></i>Số câu tự luận:{{list.NumberStatementQuestion}}</li>
+            <li><i class="fa fa-tasks fa-fw"></i>Tổng điểm:{{list.TotalScore}}</li>
+            <li><i class="fa fa-calendar fa-fw"></i>Thời gian làm bài:{{list.TestTime}}phút</li>
+            
         </ul>
     </div>
-  
-  </div>
+    <div class="col-md-7 well" style="float: right">
+            <h2 style="font-size:27px;text-align: center">Tên Bài Thi:{{list.TestName}}</h2>
+    </div>
+</div>
+</div>
+
+
+
+
+
+
+        
