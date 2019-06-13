@@ -118,7 +118,7 @@
       <div class="box" *ngFor="let item of semesters">
         <span class="boder"></span>
         <a routerLink="/semestercustomer/{{item.ID}}">
-          <h1 style="font-size: 16px;"><h3 style="color: #009CDE; font-family:Georgia, 'Times New Roman', Times, serif">Name:{{item.SemesterName}}</h3> <br /><span>
+          <h1 style="font-size: 16px;"><h3 style="color: #009CDE; font-family:Georgia, 'Times New Roman', Times, serif">{{item.SemesterName}}</h3> <br /><span>
            StartDay: {{item.StartDay| date: 'dd/MM/yyyy'}}   </span><h5 style="font-size: 13px">Enday:{{item.EndDay| date: 'dd/MM/yyyy'}}</h5><br />
           </h1>
         </a>

@@ -9,6 +9,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
+
 @Component({
   selector: 'app-thi-thi',
   templateUrl: './thi-thi.component.html',
@@ -33,7 +34,7 @@ export class ThiThiComponent implements OnInit {
   testProcessings: TestProcessing;
   array: object[];
   arrayAnswer: object[] = [];
-  
+ Idtest = this.activateRoute.snapshot.paramMap.get('TestId');
   private intervalId = 0;
   message = '';
   remainingTime: number;
@@ -41,7 +42,7 @@ export class ThiThiComponent implements OnInit {
   constructor(private semaster: FormBuilder, private fb: FormBuilder, private http: HttpClient, private router: Router, public dialog: MatDialog, public activateRoute: ActivatedRoute) { }
   @Input()
   seconds = 200;
-
+  
   clearTimer() {
     clearInterval(this.intervalId);
   }
@@ -61,6 +62,7 @@ export class ThiThiComponent implements OnInit {
         this.answerContent2 = this.testProcessings.Questions[this.i].Answers[this.j++].Content;
         this.answerContent3 = this.testProcessings.Questions[this.i].Answers[this.j++].Content;
         this.answerContent4 = this.testProcessings.Questions[this.i].Answers[this.j++].Content;
+        this.countDown();
       }
     )
 
@@ -93,9 +95,13 @@ export class ThiThiComponent implements OnInit {
     this.intervalId = window.setInterval(() => {
       this.remainingTime -= 1;
       if (this.remainingTime === 0) {
-        confirm('Time out');
+        //confirm('Time out');
        this.message = 'Blast off!';
       
+        this.router.navigate(['/thi/8/2/ketqua']);
+        console.log(this.router.navigate(['/thi/8/2/ketqua']));
+       
+     
         this.clearTimer(); // thay bang goi den ham` ket qua thi
       } else {
         this.message = `T-${this.remainingTime} seconds and counting`;
@@ -298,7 +304,16 @@ export class ThiThiComponent implements OnInit {
     return false;
   }
   summit() {
-    confirm('Nop bai');
-    // this.http.post('http://localhost:65170/api/SemesterExam?isSubmit=a&testId=1')
+   console.log(this.Idtest);
+    this.http.post('http://localhost:65170/api/SemesterExam?isSubmit=a&testId='+this.Idtest , JSON.stringify(this.arrayAnswer), httpOptions).subscribe(
+      value => (console.log(value))
+
+    )
+
+    if(confirm('Nop bai'))
+    {
+      this.router.navigate(['/thi/8/2/ketqua']);
+    }
+
   }
 }
