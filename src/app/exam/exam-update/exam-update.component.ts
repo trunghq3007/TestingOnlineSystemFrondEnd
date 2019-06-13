@@ -23,9 +23,10 @@ export class ExamUpdateComponent  implements OnInit {
   
   editForm: FormGroup;
   number = "^([1-9][0-9]{0,3}|^2000)$";
-  //regex = "^[A-Za-z0-9\s _]+$";
+  regex = "^[A-Za-z0-9\s _]+$";
   CategoryFormApi = [];
-  categoryname: string;
+  categoryname: {};
+  
 
   constructor(private fb: FormBuilder, private http: HttpClient, private ac: ActivatedRoute) { }
   get NameExam(): FormControl {
@@ -58,6 +59,7 @@ export class ExamUpdateComponent  implements OnInit {
   getApiCategory() {
     this.http.get<string>('http://localhost:65170/api/Category/').subscribe(value => {
       this.CategoryFormApi = JSON.parse(value);
+      console.log(this.CategoryFormApi);
     });
   }
 
@@ -73,20 +75,19 @@ export class ExamUpdateComponent  implements OnInit {
       CreateAt: [''],
       Note: [''],
       CategoryId: [''],
-      
-      
     });
 
     const examID = this.ac.snapshot.paramMap.get('Id');
-    this.http.get<string>('http://localhost:65170/api/Exam/?idExam=' + examID).subscribe(value => {
+    this.http.get<string>('http://localhost:65170/api/Exam/' + examID).subscribe(value => {
       this.categoryname = value;
+      console.log(value);
     });
-
-    this.http.get<string>('http://localhost:65170/api/Exam/?id=' + examID).subscribe(value => {
-      this.exam = JSON.parse(value);
-      if(this.exam.Category){
-        this.exam.CategoryId = this.exam.Category.Id;
-      }
+    this.http.get<string>('http://localhost:65170/api/Exam/' + examID).subscribe(value => {
+      this.exam = JSON.parse(value).Data[0];
+      
+      // if(this.exam.Category){
+      //   this.exam.CategoryId= this.exam.Category.Id;
+      // }
       this.editForm.patchValue(this.exam);
     });
   }
