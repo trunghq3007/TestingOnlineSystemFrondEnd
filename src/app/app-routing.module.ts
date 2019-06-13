@@ -276,4 +276,4 @@ console.log(fullRoutes);
   imports: [RouterModule.forRoot(fullRoutes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule { } 

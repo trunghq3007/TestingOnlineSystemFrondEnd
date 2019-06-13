@@ -217,6 +217,14 @@ export class ThiThiComponent implements OnInit {
     this.checkItem2 = false;
     this.checkItem3 = false;
     this.checkItem4 = false;
+    if (this.containsObject(this.question, this.array2)) {
+      console.log("arrayy 2: ", this.array2)
+     
+      this.array2.filter(this.question);
+      
+      this.reload = false;
+      this.reload = true;
+    }
     if (!this.containsObject(this.question, this.array2)) {
       this.array2.push(this.question);
 
@@ -227,6 +235,8 @@ export class ThiThiComponent implements OnInit {
     if (!this.CheckListAnswer(this.testProcessings.Questions[this.i].Answers[0], this.arrayAnswer))
       this.arrayAnswer.push(this.testProcessings.Questions[this.i].Answers[0]);
     console.log('array answer:', this.arrayAnswer);
+    console.log(this.containsObject(this.question, this.array2));
+    
   }
   check2() {
     this.checkItem1 = false;
@@ -244,15 +254,7 @@ export class ThiThiComponent implements OnInit {
     this.a = false;
     this.reload = true;
   }
-  dcm() {
-    if (this.checkItem1 == false)
-      this.checkItem1 = true;
-    else
-      this.checkItem1 = false;
-    console.log('abc ' + this.containsObject(this.question, this.array2))
-
-
-  }
+ 
   check3() {
     this.checkItem1 = false;
     this.checkItem2 = false;
@@ -296,7 +298,7 @@ export class ThiThiComponent implements OnInit {
     return false;
   }
   summit() {
-    confirm('aa');
+    confirm('Nop bai');
     // this.http.post('http://localhost:65170/api/SemesterExam?isSubmit=a&testId=1')
   }
 }
