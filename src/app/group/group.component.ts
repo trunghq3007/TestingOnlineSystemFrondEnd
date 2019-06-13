@@ -63,9 +63,15 @@ export class GroupComponent implements OnInit {
   listgroup() {
     // const permission = localStorage.getItem('currentPermission');
     // const http: HttpHeaders = new HttpHeaders({ 'permission': permission });
-    this.http.get<string>('http://localhost:65170/api/Group', { headers: http }).subscribe(value => {
-      this.dataSource.data = JSON.parse(value).Data;
-      console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
+    this.http.get<string>('http://localhost:65170/api/Group', { headers: http() }).subscribe({
+      next: (value) => {
+        this.dataSource.data = JSON.parse(value).Data;
+        console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
+      },
+      error: (err: HttpErrorResponse) => {
+        console.log(err);
+        alert(err.error.Message);
+      }
     });
   }
   ngOnInit() {
@@ -85,12 +91,12 @@ export class GroupComponent implements OnInit {
     if (this.createForm.valid) {
       const value = this.createForm.value;
       console.log(value);
-      this.http.post<string>('http://localhost:65170/api/Group', JSON.stringify(value), { headers: http }).subscribe({
+      this.http.post<string>('http://localhost:65170/api/Group', JSON.stringify(value), { headers: http() }).subscribe({
         next: (res) => {
           const result: ResultObject = JSON.parse(res);
           if (result.Success >= 1) {
             confirm('Create success!');
-            this.http.get<string>('http://localhost:65170/api/Group', { headers: http }).subscribe(value => {
+            this.http.get<string>('http://localhost:65170/api/Group', { headers: http() }).subscribe(value => {
               this.dataSource.data = JSON.parse(value).Data;
               console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
             });
@@ -99,24 +105,31 @@ export class GroupComponent implements OnInit {
           }
           this.createForm.reset();
         },
-        error: (err) => {
+        error: (err: HttpErrorResponse) => {
           console.log(err);
+          alert(err.error.Message);
         }
       });
     }
   }
 
   onSearch() {
-    this.http.get<string>('http://localhost:65170/api/Group?searchString=' + this.searchString, { headers: http }).subscribe(value => {
-      this.dataSource.data = JSON.parse(value).Data;
-      console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
-    });
+    this.http.get<string>('http://localhost:65170/api/Group?searchString=' + this.searchString, { headers: http() }).subscribe
+      ({
+        next: (value) => {
+          this.dataSource.data = JSON.parse(value).Data;
+          console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
+        }, error: (err: HttpErrorResponse) => {
+          console.log(err);
+          alert(err.error.Message);
+        }
+      });
   }
   getId(id) {
     this.groupId = id;
   }
   onDelete() {
-    this.http.delete<string>('http://localhost:65170/api/Group/' + this.groupId).subscribe({
+    this.http.delete<string>('http://localhost:65170/api/Group/' + this.groupId, { headers: http() }).subscribe({
       next: (res) => {
         let result = JSON.parse(res);
         if (result.Success == 1) {
@@ -129,8 +142,7 @@ export class GroupComponent implements OnInit {
       },
       error: (err: HttpErrorResponse) => {
         console.log(err);
-        //alert("Bạn không có quyền!");
-        alert({ err: Message });
+        alert(err.error.Message);
       }
     });
   }
@@ -138,27 +150,34 @@ export class GroupComponent implements OnInit {
   removeSelectedRows() {
     if (confirm('Delete selected?')) {
       this.selection.selected.forEach(item => {
-        this.http.delete<string>('http://localhost:65170/api/Group/' + item.GroupId, { headers: http }).subscribe(res => {
-          let result = JSON.parse(res);
-          if (result.Success == 1) {
-            this.dataSource.data = this.dataSource.data.filter(b => b.GroupId !== item.GroupId);
-            confirm('Delete success!');
-            this.listgroup();
-          } else {
-            confirm('Delete failed!');
+        this.http.delete<string>('http://localhost:65170/api/Group/' + item.GroupId, { headers: http() }).subscribe(
+          {
+            next: (res) => {
+              let result = JSON.parse(res);
+              if (result.Success == 1) {
+                this.dataSource.data = this.dataSource.data.filter(b => b.GroupId !== item.GroupId);
+                confirm('Delete success!');
+                this.listgroup();
+              } else {
+                confirm('Delete failed!');
+              }
+              this.selection = new SelectionModel<Group>(true, []);
+            },
+            error: (err: HttpErrorResponse) => {
+              console.log(err);
+              alert(err.error.Message);
+            }
           }
-        }
+          // this.dataSource = new MatTableDataSource<Group>(this.dataSource.data);
         );
-        // this.dataSource = new MatTableDataSource<Group>(this.dataSource.data);
       });
-      this.selection = new SelectionModel<Group>(true, []);
     }
   }
 
   onFilter() {
     const value = this.filterForm.value;
     console.log(this.filterForm.value);
-    this.http.post<string>('http://localhost:65170/api/Group/?action=filter', JSON.stringify(value), { headers: http }).subscribe(value => {
+    this.http.post<string>('http://localhost:65170/api/Group/?action=filter', JSON.stringify(value), { headers: http() }).subscribe(value => {
       this.dataSource.data = JSON.parse(value).Data;
     });
   }

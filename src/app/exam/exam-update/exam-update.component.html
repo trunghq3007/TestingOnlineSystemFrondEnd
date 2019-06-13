@@ -13,7 +13,7 @@
           Name exam:
         </label>
         <div class="col-10">
-          <input class="form-control" type="text" value="{{categoryname.NameExam}}"  id="example-text-input"
+          <input class="form-control" type="text" value="{{NameExam}}" [pattern]="regex" id="example-text-input"
             formControlName="NameExam">
         </div>
       </div>
@@ -35,7 +35,7 @@
             <input class="form-control" type="" formControlName="createBy" id="example-email-input">
           </div> -->
         <div class="col-10">
-          <input class="form-control"  type="text" value="{{categoryname.CreateBy}}" id="example-text-input" formControlName="CreateBy">
+          <input class="form-control"  type="text" value="{{CreateBy}}" id="example-text-input" formControlName="CreateBy">
           <!-- <select class="bootstrap-select" style="width: 100%; height: 35px;" >
               <option value="admin" selected="selected">admin</option>
               <option value="manager">manager</option>
@@ -55,7 +55,7 @@
           Question number:
         </label>
         <div class="col-10">
-          <input class="form-control" type="text" [pattern]="number" value="{{categoryname.QuestionNumber}}" formControlName="QuestionNumber"
+          <input class="form-control" type="text" [pattern]="number" value="{{QuestionNumber}}" formControlName="QuestionNumber"
             id="example-url-fb">
         </div>
       </div>
@@ -94,7 +94,7 @@
           Space QuestionNumber:
         </label>
         <div class="col-10">
-          <input class="form-control" type="text" [pattern]="number" value="{{categoryname.SpaceQuestionNumber}}" formControlName="SpaceQuestionNumber"
+          <input class="form-control" type="text" [pattern]="number" value="{{SpaceQuestionNumber}}" formControlName="SpaceQuestionNumber"
             id="example-url-fb">
         </div>
       </div>
@@ -116,7 +116,7 @@
             <input class="form-control" type="" formControlName="createBy" id="example-email-input">
           </div> -->
         <div class="col-10">
-          <input class="form-control" type="text" value="{{categoryname.CreateAt}}" id="example-text-input" formControlName="CreateAt">
+          <input class="form-control" type="text" value="{{CreateAt}}" id="example-text-input" formControlName="CreateAt">
           <!-- <select class="bootstrap-select" style="width: 100%; height: 35px;" >
               <option value="admin" selected="selected">admin</option>
               <option value="manager">manager</option>
