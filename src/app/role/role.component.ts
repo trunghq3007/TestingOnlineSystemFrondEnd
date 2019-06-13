@@ -21,7 +21,7 @@ export class RoleComponent implements OnInit {
   RoleId: '';
   public Editor = ClassicEditorBuild;
   constructor(private http: HttpClient, private router: Router, private fb: FormBuilder) { }
-  displayedColumn: string[] = ['RoleId', 'RoleName', 'Description','Action'];
+  displayedColumn: string[] = ['RoleId', 'RoleName', 'Description', 'Action'];
   dataSource = new MatTableDataSource<Role>(this.roles);
   selection = new SelectionModel<Role>(true, []);
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -44,7 +44,7 @@ export class RoleComponent implements OnInit {
 
   }
 
-  listRole(){
+  listRole() {
     this.http.get<string>('http://localhost:65170/api/Role').subscribe(value => {
       this.dataSource.data = JSON.parse(value);
       console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
@@ -56,48 +56,48 @@ export class RoleComponent implements OnInit {
   }
 
   DeleteRole(Id: string) {
-    if(confirm('Are you sure you to delete this role?')){
+    if (confirm('Are you sure you to delete this role?')) {
       this.http.delete<string>('http://localhost:65170/api/Role/?id=' + Id).subscribe(res => {
-      let result = JSON.parse(res);
-      if (result.Success == 1) {
-        this.roles = this.roles.filter(b => b.RoleId !== Id);
-        confirm('Delete success!');
-        this.listRole();
-      } else {
-        confirm('Delete failed!');
-      }
-    });
-    }
-}   
-
-onSubmit(){
-  console.log(this.createForm.value);
-  if(this.createForm.valid){
-    const value = this.createForm.value;
-    console.log(value);
-    this.http.post<string>('http://localhost:65170/api/Role', JSON.stringify(value), httpOptions).subscribe({
-      next: (res) => {
-        const result: ResultObject = JSON.parse(res);
-        if (result.Success >= 1) {
-          confirm('Create success!');
+        let result = JSON.parse(res);
+        if (result.Success == 1) {
+          this.roles = this.roles.filter(b => b.RoleId !== Id);
+          confirm('Delete success!');
+          this.listRole();
         } else {
-          confirm('Create Fail!');
+          confirm('Delete failed!');
         }
-        this.createForm.reset();
-      },
-      error: (err) => {
-        console.log(err);
-      }
-    });
+      });
+    }
   }
-}
-clickToRoute() {
-  this.router.navigate(['Role/', this.RoleId]);
-}
-validateForm() {
-  if (this.createForm.invalid) {
-    this.createForm.get('RoleName').markAsTouched();
-    return;
+
+  onSubmit() {
+    console.log(this.createForm.value);
+    if (this.createForm.valid) {
+      const value = this.createForm.value;
+      console.log(value);
+      this.http.post<string>('http://localhost:65170/api/Role', JSON.stringify(value), httpOptions).subscribe({
+        next: (res) => {
+          const result: ResultObject = JSON.parse(res);
+          if (result.Success >= 1) {
+            confirm('Create success!');
+          } else {
+            confirm('Create Fail!');
+          }
+          this.createForm.reset();
+        },
+        error: (err) => {
+          console.log(err);
+        }
+      });
+    }
   }
-}
+  clickToRoute() {
+    this.router.navigate(['Role/', this.RoleId]);
+  }
+  validateForm() {
+    if (this.createForm.invalid) {
+      this.createForm.get('RoleName').markAsTouched();
+      return;
+    }
+  }
 }

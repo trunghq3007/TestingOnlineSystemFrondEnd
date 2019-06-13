@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import * as ClassicEditorBuild from '@ckeditor/ckeditor5-build-classic';
 import { User } from '../user';
 import { ResultObject } from '../result-object';
+import { http } from '../http-header';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -69,7 +70,7 @@ export class UserCreateComponent implements OnInit {
   constructor(private fb: FormBuilder, private http: HttpClient) { }
 
   getApiRoles() {
-    this.http.get<string>('http://localhost:65170/api/role/').subscribe(value => {
+    this.http.get<string>('http://localhost:65170/api/role/',{ headers: http }).subscribe(value => {
       this.RolesFormApi = JSON.parse(value);
     });
   }
@@ -107,11 +108,11 @@ export class UserCreateComponent implements OnInit {
       value.RoleId = value.Role.RoleId;
       console.log(value);
 
-      this.http.get<string>('http://localhost:65170/api/User/?userName=' + userName).subscribe(res => {
+      this.http.get<string>('http://localhost:65170/api/User/?userName=' + userName,{ headers: http }).subscribe(res => {
         this.check = res;
         console.log(this.check);
         if (this.check == 'False') {
-          this.http.post<string>('http://localhost:65170/api/user', JSON.stringify(value), httpOptions).subscribe({
+          this.http.post<string>('http://localhost:65170/api/user', JSON.stringify(value), { headers: http }).subscribe({
             next: (res) => {
               const result: ResultObject = JSON.parse(res);
               if (result.Success >= 1) {
