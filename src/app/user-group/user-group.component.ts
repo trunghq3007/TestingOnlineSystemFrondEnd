@@ -6,6 +6,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { GroupUser } from '../group-user';
 import { ResultObject } from '../result-object';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { http } from '../http-header';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -19,11 +20,11 @@ export class UserGroupComponent implements OnInit {
   usergroup: GroupUser = undefined;
   userId = '';
   check: string;
-  ObjFormGroup:FormGroup;
+  ObjFormGroup: FormGroup;
   get GroupName(): FormControl {
     return this.ObjFormGroup.get('GroupName') as FormControl;
   }
-  constructor(private fb: FormBuilder,private http: HttpClient, private router: Router, private activatedRoute: ActivatedRoute) { }
+  constructor(private fb: FormBuilder, private http: HttpClient, private router: Router, private activatedRoute: ActivatedRoute) { }
   displayedColumn: string[] = ['select', 'UserId', 'UserName', 'FullName', 'Action'];
   dataSource = new MatTableDataSource<GroupUser>(this.usergroups);
   selection = new SelectionModel<GroupUser>(true, []);
@@ -31,19 +32,20 @@ export class UserGroupComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
- 
+
   ngOnInit() {
     this.ObjFormGroup = this.fb.group({
-      GroupName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]]});
+      GroupName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]]
+    });
 
     const GroupId = this.activatedRoute.snapshot.paramMap.get('groupId');
 
-    this.http.get<string>('http://localhost:65170/api/Group/' + GroupId).subscribe(value => {
+    this.http.get<string>('http://localhost:65170/api/Group/' + GroupId, { headers: http() }).subscribe(value => {
       this.usergroup = JSON.parse(value).Data;
       console.log(this.usergroup);
     });
 
-    this.http.get<string>('http://localhost:65170/api/UserGroup/' + GroupId).subscribe(value => {
+    this.http.get<string>('http://localhost:65170/api/UserGroup/' + GroupId, { headers: http() }).subscribe(value => {
       this.dataSource.data = JSON.parse(value).Data;
       console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
     });
@@ -67,7 +69,7 @@ export class UserGroupComponent implements OnInit {
 
   listUserGroup() {
     const GroupId = this.activatedRoute.snapshot.paramMap.get('groupId');
-    this.http.get<string>('http://localhost:65170/api/UserGroup/' + GroupId).subscribe(value => {
+    this.http.get<string>('http://localhost:65170/api/UserGroup/' + GroupId, { headers: http() }).subscribe(value => {
       this.dataSource.data = JSON.parse(value).Data;
       console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
     });
@@ -77,7 +79,7 @@ export class UserGroupComponent implements OnInit {
   }
   DeleteUserGroup() {
     const GroupId = this.activatedRoute.snapshot.paramMap.get('groupId');
-    this.http.delete<string>('http://localhost:65170/api/UserGroup/?idgroup=' + GroupId + '&iduser=' + this.userId).subscribe((res) => {
+    this.http.delete<string>('http://localhost:65170/api/UserGroup/?idgroup=' + GroupId + '&iduser=' + this.userId, { headers: http() }).subscribe((res) => {
       let result = JSON.parse(res);
       if (result.Success == 1) {
         this.usergroups = this.usergroups.filter(b => b.UserId !== this.userId);
@@ -93,7 +95,7 @@ export class UserGroupComponent implements OnInit {
   removeSelectedRows() {
     this.selection.selected.forEach(item => {
       const UserGroupId = this.activatedRoute.snapshot.paramMap.get('groupId');
-      this.http.delete<string>('http://localhost:65170/api/UserGroup/?idgroup=' + UserGroupId + '&iduser=' + item.UserId).subscribe(res => {
+      this.http.delete<string>('http://localhost:65170/api/UserGroup/?idgroup=' + UserGroupId + '&iduser=' + item.UserId, { headers: http() }).subscribe(res => {
         let result = JSON.parse(res);
         if (result.Success == 1) {
           this.usergroups = this.usergroups.filter(b => b.UserId !== item.UserId);
@@ -117,37 +119,37 @@ export class UserGroupComponent implements OnInit {
   submitEdit(groupName) {
     if (confirm('Are you sure you want to save this group name?')) {
       const GroupId = this.activatedRoute.snapshot.paramMap.get('groupId');
-    this.http.get<string>('http://localhost:65170/api/Group/?groupName=' + groupName + '&groupId=' + GroupId).subscribe(res => {
-    this.check =res;
-    console.log(this.check);
-    if(this.check == 'False')
-    {
-      // console.log(groupName);
-      
-      // console.log(GroupId);
-      this.http.put<string>('http://localhost:65170/api/Group/?id=' + GroupId + '&groupname=' + groupName, httpOptions).subscribe({
-        next: (res) => {
-          const result: ResultObject = JSON.parse(res);
-          if (result.Success >= 1) {
-            confirm('Update success!');
-          } else {
-            confirm('Update Fail!');
+      this.http.get<string>('http://localhost:65170/api/Group/?groupName=' + groupName + '&groupId=' + GroupId,
+        { headers: http() }).subscribe(res => {
+          this.check = res;
+          console.log(this.check);
+          if (this.check == 'False') {
+            // console.log(groupName);
+
+            // console.log(GroupId);
+            this.http.put<string>('http://localhost:65170/api/Group/?id=' + GroupId + '&groupname=' + groupName, { headers: http() }).subscribe({
+              next: (res) => {
+                const result: ResultObject = JSON.parse(res);
+                if (result.Success >= 1) {
+                  confirm('Update success!');
+                } else {
+                  confirm('Update Fail!');
+                }
+              },
+              error: (err) => {
+                console.log(err);
+              }
+            });
           }
-        },
-        error: (err) => {
-          console.log(err);
-        }
-      });
+          else {
+            confirm("Group name is exist");
+          }
+        });
+
+
     }
-    else{
-      confirm("Group name is exist");
-    }
-    });
-    
-   
   }
-  }
-  
+
 }
 
 
