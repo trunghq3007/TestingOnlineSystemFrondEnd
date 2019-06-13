@@ -70,7 +70,7 @@ export class UserUpdateComponent implements OnInit {
   }
 
   getApiRoles() {
-    this.http.get<string>('http://localhost:65170/api/role/',{ headers: http }).subscribe(value => {
+    this.http.get<string>('http://localhost:65170/api/role/',{ headers: http() }).subscribe(value => {
       this.RolesFormApi = JSON.parse(value);
     });
   }
@@ -96,10 +96,10 @@ export class UserUpdateComponent implements OnInit {
       Note: ['']
     });
     const userId = this.ac.snapshot.paramMap.get('Id');
-    this.http.get<string>('http://localhost:65170/api/User/?idUser=' + userId,{ headers: http }).subscribe(value => {
+    this.http.get<string>('http://localhost:65170/api/User/?idUser=' + userId,{ headers: http() }).subscribe(value => {
       this.rolename = value;
     });
-    this.http.get<string>('http://localhost:65170/api/User/?userid=' + userId,{ headers: http }).subscribe(value => {
+    this.http.get<string>('http://localhost:65170/api/User/?userid=' + userId,{ headers: http() }).subscribe(value => {
       this.user = JSON.parse(value);
       this.editform.patchValue(JSON.parse(value));
     });
@@ -117,7 +117,7 @@ export class UserUpdateComponent implements OnInit {
       let temp = this.RolesFormApi.filter(s => s.RoleId == value.RoleId);
       value.Role = temp.length > 0 ? temp[0] : null;
       console.log(value);
-      this.http.put('http://localhost:65170/api/User/' + formData.UserId, formData, { headers: http }).subscribe({
+      this.http.put('http://localhost:65170/api/User/' + formData.UserId, formData, { headers: http() }).subscribe({
         next: (res) => {
           console.log(res);
           confirm('Update success!');

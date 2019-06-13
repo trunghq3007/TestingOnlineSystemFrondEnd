@@ -63,13 +63,15 @@ export class GroupComponent implements OnInit {
   listgroup() {
     // const permission = localStorage.getItem('currentPermission');
     // const http: HttpHeaders = new HttpHeaders({ 'permission': permission });
-    this.http.get<string>('http://localhost:65170/api/Group', { headers: http() }).subscribe
-    ({value => {
-      this.dataSource.data = JSON.parse(value).Data;
-      console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
-    }},error: (err: HttpErrorResponse) => {
-      console.log(err);
-      alert(err.error.Message);
+    this.http.get<string>('http://localhost:65170/api/Group', { headers: http() }).subscribe({
+      next: (value) => {
+        this.dataSource.data = JSON.parse(value).Data;
+        console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
+      },
+      error: (err: HttpErrorResponse) => {
+        console.log(err);
+        alert(err.error.Message);
+      }
     });
   }
   ngOnInit() {
