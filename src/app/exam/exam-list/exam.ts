@@ -1,7 +1,4 @@
-import { Category } from './ICategory';
-
 export interface Exam {
-
     Id: number,
     NameExam: string,
     CreateBy: string,
@@ -9,12 +6,10 @@ export interface Exam {
     Status: boolean,
     SpaceQuestionNumber: number,
     CreateAt: Date,
-
     Categorys: object,
-    Category: Category,
+    Category: any,
     CategoryId: string,
+    NameCategory:string,
     Note: string,
-    NameCategory: string,
-    StartDate:Date;
-    TestName:string;
+
 }

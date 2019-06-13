@@ -38,10 +38,10 @@ export class ImportQuestionComponent implements OnInit {
       .subscribe(
         (res) => {
           if (res.Success >= 1) {
-            confirm("Import Success");
+            confirm('Import Success');
           }
           else {
-            confirm("Import Fail"+ res.Message);
+            confirm('Import Fail!  ' + res.Message);
           }
         },
 
@@ -50,7 +50,7 @@ export class ImportQuestionComponent implements OnInit {
 
 
       );
-      this.router.navigate(['question']);
+    this.router.navigate(['question']);
 
   }
 

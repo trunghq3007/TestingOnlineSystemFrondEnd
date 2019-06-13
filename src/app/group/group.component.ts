@@ -3,10 +3,12 @@ import { Router } from '@angular/router';
 import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { FormBuilder, FormGroup, Validators, FormControl, ValidationErrors } from '@angular/forms';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Group } from '../group';
 import { ResultObject } from '../result-object';
 import { http } from '../http-header';
+import { Message } from '@angular/compiler/src/i18n/i18n_ast';
+
 
 
 const httpOptions = {
@@ -68,10 +70,7 @@ export class GroupComponent implements OnInit {
   }
   ngOnInit() {
     this.listgroup();
-    // this.http.get<string>('http://localhost:65170/api/Group').subscribe(value => {
-    //   this.dataSource.data = JSON.parse(value).Data;
-    //   console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
-    // });
+
     this.createForm = this.fb.group({
       GroupName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(20)]],
       Creator: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
@@ -108,7 +107,7 @@ export class GroupComponent implements OnInit {
   }
 
   onSearch() {
-    this.http.get<string>('http://localhost:65170/api/Group?searchString=' + this.searchString).subscribe(value => {
+    this.http.get<string>('http://localhost:65170/api/Group?searchString=' + this.searchString, { headers: http }).subscribe(value => {
       this.dataSource.data = JSON.parse(value).Data;
       console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
     });
@@ -117,14 +116,21 @@ export class GroupComponent implements OnInit {
     this.groupId = id;
   }
   onDelete() {
-    this.http.delete<string>('http://localhost:65170/api/Group/' + this.groupId).subscribe(res => {
-      let result = JSON.parse(res);
-      if (result.Success == 1) {
-        this.groups = this.groups.filter(b => b.GroupId !== this.groupId);
-        confirm('Delete success!');
-        this.listgroup();
-      } else {
-        confirm('Delete failed!');
+    this.http.delete<string>('http://localhost:65170/api/Group/' + this.groupId).subscribe({
+      next: (res) => {
+        let result = JSON.parse(res);
+        if (result.Success == 1) {
+          this.groups = this.groups.filter(b => b.GroupId !== this.groupId);
+          confirm('Delete success!');
+          this.listgroup();
+        } else {
+          confirm('Delete failed!');
+        }
+      },
+      error: (err: HttpErrorResponse) => {
+        console.log(err);
+        //alert("Bạn không có quyền!");
+        alert({ err: Message });
       }
     });
   }
@@ -132,7 +138,7 @@ export class GroupComponent implements OnInit {
   removeSelectedRows() {
     if (confirm('Delete selected?')) {
       this.selection.selected.forEach(item => {
-        this.http.delete<string>('http://localhost:65170/api/Group/' + item.GroupId).subscribe(res => {
+        this.http.delete<string>('http://localhost:65170/api/Group/' + item.GroupId, { headers: http }).subscribe(res => {
           let result = JSON.parse(res);
           if (result.Success == 1) {
             this.dataSource.data = this.dataSource.data.filter(b => b.GroupId !== item.GroupId);
@@ -152,7 +158,7 @@ export class GroupComponent implements OnInit {
   onFilter() {
     const value = this.filterForm.value;
     console.log(this.filterForm.value);
-    this.http.post<string>('http://localhost:65170/api/Group/?action=filter', JSON.stringify(value), httpOptions).subscribe(value => {
+    this.http.post<string>('http://localhost:65170/api/Group/?action=filter', JSON.stringify(value), { headers: http }).subscribe(value => {
       this.dataSource.data = JSON.parse(value).Data;
     });
   }
@@ -179,5 +185,8 @@ export class GroupComponent implements OnInit {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.GroupId + 1}`;
   }
 
-
+  logout() {
+    sessionStorage.removeItem('currentPermission');
+    this.router.navigate(['']);
+  }
 }
