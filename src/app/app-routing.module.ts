@@ -41,6 +41,7 @@ import { RoleActionComponent } from './roleaction/roleaction.component';
 import { RoleActionAddComponent } from './role-action-add/role-action-add.component';
 import { AuthGuard } from './_guards/auth.guard';
 import { ExportExamComponent } from './exam/exam-list/export-exam/export-exam.component';
+import { ExamDetailQuestionComponent } from './exam/exam-detail-question/exam-detail-question.component';
 const routes: Routes = [
   {
     path: '',
@@ -130,6 +131,10 @@ const routes: Routes = [
         path: ':examID',
         component: ExamDetailComponent
       },
+{
+  path:'examquestion/:examID',
+  component:ExamDetailQuestionComponent
+},
 
       {
         path: 'update/:Id',
