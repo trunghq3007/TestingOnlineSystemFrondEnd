@@ -10,7 +10,7 @@ import { User } from './user';
 })
 export class AppComponent {
   title = 'OnlineSystem';
-  currentUser: User = null;
+  currentUser = null;
   initUser(value: User) {
     this.currentUser = value;
   }
@@ -24,6 +24,7 @@ export class AppComponent {
       this.currentUser = user;
     });
     // }
+    // this.currentUser = sessionStorage.getItem('currentPermission');
   }
 }
 

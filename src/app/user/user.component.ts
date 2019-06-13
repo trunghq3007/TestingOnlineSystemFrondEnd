@@ -42,7 +42,7 @@ export class UserComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
   listuser() {
-    this.http.get<string>('http://localhost:65170/api/User',{ headers: http }).subscribe(value => {
+    this.http.get<string>('http://localhost:65170/api/User',{ headers: http() }).subscribe(value => {
       this.dataSource.data = JSON.parse(value).Data;
       console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
     });
@@ -52,7 +52,7 @@ export class UserComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.http.get<string>('http://localhost:65170/api/User',{ headers: http }).subscribe(value => {
+    this.http.get<string>('http://localhost:65170/api/User',{ headers: http() }).subscribe(value => {
       this.dataSource.data = JSON.parse(value).Data;
       console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
     });
@@ -60,16 +60,16 @@ export class UserComponent implements OnInit {
       Position: [''],
       Department: ['']
     });
-    this.http.get<string>('http://localhost:65170/api/User',{ headers: http }).subscribe(value => {
+    this.http.get<string>('http://localhost:65170/api/User',{ headers: http() }).subscribe(value => {
       this.PositionApi = JSON.parse(value).Data;
     });
-    this.http.get<string>('http://localhost:65170/api/User',{ headers: http }).subscribe(value => {
+    this.http.get<string>('http://localhost:65170/api/User',{ headers: http() }).subscribe(value => {
       this.DepartmentApi = JSON.parse(value).Data;
     });
   }
 
   onSearch() {
-    this.http.get<string>('http://localhost:65170/api/User?searchString=' + this.searchString,{ headers: http }).subscribe(value => {
+    this.http.get<string>('http://localhost:65170/api/User?searchString=' + this.searchString,{ headers: http() }).subscribe(value => {
       this.dataSource.data = JSON.parse(value).Data;
       console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
     });
@@ -94,18 +94,18 @@ export class UserComponent implements OnInit {
     const value = this.filterForm.value;
     console.log(value);
     this.http.post<string>('http://localhost:65170/api/User/?action=filter', JSON.stringify(value),
-    { headers: http }).subscribe(value => {
+    { headers: http() }).subscribe(value => {
         this.dataSource.data = JSON.parse(value).Data;
       });
   }
   detail(id) {
     this.userId = id;
     console.log(this.userId);
-    this.http.get<string>('http://localhost:65170/api/User/?userid=' + this.userId,{ headers: http }).subscribe(value => {
+    this.http.get<string>('http://localhost:65170/api/User/?userid=' + this.userId,{ headers: http() }).subscribe(value => {
       this.getUsers = JSON.parse(value);
       console.log(this.getUsers);
     });
-    this.http.get<string>('http://localhost:65170/api/User/' + this.userId,{ headers: http }).subscribe(value => {
+    this.http.get<string>('http://localhost:65170/api/User/' + this.userId,{ headers: http() }).subscribe(value => {
       this.user = JSON.parse(value);
       console.log(value);
     });
@@ -113,7 +113,7 @@ export class UserComponent implements OnInit {
   }
   onDelete(id: string) {
     if (confirm('Are you sure you want to delete this user?')) {
-      this.http.delete<string>('http://localhost:65170/api/User/' + id,{ headers: http }).subscribe(res => {
+      this.http.delete<string>('http://localhost:65170/api/User/' + id,{ headers: http() }).subscribe(res => {
         let result = JSON.parse(res);
         if (result.Success == 1) {
           this.users = this.users.filter(b => b.UserId !== id);         
@@ -131,7 +131,7 @@ export class UserComponent implements OnInit {
   removeSelectedRows(id: string) {
     if (confirm('Delete selected?')) {
       this.selection.selected.forEach(item => {
-        this.http.delete<string>('http://localhost:65170/api/User/' + item.UserId,{ headers: http }).subscribe(res => {
+        this.http.delete<string>('http://localhost:65170/api/User/' + item.UserId,{ headers: http() }).subscribe(res => {
           let result = JSON.parse(res);
           if (result.Success == 1) {
             this.dataSource.data = this.dataSource.data.filter(b => b.UserId !== item.UserId);

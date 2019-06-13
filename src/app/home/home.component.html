@@ -36,7 +36,7 @@
 <!-- End Slide -->
 <br />
 
-<div class="container"  style="margin-left: 10px;margin-top: 50px" >
+<div class="container" style="margin-top: 50px; width: 100%;color: silver;">
   <div class="row">
     <div class="col-md-2"></div>
     <div class="input-group col-md-8">
@@ -49,8 +49,8 @@
       </div>
     </div>
 
-    
-    <div class="col-md-2 column productbox"  *ngFor="let item of semesters" >
+
+    <!-- <div class="col-md-2 column productbox"  *ngFor="let item of semesters" >
       <img src="http://placehold.it/460x250/e67e22/ffffff&text=HTML5" class="img-responsive">
       <div class="producttitle">{{item.SemesterName}}</div>
       <div class="productprice">
@@ -59,61 +59,77 @@
       </div>
     </div>
     
-  </div>
+  </div> -->
 
-  
 
-  <!-- 
-  <ng-container *ngIf="tests?.data.length > 0">
-    <br />
-    <div class="form-test">
-      <div class="panel panel-default">
-        <div class="panel-body">
-          <h3 class="title">List test of the Semester</h3>
-          <br />
-          <div class="content-list">
-            <div>
-              <table class="table table-bordered table-hover">
-                <thead>
-                  <tr class="info">
-                    <th style="width: 28%">Exam name</th>
-                    <th style="width: 28%">Duration</th>
-                    <th>Category Exam</th>
-                    <th style="width: 10%"></th>
-                  </tr>
-                </thead>
-                <tbody *ngFor="let obj of tests?.data">
-                  <tr>
-                    <td>{{ obj?.title }}</td>
-                    <td>{{ obj?.duration }}</td>
-                    <td>{{ obj?.category?.categoryName }}</td>
-                    <td>
-                      <button class="btn btn-info">Test</button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+
+
+
+
+  <h1 style="margin-left: 185px">List SemesterName</h1>
+    <ng-container *ngIf="tests?.data.length > 0">
+      <br />
+      <div class="form-test">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <h3 class="title">List test of the Semester</h3>
+            <br />
+            <div class="content-list">
+              <div>
+                <table class="table table-bordered table-hover">
+                  <thead>
+                    <tr class="info">
+                      <th style="width: 28%">Exam name</th>
+                      <th style="width: 28%">Duration</th>
+                      <th>Category Exam</th>
+                      <th style="width: 10%"></th>
+                    </tr>
+                  </thead>
+                  <tbody *ngFor="let obj of tests?.data">
+                    <tr>
+                      <td>{{ obj?.title }}</td>
+                      <td>{{ obj?.duration }}</td>
+                      <td>{{ obj?.category?.categoryName }}</td>
+                      <td>
+                        <button class="btn btn-info">Test</button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
       </div>
+    </ng-container>
+    <ng-container *ngIf="!(tests?.data.length > 0)">
+      <div style="height: 175px"></div>
+    </ng-container>
+  </div>
+
+  <ng-container *ngIf="tests?.data.length !== 0 || tests === null">
+    <div style="height:65px;"></div>
+  
+  </ng-container>
+
+
+  <div style="display: flex; justify-content: center;">
+    <div class="abc" style="width: 100%">
+      <div class="box" *ngFor="let item of semesters">
+        <span class="boder"></span>
+        <a routerLink="/semestercustomer/{{item.ID}}">
+          <h1 style="font-size: 16px;"><h3 style="color: #009CDE; font-family:Georgia, 'Times New Roman', Times, serif">Name:{{item.SemesterName}}</h3> <br /><span>
+           StartDay: {{item.StartDay| date: 'dd/MM/yyyy'}}   </span><h5 style="font-size: 13px">Enday:{{item.EndDay| date: 'dd/MM/yyyy'}}</h5><br />
+          </h1>
+        </a>
+      </div>
     </div>
-  </ng-container>
-  <ng-container *ngIf="!(tests?.data.length > 0)">
-    <div style="height: 175px"></div>
-  </ng-container>
+  </div>
+
+
+
 </div>
-
-<ng-container *ngIf="tests?.data.length !== 0 || tests === null">
-  <div style="height:65px;"></div>
-</ng-container> -->
-
-
-
-
-
-
-  <!-- <div class="col-md-2 column productbox">
+<!-- <div class="col-md-2 column productbox">
   <img src="http://placehold.it/460x250/e67e22/ffffff&text=HTML5" class="img-responsive">
   <div class="producttitle">Product 3</div>
   <div class="productprice"><div class="pull-right"><a href="#" class="btn btn-danger btn-sm" role="button">BUY</a></div><div class="pricetext">£8.95</div></div>
@@ -126,9 +142,9 @@
 
 
 
-  <!-- Footer -->
-  <footer class="justify-content-c">
-    <br>
-    <hr>
-    <div class="text-center text-muted">Copyright &copy; 2019 by GDP07</div>
-  </footer>
+<!-- Footer -->
+<footer class="justify-content-c">
+  <br>
+  <hr>
+  <div class="text-center text-muted">Copyright &copy; 2019 by GDP07</div>
+</footer>

@@ -32,14 +32,13 @@ export class LoginComponent implements OnInit {
   }
   constructor(private fb: FormBuilder, private http: HttpClient,
     private router: Router, private route: ActivatedRoute, private authenticationService: AuthenticationService, private cookieService: CookieService) {
-     if (sessionStorage.getItem('currentPermission')) {
-       this.router.navigate(['']);
-     }
+    if (sessionStorage.getItem('currentPermission')) {
+      this.router.navigate(['']);
+    }
   }
 
   ngOnInit() {
-    if(this.cookieService.check('username'))
-    {
+    if (this.cookieService.check('username')) {
       this.loginForm = this.fb.group({
         username: this.fb.control(this.cookieService.get('username'), [
           Validators.required,
@@ -51,8 +50,7 @@ export class LoginComponent implements OnInit {
         ]),
         rememberMe: this.fb.control(true)
       });
-    }else
-    {
+    } else {
       this.loginForm = this.fb.group({
         username: this.fb.control('', [
           Validators.required,
@@ -96,19 +94,17 @@ export class LoginComponent implements OnInit {
             const sessionId = sessionStorage.getItem('currentPermission');
             // debugger;
             const httpOptions1 = {
-              headers: new HttpHeaders({ 'Content-Type': 'application/json', 'permission': sessionId  })
+              headers: new HttpHeaders({ 'Content-Type': 'application/json', 'permission': sessionId })
             };
             this.http.get<string>('http://localhost:65170/api/group', httpOptions1).subscribe((val) => {
               // debugger;
               console.log(JSON.parse(val));
             });
             // add cookie
-            if(this.rememberMe.value == true)
-            {
+            if (this.rememberMe.value == true) {
               this.cookieService.set('username', this.username.value);
               this.cookieService.set('password', this.password.value);
-            }
-            else {
+            } else {
               this.cookieService.delete('username');
               this.cookieService.delete('password');
             }
