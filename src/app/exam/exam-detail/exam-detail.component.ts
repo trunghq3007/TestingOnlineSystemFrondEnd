@@ -74,7 +74,7 @@ export class ExamDetailComponent implements OnInit {
   get RandomNumber(): FormControl {
     return this.randomForm.get('Total') as FormControl;
   }
-  regTotal="^[0-9]{1,2}$";
+  regTotal="^[0-9]{1,4}$";
   ngOnInit() {
     this.filterForm = this.fb.group({
       // CreatedDate: [''],

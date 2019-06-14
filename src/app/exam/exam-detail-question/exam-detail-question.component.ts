@@ -19,7 +19,7 @@ export interface detailExam {
   CreatedBy: string;
   CreatedDate: Date;
   CategoryName: string;
-  Space:string;
+  Space: string;
 }
 @Component({
   selector: 'app-exam-detail-question',
@@ -36,12 +36,12 @@ export class ExamDetailQuestionComponent implements OnInit {
   dataSource = new MatTableDataSource<detailExam>(this.detailExams);
 
   @ViewChild(MatSort) sort: MatSort;
-  displayedColumns: string[] = ['select', 'QuesId','Category', 'nameExam', 'Content', 'Level', 'Space', 'CreatedBy', 'CreatedDate', 'Action'];
+  displayedColumns: string[] = ['select', 'QuesId', 'Category', 'nameExam', 'Content', 'Level', 'Space', 'CreatedBy', 'CreatedDate'];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   selection = new SelectionModel<detailExam>(true, []);
-  constructor(private http: HttpClient, private ac: ActivatedRoute, private fb: FormBuilder,private toar:ToastrService) { }
+  constructor(private http: HttpClient, private ac: ActivatedRoute, private fb: FormBuilder, private toar: ToastrService) { }
 
   ngOnInit() {
     this.listQuestionDetail();
@@ -52,7 +52,7 @@ export class ExamDetailQuestionComponent implements OnInit {
     this.http.get<string>('http://localhost:65170/api/ExamQuestions/' + examID + '?action=GetById').subscribe(
       value => {
         this.dataSource.data = JSON.parse(value);
-        
+
         console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
         this.dataSource.sort = this.sort;
       });
@@ -60,7 +60,7 @@ export class ExamDetailQuestionComponent implements OnInit {
   deleteQuestion(QuesId) {
     const examID = this.ac.snapshot.paramMap.get('examID');
     let Arr = { ExamId: examID, QuestionId: QuesId };
- 
+
     this.http.delete('http://localhost:65170/api/ExamQuestions/' + JSON.stringify(Arr), httpOptions).subscribe
       (
         value => {
@@ -74,13 +74,17 @@ export class ExamDetailQuestionComponent implements OnInit {
     this.selection.selected.forEach(item => {
       Arr.push({ ExamId: examID, QuestionId: item.QuesId });
     })
-   
-    this.http.post<string>('http://localhost:65170/api/ExamQuestions?action=DeleteMutiple', JSON.stringify(Arr), httpOptions).subscribe(value => {
 
-this.toar.success('deleted' + ' ' + value + ' ' + 'records in Exam',' Question Number');
+    this.http.post<string>('http://localhost:65170/api/ExamQuestions?action=DeleteMutiple', JSON.stringify(Arr), httpOptions).subscribe(value => {
+      if (value == -1) {
+        this.toar.warning('Exam is public,cannot delete', ' Question Number');
+      } else {
+        this.toar.success('deleted' + ' ' + value + ' ' + 'records in Exam', ' Question Number');
+
+      }
 
       this.listQuestionDetail();
-     
+
     })
   }
   isAllSelected() {
