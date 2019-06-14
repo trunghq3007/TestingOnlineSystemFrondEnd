@@ -81,15 +81,18 @@ export class RoleComponent implements OnInit {
           const result: ResultObject = JSON.parse(res);
           if (result.Success >= 1) {
             confirm('Create success!');
+            
           } else {
             confirm('Create Fail!');
           }
           this.createForm.reset();
+          this.listRole();
         },
         error: (err) => {
           console.log(err);
         }
       });
+
     }
   }
   clickToRoute() {
