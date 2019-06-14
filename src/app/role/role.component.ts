@@ -39,7 +39,8 @@ export class RoleComponent implements OnInit {
   ngOnInit() {
     this.listRole();
     this.createForm = this.fb.group({
-      RoleName: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(50)]]
+      RoleName: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(50)]],
+      Description :['']
     });
 
   }
