@@ -86,14 +86,28 @@
                 </tr>
                 <tr>
                     <td><label>Trạng thái</label></td>
-                    <td>{{list.status}}</td>
+                    <td> 
+                        <!-- <mat-form-field class="example-full-width">
+                        <input matInput formControlName="status">
+                    </mat-form-field>  -->
+
+                    <mat-form-field>
+                       
+                        <select matNativeControl required formControlName="status" >
+                          <option value="Public" >Public</option>
+                          <option value="No Public">No Public</option>
+                          <option value="Draft">Draft</option>
+                        
+                        </select>
+                      </mat-form-field>
+                </td>
 
                 </tr>
                 <tr>
                     <td><label>Thời gian thi</label></td>
                     <td> 
                         <mat-form-field>
-                                <input matInput [min]="minDate" [max]="maxDate" placeholder="{{list.StartDay}}" [(ngModel)]="dateTime" [owlDateTime]="dt2" formControlName="StartDay">
+                                <input matInput placeholder="{{list.StartDay}}" [(ngModel)]="dateTime" [owlDateTime]="dt2" formControlName="StartDay">
 
                     </mat-form-field>
                     
@@ -112,7 +126,7 @@
                     <td><label>Thời gian kết thúc</label></td>
                     <td>
                             <mat-form-field>
-                            <input matInput  placeholder="{{list.EndDay}}" [(ngModel)]="dateTime1" [owlDateTime]="dt3" formControlName="EndDay">
+                            <input matInput [min]="this.list.StartDay" placeholder="{{list.EndDay}}" [(ngModel)]="dateTime1" [owlDateTime]="dt3" formControlName="EndDay">
                         </mat-form-field>
 
                         <!-- <mat-form-field>
