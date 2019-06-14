@@ -1,14 +1,7 @@
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
   <section class="content-header">
-    <h1>
-      Dashboard
-      <small>Control panel</small>
-    </h1>
-    <ol class="breadcrumb">
-      <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-      <li class="active">Dashboard</li>
-    </ol>
+   
   
   </section>
 
@@ -34,19 +27,12 @@
         </div>
         <div class="col-md-7 header-right">
         <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">Random</button>
-        <button class="btn btn-primary" (click)="AddMutiple()">Apply</button>
+       
         <a class="btn btn-danger">Go Back</a>
         </div>
         </div>
         <br>
-        <div class="icon clearfix">
-          <div class="col-md-6">
-            <p>Filter</p>
-          </div>
-          <div style="text-align: right" class="col-md-6">
-            <p  class="glyphicon glyphicon-triangle-bottom"></p>
-            </div>
-        </div>
+        
         <div class="filter clearfix" >
           <form novalidate (ngSubmit)="onFilter()" [formGroup]="filterForm">
             <div class="col-md-12">
@@ -108,8 +94,8 @@
         
         
         </div>
-        <button [routerLink]="['/exam/', examID]"  class="btn btn-info" data-dismiss="modal">Update
-          Question to Exam</button>
+        <!-- <button [routerLink]="['/exam/', examID]"  class="btn btn-info" data-dismiss="modal">Update
+          Question to Exam</button> -->
           <button [routerLink]="['/exam/examquestion', examID]" class="btn btn-primary" data-dismiss="modal">Detail Question in Exam
             </button>
   
@@ -121,7 +107,9 @@
                     <div class="col-md-6">
                     <h1 style="text-align: center">List Question</h1>
                       </div>
-                     
+                     <div class="col-md-3">
+                      <button class="btn btn-primary" (click)="AddMutiple()">Apply</button>
+                     </div>
                     </div>
                 <table mat-table [dataSource]="dataSource" class="table table-hover" matSort>
 

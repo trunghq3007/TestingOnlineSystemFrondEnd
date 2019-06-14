@@ -74,18 +74,21 @@ export class ExamDetailQuestionComponent implements OnInit {
     this.selection.selected.forEach(item => {
       Arr.push({ ExamId: examID, QuestionId: item.QuesId });
     })
+    if(Arr.length!=0){
+      this.http.post<string>('http://localhost:65170/api/ExamQuestions?action=DeleteMutiple', JSON.stringify(Arr), httpOptions).subscribe(value => {
+        if (value == -1) {
+          this.toar.warning('Exam is public,cannot delete', ' Question Number');
+        } else {
+          this.toar.success('deleted' + ' ' + value + ' ' + 'records in Exam', ' Question Number');
+  
+        }
+  
+        this.listQuestionDetail();
+  
+      })
+    }
 
-    this.http.post<string>('http://localhost:65170/api/ExamQuestions?action=DeleteMutiple', JSON.stringify(Arr), httpOptions).subscribe(value => {
-      if (value == -1) {
-        this.toar.warning('Exam is public,cannot delete', ' Question Number');
-      } else {
-        this.toar.success('deleted' + ' ' + value + ' ' + 'records in Exam', ' Question Number');
-
-      }
-
-      this.listQuestionDetail();
-
-    })
+    
   }
   isAllSelected() {
     const numSelected = this.selection.selected.length;
