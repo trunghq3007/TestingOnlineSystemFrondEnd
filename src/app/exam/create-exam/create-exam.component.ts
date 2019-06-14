@@ -17,11 +17,7 @@ const httpOptions = {
   styleUrls: ['./create-exam.component.scss']
 })
 export class CreateExamComponent implements OnInit {
-  currentUser: User;
-  currentUserSubscription: Subscription;
-  isMember = false;
-  isManager = false;
-  isAdmin = false;
+ 
   name:string;
   public Editor = ClassicEditorBuild;
   // submited = false;
@@ -32,18 +28,7 @@ export class CreateExamComponent implements OnInit {
 
   CategoryFormApi = [];
   constructor(private fb: FormBuilder, private http: HttpClient, private authenticationService: AuthenticationService) {
-    this.currentUserSubscription = this.authenticationService.currentUser.subscribe(user => {
-      this.currentUser = JSON.parse(user);
-    });
-    if (this.currentUser.RoleId == '1') {
-      this.isAdmin = true;
-    }
-    if (this.currentUser.RoleId == '2') {
-      this.isManager = true;
-    }
-    if (this.currentUser.RoleId == '3') {
-      this.isMember = true;
-    }
+   
    }
   get NameExam(): FormControl {
     return this.examForm.get('NameExam') as FormControl;
@@ -89,7 +74,7 @@ export class CreateExamComponent implements OnInit {
 
 
     });
-    console.log(this.currentUser);
+  
   }
   getApiCategory() {
     this.http.get<string>('http://localhost:65170/api/Category/').subscribe(value => {
