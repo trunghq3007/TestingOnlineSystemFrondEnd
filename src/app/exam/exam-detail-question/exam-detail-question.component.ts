@@ -69,14 +69,13 @@ export class ExamDetailQuestionComponent implements OnInit {
 
   }
   DeleteMutiple() {
-
     let Arr = [];
     const examID = this.ac.snapshot.paramMap.get('examID');
     this.selection.selected.forEach(item => {
       Arr.push({ ExamId: examID, QuestionId: item.QuesId });
-      
     })
-    
+   
+    if(Arr.length!=0){
       this.http.post<string>('http://localhost:65170/api/ExamQuestions?action=DeleteMutiple', JSON.stringify(Arr), httpOptions).subscribe(value => {
         if (value == -1) {
           this.toar.warning('Exam is public,cannot delete', ' Question Number');
@@ -88,8 +87,8 @@ export class ExamDetailQuestionComponent implements OnInit {
         this.listQuestionDetail();
   
       })
-    
-    
+    }
+
     
   }
   isAllSelected() {
