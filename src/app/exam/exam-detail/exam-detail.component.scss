@@ -1,9 +1,9 @@
 .header-right{
-    
+
     text-align: right;
 }
 .header-right a{
-    
+
     margin-left: 50px;
 }
 .icon p{
@@ -11,8 +11,8 @@
     font-size: 20px;
 }
 .filter{
-   
-  
+
+
 }
 .clearfix:after{
     display: block;
@@ -35,3 +35,19 @@ table {
   th.mat-sort-header-sorted {
     color: black;
   }
+  img{
+    width: 200px;
+  }
+
+img{
+  width: 200px;
+}
+
+td p figure img{
+
+  width: 200px;
+
+}
+:host ::ng-deep img {
+  max-width: 200px;
+}
