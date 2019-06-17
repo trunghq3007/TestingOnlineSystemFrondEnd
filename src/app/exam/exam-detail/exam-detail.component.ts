@@ -74,7 +74,7 @@ export class ExamDetailComponent implements OnInit {
   get RandomNumber(): FormControl {
     return this.randomForm.get('Total') as FormControl;
   }
-  regTotal="^[0-9]{1,4}$";
+  regTotal = "^[0-9]{1,4}$";
   ngOnInit() {
     this.filterForm = this.fb.group({
       // CreatedDate: [''],
@@ -85,9 +85,9 @@ export class ExamDetailComponent implements OnInit {
 
     });
     this.randomForm = this.fb.group({
-      Type: ['',Validators.required],
-      CategoryName: ['',Validators.required],
-      Total: ['',[Validators.required,Validators.pattern]],
+      Type: ['', Validators.required],
+      CategoryName: ['', Validators.required],
+      Total: ['', [Validators.required, Validators.pattern]],
       ExamId: [this.examID]
     });
     this.listQuestion();
@@ -110,7 +110,7 @@ export class ExamDetailComponent implements OnInit {
   }
 
   addQuestion(Id) {
-  
+
   }
   AddMutiple() {
     let Arr = [];
@@ -121,8 +121,14 @@ export class ExamDetailComponent implements OnInit {
     console.log(Arr);
     console.log(JSON.stringify(Arr));
     this.http.post<string>('http://localhost:65170/api/ExamQuestions/?action=AddMutiple', JSON.stringify(Arr), httpOptions).subscribe((error) => {
+      if (error == -2) {
+        this.toar.warning('something went wrong', ' Question Number');
+      } else if (error == 0) {
+        this.toar.warning('There are no questions in this category', ' Question Number');
+      } else {
+        this.toar.success('inserted' + ' ' + error + ' ' + 'records in Exam', ' Question Number');
+      }
 
-      this.toar.success('inserted' + ' ' + error + ' ' + 'records in Exam', ' Question Number');
 
       this.listQuestion();
 
@@ -170,11 +176,11 @@ export class ExamDetailComponent implements OnInit {
       this.randomForm.get('Type').markAsTouched();
       this.randomForm.get('CategoryName').markAsTouched();
       this.randomForm.get('Total').markAsTouched();
-     
+
       return;
     }
   }
- 
+
   onSearch() {
     this.http.get<string>('http://localhost:65170/api/ExamQuestions?searchString=' + this.searchString).subscribe(value => {
       this.dataSource.data = JSON.parse(value);
