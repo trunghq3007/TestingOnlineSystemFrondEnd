@@ -37,19 +37,18 @@ export class SemesterDetailComponent implements OnInit {
   get Code(): FormControl {
     return this.formApply.get('Code') as FormControl
   }
+  get status(): FormControl {
+    return this.formApply.get('status') as FormControl
+  }
   date1 = new FormControl(new Date(this.list.StartDay));
   date2 = new FormControl(new Date(this.list.EndDay));
-  // get status(): FormControl {
-  // return this.formApply.get('status') as FormControl
-  // }
+  
+  
   constructor(private semester: FormBuilder , private activatedRoute: ActivatedRoute, private http: HttpClient, private router: Router) { }
 
   ngOnInit() {
     this.formApply = this.semester.group({
-      // SemesterName: new FormControl(['', [Validators.required]]),
-      // StartDay: new FormControl(''),
-      // EndDay: new FormControl(''),
-      // Code :new FormControl(''),
+    
       SemesterName: ['', [Validators.required,Validators.minLength(4)]],
       StartDay: [''],
       EndDay: [''],
@@ -63,9 +62,9 @@ export class SemesterDetailComponent implements OnInit {
       .subscribe(
         value => {
           this.list = JSON.parse(value);
-          console.log(this.list.StartDay)
+     
           console.log(this.list);
-        
+
           
           this.formApply.patchValue(this.list);//a tiep
         }
