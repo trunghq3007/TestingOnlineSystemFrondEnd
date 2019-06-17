@@ -3,7 +3,7 @@ import { Form, NgForm, FormGroup, FormBuilder, Validators, FormControl } from '@
 import { Exam } from 'src/app/exam';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import * as ClassicEditorBuild from '@ckeditor/ckeditor5-build-classic';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -28,7 +28,8 @@ export class ExamUpdateComponent  implements OnInit {
   categoryname: {};
   
 
-  constructor(private fb: FormBuilder,private toar:ToastrService, private http: HttpClient, private ac: ActivatedRoute) { }
+  constructor(private fb: FormBuilder,private toar:ToastrService, private http: HttpClient, private ac: ActivatedRoute,
+    private router: Router) { }
   get NameExam(): FormControl {
     return this.editForm.get('NameExam') as FormControl;
   }
@@ -120,14 +121,21 @@ export class ExamUpdateComponent  implements OnInit {
       console.log(value);
       this.http.put('http://localhost:65170/api/Exam/' + formData.Id, formData, httpOptions).subscribe({
         next: (res) => {
-          this.toar.success('success',' Update Exam');
-        },
+          if(res ==1){
+            this.toar.success('success',' Update Exam');
+          }else{
+            this.toar.error('false',' Update Exam');
+          }
+         
+        }
+        ,
         error: (err) => {
-          this.toar.warning('false',' Update Exam');
+          this.toar.warning('false','  Update Exam');
         }
       });
       console.log(this.editForm.value);
     }
+    this.router.navigate(['/exam'])
   }
 
 

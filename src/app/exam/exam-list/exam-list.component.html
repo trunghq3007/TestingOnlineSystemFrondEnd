@@ -45,6 +45,15 @@
                 </mat-select>
               </mat-form-field>
               <mat-form-field class="col-md-4">
+                <mat-label>TypeExam</mat-label>
+                <mat-select formControlName="TypeExam">
+                  <mat-option > ----- </mat-option>
+                  <mat-option *ngFor="let exam of listExam.ListTypeExam" [value]="exam">
+                    {{exam}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field class="col-md-4">
                 <mat-label>QuestionNumber</mat-label>
                 <mat-select formControlName="QuestionNumber">
                   <mat-option > ----- </mat-option>
@@ -72,8 +81,8 @@
                 <mat-label>Status</mat-label>
                 <mat-select formControlName="Status">
                     <mat-option > ----- </mat-option>
-                  <mat-option value="0"> False </mat-option>
-                  <mat-option value="1"> True </mat-option>
+                  <mat-option value="0"> Public </mat-option>
+                  <mat-option value="1"> Draft </mat-option>
                 </mat-select>
               </mat-form-field>
   
