@@ -83,6 +83,7 @@ export class ExamListComponent implements OnInit {
       QuestionNumber: ['',],
       Status: '',
       CreateAt: ['',],
+      TypeExam: ['']
     });
     this.listexams();
     this.dataSource.sort = this.sort;

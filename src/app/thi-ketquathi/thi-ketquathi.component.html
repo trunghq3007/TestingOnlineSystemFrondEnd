@@ -9,9 +9,10 @@
                 <table class="information">
                     <tr>
                         <td>
-                            Tên bài thi:  <mat-form-field class="example-full-width">
-                                <input matInput formControlName="TestName">
-                            </mat-form-field>
+                            Tên bài thi:  
+                                
+                                    <label  >{{list.TestName}}</label>
+                           
                         </td>
                         <td class="td1">
                             Tên kì thi:<mat-form-field class="example-full-width">
@@ -21,9 +22,7 @@
                     </tr>
                     <tr>
                         <td>
-                            Tên thí sinh: <mat-form-field class="example-full-width">
-                                <input matInput formControlName="FullName">
-                            </mat-form-field>
+                            Tên thí sinh:   <label >{{list.FullName}}</label>
                         </td>
                         <td class="td1">
                             Email: <mat-form-field class="example-full-width">
@@ -63,14 +62,14 @@
             <table class="tb3">
                 <tr>
                     <td>Lần thi</td>
-                    <td>Ngày thi</td>
+                   
                     <td>Ðiểm thi</td>
                     <td>Xếp loại</td>
                     <td>Trạng thái</td>
                 </tr>
                 <tr>
                     <td>1</td>
-                    <td>10/10/2019</td>
+                  
                     <td><mat-form-field class="example-full-width">
                         <input matInput formControlName="Score">
                     </mat-form-field></td>
@@ -79,21 +78,14 @@
                     </mat-form-field></td>
                     <td>Ðã thi</td>
                 </tr>
-                <!-- <tr>
-
-                    <td>2</td>
-                    <td>10/10/2019</td>
-                    <td>80</td>
-                    <td>Ðỗ</td>
-                    <td>Ðã thi</td>
-                </tr> -->
+             
             </table>
         </form>
         </div>
    
         <table class="tb4">
             <tr>
-                <td><button type="submit" class="apply"> Thi lại</button></td>
+                <!-- <td><button type="submit" class="apply"> Thi lại</button></td> -->
                 <td class="quaylai"><button type="submit" class="apply"> Quay lại</button></td>
             </tr>
         </table>

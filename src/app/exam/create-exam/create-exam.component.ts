@@ -7,6 +7,7 @@ import { User } from 'src/app/user';
 import { Subscription } from 'rxjs';
 import { AuthenticationService } from 'src/app/_services/authentication.service';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -27,7 +28,8 @@ export class CreateExamComponent implements OnInit {
   // regex = "^[A-Za-z0-9@/._#] +$";
 
   CategoryFormApi = [];
-  constructor(private fb: FormBuilder,private toar:ToastrService, private http: HttpClient, private authenticationService: AuthenticationService) {
+  constructor(private fb: FormBuilder,private toar:ToastrService, private http: HttpClient, private authenticationService: AuthenticationService
+    ,private route:Router ) {
    
    }
   get NameExam(): FormControl {
@@ -115,6 +117,7 @@ export class CreateExamComponent implements OnInit {
         
       });
     }
+    //this.route.navigate(['/exam'])
   }
 
 
