@@ -24,7 +24,7 @@ export class CategoryComponent implements OnInit {
   cateIdd = '';
   cateIdArray = "";
   insertForm: FormGroup;
-  unamePattern = "^[A-Za-z-vxyàáâãèéêìíòóôõùúýỳỹỷỵựửữừứưụủũợởỡờớơộổỗồốọỏịỉĩệểễềếẹẻẽặẳẵằắăậẩẫầấạảđ₫]+[A-Za-z0-9a-z-vxyàáâãèéêìíòóôõùúýỳỹỷỵựửữừứưụủũợởỡờớơộổỗồốọỏịỉĩệểễềếẹẻẽặẳẵằắăậẩẫầấạảđ₫.''/ ]*$";
+  unamePattern = "^[A-Za-z-vxyàáâãèéêìíòóôõùúýỳỹỷỵựửữừứưụủũợởỡờớơộổỗồốọỏịỉĩệểễềếẹẻẽặẳẵằắăậẩẫầấạảđ₫]+[A-Za-z0-9a-z-vxyàáâãèéêìíòóôõùúýỳỹỷỵựửữừứưụủũợởỡờớơộổỗồốọỏịỉĩệểễềếẹẻẽặẳẵằắăậẩẫầấạảđ₫.''/# ]*$";
   public dataLength: number;
   constructor(private http: HttpClient,
     private router: Router, private toastr: ToastrService) { }
@@ -139,7 +139,7 @@ export class CategoryComponent implements OnInit {
         }
 
         else if (res == 0) {
-          confirm("Đang có câu hỏi trong Category");
+          this.toastr.error('Category đang được sử dụng', 'Delete Fail');
         }
         else {
           confirm("Lỗi");
@@ -173,6 +173,7 @@ export class CategoryComponent implements OnInit {
   }
 
   public doFilter = (value: string) => {
+    console.log(value);
     this.dataSource.filter = value.trim().toLocaleLowerCase();
   }
   removeSelectedRows1() {
@@ -184,12 +185,12 @@ export class CategoryComponent implements OnInit {
     this.http.post('http://localhost:65170/api/Category?action=delete', JSON.stringify(arrId), httpOptions).subscribe((e) => {
       console.log(typeof (e));
       if (+e >= 1) {
-        this.toastr.success('Delete all success!', 'List Tag!');
+        this.toastr.success('Delete all success!', '');
        this.getlist();
       } else if (+e == 0) {
-        this.toastr.warning('Delete all false!', '!');
+        this.toastr.error('Category đang được sử dụng', 'Delete Fail');
       } else {
-        this.toastr.warning('Something wrong!', '!');
+        this.toastr.warning('Something wrong!', '');
       }
     }
     );
