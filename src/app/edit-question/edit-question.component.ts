@@ -5,6 +5,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Question } from '../question';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ResultObject } from '../result-object';
+import { Tag } from '../Tag';
+import { Category } from '../ICategory';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -24,8 +26,8 @@ export class EditQuestionComponent implements OnInit {
   EditorAnswers: [];
   answer: FormGroup;
   answers: FormArray;
-  tagsFormApi: [];
-  categoriesFormApi: [];
+  tagsFormApi: Tag[];
+  categoriesFormApi: Category[];
   ctForm: FormGroup;
   //  submitted = false;
 
@@ -98,10 +100,10 @@ export class EditQuestionComponent implements OnInit {
               this.Questions = JSON.parse(value);
             });
             if (result.Success >= 1) {
-              confirm("Update success!");
+              confirm('Update success!');
             }
             else{
-              confirm("Update fail");
+              confirm('Update fail');
             }
             this.ctForm.reset();
           },

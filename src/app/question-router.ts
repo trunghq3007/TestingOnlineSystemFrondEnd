@@ -31,7 +31,7 @@ const QuestionRouting: Routes = [{
             component: ImportQuestionComponent
         }
 
-    ], canActivate: [AuthGuard]
+    ], 
 }];
 
 export { QuestionRouting };
