@@ -9,6 +9,7 @@ export interface Exam {
     Status: boolean,
     SpaceQuestionNumber: number,
     CreateAt: Date,
+    EnDate:Date;
 
     Categorys: object,
     Category: Category,

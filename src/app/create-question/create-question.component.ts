@@ -6,7 +6,8 @@ import { Question } from '../question';
 import { Router } from '@angular/router';
 import { ResultObject } from '../result-object';
 import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
-import EasyImage from '@ckeditor/ckeditor5-easy-image/src/easyimage';
+import { Category } from '../ICategory';
+import { Tag } from '../Tag';
 
 
 const httpOptions = {
@@ -27,8 +28,8 @@ export class CreateQuestionComponent implements OnInit {
   EditorQuestion: { getData; setData; };
   answer: FormGroup;
   answers: FormArray;
-  tagsFormApi: [];
-  categoriesFormApi: [];
+  tagsFormApi: Tag[];
+  categoriesFormApi: Category[];
   ctForm: FormGroup;
   //  submitted = false;
 
@@ -102,7 +103,7 @@ export class CreateQuestionComponent implements OnInit {
         arrTags = [...arrTags, ...tag];
       }
       valueQuestion.Tags = arrTags;
-      valueQuestion.Category = this.categoriesFormApi.filter(s => s.Id == valueQuestion.Category.Id);
+      valueQuestion.Category = this.categoriesFormApi.filter(s  => s.Id == valueQuestion.Category.Id);
       valueQuestion.Category = valueQuestion.Category.length > 0 ? valueQuestion.Category[0] : {};
       valueQuestion.Answers.map(s => s.IsTrue = s.IsTrue ? 1 : 0);
       console.log(valueQuestion);
