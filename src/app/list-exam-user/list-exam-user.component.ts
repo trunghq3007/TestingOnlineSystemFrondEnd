@@ -22,6 +22,7 @@ export class ListExamUserComponent implements OnInit {
         this.semester = JSON.parse(value).Data;
         console.log(IdQuestion);
         console.log(value);
+        
       });
   }
   listExam(id)

@@ -17,4 +17,7 @@ export interface Exam {
     NameCategory: string,
     StartDate:Date;
     TestName:string;
+    SemesterName:string;
+    SemesterExam:[{SemesterName:string}]
+    Tags: [{ Id: string; Name: string }]
 }
