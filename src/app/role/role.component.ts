@@ -39,7 +39,8 @@ export class RoleComponent implements OnInit {
   ngOnInit() {
     this.listRole();
     this.createForm = this.fb.group({
-      RoleName: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(50)]]
+      RoleName: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(50)]],
+      Description :['']
     });
 
   }
@@ -80,15 +81,18 @@ export class RoleComponent implements OnInit {
           const result: ResultObject = JSON.parse(res);
           if (result.Success >= 1) {
             confirm('Create success!');
+            
           } else {
             confirm('Create Fail!');
           }
           this.createForm.reset();
+          this.listRole();
         },
         error: (err) => {
           console.log(err);
         }
       });
+
     }
   }
   clickToRoute() {

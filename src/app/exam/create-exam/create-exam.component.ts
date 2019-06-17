@@ -6,7 +6,8 @@ import * as ClassicEditorBuild from '@ckeditor/ckeditor5-build-classic';
 import { User } from 'src/app/user';
 import { Subscription } from 'rxjs';
 import { AuthenticationService } from 'src/app/_services/authentication.service';
-
+import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -17,11 +18,7 @@ const httpOptions = {
   styleUrls: ['./create-exam.component.scss']
 })
 export class CreateExamComponent implements OnInit {
-  currentUser: User;
-  currentUserSubscription: Subscription;
-  isMember = false;
-  isManager = false;
-  isAdmin = false;
+ 
   name:string;
   public Editor = ClassicEditorBuild;
   // submited = false;
@@ -31,19 +28,9 @@ export class CreateExamComponent implements OnInit {
   // regex = "^[A-Za-z0-9@/._#] +$";
 
   CategoryFormApi = [];
-  constructor(private fb: FormBuilder, private http: HttpClient, private authenticationService: AuthenticationService) {
-    this.currentUserSubscription = this.authenticationService.currentUser.subscribe(user => {
-      this.currentUser = JSON.parse(user);
-    });
-    if (this.currentUser.RoleId == '1') {
-      this.isAdmin = true;
-    }
-    if (this.currentUser.RoleId == '2') {
-      this.isManager = true;
-    }
-    if (this.currentUser.RoleId == '3') {
-      this.isMember = true;
-    }
+  constructor(private fb: FormBuilder,private toar:ToastrService, private http: HttpClient, private authenticationService: AuthenticationService
+    ,private route:Router ) {
+   
    }
   get NameExam(): FormControl {
     return this.examForm.get('NameExam') as FormControl;
@@ -54,9 +41,7 @@ export class CreateExamComponent implements OnInit {
   get QuestionNumber(): FormControl {
     return this.examForm.get('QuestionNumber') as FormControl;
   }
-  get Status(): FormControl {
-    return this.examForm.get('Status') as FormControl;
-  }
+
   get SpaceQuestionNumber(): FormControl {
     return this.examForm.get('SpaceQuestionNumber') as FormControl;
   }
@@ -80,7 +65,7 @@ export class CreateExamComponent implements OnInit {
       CreateBy: ['',Validators.required],
       QuestionNumber: ['', [Validators.required, Validators.pattern]],
       //status: ['', [{value: 'false', disabled: true}]],
-      Status: [''],
+     
       SpaceQuestionNumber: ['', [Validators.required, Validators.pattern]],
       CreateAt: [''],
         CategoryId: [''],
@@ -89,7 +74,7 @@ export class CreateExamComponent implements OnInit {
 
 
     });
-    console.log(this.currentUser);
+  
   }
   getApiCategory() {
     this.http.get<string>('http://localhost:65170/api/Category/').subscribe(value => {
@@ -119,21 +104,20 @@ export class CreateExamComponent implements OnInit {
      
       this.http.post<string>('http://localhost:65170/api/Exam', JSON.stringify(value), httpOptions).subscribe({
         next: (res) => {
-          console.log(res);
-          confirm("Insert success!");
-          console.log('success');
+          
+       
+          this.toar.success('success',' Create Exam');
           this.examForm.reset();
         },
 
         error: (err) => {
-          console.log(err);
-          confirm("Insert false!");
-          console.log('false');
+          this.toar.warning('false',' Create Exam');
           //this.examForm.reset();
         }
         
       });
     }
+    //this.route.navigate(['/exam'])
   }
 
 

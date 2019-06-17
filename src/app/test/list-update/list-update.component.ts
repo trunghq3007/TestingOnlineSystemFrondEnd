@@ -42,6 +42,7 @@ export class ListUpdateComponent implements OnInit {
   exams: exam[] = [];
   form: FormGroup;
   semasters: semaster[] = [];
+  
   constructor(private insert: FormBuilder, private http: HttpClient, private ac: ActivatedRoute,private toar:ToastrService) {
 
   }
@@ -50,7 +51,7 @@ export class ListUpdateComponent implements OnInit {
   validateForm() {
     if (this.form.invalid) {
       this.form.get('TestTime').markAsTouched();
-      this.form.get('NumberTime').markAsTouched();
+      this.form.get('TotalTest').markAsTouched();
       this.form.get('ExamId').markAsTouched();
       this.form.get('SemasterExamId').markAsTouched();
       this.form.get('TestName').markAsTouched();
@@ -61,7 +62,9 @@ export class ListUpdateComponent implements OnInit {
     }
     // do something else
   }
-
+  timeTestFormat = "^[0-9]{1,3}$";
+  passScoreFormat="^[1-9][0-9]{0,4}$";
+  passTotalFormat="^[1-9][0-9]{0,4}$";
   ngOnInit() {
     this.form = this.insert.group({
       ExamId: ['', [Validators.required]],
@@ -71,10 +74,10 @@ export class ListUpdateComponent implements OnInit {
       // EndDate: ['', ],
       CreateBy: ['', [Validators.required]],
 
-      PassScore: ['', [Validators.required, Validators.min(1)]],
-      TotalTest: ['', [Validators.required]],
+      PassScore: ['', [Validators.required, Validators.pattern]],
+      TotalTest: ['', [Validators.required, Validators.pattern]],
       Status: ['', [Validators.required]],
-      TestTime: ['', [Validators.required]],
+      TestTime: ['', [Validators.required,Validators.pattern]],
 
     });
     this.http.get<string>('http://localhost:65170/api/exam').subscribe(
@@ -138,11 +141,11 @@ export class ListUpdateComponent implements OnInit {
         .subscribe({
         
           next: (response) => {
-              this.toar.success('success',' Update Test');
+              this.toar.success('Successful',' Update Test');
           
           },
           error: (err) => {
-            this.toar.warning('false',' Update Test');
+            this.toar.warning('Fail',' Update Test');
             
           }
         });

@@ -1,94 +1,89 @@
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
   <section class="content-header">
-    <h1>
-      Dashboard
-      <small>Control panel</small>
-    </h1>
-    <ol class="breadcrumb">
-      <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-      <li class="active">Dashboard</li>
-    </ol>
-  
+
+
   </section>
 
   <!-- Main content -->
   <section class="content">
     <!-- Small boxes (Stat box) -->
-    
+
     <!-- /.row -->
     <!-- Main row -->
     <div class="row">
       <!-- Left col -->
-      
+
       <!-- /.Left col -->
       <!-- right col (We are only adding the ID to make the widgets sortable)-->
-    
 
-        <div class="container-fluid "> 
+
+        <div class="container-fluid ">
           <div class="clearfix">
           <div class="col-md-5">
               <input [(ngModel)]="searchString" type="text" placeholder="Search content">
               <button (click)="onSearch()" type="submit"><i class="fa fa-search"></i></button>
-          
+
         </div>
         <div class="col-md-7 header-right">
-        <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">Random</button>
-        <button class="btn btn-primary" (click)="AddMutiple()">Apply</button>
-        <a class="btn btn-danger">Go Back</a>
+        <button style="margin-right: 50px;" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Random</button>
+
+        <button [routerLink]="['/exam']" class="btn btn-danger">Go Back</button>
         </div>
         </div>
         <br>
-        <div class="icon clearfix">
-          <div class="col-md-6">
-            <p>Filter</p>
-          </div>
-          <div style="text-align: right" class="col-md-6">
-            <p  class="glyphicon glyphicon-triangle-bottom"></p>
-            </div>
-        </div>
+
         <div class="filter clearfix" >
           <form novalidate (ngSubmit)="onFilter()" [formGroup]="filterForm">
             <div class="col-md-12">
               <mat-accordion>
                 <mat-expansion-panel>
                   <mat-expansion-panel-header>
-        
+
                     <mat-panel-description>
                       Cick Choice Type Filter
                     </mat-panel-description>
                   </mat-expansion-panel-header>
-        
-                  <mat-form-field class="col-md-4">
-                      <mat-label>---filter level---</mat-label> 
-                    <mat-select formControlName="Level">
-                                
 
+                  <mat-form-field class="col-md-4">
+                      <mat-label>---filter level---</mat-label>
+                    <mat-select formControlName="Level">
+
+                      <mat-option > ----- </mat-option>
                       <mat-option *ngFor="let level of listfilter.ListLevel" value="{{ level }}">
                         {{(level==1) ?"Easy":"medium"}}
                       </mat-option>
                     </mat-select>
                   </mat-form-field>
-        
+
                   <mat-form-field class="col-md-4">
-                      <mat-label>---filter type---</mat-label>   
+                      <mat-label>---filter type---</mat-label>
                       <mat-select formControlName="Type" >
-                                  
+                        <mat-option > ----- </mat-option>
                         <mat-option *ngFor="let type of listfilter.ListType" value={{type}}> {{(type==1)? "Essay":"mutiple choice"}}</mat-option>
-                        
+
                       </mat-select>
                     </mat-form-field>
                     <mat-form-field class="col-md-4">
-                        <mat-label>---Create By---</mat-label> 
+                        <mat-label>---Create By---</mat-label>
                         <mat-select formControlName="CreatedBy">
-                                      
+                          <mat-option > ----- </mat-option>
                             <mat-option *ngFor="let CreatedBy of listfilter.ListCreateBy" value="{{ CreatedBy }}">
                             {{ CreatedBy }}
                           </mat-option>
                         </mat-select>
                       </mat-form-field>
-                     
-                    
+                      <mat-form-field class="col-md-4">
+                        <mat-label>---Category---</mat-label>
+                        <mat-select formControlName="CategoryName">
+                          <mat-option > ----- </mat-option>
+                            <mat-option *ngFor="let CategoryName of listfilter.ListCategory" value="{{ CategoryName }}">
+                            {{ CategoryName }}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+
+
                     <!-- <ng-container matColumnDef="Action">
                       <th mat-header-cell *matHeaderCellDef > Action </th>
                       <td mat-cell *matCellDef="let element"> hÃ¡dhajshdgh </td>
@@ -98,30 +93,32 @@
                           </div>
                 </mat-expansion-panel>
                 <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-        
+
                   <p>I'm visible because I am open</p>
                 </mat-expansion-panel>
               </mat-accordion>
             </div>
           </form>
-        
-        
-        
+
+
+
         </div>
-        <button [routerLink]="['/exam/', examID]"  class="btn btn-info" data-dismiss="modal">Update
-          Question to Exam</button>
+        <!-- <button [routerLink]="['/exam/', examID]"  class="btn btn-info" data-dismiss="modal">Update
+          Question to Exam</button> -->
           <button [routerLink]="['/exam/examquestion', examID]" class="btn btn-primary" data-dismiss="modal">Detail Question in Exam
             </button>
-  
+
                 <div class="title">
-            
+
                     <div class="col-md-3">
-                   
+
                     </div>
                     <div class="col-md-6">
                     <h1 style="text-align: center">List Question</h1>
                       </div>
-                     
+                     <div class="col-md-3">
+                      <button class="btn btn-primary" (click)="AddMutiple()">Apply</button>
+                     </div>
                     </div>
                 <table mat-table [dataSource]="dataSource" class="table table-hover" matSort>
 
@@ -155,32 +152,20 @@
                       <th mat-header-cell *matHeaderCellDef mat-sort-header> CreateBy. </th>
                       <td mat-cell *matCellDef="let element"> {{element.CreatedBy}} </td>
                     </ng-container>
-                  
+
                     <!-- Name Column -->
                     <ng-container matColumnDef="CreatedDate">
                       <th mat-header-cell *matHeaderCellDef mat-sort-header> CreateDAte </th>
-                      <td mat-cell *matCellDef="let element"> {{element.CreatedDate}} </td>
+                      <td mat-cell *matCellDef="let element"> {{element.CreatedDate|date}} </td>
                     </ng-container>
-                  
-                    <ng-container matColumnDef="Action">
-                      <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
-                      <td mat-cell *matCellDef="let element">
-                       
-                       
-                          <span data-placement="top"  data-toggle="tooltip" title="add">
-                            <button (click)="addQuestion(element.Id)"   class="btn btn-primary btn-xs"
-                                 ><span
-                            class="glyphicon glyphicon-plus-sign"></span></button>
-                          </span>
-                      </td>
-                     
-                    </ng-container>
+
+
                     <!-- Weight Column -->
                     <ng-container matColumnDef="Level">
                       <th mat-header-cell *matHeaderCellDef mat-sort-header> Level </th>
                       <td mat-cell *matCellDef="let element"> {{(element.Level==1) ?"Easy":"medium"}} </td>
                     </ng-container>
-                  
+
                     <!-- Symbol Column -->
                     <ng-container matColumnDef="Type">
                       <th mat-header-cell *matHeaderCellDef mat-sort-header> Type </th>
@@ -188,7 +173,9 @@
                     </ng-container>
                     <ng-container matColumnDef="Content">
                       <th mat-header-cell *matHeaderCellDef mat-sort-header> content </th>
-                      <td mat-cell *matCellDef="let element"> {{element.Content}} </td>
+                      <td mat-cell *matCellDef="let element">
+                        <p style="width: 100px;" class="content-question" [innerHtml]="element.Content"></p>
+                      </td>
                     </ng-container>
                     <ng-container matColumnDef="Suggestion">
                       <th mat-header-cell *matHeaderCellDef mat-sort-header> sugestion </th>
@@ -198,19 +185,19 @@
                       <th mat-header-cell *matHeaderCellDef mat-sort-header> nameExam </th>
                       <td mat-cell *matCellDef="let element"> {{element.nameExam}} </td>
                     </ng-container>
-                   
+
                     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumns;"
                         >
                     </tr>
                   </table>
                   <mat-paginator [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons></mat-paginator>
-      
-        
+
+
         </div>
-        
-      
- 
+
+
+
       <!-- right col -->
     </div>
     <!-- /.row (main row) -->
@@ -236,43 +223,43 @@
         <button type="button" (click)="random()" class="btn btn-primary">
           Submit
         </button> -->
-         <form novalidate (ngSubmit)="onSubmit()" [formGroup]="randomForm" > 
+         <form novalidate (ngSubmit)="onSubmit()" [formGroup]="randomForm" >
            <div class="formTest ">
               <div class="">
                   <div class="form-group row">
                       <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Type Question</label>
                       <div class="col-sm-10">
                         <select  class="form-control form-control-sm"  formControlName="Type">
-                         
+
                           <option  *ngFor="let level of listfilter.ListLevel" value="{{ level }}"> {{(level==1) ?"Easy":"medium"}}</option>
                           <!-- <option >Medium</option>
                           <option >Hard</option> -->
                         </select>
                       </div>
                     </div>
-                 
+
                           <div *ngIf="!TypeQuestion.valid && TypeQuestion.touched "  style="color: red">
                               <div *ngIf="TypeQuestion.hasError('required')">
                               Type  Question must be not null
                               </div>
-                              
+
                             </div>
                             <div class="form-group row">
                                 <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Question Category</label>
                                 <div class="col-sm-10">
                                   <select  class="form-control form-control-sm"   formControlName="CategoryName">
                                     <option *ngFor="let category of listfilter.ListCategory" value="{{ category }}">{{category}}</option>
-                                    
+
                                   </select>
                                 </div>
                               </div>
-                         
+
                               <div *ngIf="!QuestionCategory.valid && QuestionCategory.touched " style="color: red">
                                   <div *ngIf="QuestionCategory.hasError('required')">
                                     Category must be not null
                                   </div>
-                                  
-                            
+
+
                                 </div>
                                 <div class="form-group row">
                                   <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Random number</label>
@@ -287,13 +274,13 @@
                                   <div *ngIf="RandomNumber.hasError('pattern')">
                                     random number is not fommal
                                    </div>
-                            
+
                                 </div>
-                               
+
                  </div>
               <button type="submit" (click)="validateForm()" mat-flat-button color="primary">Save</button>
-              </div> 
-            </form> 
+              </div>
+            </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

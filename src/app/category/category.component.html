@@ -1,24 +1,18 @@
-<div class="container" fxLayout style="margin-left: 20%;margin-top: 15px;">
-  <mat-form-field fxFlex="30%">
-    <input matInput class="form-control border-secondary py-2" type="text" (keyup)="doFilter($event.target.value)"
-      placeholder="Search" style="height: 20px">
-  </mat-form-field>
-  <span data-placement="top" data-toggle="tooltip"><button class="btn btn-primary " data-toggle="modal"
-      (click)="reset()" data-target="#create" style="margin-left: 64.8%;"
-      id="Create"><span>Create</span></button></span>
+
+<div class="container" fxLayout style="margin-left: 20%;margin-top: 15px;width: 100%;margin-bottom:3%">
+      <input  type="text" #input placeholder="Search ">
+      <button (click)="doFilter(input.value)" type="submit"><i class="fa fa-search"></i></button>
+  
+      <button data-toggle="modal" id="Create" data-target="#create"
+      type="button" class="btn btn-primary "
+      style="border: none;margin-left: 55.1%; ">Create</button>
 </div>
 <div class="head">
-
-
   <h4 style="font-size: 40px;float: left; margin-left: 50%;padding-bottom: 10px;">List Category</h4>
 
   <div style="float:left;margin-left: 21.75%;margin-top: 1%"><button data-toggle="modal" data-target="#deleteAll"
       type="button" class="btn btn-primary "
       style="background-color:#dd4b39;border-color: #dd4b39;border: none; ">Delete</button></div>
-</div>
-<div class="md-form mt-0" style="width: 100%;margin-left: 20%">
-
-
 </div>
 <div class="content-wrapper">
   <div class="mat-elevation-z8">
@@ -64,7 +58,7 @@
       <ng-container matColumnDef="Action">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
 
-        <td mat-cell *matCellDef="let element"> <span data-placement="top" data-toggle="tooltip" title="Delete"><button
+        <td mat-cell *matCellDef="let element"> <span data-placement="top" data-toggle="tooltip" title="Delete" style="margin-right: 1%"><button
               (click)="delete(element.Id)" class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal"
               data-target="#delete"><span class="glyphicon glyphicon-trash"></span></button></span>
           <span data-placement="top" data-toggle="tooltip" title="Edit"><button (click)="detail(element.Id)"
@@ -151,10 +145,7 @@
                       <div class="example-full-width" style="float: right;width: 80%;">
                         <input class="form-control " placeholder="" value="{{cateInfo.Description}}" type="text"
                           formControlName="Description">
-                        <span class="col-md-12 alert alert-danger" role="alert"
-                          *ngIf="Description.hasError('required') && Description.touched" style="top:25px">
-                          Category Name is required!
-                        </span>
+                      
                       </div>
 
                     </div>
@@ -282,10 +273,7 @@
 
                     <input class="form-control" placeholder="Description" value="" type="text"
                       formControlName="Description">
-                    <span class="col-md-12 alert alert-danger" role="alert"
-                      *ngIf="Description.hasError('required') && Description.touched" style="top:25px">
-                      Description is required!
-                    </span>
+                   
                   </div>
 
                 </div>
