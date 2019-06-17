@@ -8,6 +8,7 @@ import { ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material';
 import { FormGroup, FormBuilder, FormControl, Validators, ValidationErrors } from '@angular/forms';
 import { ObjectResult } from '../object-result';
+import { ToastrService } from 'ngx-toastr';
 
 
 const httpOptions = {
@@ -43,7 +44,7 @@ export class ViewListSemasterComponent implements OnInit {
   }
 
   semesterExams: Isemaster[] = [];
-  constructor(private semaster: FormBuilder, private fl: FormBuilder, private http: HttpClient, private router: Router, public dialog: MatDialog) { }
+  constructor(private semaster: FormBuilder, private fl: FormBuilder, private http: HttpClient, private router: Router, public dialog: MatDialog,private toastr:ToastrService) { }
   displayedColumn: string[] = ['select', 'ID', 'SemesterName', 'StartDay', 'EndDay', 'Code', 'status', 'action'];
   dataSource = new MatTableDataSource<Isemaster>(this.semesterExams);
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -85,9 +86,9 @@ export class ViewListSemasterComponent implements OnInit {
   ngOnInit() {
     this.ctForm = this.semaster.group({
       SemesterName: ['', [Validators.required]],
-      StartDay: [''],
-      EndDay: [''],
-      status: [''],
+      StartDay: ['',[Validators.required]],
+      EndDay: ['',[Validators.required]],
+      status: ['',[Validators.required]],
     });
     this.ctForm2 = this.semaster.group({
       SemesterName: ['', [Validators.required]],
@@ -124,6 +125,7 @@ export class ViewListSemasterComponent implements OnInit {
             });
             this.semesterExams = this.semesterExams.filter(s => s.ID !== id);
             this.list();
+            this.toastr.success('Hide success!', '');
           });
     }
   }
@@ -147,13 +149,14 @@ export class ViewListSemasterComponent implements OnInit {
               console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
             });
             this.list();
-            confirm('Create success!');
+            this.toastr.success('Create success!', '');
           },
           error: (err) => {
             console.error(err);
           }
         });
     }
+
   }
   onSubmit2() {
     console.log("submit 2 work");
@@ -172,7 +175,7 @@ export class ViewListSemasterComponent implements OnInit {
           });
         }
         this.list();
-        confirm('Clone success!');
+        this.toastr.success('Create success!', '');
       },
       error: (err) => {
         console.log(err);

@@ -127,11 +127,16 @@ regPassScore="^[0-9]{1,3}$"
       const value = this.form.value;
       this.http.post('http://localhost:65170/api/Test', JSON.stringify(value),httpOptions).subscribe({
         next: (response) => {
-          this.toar.success('success',' Create Test');
+          if(response==-2){
+            this.toar.warning('something went wrong',' Create Test');
+          }else{
+            this.toar.success('Successful',' Create Test');
+          }
+         
         
         },
         error: (err) => {
-          this.toar.warning('false',' Create Test');
+          this.toar.warning('Fail',' Create Test');
           
         }
 

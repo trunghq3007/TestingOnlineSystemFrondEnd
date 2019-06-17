@@ -6,7 +6,8 @@ import * as ClassicEditorBuild from '@ckeditor/ckeditor5-build-classic';
 import { User } from 'src/app/user';
 import { Subscription } from 'rxjs';
 import { AuthenticationService } from 'src/app/_services/authentication.service';
-
+import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -27,7 +28,8 @@ export class CreateExamComponent implements OnInit {
   // regex = "^[A-Za-z0-9@/._#] +$";
 
   CategoryFormApi = [];
-  constructor(private fb: FormBuilder, private http: HttpClient, private authenticationService: AuthenticationService) {
+  constructor(private fb: FormBuilder,private toar:ToastrService, private http: HttpClient, private authenticationService: AuthenticationService
+    ,private route:Router ) {
    
    }
   get NameExam(): FormControl {
@@ -39,9 +41,7 @@ export class CreateExamComponent implements OnInit {
   get QuestionNumber(): FormControl {
     return this.examForm.get('QuestionNumber') as FormControl;
   }
-  get Status(): FormControl {
-    return this.examForm.get('Status') as FormControl;
-  }
+
   get SpaceQuestionNumber(): FormControl {
     return this.examForm.get('SpaceQuestionNumber') as FormControl;
   }
@@ -65,7 +65,7 @@ export class CreateExamComponent implements OnInit {
       CreateBy: ['',Validators.required],
       QuestionNumber: ['', [Validators.required, Validators.pattern]],
       //status: ['', [{value: 'false', disabled: true}]],
-      Status: [''],
+     
       SpaceQuestionNumber: ['', [Validators.required, Validators.pattern]],
       CreateAt: [''],
         CategoryId: [''],
@@ -104,21 +104,20 @@ export class CreateExamComponent implements OnInit {
      
       this.http.post<string>('http://localhost:65170/api/Exam', JSON.stringify(value), httpOptions).subscribe({
         next: (res) => {
-          console.log(res);
-          confirm("Insert success!");
-          console.log('success');
+          
+       
+          this.toar.success('success',' Create Exam');
           this.examForm.reset();
         },
 
         error: (err) => {
-          console.log(err);
-          confirm("Insert false!");
-          console.log('false');
+          this.toar.warning('false',' Create Exam');
           //this.examForm.reset();
         }
         
       });
     }
+    //this.route.navigate(['/exam'])
   }
 
 

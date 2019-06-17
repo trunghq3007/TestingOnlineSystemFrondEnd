@@ -83,6 +83,7 @@ export class ExamListComponent implements OnInit {
       QuestionNumber: ['',],
       Status: '',
       CreateAt: ['',],
+      TypeExam: ['']
     });
     this.listexams();
     this.dataSource.sort = this.sort;
@@ -162,10 +163,10 @@ export class ExamListComponent implements OnInit {
           res => {
             if (res == 2) {
               this.exams = this.exams.filter(ex => ex.Id !== examID);
-              this.toasr.success('Delete Successfully', 'Exam.Delete');
+              this.toasr.success('Delete Successfully', 'Exam Delete');
             }
             else if (res == false) {
-              this.toasr.error('Delete Successfully', 'Exam.Delete');
+              this.toasr.error('Delete Fail because exam has been public', 'Exam Delete');
             }
             this.listexams();
            

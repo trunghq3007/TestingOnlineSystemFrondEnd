@@ -1,14 +1,7 @@
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
   <section class="content-header">
-    <h1>
-      Dashboard
-      <small>Control panel</small>
-    </h1>
-    <ol class="breadcrumb">
-      <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-      <li class="active">Dashboard</li>
-    </ol>
+    
   
   </section>
 
@@ -33,82 +26,19 @@
           
         </div>
         <div class="col-md-7 header-right">
-        <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">Random</button>
-        <button class="btn btn-primary" >Apply</button>
-        <a class="btn btn-danger">Go Back</a>
+          <button [routerLink]="['/exam']" class="btn btn-danger">Go Back</button>
         </div>
         </div>
         <br>
-        <div class="icon clearfix">
-          <div class="col-md-6">
-            <p>Filter</p>
-          </div>
-          <div style="text-align: right" class="col-md-6">
-            <p  class="glyphicon glyphicon-triangle-bottom"></p>
-            </div>
-        </div>
+        
         <div class="filter clearfix" >
-          <!-- <form novalidate (ngSubmit)="onFilter()" [formGroup]="filterForm">
-            <div class="col-md-12">
-              <mat-accordion>
-                <mat-expansion-panel>
-                  <mat-expansion-panel-header>
         
-                    <mat-panel-description>
-                      Cick Choice Type Filter
-                    </mat-panel-description>
-                  </mat-expansion-panel-header>
-        
-                  <mat-form-field class="col-md-4">
-                      <mat-label>---filter level---</mat-label> 
-                    <mat-select formControlName="Level">
-                                
-
-                      <mat-option *ngFor="let level of listfilter.ListLevel" value="{{ level }}">
-                        {{(level==1) ?"Easy":"medium"}}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>
-        
-                  <mat-form-field class="col-md-4">
-                      <mat-label>---filter type---</mat-label>   
-                      <mat-select formControlName="Type" >
-                                  
-                        <mat-option *ngFor="let type of listfilter.ListType" value={{type}}> {{(type==1)? "Essay":"mutiple choice"}}</mat-option>
-                        
-                      </mat-select>
-                    </mat-form-field>
-                    <mat-form-field class="col-md-4">
-                        <mat-label>---Create By---</mat-label> 
-                        <mat-select formControlName="CreatedBy">
-                                      
-                            <mat-option *ngFor="let CreatedBy of listfilter.ListCreateBy" value="{{ CreatedBy }}">
-                            {{ CreatedBy }}
-                          </mat-option>
-                        </mat-select>
-                      </mat-form-field>
-                     
-                    
-                    
-                          <div class="col-md-2">
-                            <button class="btn btn-primary">filter</button>
-                          </div>
-                </mat-expansion-panel>
-                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-        
-                  <p>I'm visible because I am open</p>
-                </mat-expansion-panel>
-              </mat-accordion>
-            </div>
-          </form>
-         -->
         
         
         </div>
         <button [routerLink]="['/exam/', examID]"  class="btn btn-info" data-dismiss="modal">Update
           Question to Exam</button>
-          <button [routerLink]="['/exam/examquestion', examID]" class="btn btn-primary" data-dismiss="modal">Detail Question in Exam
-            </button>
+          
            
 
 
@@ -166,7 +96,7 @@
                     <!-- Name Column -->
                     <ng-container matColumnDef="CreatedDate">
                       <th mat-header-cell *matHeaderCellDef mat-sort-header> CreatedDate </th>
-                      <td mat-cell *matCellDef="let element"> {{element.CreatedDate}} </td>
+                      <td mat-cell *matCellDef="let element"> {{element.CreatedDate | date}} </td>
                     </ng-container>
                   
                     <!-- Weight Column -->
