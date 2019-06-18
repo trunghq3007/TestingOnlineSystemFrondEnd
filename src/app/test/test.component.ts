@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { http } from '../http-header';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -33,7 +34,7 @@ export class TestComponent implements OnInit {
       TestTime: ['', [Validators.required]],
 
     });
-    this.http.get<string>('http://localhost:65170/api/Question').subscribe(
+    this.http.get<string>('http://localhost:65170/api/Question', { headers: http() }).subscribe(
       value => {
         
       });
@@ -74,7 +75,7 @@ export class TestComponent implements OnInit {
 
     if (this.form.valid) {
       const value = this.form.value;
-      this.http.post('http://localhost:65170/api/Test', JSON.stringify(value),httpOptions).subscribe({
+      this.http.post('http://localhost:65170/api/Test', JSON.stringify(value), { headers: http() }).subscribe({
         next: (response) => {
           console.log(response);
           console.log('ok');

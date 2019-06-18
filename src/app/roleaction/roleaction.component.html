@@ -7,12 +7,6 @@
   </div>
   <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource" matSort>
-
-      <!-- ActionId Column -->
-      <ng-container matColumnDef="ActionId">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Action Id </th>
-        <td mat-cell *matCellDef="let element"> {{element.ActionId}} </td>
-      </ng-container>
       <!-- UserName Column -->
       <ng-container matColumnDef="ActionName">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Action Name </th>

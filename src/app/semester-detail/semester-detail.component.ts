@@ -5,6 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormGroup, FormBuilder, FormControl, Validators, ValidationErrors, FormControlName } from '@angular/forms';
 import { and } from '@angular/router/src/utils/collection';
 import { Isemaster } from '../isemaster';
+import { http } from '../http-header';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -22,6 +23,7 @@ export class SemesterDetailComponent implements OnInit {
   public dateTime1: Date;
   list: Isemaster = {} as Isemaster;// a tiep
   CodeSource: string;
+  generate : boolean;
   count: number = 0;
   formApply: FormGroup;
   Id = this.activatedRoute.snapshot.paramMap.get('Id');
@@ -40,6 +42,9 @@ export class SemesterDetailComponent implements OnInit {
   get status(): FormControl {
     return this.formApply.get('status') as FormControl
   }
+ // get Creator(): FormControl {
+ //   return this.formApply.get('Creator') as FormControl
+ // }
   date1 = new FormControl(new Date(this.list.StartDay));
   date2 = new FormControl(new Date(this.list.EndDay));
   
@@ -53,12 +58,13 @@ export class SemesterDetailComponent implements OnInit {
       StartDay: [''],
       EndDay: [''],
       status: [''],
+    //  Creator:['']
       
       
       });
   
     this.http
-      .get<string>('http://localhost:65170/semesterExam/detail/' + this.Id)
+      .get<string>('http://localhost:65170/semesterExam/detail/' + this.Id,{ headers: http() })
       .subscribe(
         value => {
           this.list = JSON.parse(value);
@@ -75,26 +81,47 @@ export class SemesterDetailComponent implements OnInit {
   {
     console.log(StartDay)
   }
+  error: any = { isError: false, errorMessage: '' };
+  compareTwoDates() {
+    if (new Date(this.formApply.controls['EndDay'].value) < new Date(this.formApply.controls['StartDay'].value)) {
+      this.error = { isError: true, errorMessage: 'End Date cant before start date !' };
+    }
+    else {
+      this.error = { isError: false, errorMessage: '' };
+    }
+  }
   navigateToEdit() {
-    this.list.Code= this.CodeSource;
    
-    
+    console.log('code :'+this.list.Code)
+   
+    if(this.generate== true)
+    {
+      this.list.Code= this.CodeSource;
+    }
+    if(this.generate == false)
+    {
+      this.generate = true;
+    }
     console.log(this.list)
     console.log(this.list.Code)
     console.log(this.formApply.value)
-    if (this.formApply.valid) {
+  
     //   const value = {
     //     ...this.list,
     //     ...this.formApply.value
     //   };
-      const value = Object.assign({}, this.list, this.formApply.value,this.CodeSource);// a tiep
+    
+      const value = Object.assign({}, this.list, this.formApply.value,this.list.Code);// a tiep
+      console.log('code:',this.Code)
+      console.log('form apply :',value);
        console.log(value);  //this.list ko update dc gi ngoai code. value ko update dc code
-      this.http.post('http://localhost:65170/semesterExam/Update', JSON.stringify(value), httpOptions).subscribe({
+      this.http.post('http://localhost:65170/semesterExam/Update', JSON.stringify(value), { headers: http() }).subscribe({
         next: (res) => {
           const listIdc = this.activatedRoute.snapshot.paramMap.get('listIdc');
-          this.http.get<string>('http://localhost:65170/SemesterExam/detail/'+listIdc).subscribe(value => {
+          this.http.get<string>('http://localhost:65170/SemesterExam/detail/'+listIdc,{ headers: http() }).subscribe(value => {
             this.list = JSON.parse(value);
              console.log(this.list);
+             console.log(this.list.Code);
           });
         },
         error: (err) => {
@@ -102,8 +129,14 @@ export class SemesterDetailComponent implements OnInit {
         }
         
       });
-      return confirm('Update SuccessFully');
+      if( confirm('Update SuccessFully'))
+    {
+      this.router.navigate(['/SemesterExamManager']);
+      console.log(this.list.Code);
     }
+    
+    
+    
 
 
   }
@@ -130,6 +163,6 @@ export class SemesterDetailComponent implements OnInit {
     console.log(this.CodeSource)
 
   }
-
+  
 
 }

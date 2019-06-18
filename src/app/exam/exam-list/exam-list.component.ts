@@ -6,6 +6,7 @@ import { Exam } from 'src/app/exam';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { http } from 'src/app/http-header';
 @Component({
   selector: 'app-exam-list',
   templateUrl: './exam-list.component.html',
@@ -39,7 +40,7 @@ export class ExamListComponent implements OnInit {
       };
       if (this.filterExam.valid) {
         const value = this.filterExam.value;
-        this.http.post<string>('http://localhost:65170/api/Exam?action=filter', JSON.stringify(value), httpOptions).subscribe({
+        this.http.post<string>('http://localhost:65170/api/Exam?action=filter', JSON.stringify(value), { headers: http() }).subscribe({
           next: (res) => {
 
 
@@ -57,7 +58,7 @@ export class ExamListComponent implements OnInit {
 
 
   listexams() {
-    this.http.get<string>('http://localhost:65170/api/Exam').subscribe(
+    this.http.get<string>('http://localhost:65170/api/Exam',{ headers: http() }).subscribe(
       value => {
         this.exams = JSON.parse(value);
         for (let i = 0; i < this.exams.length; i++) {
@@ -73,7 +74,7 @@ export class ExamListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.http.post<string>('http://localhost:65170/api/Exam?action=getfilter', {}).subscribe(
+    this.http.post<string>('http://localhost:65170/api/Exam?action=getfilter', {},{ headers: http() }).subscribe(
       value => {
         this.listExam = JSON.parse(value);
       });
@@ -83,12 +84,13 @@ export class ExamListComponent implements OnInit {
       QuestionNumber: ['',],
       Status: '',
       CreateAt: ['',],
+      TypeExam: ['']
     });
     this.listexams();
     this.dataSource.sort = this.sort;
   }
   detail(examID) {
-    this.http.get<string>('http://localhost:65170/api/Exam/' + examID).subscribe
+    this.http.get<string>('http://localhost:65170/api/Exam/' + examID,{ headers: http() }).subscribe
       (
         value => {
           this.examInfo = JSON.parse(value).Data;
@@ -98,7 +100,7 @@ export class ExamListComponent implements OnInit {
   }
   detailQuestion(examID) {
 
-    this.http.get<string>('http://localhost:65170/api/ExamQuestions/' + examID).subscribe
+    this.http.get<string>('http://localhost:65170/api/ExamQuestions/' + examID,{ headers: http() }).subscribe
       (
         value => {
           this.examInfo = JSON.parse(value);
@@ -108,7 +110,7 @@ export class ExamListComponent implements OnInit {
   }
   onFilter() {
     const value = this.filterExam.value;
-    this.http.post<string>('http://localhost:65170/api/Exam/?action=filter', JSON.stringify(value)).subscribe(value => {
+    this.http.post<string>('http://localhost:65170/api/Exam/?action=filter', JSON.stringify(value),{ headers: http() }).subscribe(value => {
       this.dataSource.data = JSON.parse(value);
       console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
     });
@@ -119,7 +121,7 @@ export class ExamListComponent implements OnInit {
     // });
   }
   onSearch() {
-    this.http.get<string>('http://localhost:65170/api/Exam?searchString=' + this.searchString).subscribe(value => {
+    this.http.get<string>('http://localhost:65170/api/Exam?searchString=' + this.searchString,{ headers: http() }).subscribe(value => {
       this.dataSource.data = JSON.parse(value);
       console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
     });
@@ -145,7 +147,7 @@ export class ExamListComponent implements OnInit {
 
   exportExam(examID: number) {
     if (confirm('you want to export record')) {
-      this.http.get<string>('http://localhost:65170/api/Exam/' + examID + '?action=export').subscribe
+      this.http.get<string>('http://localhost:65170/api/Exam/' + examID + '?action=export',{ headers: http() }).subscribe
         (
           res => {
             this.listexams();
@@ -157,15 +159,15 @@ export class ExamListComponent implements OnInit {
 
   deleteExam(examID: number) {
     if (confirm('you want to delete record')) {
-      this.http.delete('http://localhost:65170/api/Exam/' + examID).subscribe
+      this.http.delete('http://localhost:65170/api/Exam/' + examID,{ headers: http() }).subscribe
         (
           res => {
             if (res == 2) {
               this.exams = this.exams.filter(ex => ex.Id !== examID);
-              this.toasr.success('Delete Successfully', 'Exam.Delete');
+              this.toasr.success('Delete Successfully', 'Exam Delete');
             }
             else if (res == false) {
-              this.toasr.error('Delete Successfully', 'Exam.Delete');
+              this.toasr.error('Delete Fail because exam has been public', 'Exam Delete');
             }
             this.listexams();
            

@@ -6,6 +6,7 @@ import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { http } from 'src/app/http-header';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -44,14 +45,14 @@ export class ExamDetailComponent implements OnInit {
   filterForm: FormGroup;
   randomForm: FormGroup;
   dataSource = new MatTableDataSource<questions>(this.questions);
+  displayedColumns: string[] = ['select', 'Id', 'Category', 'Content', 'Level', 'Suggestion', 'Type', 'CreatedBy', 'CreatedDate'];
+  selection = new SelectionModel<questions>(true, []);
 
 
   @ViewChild(MatSort) sort: MatSort;
-  displayedColumns: string[] = ['select', 'Id', 'Category', 'Content', 'Level', 'Suggestion', 'Type', 'CreatedBy', 'CreatedDate', 'Action'];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  selection = new SelectionModel<questions>(true, []);
   constructor(private http: HttpClient, private ac: ActivatedRoute, private fb: FormBuilder, private toar: ToastrService) { }
   get StartDate(): FormControl {
     return this.filterForm.get('CreatedDate') as FormControl;
@@ -65,6 +66,9 @@ export class ExamDetailComponent implements OnInit {
   get Type(): FormControl {
     return this.filterForm.get('Type') as FormControl;
   }
+  get Category(): FormControl {
+    return this.filterForm.get('CategoryName') as FormControl;
+  }
   get TypeQuestion(): FormControl {
     return this.randomForm.get('Type') as FormControl;
   }
@@ -74,89 +78,95 @@ export class ExamDetailComponent implements OnInit {
   get RandomNumber(): FormControl {
     return this.randomForm.get('Total') as FormControl;
   }
-  regTotal="^[0-9]{1,4}$";
+  regTotal = "^[0-9]{1,4}$";
   ngOnInit() {
     this.filterForm = this.fb.group({
       // CreatedDate: [''],
-      // Category: [''],
+      CategoryName: [''],
       Level: [''],
       CreatedBy: [''],
       Type: ['']
 
     });
     this.randomForm = this.fb.group({
-      Type: ['',Validators.required],
-      CategoryName: ['',Validators.required],
-      Total: ['',[Validators.required,Validators.pattern]],
+      Type: ['', Validators.required],
+      CategoryName: ['', Validators.required],
+      Total: ['', [Validators.required, Validators.pattern]],
       ExamId: [this.examID]
     });
     this.listQuestion();
 
-    this.http.post<string>('http://localhost:65170/api/ExamQuestions/?action=getfillter', {}).subscribe(
+    this.http.get<string>('http://localhost:65170/api/ExamQuestions/1?action=getfillter',{ headers: http() }).subscribe(
       value => {
         this.listfilter = JSON.parse(value);
-        console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
+        this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort;
+
       });
-    this.dataSource.sort = this.sort;
+
 
   }
   listQuestion() {
     const examID = this.ac.snapshot.paramMap.get('examID');
-    this.http.get<string>('http://localhost:65170/api/ExamQuestions/' + examID + '?action=GetAll').subscribe(
+    this.http.get<string>('http://localhost:65170/api/ExamQuestions/' + examID + '?action=GetAll',{ headers: http() }).subscribe(
       value => {
         this.dataSource.data = JSON.parse(value);
-        console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
+        (this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
+
+
       });
+this.selection.clear();
   }
 
   addQuestion(Id) {
-  
+
   }
   AddMutiple() {
     let Arr = [];
     const examID = this.ac.snapshot.paramMap.get('examID');
     this.selection.selected.forEach(item => {
       Arr.push({ ExamId: examID, QuestionId: item.QuesId });
+
     })
-    console.log(Arr);
-    console.log(JSON.stringify(Arr));
-    this.http.post<string>('http://localhost:65170/api/ExamQuestions/?action=AddMutiple', JSON.stringify(Arr), httpOptions).subscribe((error) => {
+    if (Arr.length > 0) {
+      this.http.post<string>('http://localhost:65170/api/ExamQuestions/?action=AddMutiple', JSON.stringify(Arr),{ headers: http() }).subscribe((error) => {
+        if (error == -2) {
+          this.toar.warning('something went wrong', ' Question Number');
+        } else if (error == 0) {
 
-      this.toar.success('inserted' + ' ' + error + ' ' + 'records in Exam', ' Question Number');
+          this.toar.info('There are no questions in this category match with exam', ' Question Number');
+        } else {
+          this.toar.success('inserted' + ' ' + error + ' ' + 'records in Exam', ' Question Number');
+        }
+        this.listQuestion();
 
-      this.listQuestion();
 
-    });
+
+      });
+    } else {
+      this.toar.info('please choice question', ' Question Number');
+    }
+
   }
 
   random() {
-    if (this.numberQuestion < 0) {
-      this.toar.warning('random number is greater than 0', ' Question Number');
-      // confirm('random number is greater than 0');
-    } else if (isNaN(this.numberQuestion)) {
-      this.toar.warning('random number must is number', ' Question Number')
-      // confirm('random number must is number');
-    } else {
-      const examID = this.ac.snapshot.paramMap.get('examID');
-      let Arr = { Total: this.numberQuestion, ExamId: examID };
-      this.http.post<string>('http://localhost:65170/api/ExamQuestions?action=random', JSON.stringify(Arr), httpOptions).subscribe((error) => {
-        this.toar.success('inserted' + ' ' + error + ' ' + 'records in Exam', ' Question Number');
-        // confirm('inserted' + ' ' + error + ' ' + 'records in Exam');
-        this.listQuestion();
 
-        console.log(error)
-      });
-    }
 
   }
   onSubmit() {
 
 
     if (this.randomForm.valid) {
-      const examID = this.ac.snapshot.paramMap.get('examID');
+    
       const value = this.randomForm.value;
-      this.http.post<string>('http://localhost:65170/api/ExamQuestions?action=random', JSON.stringify(value), httpOptions).subscribe((error) => {
-        this.toar.success('inserted' + ' ' + error + ' ' + 'records in Exam', ' Question Number');
+      this.http.post<string>('http://localhost:65170/api/ExamQuestions?action=random', JSON.stringify(value),{ headers: http() }).subscribe((error) => {
+        if (error == 0) {
+          this.toar.info('There are no questions in this category', ' Question Number');
+        } else if (error == -2) {
+          this.toar.warning('something went wrong', ' Question Number');
+        } else {
+          this.toar.success('inserted' + ' ' + error + ' ' + 'records in Exam', ' Question Number');
+        }
+
         // confirm('inserted' + ' ' + error + ' ' + 'records in Exam');
         this.listQuestion();
 
@@ -170,13 +180,13 @@ export class ExamDetailComponent implements OnInit {
       this.randomForm.get('Type').markAsTouched();
       this.randomForm.get('CategoryName').markAsTouched();
       this.randomForm.get('Total').markAsTouched();
-     
+
       return;
     }
   }
- 
+
   onSearch() {
-    this.http.get<string>('http://localhost:65170/api/ExamQuestions?searchString=' + this.searchString).subscribe(value => {
+    this.http.get<string>('http://localhost:65170/api/ExamQuestions?searchString=' + this.searchString,{ headers: http() }).subscribe(value => {
       this.dataSource.data = JSON.parse(value);
       console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
     });
@@ -184,9 +194,9 @@ export class ExamDetailComponent implements OnInit {
   onFilter() {
     const value = this.filterForm.value;
     console.log(value);
-    this.http.post<string>('http://localhost:65170/api/ExamQuestions/?action=fillter', JSON.stringify(value), httpOptions).subscribe(value => {
+    this.http.post<string>('http://localhost:65170/api/ExamQuestions', JSON.stringify(value),{ headers: http() }).subscribe(value => {
       this.dataSource.data = JSON.parse(value);
-      console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
+      this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort;
 
     });
   }
@@ -195,11 +205,15 @@ export class ExamDetailComponent implements OnInit {
     const numRows = this.dataSource.data.length;
     return numSelected === numRows;
   }
+
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
     this.isAllSelected() ?
       this.selection.clear() :
       this.dataSource.data.forEach(row => this.selection.select(row));
   }
+
+  /** The label for the checkbox on the passed row */
   checkboxLabel(row?: questions): string {
     if (!row) {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;

@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { User } from '../user';
 import { Isemaster } from '../isemaster';
 import { ToastrService } from 'ngx-toastr';
+import { http } from '../http-header';
 
 @Component({
   selector: 'app-home',
@@ -38,7 +39,7 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.http.get<string>('http://localhost:65170/api/SemesterCustomer').subscribe(
+    this.http.get<string>('http://localhost:65170/api/SemesterCustomer',{ headers: http() }).subscribe(
       value => {
 
         this.semesters = JSON.parse(value).Data;
@@ -73,7 +74,7 @@ export class HomeComponent implements OnInit {
     if (this.semesterExamCode == '') {
        this.toasr.warning('You Must Input Code');
     }else if(this.semesterExamCode !== '') {
-      this.http.get<string>('http://localhost:65170/api/SemesterCustomer?code=' + this.semesterExamCode)
+      this.http.get<string>('http://localhost:65170/api/SemesterCustomer?code=' + this.semesterExamCode,{ headers: http() })
       .subscribe(value => {
         this.semesters = JSON.parse(value).Data;
         console.log(value);
