@@ -61,10 +61,10 @@ const routes: Routes = [
 
     ]
   },
-  { path: '**',
-    redirectTo:'login',
-    pathMatch: 'full' 
-  },
+  // { path: '**',
+  //   redirectTo:'login',
+  //   pathMatch: 'full' 
+  // },
   // { path: 'error', component: ErrorsComponent },
   {
     path: 'Role',
