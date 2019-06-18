@@ -76,12 +76,14 @@ regPassScore="^[0-9]{1,3}$"
       TestTime: ['', [Validators.required,Validators.pattern]],
 
     });
+   
     this.http.get<string>('http://localhost:65170/api/exam', { headers: http() }).subscribe(
       value => {
         this.exams = JSON.parse(value)  ;
         
 
       });
+   
       this.http.get<string>('http://localhost:65170/api/Semaster', { headers: http() }).subscribe(
       value => {
         this.semasters = JSON.parse(value)  ;
@@ -126,6 +128,7 @@ regPassScore="^[0-9]{1,3}$"
 
     if (this.form.valid) {
       const value = this.form.value;
+     
       this.http.post('http://localhost:65170/api/Test', JSON.stringify(value), { headers: http() }).subscribe({
         next: (response) => {
           if(response==-2){
