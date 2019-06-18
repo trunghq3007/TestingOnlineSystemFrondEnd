@@ -5,6 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormGroup, FormBuilder, FormControl, Validators, ValidationErrors, FormControlName } from '@angular/forms';
 import { and } from '@angular/router/src/utils/collection';
 import { Isemaster } from '../isemaster';
+import { http } from '../http-header';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -63,7 +64,7 @@ export class SemesterDetailComponent implements OnInit {
       });
   
     this.http
-      .get<string>('http://localhost:65170/semesterExam/detail/' + this.Id)
+      .get<string>('http://localhost:65170/semesterExam/detail/' + this.Id,{ headers: http() })
       .subscribe(
         value => {
           this.list = JSON.parse(value);
@@ -114,10 +115,10 @@ export class SemesterDetailComponent implements OnInit {
       console.log('code:',this.Code)
       console.log('form apply :',value);
        console.log(value);  //this.list ko update dc gi ngoai code. value ko update dc code
-      this.http.post('http://localhost:65170/semesterExam/Update', JSON.stringify(value), httpOptions).subscribe({
+      this.http.post('http://localhost:65170/semesterExam/Update', JSON.stringify(value), { headers: http() }).subscribe({
         next: (res) => {
           const listIdc = this.activatedRoute.snapshot.paramMap.get('listIdc');
-          this.http.get<string>('http://localhost:65170/SemesterExam/detail/'+listIdc).subscribe(value => {
+          this.http.get<string>('http://localhost:65170/SemesterExam/detail/'+listIdc,{ headers: http() }).subscribe(value => {
             this.list = JSON.parse(value);
              console.log(this.list);
              console.log(this.list.Code);
