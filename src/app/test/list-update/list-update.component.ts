@@ -3,6 +3,7 @@ import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { http } from 'src/app/http-header';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -80,18 +81,21 @@ export class ListUpdateComponent implements OnInit {
       TestTime: ['', [Validators.required,Validators.pattern]],
 
     });
-    this.http.get<string>('http://localhost:65170/api/exam').subscribe(
+ 
+    this.http.get<string>('http://localhost:65170/api/exam', { headers: http() }).subscribe(
       value => {
         this.exams = JSON.parse(value);
 
       });
-    this.http.get<string>('http://localhost:65170/api/Semaster').subscribe(
+   
+    this.http.get<string>('http://localhost:65170/api/Semaster', { headers: http() }).subscribe(
       value => {
         this.semasters = JSON.parse(value);
 
       });
     const TestID = this.ac.snapshot.paramMap.get('Id');
-    this.http.get<string>('http://localhost:65170/api/test/'+TestID+ '?action=DetailUpdate' ).subscribe(value => {
+   
+    this.http.get<string>('http://localhost:65170/api/test/'+TestID+ '?action=DetailUpdate' , { headers: http() }).subscribe(value => {
       this.tests = JSON.parse(value);
      
       this.form.patchValue(JSON.parse(value));
@@ -137,7 +141,8 @@ export class ListUpdateComponent implements OnInit {
         ...value
       };
       this.http.put
-        ('http://localhost:65170/api/Test/' + formData.Id, formData)
+  
+        ('http://localhost:65170/api/Test/' + formData.Id, formData, { headers: http() })
         .subscribe({
         
           next: (response) => {

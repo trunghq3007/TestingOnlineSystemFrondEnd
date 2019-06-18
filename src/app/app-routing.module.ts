@@ -111,6 +111,7 @@ const routes: Routes = [
     },
     ], canActivate: [AuthGuard]
   },
+ 
   {
     path: 'exam',
     children: [
