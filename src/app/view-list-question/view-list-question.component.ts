@@ -9,6 +9,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { ResultObject } from '../result-object';
 import { Category } from '../ICategory';
 import { Tag } from '../Tag';
+import { http } from '../http-header';
 @Component({
   selector: 'app-view-list-question',
   templateUrl: './view-list-question.component.html',
@@ -58,7 +59,7 @@ export class ViewListQuestionComponent implements OnInit {
   initListQuestion() {
     this.dataSource.data = [];
       this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort;
-    this.http.get<string>('http://localhost:65170/api/question/').subscribe(value => {
+    this.http.get<string>('http://localhost:65170/api/question/',{ headers: http() }).subscribe(value => {
       const source = JSON.parse(value).Data;
 
       for (let index = 0; index < source.length; index++) {
@@ -82,7 +83,7 @@ export class ViewListQuestionComponent implements OnInit {
   }
 
   exportQuestion() {
-    this.http.get<ResultObject>('http://localhost:65170/upload/exportQuestion', this.httpOptions).subscribe(value => {
+    this.http.get<ResultObject>('http://localhost:65170/upload/exportQuestion', { headers: http() }).subscribe(value => {
       if (value.Success >= 1 && value.Status === 200) {
         const a = document.createElement('a');
         a.href = 'http://localhost:65170/upload/DownloadFileExport?fileName=' + value.Message;
@@ -99,7 +100,7 @@ export class ViewListQuestionComponent implements OnInit {
 
 
   deleteQuestion() {
-    this.http.delete<string>('http://localhost:65170/api/question/' + this.questionId).subscribe(
+    this.http.delete<string>('http://localhost:65170/api/question/' + this.questionId,{ headers: http() }).subscribe(
       res => {
         const result: ResultObject = JSON.parse(res);
         if (result.Success >= 1) {
@@ -130,7 +131,7 @@ export class ViewListQuestionComponent implements OnInit {
     };
 
     this.http.post<string>('http://localhost:65170/api/question?action=search',
-      JSON.stringify(searchObject), this.httpOptions).subscribe(value => {
+      JSON.stringify(searchObject), { headers: http() }).subscribe(value => {
         this.Question = JSON.parse(value);
         this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort;
       });
@@ -150,12 +151,12 @@ export class ViewListQuestionComponent implements OnInit {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.Id + 1}`;
   }
   getApiTags() {
-    this.http.get<string>('http://localhost:65170/api/tag/').subscribe(value => {
+    this.http.get<string>('http://localhost:65170/api/tag/',{ headers: http() }).subscribe(value => {
       this.tagsFormApi = JSON.parse(value);
     });
   }
   getApiCategories() {
-    this.http.get<string>('http://localhost:65170/api/category/').subscribe(value => {
+    this.http.get<string>('http://localhost:65170/api/category/',{ headers: http() }).subscribe(value => {
       this.categoriesFormApi = JSON.parse(value);
       // listCate.forEach(element => {
       //   element.text = element.Name;  
@@ -171,7 +172,7 @@ export class ViewListQuestionComponent implements OnInit {
   fillterClick() {
     console.log(this.formFillter.value);
     this.http.post<string>('http://localhost:65170/api/question?action=fillter',
-      JSON.stringify(this.formFillter.value), this.httpOptions).subscribe(value => {
+      JSON.stringify(this.formFillter.value),{ headers: http() }).subscribe(value => {
 
         const source = JSON.parse(value).Data;
 

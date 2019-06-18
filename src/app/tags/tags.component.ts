@@ -8,11 +8,10 @@ import { FormBuilder, FormGroup, Validators, FormControl, ReactiveFormsModule } 
 import { ActivatedRoute } from '@angular/router';
 import { Sort } from '@angular/material';
 import { ToastrService } from 'ngx-toastr';
+import { http } from '../http-header';
 
 
-const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-};
+
 
 @Component({
 
@@ -64,7 +63,7 @@ export class TagsComponent implements OnInit {
 ///get data
 
   refreshTable() {
-    this.http.get<string>('http://localhost:65170/api/Tag').subscribe(value => {
+    this.http.get<string>('http://localhost:65170/api/Tag',{ headers: http() }).subscribe(value => {
       this.dataSource.data = this.FormatData(JSON.parse(value));
       console.log(this.FormatData(JSON.parse(value)));
       (this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
@@ -118,7 +117,7 @@ export class TagsComponent implements OnInit {
     });
 
     arrId = arrId.substring(0, arrId.length - 1);
-    this.http.post('http://localhost:65170/api/Tag?action=delete', JSON.stringify(arrId), httpOptions).subscribe((e) => {
+    this.http.post('http://localhost:65170/api/Tag?action=delete', JSON.stringify(arrId), { headers: http() }).subscribe((e) => {
       console.log(typeof (e));
       if (+e >= 1) {
         this.toastr.success('Delete all success!', 'List Tag!');
@@ -140,7 +139,7 @@ export class TagsComponent implements OnInit {
   }
 
   delete() {
-    this.http.delete('http://localhost:65170/api/Tag/' + this.TagIdDelete).subscribe(() => {
+    this.http.delete('http://localhost:65170/api/Tag/' + this.TagIdDelete,{ headers: http() }).subscribe(() => {
       this.dataSource.data = this.dataSource.data.filter(b => b.Id !== this.TagIdDelete);
       this.toastr.success('Delete success!', 'List Tag!');
     }
@@ -154,7 +153,7 @@ export class TagsComponent implements OnInit {
     if (this.ctForm.valid) {
       const value = this.ctForm.value;
       console.log(value);
-      this.http.post('http://localhost:65170/api/Tag/', JSON.stringify(value), httpOptions)
+      this.http.post('http://localhost:65170/api/Tag/', JSON.stringify(value), { headers: http() })
         .subscribe({
           next: (res) => {
             this.http.get<string>('http://localhost:65170/api/Tag/').subscribe(value => {
@@ -172,7 +171,7 @@ export class TagsComponent implements OnInit {
   /// Edit Tags
 
   onEdit(TagId: string) {
-    this.http.get<string>('http://localhost:65170/api/Tag/' + TagId).subscribe(value => {
+    this.http.get<string>('http://localhost:65170/api/Tag/' + TagId,{ headers: http() }).subscribe(value => {
       const tag = JSON.parse(value);
       const StatusName = tag.Status === 1 ? 'Active' : 'Disable';
       this.tag = { ...JSON.parse(value), StatusName };
@@ -193,11 +192,11 @@ export class TagsComponent implements OnInit {
         ...value
       };
       this.http
-        .put('http://localhost:65170/api/Tag/' + TagId, formData)
+        .put('http://localhost:65170/api/Tag/' + TagId, formData,{ headers: http() })
         .subscribe(
           {
             next: (res) => {
-              this.http.get<string>('http://localhost:65170/api/Tag/').subscribe(value => {
+              this.http.get<string>('http://localhost:65170/api/Tag/',{ headers: http() }).subscribe(value => {
                 this.dataSource.data = this.FormatData(JSON.parse(value));
                 this.toastr.info('Edit success!', 'List Tag!');
               });

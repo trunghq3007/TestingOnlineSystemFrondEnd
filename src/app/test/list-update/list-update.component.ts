@@ -81,18 +81,21 @@ export class ListUpdateComponent implements OnInit {
       TestTime: ['', [Validators.required,Validators.pattern]],
 
     });
-    this.http.get<string>('http://localhost:65170/api/exam',{ headers: http() }).subscribe(
+ 
+    this.http.get<string>('http://localhost:65170/api/exam', { headers: http() }).subscribe(
       value => {
         this.exams = JSON.parse(value);
 
       });
-    this.http.get<string>('http://localhost:65170/api/Semaster',{ headers: http() }).subscribe(
+   
+    this.http.get<string>('http://localhost:65170/api/Semaster', { headers: http() }).subscribe(
       value => {
         this.semasters = JSON.parse(value);
 
       });
     const TestID = this.ac.snapshot.paramMap.get('Id');
-    this.http.get<string>('http://localhost:65170/api/test/'+TestID+ '?action=DetailUpdate',{ headers: http() } ).subscribe(value => {
+   
+    this.http.get<string>('http://localhost:65170/api/test/'+TestID+ '?action=DetailUpdate' , { headers: http() }).subscribe(value => {
       this.tests = JSON.parse(value);
      
       this.form.patchValue(JSON.parse(value));
@@ -138,7 +141,8 @@ export class ListUpdateComponent implements OnInit {
         ...value
       };
       this.http.put
-        ('http://localhost:65170/api/Test/' + formData.Id, formData,{ headers: http() })
+  
+        ('http://localhost:65170/api/Test/' + formData.Id, formData, { headers: http() })
         .subscribe({
         
           next: (response) => {

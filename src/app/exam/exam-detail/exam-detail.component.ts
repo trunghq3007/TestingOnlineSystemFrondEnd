@@ -156,7 +156,7 @@ this.selection.clear();
 
 
     if (this.randomForm.valid) {
-      const examID = this.ac.snapshot.paramMap.get('examID');
+    
       const value = this.randomForm.value;
       this.http.post<string>('http://localhost:65170/api/ExamQuestions?action=random', JSON.stringify(value),{ headers: http() }).subscribe((error) => {
         if (error == 0) {
