@@ -39,19 +39,13 @@ export class ImportQuestionComponent implements OnInit {
         (res) => {
           if (res.Success >= 1) {
             confirm('Import Success');
-          }
-          else {
+          } else {
             confirm('Import Fail!  ' + res.Message);
           }
         },
-
-
-        (err) => this.error = err,
-
-
+        (err) => this.error = err, 
       );
     this.router.navigate(['question']);
-
   }
 
 }
