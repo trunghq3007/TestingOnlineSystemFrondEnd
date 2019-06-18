@@ -56,10 +56,16 @@
         <div class="form-group" style="color:red;" role="alert" *ngIf="!username.valid && submitted">
           <i class="fa fa-times-circle-o"> </i>
           <span *ngIf="username.hasError('required')">
-            Username is required
+            Username is required.
+          </span>
+          <span *ngIf="username.hasError('minlength')">
+            Username is required length 5-15 characters
           </span>
           <span *ngIf="username.hasError('maxlength')">
-            Username is less than 15 characters
+            Username is required length 5-15 characters
+          </span>
+          <span *ngIf="username.hasError('pattern')">
+            Username contains invalid characters
           </span>
         </div>
 
@@ -70,10 +76,13 @@
         <div class="form-group" style="color:red;" role="alert" *ngIf="!password.valid && submitted">
           <i class="fa fa-times-circle-o"> </i>
           <span *ngIf="password.hasError('required')">
-            Password is required
+            Password is required.
           </span>
-          <span *ngIf="password.hasError('maxlength')">
-            Password is less than 15 characters
+          <span *ngIf="password.hasError('maxlength') || password.hasError('minlength')">
+            Password is required length 5-15 characters
+          </span>
+          <span *ngIf="username.hasError('pattern')">
+            Password contains invalid characters
           </span>
         </div>
 

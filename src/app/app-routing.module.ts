@@ -61,6 +61,10 @@ const routes: Routes = [
 
     ]
   },
+  { path: '**',
+    redirectTo:'login',
+    pathMatch: 'full' 
+  },
   // { path: 'error', component: ErrorsComponent },
   {
     path: 'Role',
@@ -80,8 +84,7 @@ const routes: Routes = [
   },
   {
     path: 'login',
-    component: LoginComponent,
-    pathMatch: 'full'
+    component: LoginComponent
   },
   {
     path: 'tag',
