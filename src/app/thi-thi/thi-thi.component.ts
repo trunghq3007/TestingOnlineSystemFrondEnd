@@ -35,6 +35,7 @@ export class ThiThiComponent implements OnInit {
   array: object[];
   arrayAnswer: object[] = [];
  Idtest = this.activateRoute.snapshot.paramMap.get('TestId');
+ Id = this.activateRoute.snapshot.paramMap.get('Id');
   private intervalId = 0;
   message = '';
   remainingTime: number;
@@ -312,7 +313,8 @@ export class ThiThiComponent implements OnInit {
 
     if(confirm('Nop bai'))
     {
-      this.router.navigate(['/thi/8/2/ketqua']);
+     
+      this.router.navigate(['/thi/'+this.Id+'/'+this.Idtest+'/ketqua']);
     }
 
   }

@@ -21,6 +21,9 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   loading = false;
   submitted = false;
+
+  passwordPattern ="^[a-z0-9_@A-Z]*$";
+  usernamePattern="^[a-z0-9_@A-Z]*$";
   get username(): FormControl {
     return this.loginForm.get('username') as FormControl;
   }
@@ -42,11 +45,15 @@ export class LoginComponent implements OnInit {
       this.loginForm = this.fb.group({
         username: this.fb.control(this.cookieService.get('username'), [
           Validators.required,
-          Validators.maxLength(15)
+          Validators.maxLength(15),
+          Validators.minLength(5),
+          Validators.pattern(this.usernamePattern)
         ]),
         password: this.fb.control(this.cookieService.get('password'), [
           Validators.required,
-          Validators.maxLength(15)
+          Validators.maxLength(15),
+          Validators.minLength(5),
+          Validators.pattern(this.passwordPattern)
         ]),
         rememberMe: this.fb.control(true)
       });
@@ -54,11 +61,15 @@ export class LoginComponent implements OnInit {
       this.loginForm = this.fb.group({
         username: this.fb.control('', [
           Validators.required,
-          Validators.maxLength(15)
+          Validators.maxLength(15),
+          Validators.minLength(5),
+          Validators.pattern(this.usernamePattern)
         ]),
         password: this.fb.control('', [
           Validators.required,
-          Validators.maxLength(15)
+          Validators.maxLength(15),
+          Validators.minLength(5),
+          Validators.pattern(this.passwordPattern)
         ]),
         rememberMe: this.fb.control(false)
       });

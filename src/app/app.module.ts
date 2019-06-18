@@ -34,7 +34,7 @@ import { ViewListQuestionComponent } from './view-list-question/view-list-questi
 import { CreateQuestionComponent } from './create-question/create-question.component';
 import * as ClassicEditor from '@ckeditor/ckeditor5-angular';
 import { GroupComponent } from './group/group.component';
-
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { GroupDetailComponent } from './group-detail/group-detail.component';
 import { UserGroupComponent } from './user-group/user-group.component';
 import { UserGroupAddComponent } from './user-group-add/user-group-add.component';
@@ -164,6 +164,7 @@ import{ CandidatesComponent } from './candidates/candidates.component';
     MatNativeDateModule,
     MatSelectModule,
     CKEditorModule,
+    MatProgressBarModule,
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
     SelectModule,
