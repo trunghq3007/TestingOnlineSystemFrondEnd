@@ -1,7 +1,7 @@
-
+<h1 style="margin-left: 300px">View List Bài Thi </h1>
 <div class="content-master-hot bxslider" *ngFor="let st of semester" style="margin-left: 300px">
   
-    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 box-info-home"  style="margin-top:  10px;    background: rgb(240,240,240);" >
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 box-info-home"  style="margin-top:  10px" >
         <div class="list-exam" data-toggle="tooltip" data-placement="top" title="" data-original-title="Exam_Technical_BTNB_Final_18_01">
             <div class="col-md-3 no-padding " style="margin-top: 0">
                 <div class="event-icon">
@@ -14,13 +14,16 @@
                     <p class="exam-calendar-date text-center">
                         <b>{{st.StartDate| date:'dd'}}</b>
                     </p>
+                   
                 </div>
             </div>
             <div class="col-md-9 col-xs-9 margin-top-10 padding-left-15 pull-left" style="overflow: hidden">
                     <a  routerLink="/DetailExamCustomer/{{st.Id}}">
                         <span class="exam-title">
                            {{st.TestName}}
+                           <p>{{st.SemesterExam.SemesterName}}</p>
                         </span>
+                        
                     </a>
                     
                 <div class="box-label-exam">

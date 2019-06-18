@@ -9,6 +9,7 @@ import { MatPaginator } from '@angular/material';
 import { FormGroup, FormBuilder, FormControl, Validators, ValidationErrors } from '@angular/forms';
 import { ObjectResult } from '../object-result';
 import { ToastrService } from 'ngx-toastr';
+import { http } from '../http-header';
 
 
 const httpOptions = {
@@ -100,14 +101,14 @@ export class ViewListSemasterComponent implements OnInit {
       StartDay: [''],
       EndDay: [""]
     });
-    this.http.get<string>('http://localhost:65170/SemesterExam').subscribe(value => {
+    this.http.get<string>('http://localhost:65170/SemesterExam',{ headers: http() }).subscribe(value => {
       this.dataSource.data = JSON.parse(value).Data;
       console.log(value);
       console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
     });
   }
   list() {
-    this.http.get<string>('http://localhost:65170/SemesterExam').subscribe(value => {
+    this.http.get<string>('http://localhost:65170/SemesterExam',{ headers: http() }).subscribe(value => {
       this.dataSource.data = JSON.parse(value).Data;
       console.log(value);
       console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
@@ -115,10 +116,10 @@ export class ViewListSemasterComponent implements OnInit {
   }
   delete(id: string) {
     if (confirm('you want to hide record')) {
-      this.http.delete('http://localhost:65170/SemesterExam/' + id).subscribe
+      this.http.delete('http://localhost:65170/SemesterExam/' + id,{ headers: http() }).subscribe
         (
           res => {
-            this.http.get<string>('http://localhost:65170/SemesterExam').subscribe(value => {
+            this.http.get<string>('http://localhost:65170/SemesterExam',{ headers: http() }).subscribe(value => {
               this.dataSource.data = JSON.parse(value).Data;
               console.log(value);
               console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
@@ -131,7 +132,7 @@ export class ViewListSemasterComponent implements OnInit {
   }
 
   onSearch() {
-    this.http.get<string>('http://localhost:65170/api/SemesterExam/?searchString=' + this.searchString).subscribe(value => {
+    this.http.get<string>('http://localhost:65170/api/SemesterExam/?searchString=' + this.searchString,{ headers: http() }).subscribe(value => {
       this.dataSource.data = JSON.parse(value);
       console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
     });
@@ -141,10 +142,10 @@ export class ViewListSemasterComponent implements OnInit {
     const value = this.ctForm.value;
     console.log(value);
     if (this.ctForm.valid) {
-      this.http.post('http://localhost:65170/SemesterExam/Post', JSON.stringify(value), httpOptions)
+      this.http.post('http://localhost:65170/SemesterExam/Post', JSON.stringify(value), { headers: http() })
         .subscribe({
           next: (res) => {
-            this.http.get<string>('http://localhost:65170/SemesterExam').subscribe(value => {
+            this.http.get<string>('http://localhost:65170/SemesterExam',{ headers: http() }).subscribe(value => {
               this.dataSource.data = JSON.parse(value);
               console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
             });
@@ -165,11 +166,11 @@ export class ViewListSemasterComponent implements OnInit {
     console.log(value2);
     console.log(this.ctForm2.value);
     console.log("clone wprk");
-    this.http.post('http://localhost:65170/SemesterExam/Post', JSON.stringify(value2), httpOptions).subscribe({
+    this.http.post('http://localhost:65170/SemesterExam/Post', JSON.stringify(value2), { headers: http() }).subscribe({
       next: (res) => {
         let result: any = JSON.stringify(res);
         if (result.Success == 1) {
-          this.http.get<string>('http://localhost:65170/SemesterExam').subscribe(value2 => {
+          this.http.get<string>('http://localhost:65170/SemesterExam',{ headers: http() }).subscribe(value2 => {
             this.dataSource.data = JSON.parse(value2);
             console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
           });
@@ -184,7 +185,7 @@ export class ViewListSemasterComponent implements OnInit {
   }
   onFilter() {
     const value = this.filterForm.value;
-    this.http.post<string>('http://localhost:65170/api/SemesterExam?action=filter', JSON.stringify(value), httpOptions).subscribe(value => {
+    this.http.post<string>('http://localhost:65170/api/SemesterExam?action=filter', JSON.stringify(value), { headers: http() }).subscribe(value => {
       this.dataSource.data = JSON.parse(value);
     });
 
