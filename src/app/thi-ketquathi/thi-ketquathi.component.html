@@ -15,9 +15,8 @@
                            
                         </td>
                         <td class="td1">
-                            Tên kì thi:<mat-form-field class="example-full-width">
-                                <input matInput formControlName="SemesterName">
-                            </mat-form-field>
+                            Tên kì thi:
+                            <label  >{{list.SemesterName}}</label>
                         </td>
                     </tr>
                     <tr>
@@ -25,9 +24,7 @@
                             Tên thí sinh:   <label >{{list.FullName}}</label>
                         </td>
                         <td class="td1">
-                            Email: <mat-form-field class="example-full-width">
-                                <input matInput formControlName="Email">
-                            </mat-form-field>
+                            Email:  <label  >{{list.Email}}</label>
                         </td>
                     </tr>
     
@@ -70,12 +67,12 @@
                 <tr>
                     <td>1</td>
                   
-                    <td><mat-form-field class="example-full-width">
-                        <input matInput formControlName="Score">
-                    </mat-form-field></td>
-                    <td><mat-form-field class="example-full-width">
-                        <input matInput formControlName="Category">
-                    </mat-form-field></td>
+                    <td>
+                            <label  >{{list.Score}}</label>
+                </td>
+                <td>
+                <label  >{{list.Category}}</label>
+                </td>
                     <td>Ðã thi</td>
                 </tr>
              

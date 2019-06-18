@@ -4,8 +4,71 @@ body{margin-top:20px;}
 
 li{
     margin-top: 25px !important;
+   font-size: 12px;
+   font-family: 'Open Sans',sans-serif;
     
+}
+span{
+    float:right;
+    text-align: center;
+    margin-right: 12px;
 }
 h2{
     font-family:"Open Sans", sans-serif;
 }
+.portlet-title {
+    background-color: #009CDE !important;
+}
+
+
+    .media {
+        border-bottom: 1px solid #ecebeb;
+        margin-bottom: -1px;
+    }
+    .user-comment-title {
+        padding: 10px 0 5px 10px;
+        font-size: 16px;
+    }
+    .reply-cm {
+        margin: 10px 0 0 8.5%;
+    }
+    .chats li.in .message .reply-arrow .arrow {
+        top: 18px;
+        border-right: 8px solid #4B8DF8;
+    }
+    .comment-scc {
+        overflow: hidden;
+    }
+
+    .comment-scc ul li {
+        float: left;
+        margin: 0px;
+        /*width: 11%;*/
+        padding-right: 15px;
+    }
+
+    .comment-scc ul li a {
+        color: #999999;
+        cursor:pointer;
+    }
+
+    .comment-scc ul li:first-child {
+        list-style: none;
+    }
+    .comment-scr {
+        max-height: 525px;
+        overflow:auto;
+        width: auto;
+    }
+    .comment-scr.slimScrollDiv {
+        overflow: inherit !important;
+    }
+
+    .comment-scr.slimScrollDiv .slimScrollBar {
+        border-radius: 2px !important;
+        opacity: 0.8 !important;
+    }
+    a{
+        text-decoration: none;
+    }
+

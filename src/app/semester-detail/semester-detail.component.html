@@ -105,49 +105,52 @@
                         <tr>
                             <td><label>Thời gian thi</label></td>
                             <td>
-                                <!-- <mat-form-field>
+                                <mat-form-field>
                                     <input matInput placeholder="{{list.StartDay}}" [(ngModel)]="dateTime"
                                         [owlDateTime]="dt2" formControlName="StartDay">
 
-                                </mat-form-field> -->
+                                </mat-form-field>
 
-                                <div class="magin">
+                                <!-- <div class="magin">
 
                                     <input type="date" name="date" formControlName="StartDay">
-                                </div>
+                                </div> -->
 
 
                             </td>
-                            <!-- <td>
+                            <td>
                                 <span class="example-trigger" [owlDateTimeTrigger]="dt2">
                                     <i class="fas fa-calendar-alt"></i>
                                 </span>
                                 <owl-date-time #dt2></owl-date-time>
-                            </td> -->
+                            </td>
                         </tr>
                         <tr>
                             <td><label>Thời gian kết thúc</label></td>
                             <td>
-                                <!-- <mat-form-field>
+                                <mat-form-field (blur)="compareTwoDates()">
                                     <input matInput placeholder="{{list.EndDay}}" [(ngModel)]="dateTime1"
                                         [owlDateTime]="dt3" formControlName="EndDay" (blur)="compareTwoDates()">
-                                </mat-form-field> -->
-
+                                </mat-form-field>
+                                <!-- 
                                 <div class="magin">
 
                                     <input type="date" name="date" formControlName="EndDay" (blur)="compareTwoDates()">
                                 </div>
                                 <div style=" color: red" *ngIf="error.isError">
                                     {{ error.errorMessage }}
-                                </div>
-
+                                </div> -->
+                    
+                            <div style=" color: red" *ngIf="error.isError">
+                                {{ error.errorMessage }}
+                            </div>
                             </td>
-                            <!-- <td>
+                            <td>
                                 <span class="example-trigger" [owlDateTimeTrigger]="dt3">
                                     <i class="fas fa-calendar-alt"></i>
                                 </span>
                                 <owl-date-time #dt3></owl-date-time>
-                            </td> -->
+                            </td>
 
 
                         <tr>
