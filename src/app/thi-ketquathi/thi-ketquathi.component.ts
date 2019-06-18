@@ -41,6 +41,7 @@ get Category(): FormControl {
   return this.formApply.get('Category') as FormControl
 }
 
+
   constructor( private result:FormBuilder ,private activatedRoute: ActivatedRoute, private http: HttpClient, private router: Router) { }
 
   ngOnInit() {
@@ -65,7 +66,12 @@ get Category(): FormControl {
         this.formApply.patchValue(this.list);//a tiep
       }
     );
-   
+  
+  }
+
+  submit()
+  {
+   this.router.navigate(['']);
   }
 
 }

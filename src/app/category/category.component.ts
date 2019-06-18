@@ -8,10 +8,8 @@ import { Category } from '../ICategory';
 import { FormBuilder, FormGroup, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
 
 import { ToastrService } from 'ngx-toastr';
-const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+import { http } from '../http-header';
 
-};
 @Component({
   selector: 'app-category',
   templateUrl: './category.component.html',
@@ -55,7 +53,7 @@ export class CategoryComponent implements OnInit {
   }
   getlist()
   {
-    this.http.get<string>('http://localhost:65170/api/category').subscribe(value => {
+    this.http.get<string>('http://localhost:65170/api/category',{ headers: http() }).subscribe(value => {
       this.dataSource.data = this.FormatData(JSON.parse(value));
       console.log(value);
       this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort;
@@ -63,7 +61,7 @@ export class CategoryComponent implements OnInit {
   }
   ngOnInit() {
     
-    this.http.get<string>('http://localhost:65170/api/category').subscribe(value => {
+    this.http.get<string>('http://localhost:65170/api/category',{ headers: http() }).subscribe(value => {
       this.dataSource.data = this.FormatData(JSON.parse(value));
       console.log(value);
       this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort;
@@ -102,10 +100,10 @@ export class CategoryComponent implements OnInit {
     console.log(value);
     if (this.insertForm.valid) {
 
-      this.http.post('http://localhost:65170/api/category/', JSON.stringify(value), httpOptions)
+      this.http.post('http://localhost:65170/api/category/', JSON.stringify(value), { headers: http() })
         .subscribe({
           next: (res) => {
-            this.http.get<string>('http://localhost:65170/api/category').subscribe(value => {
+            this.http.get<string>('http://localhost:65170/api/category',{ headers: http() }).subscribe(value => {
               this.dataSource.data = this.FormatData(JSON.parse(value));
               this.toastr.success('Create success!', '');
             });
@@ -117,7 +115,7 @@ export class CategoryComponent implements OnInit {
     }
   }
   detail(id: string) {
-    this.http.get<string>('http://localhost:65170/api/category/' + id)
+    this.http.get<string>('http://localhost:65170/api/category/' + id,{ headers: http() })
       .subscribe(s => {
         this.cateInfo = JSON.parse(s);
 
@@ -130,7 +128,7 @@ export class CategoryComponent implements OnInit {
     console.log(this.cateId);
   }
   deleteCate() {
-    this.http.delete('http://localhost:65170/api/category/' + this.cateId).subscribe(
+    this.http.delete('http://localhost:65170/api/category/' + this.cateId,{ headers: http() }).subscribe(
       res => {
 
         if (res == 1) {
@@ -156,10 +154,10 @@ export class CategoryComponent implements OnInit {
     console.log(this.insertForm);
     console.log(value);
     if (this.insertForm.valid) {
-      this.http.put('http://localhost:65170/api/category/' + id, JSON.stringify(value), httpOptions)
+      this.http.put('http://localhost:65170/api/category/' + id, JSON.stringify(value), { headers: http() })
         .subscribe({
           next: (res) => {
-            this.http.get<string>('http://localhost:65170/api/category').subscribe(value => {
+            this.http.get<string>('http://localhost:65170/api/category',{ headers: http() }).subscribe(value => {
               this.dataSource.data = this.FormatData(JSON.parse(value));
               this.toastr.success('Update success!', '');
             });
@@ -182,7 +180,7 @@ export class CategoryComponent implements OnInit {
       arrId += item.Id + ',';
     });
     arrId = arrId.substring(0, arrId.length - 1);
-    this.http.post('http://localhost:65170/api/Category?action=delete', JSON.stringify(arrId), httpOptions).subscribe((e) => {
+    this.http.post('http://localhost:65170/api/Category?action=delete', JSON.stringify(arrId), { headers: http() }).subscribe((e) => {
       console.log(typeof (e));
       if (+e >= 1) {
         this.toastr.success('Delete all success!', '');
