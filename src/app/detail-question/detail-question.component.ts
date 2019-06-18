@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Question } from '../question';
 import { FormBuilder, FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
+import { http } from '../http-header';
 
 @Component({
   selector: 'app-detail-question',
@@ -19,7 +20,7 @@ export class DetailQuestionComponent implements OnInit {
     debugger;
     const IdQuestion = this.activedRoute.snapshot.paramMap.get('id')
     // const IdQuestion = this.activedRoute.snapshot.paramMap.get('Id')
-    this.http.get<string>('http://localhost:65170/api/question/' + IdQuestion).subscribe(value => {
+    this.http.get<string>('http://localhost:65170/api/question/' + IdQuestion,{ headers: http() }).subscribe(value => {
 
       console.log(value);
 

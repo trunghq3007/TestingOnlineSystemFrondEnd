@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import {SelectModule} from 'ng2-select';
 import {
   MatButtonModule,
   MatSortModule,
@@ -33,7 +34,7 @@ import { ViewListQuestionComponent } from './view-list-question/view-list-questi
 import { CreateQuestionComponent } from './create-question/create-question.component';
 import * as ClassicEditor from '@ckeditor/ckeditor5-angular';
 import { GroupComponent } from './group/group.component';
-
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { GroupDetailComponent } from './group-detail/group-detail.component';
 import { UserGroupComponent } from './user-group/user-group.component';
 import { UserGroupAddComponent } from './user-group-add/user-group-add.component';
@@ -82,7 +83,7 @@ import { RoleActionComponent } from './roleaction/roleaction.component';
 import { AuthGuard } from './_guards/auth.guard';
 import { CookieService } from 'ngx-cookie-service';
 import { ExportExamComponent } from './exam/exam-list/export-exam/export-exam.component';
-
+import{ CandidatesComponent } from './candidates/candidates.component';
 @NgModule({
   declarations: [
     ExamListComponent,
@@ -141,6 +142,7 @@ import { ExportExamComponent } from './exam/exam-list/export-exam/export-exam.co
     RoleActionComponent,
 
     ExportExamComponent,
+    CandidatesComponent
   ],
   imports: [
     MatTabsModule,
@@ -162,8 +164,10 @@ import { ExportExamComponent } from './exam/exam-list/export-exam/export-exam.co
     MatNativeDateModule,
     MatSelectModule,
     CKEditorModule,
+    MatProgressBarModule,
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
+    SelectModule,
     ToastrModule.forRoot(),
     NgxTrimDirectiveModule
   ],

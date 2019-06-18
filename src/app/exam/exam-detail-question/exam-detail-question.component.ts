@@ -5,6 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { http } from 'src/app/http-header';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -49,47 +50,47 @@ export class ExamDetailQuestionComponent implements OnInit {
   listQuestionDetail() {
 
     const examID = this.ac.snapshot.paramMap.get('examID');
-    this.http.get<string>('http://localhost:65170/api/ExamQuestions/' + examID + '?action=GetById').subscribe(
+    this.http.get<string>('http://localhost:65170/api/ExamQuestions/' + examID + '?action=GetById',{ headers: http() }).subscribe(
       value => {
         this.dataSource.data = JSON.parse(value);
 
-        console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
-        this.dataSource.sort = this.sort;
+        (this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
+
       });
+      this.selection.clear();
   }
-  deleteQuestion(QuesId) {
-    const examID = this.ac.snapshot.paramMap.get('examID');
-    let Arr = { ExamId: examID, QuestionId: QuesId };
 
-    this.http.delete('http://localhost:65170/api/ExamQuestions/' + JSON.stringify(Arr), httpOptions).subscribe
-      (
-        value => {
-          this.listQuestionDetail();
-        });
-
-  }
   DeleteMutiple() {
     let Arr = [];
     const examID = this.ac.snapshot.paramMap.get('examID');
     this.selection.selected.forEach(item => {
       Arr.push({ ExamId: examID, QuestionId: item.QuesId });
     })
-   
-    if(Arr.length!=0){
-      this.http.post<string>('http://localhost:65170/api/ExamQuestions?action=DeleteMutiple', JSON.stringify(Arr), httpOptions).subscribe(value => {
+
+    if (Arr.length != 0) {
+      this.http.post<string>('http://localhost:65170/api/ExamQuestions?action=DeleteMutiple', JSON.stringify(Arr),{ headers: http() }).subscribe(value => {
         if (value == -1) {
           this.toar.warning('Exam is public,cannot delete', ' Question Number');
-        } else {
-          this.toar.success('deleted' + ' ' + value + ' ' + 'records in Exam', ' Question Number');
-  
+        } else if (value == 0) {
+
+          this.toar.info('There are no questions found in this exam', ' Question Number');
+
+        } else if (value == -2) {
+          this.toar.warning('something went wrong', ' Question Number');
         }
-  
+        else {
+          this.toar.success('deleted' + ' ' + value + ' ' + 'records in Exam', ' Question Number');
+
+        }
+
         this.listQuestionDetail();
-  
+
       })
+    }else{
+      this.toar.info('please choice question', ' Question Number');
     }
 
-    
+
   }
   isAllSelected() {
     const numSelected = this.selection.selected.length;
@@ -105,7 +106,7 @@ export class ExamDetailQuestionComponent implements OnInit {
     if (!row) {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.QuesId + 1}`;
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.nameExam + 1}`;
   }
 
 
