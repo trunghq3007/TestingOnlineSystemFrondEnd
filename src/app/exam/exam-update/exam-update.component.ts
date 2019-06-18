@@ -5,6 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import * as ClassicEditorBuild from '@ckeditor/ckeditor5-build-classic';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { http } from 'src/app/http-header';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -58,7 +59,7 @@ export class ExamUpdateComponent  implements OnInit {
     return this.editForm.get('Note') as FormControl;
   }
   getApiCategory() {
-    this.http.get<string>('http://localhost:65170/api/Category/').subscribe(value => {
+    this.http.get<string>('http://localhost:65170/api/Category/',{ headers: http() }).subscribe(value => {
       this.CategoryFormApi = JSON.parse(value);
       console.log(this.CategoryFormApi);
     });
@@ -79,11 +80,11 @@ export class ExamUpdateComponent  implements OnInit {
     });
 
     const examID = this.ac.snapshot.paramMap.get('Id');
-    this.http.get<string>('http://localhost:65170/api/Exam/' + examID).subscribe(value => {
+    this.http.get<string>('http://localhost:65170/api/Exam/' + examID,{ headers: http() }).subscribe(value => {
       this.categoryname = value;
       console.log(value);
     });
-    this.http.get<string>('http://localhost:65170/api/Exam/' + examID).subscribe(value => {
+    this.http.get<string>('http://localhost:65170/api/Exam/' + examID,{ headers: http() }).subscribe(value => {
       this.exam = JSON.parse(value).Data[0];
       
       // if(this.exam.Category){
@@ -119,7 +120,7 @@ export class ExamUpdateComponent  implements OnInit {
       //value.Category = this.CategoryFormApi.filter(s => s.Id == value.CategoryId);
       value.Category = temp.length > 0 ? temp[0] : null;
       console.log(value);
-      this.http.put('http://localhost:65170/api/Exam/' + formData.Id, formData, httpOptions).subscribe({
+      this.http.put('http://localhost:65170/api/Exam/' + formData.Id, formData,{ headers: http() }).subscribe({
         next: (res) => {
           if(res ==1){
             this.toar.success('success',' Update Exam');

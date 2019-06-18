@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Question } from '../question';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { ToastrService } from 'ngx-toastr';
@@ -9,6 +9,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { ResultObject } from '../result-object';
 import { Category } from '../ICategory';
 import { Tag } from '../Tag';
+import { http } from '../http-header';
 @Component({
   selector: 'app-view-list-question',
   templateUrl: './view-list-question.component.html',
@@ -43,7 +44,22 @@ export class ViewListQuestionComponent implements OnInit {
   ngOnInit() {
     this.getApiCategories();
     this.getApiTags();
-    this.http.get<string>('http://localhost:65170/api/question/').subscribe(value => {
+    this.initListQuestion();
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.initListQuestion();
+      }
+    });
+  }
+  delete(Id) {
+    this.questionId = Id;
+    console.log(this.questionId);
+
+  }
+  initListQuestion() {
+    this.dataSource.data = [];
+      this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort;
+    this.http.get<string>('http://localhost:65170/api/question/',{ headers: http() }).subscribe(value => {
       const source = JSON.parse(value).Data;
 
       for (let index = 0; index < source.length; index++) {
@@ -64,17 +80,10 @@ export class ViewListQuestionComponent implements OnInit {
       this.dataSource.data = source;
       this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort;
     });
-
   }
-  delete(Id) {
-    this.questionId = Id;
-    console.log(this.questionId);
-
-  }
-
 
   exportQuestion() {
-    this.http.get<ResultObject>('http://localhost:65170/upload/exportQuestion', this.httpOptions).subscribe(value => {
+    this.http.get<ResultObject>('http://localhost:65170/upload/exportQuestion', { headers: http() }).subscribe(value => {
       if (value.Success >= 1 && value.Status === 200) {
         const a = document.createElement('a');
         a.href = 'http://localhost:65170/upload/DownloadFileExport?fileName=' + value.Message;
@@ -83,7 +92,7 @@ export class ViewListQuestionComponent implements OnInit {
         confirm('export fail');
       }
     });
-// tslint:disable-next-line: no-unused-expression
+    // tslint:disable-next-line: no-unused-expression
     (err) => {
       if (err.status === 404) { console.log('404 founded'); }
     };
@@ -91,7 +100,7 @@ export class ViewListQuestionComponent implements OnInit {
 
 
   deleteQuestion() {
-    this.http.delete<string>('http://localhost:65170/api/question/' + this.questionId).subscribe(
+    this.http.delete<string>('http://localhost:65170/api/question/' + this.questionId,{ headers: http() }).subscribe(
       res => {
         const result: ResultObject = JSON.parse(res);
         if (result.Success >= 1) {
@@ -122,10 +131,10 @@ export class ViewListQuestionComponent implements OnInit {
     };
 
     this.http.post<string>('http://localhost:65170/api/question?action=search',
-    JSON.stringify(searchObject), this.httpOptions).subscribe(value => {
-      this.Question = JSON.parse(value);
-      this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort;
-    });
+      JSON.stringify(searchObject), { headers: http() }).subscribe(value => {
+        this.Question = JSON.parse(value);
+        this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort;
+      });
   }
 
   isAllSelected() {
@@ -142,12 +151,12 @@ export class ViewListQuestionComponent implements OnInit {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.Id + 1}`;
   }
   getApiTags() {
-    this.http.get<string>('http://localhost:65170/api/tag/').subscribe(value => {
+    this.http.get<string>('http://localhost:65170/api/tag/',{ headers: http() }).subscribe(value => {
       this.tagsFormApi = JSON.parse(value);
     });
   }
   getApiCategories() {
-    this.http.get<string>('http://localhost:65170/api/category/').subscribe(value => {
+    this.http.get<string>('http://localhost:65170/api/category/',{ headers: http() }).subscribe(value => {
       this.categoriesFormApi = JSON.parse(value);
       // listCate.forEach(element => {
       //   element.text = element.Name;  
@@ -163,26 +172,26 @@ export class ViewListQuestionComponent implements OnInit {
   fillterClick() {
     console.log(this.formFillter.value);
     this.http.post<string>('http://localhost:65170/api/question?action=fillter',
-    JSON.stringify(this.formFillter.value), this.httpOptions).subscribe(value => {
+      JSON.stringify(this.formFillter.value),{ headers: http() }).subscribe(value => {
 
-      const source = JSON.parse(value).Data;
+        const source = JSON.parse(value).Data;
 
-      
-      for (let index = 0; index < source.length; index++) {
-        let tagNames = '';
-        const element = source[index];
-        const tag = element.Tags;
-        if (tag && tag.length > 0) {
-          for (let i = 0; i < tag.length; i++) {
-            tagNames += tag[i].Name + ', ';
+
+        for (let index = 0; index < source.length; index++) {
+          let tagNames = '';
+          const element = source[index];
+          const tag = element.Tags;
+          if (tag && tag.length > 0) {
+            for (let i = 0; i < tag.length; i++) {
+              tagNames += tag[i].Name + ', ';
+            }
           }
+          tagNames = tagNames.trim();
+          element.TagNames = tagNames.substring(0, tagNames.length - 1);
         }
-        tagNames =tagNames.trim();
-        element.TagNames = tagNames.substring(0, tagNames.length-1);
-      }
-      this.dataSource.data = source;
-      this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort;
-    });
+        this.dataSource.data = source;
+        this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort;
+      });
   }
   public doFilter = (value: string) => {
     this.dataSource.filter = value.trim().toLocaleLowerCase();

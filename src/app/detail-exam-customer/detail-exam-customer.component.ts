@@ -3,6 +3,7 @@ import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { Isemaster } from '../isemaster';
 import { Router ,ActivatedRoute} from '@angular/router';
 import { DetailExam } from '../detailExams';
+import { http } from '../http-header';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })}
 @Component({
@@ -21,7 +22,7 @@ export class DetailExamCustomerComponent implements OnInit {
   ngOnInit() {
  
     const IdQuestion = this.activedRoute.snapshot.paramMap.get('id')
-    this.http.get<string>('http://localhost:65170/ExamDetails/'+IdQuestion).subscribe(
+    this.http.get<string>('http://localhost:65170/ExamDetails/'+IdQuestion,{ headers: http() }).subscribe(
       value => {
 
         this.list = JSON.parse(value);

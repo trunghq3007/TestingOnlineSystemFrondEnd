@@ -42,7 +42,7 @@ export class ThiThiComponent implements OnInit {
   constructor(private semaster: FormBuilder, private fb: FormBuilder, private http: HttpClient, private router: Router, public dialog: MatDialog, public activateRoute: ActivatedRoute) { }
   @Input()
   seconds = 200;
-
+  
   clearTimer() {
     clearInterval(this.intervalId);
   }
@@ -97,11 +97,11 @@ export class ThiThiComponent implements OnInit {
       if (this.remainingTime === 0) {
         //confirm('Time out');
        this.message = 'Blast off!';
-
+      
         this.router.navigate(['/thi/8/2/ketqua']);
         console.log(this.router.navigate(['/thi/8/2/ketqua']));
-
-
+       
+     
         this.clearTimer(); // thay bang goi den ham` ket qua thi
       } else {
         this.message = `T-${this.remainingTime} seconds and counting`;
@@ -225,9 +225,9 @@ export class ThiThiComponent implements OnInit {
     this.checkItem4 = false;
     if (this.containsObject(this.question, this.array2)) {
       console.log("arrayy 2: ", this.array2)
-
+     
       this.array2.filter(this.question);
-
+      
       this.reload = false;
       this.reload = true;
     }
@@ -242,7 +242,7 @@ export class ThiThiComponent implements OnInit {
       this.arrayAnswer.push(this.testProcessings.Questions[this.i].Answers[0]);
     console.log('array answer:', this.arrayAnswer);
     console.log(this.containsObject(this.question, this.array2));
-
+    
   }
   check2() {
     this.checkItem1 = false;
@@ -260,7 +260,7 @@ export class ThiThiComponent implements OnInit {
     this.a = false;
     this.reload = true;
   }
-
+ 
   check3() {
     this.checkItem1 = false;
     this.checkItem2 = false;
@@ -312,6 +312,7 @@ export class ThiThiComponent implements OnInit {
 
     if(confirm('Nop bai'))
     {
+     
       this.router.navigate(['/thi/'+17+'/1/ketqua']);
     }
 

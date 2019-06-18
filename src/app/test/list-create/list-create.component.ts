@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { AuthenticationService } from 'src/app/_services/authentication.service';
 import { User } from 'src/app/user';
 import { Subscription } from 'rxjs';
+import { http } from 'src/app/http-header';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -75,13 +76,15 @@ regPassScore="^[0-9]{1,3}$"
       TestTime: ['', [Validators.required,Validators.pattern]],
 
     });
-    this.http.get<string>('http://localhost:65170/api/exam').subscribe(
+   
+    this.http.get<string>('http://localhost:65170/api/exam', { headers: http() }).subscribe(
       value => {
         this.exams = JSON.parse(value)  ;
         
 
       });
-      this.http.get<string>('http://localhost:65170/api/Semaster').subscribe(
+   
+      this.http.get<string>('http://localhost:65170/api/Semaster', { headers: http() }).subscribe(
       value => {
         this.semasters = JSON.parse(value)  ;
         
@@ -125,7 +128,8 @@ regPassScore="^[0-9]{1,3}$"
 
     if (this.form.valid) {
       const value = this.form.value;
-      this.http.post('http://localhost:65170/api/Test', JSON.stringify(value),httpOptions).subscribe({
+     
+      this.http.post('http://localhost:65170/api/Test', JSON.stringify(value), { headers: http() }).subscribe({
         next: (response) => {
           if(response==-2){
             this.toar.warning('something went wrong',' Create Test');
