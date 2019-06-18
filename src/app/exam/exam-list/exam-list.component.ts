@@ -159,7 +159,7 @@ export class ExamListComponent implements OnInit {
 
   deleteExam(examID: number) {
     if (confirm('you want to delete record')) {
-      this.http.delete('http://localhost:65170/api/Exam/' + examID).subscribe
+      this.http.delete('http://localhost:65170/api/Exam/' + examID,{ headers: http() }).subscribe
         (
           res => {
             if (res == 2) {

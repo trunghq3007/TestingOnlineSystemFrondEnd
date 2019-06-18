@@ -8,6 +8,7 @@ import { Subscription } from 'rxjs';
 import { AuthenticationService } from 'src/app/_services/authentication.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+import { http } from 'src/app/http-header';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -77,7 +78,7 @@ export class CreateExamComponent implements OnInit {
   
   }
   getApiCategory() {
-    this.http.get<string>('http://localhost:65170/api/Category/').subscribe(value => {
+    this.http.get<string>('http://localhost:65170/api/Category/',{ headers: http() }).subscribe(value => {
       this.CategoryFormApi = JSON.parse(value);
     });
   }
@@ -102,7 +103,7 @@ export class CreateExamComponent implements OnInit {
       value.Category = this.CategoryFormApi.filter(s => s.Id == value.CategoryId);
       value.Category = value.Category.length > 0 ? value.Category[0] : null;
      
-      this.http.post<string>('http://localhost:65170/api/Exam', JSON.stringify(value), httpOptions).subscribe({
+      this.http.post<string>('http://localhost:65170/api/Exam', JSON.stringify(value),{ headers: http() }).subscribe({
         next: (res) => {
           
        

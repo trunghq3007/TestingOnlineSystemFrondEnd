@@ -6,6 +6,7 @@ import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { http } from 'src/app/http-header';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -95,7 +96,7 @@ export class ExamDetailComponent implements OnInit {
     });
     this.listQuestion();
 
-    this.http.get<string>('http://localhost:65170/api/ExamQuestions/1?action=getfillter').subscribe(
+    this.http.get<string>('http://localhost:65170/api/ExamQuestions/1?action=getfillter',{ headers: http() }).subscribe(
       value => {
         this.listfilter = JSON.parse(value);
         this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort;
@@ -106,7 +107,7 @@ export class ExamDetailComponent implements OnInit {
   }
   listQuestion() {
     const examID = this.ac.snapshot.paramMap.get('examID');
-    this.http.get<string>('http://localhost:65170/api/ExamQuestions/' + examID + '?action=GetAll').subscribe(
+    this.http.get<string>('http://localhost:65170/api/ExamQuestions/' + examID + '?action=GetAll',{ headers: http() }).subscribe(
       value => {
         this.dataSource.data = JSON.parse(value);
         (this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
@@ -127,7 +128,7 @@ this.selection.clear();
 
     })
     if (Arr.length > 0) {
-      this.http.post<string>('http://localhost:65170/api/ExamQuestions/?action=AddMutiple', JSON.stringify(Arr), httpOptions).subscribe((error) => {
+      this.http.post<string>('http://localhost:65170/api/ExamQuestions/?action=AddMutiple', JSON.stringify(Arr),{ headers: http() }).subscribe((error) => {
         if (error == -2) {
           this.toar.warning('something went wrong', ' Question Number');
         } else if (error == 0) {
@@ -157,7 +158,7 @@ this.selection.clear();
     if (this.randomForm.valid) {
       const examID = this.ac.snapshot.paramMap.get('examID');
       const value = this.randomForm.value;
-      this.http.post<string>('http://localhost:65170/api/ExamQuestions?action=random', JSON.stringify(value), httpOptions).subscribe((error) => {
+      this.http.post<string>('http://localhost:65170/api/ExamQuestions?action=random', JSON.stringify(value),{ headers: http() }).subscribe((error) => {
         if (error == 0) {
           this.toar.info('There are no questions in this category', ' Question Number');
         } else if (error == -2) {
@@ -185,7 +186,7 @@ this.selection.clear();
   }
 
   onSearch() {
-    this.http.get<string>('http://localhost:65170/api/ExamQuestions?searchString=' + this.searchString).subscribe(value => {
+    this.http.get<string>('http://localhost:65170/api/ExamQuestions?searchString=' + this.searchString,{ headers: http() }).subscribe(value => {
       this.dataSource.data = JSON.parse(value);
       console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
     });
@@ -193,7 +194,7 @@ this.selection.clear();
   onFilter() {
     const value = this.filterForm.value;
     console.log(value);
-    this.http.post<string>('http://localhost:65170/api/ExamQuestions', JSON.stringify(value), httpOptions).subscribe(value => {
+    this.http.post<string>('http://localhost:65170/api/ExamQuestions', JSON.stringify(value),{ headers: http() }).subscribe(value => {
       this.dataSource.data = JSON.parse(value);
       this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort;
 

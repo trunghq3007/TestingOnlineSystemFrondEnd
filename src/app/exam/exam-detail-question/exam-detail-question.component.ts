@@ -5,6 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { http } from 'src/app/http-header';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -49,7 +50,7 @@ export class ExamDetailQuestionComponent implements OnInit {
   listQuestionDetail() {
 
     const examID = this.ac.snapshot.paramMap.get('examID');
-    this.http.get<string>('http://localhost:65170/api/ExamQuestions/' + examID + '?action=GetById').subscribe(
+    this.http.get<string>('http://localhost:65170/api/ExamQuestions/' + examID + '?action=GetById',{ headers: http() }).subscribe(
       value => {
         this.dataSource.data = JSON.parse(value);
 
@@ -67,7 +68,7 @@ export class ExamDetailQuestionComponent implements OnInit {
     })
 
     if (Arr.length != 0) {
-      this.http.post<string>('http://localhost:65170/api/ExamQuestions?action=DeleteMutiple', JSON.stringify(Arr), httpOptions).subscribe(value => {
+      this.http.post<string>('http://localhost:65170/api/ExamQuestions?action=DeleteMutiple', JSON.stringify(Arr),{ headers: http() }).subscribe(value => {
         if (value == -1) {
           this.toar.warning('Exam is public,cannot delete', ' Question Number');
         } else if (value == 0) {
