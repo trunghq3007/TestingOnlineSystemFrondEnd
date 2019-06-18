@@ -21,7 +21,7 @@ export class RoleComponent implements OnInit {
   RoleId: '';
   public Editor = ClassicEditorBuild;
   constructor(private http: HttpClient, private router: Router, private fb: FormBuilder) { }
-  displayedColumn: string[] = ['RoleId', 'RoleName', 'Description', 'Action'];
+  displayedColumn: string[] = [ 'RoleName', 'Description', 'Action'];
   dataSource = new MatTableDataSource<Role>(this.roles);
   selection = new SelectionModel<Role>(true, []);
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -83,7 +83,7 @@ export class RoleComponent implements OnInit {
             confirm('Create success!');
             
           } else {
-            confirm('Create Fail!');
+            confirm('Create fail!');
           }
           this.createForm.reset();
           this.listRole();

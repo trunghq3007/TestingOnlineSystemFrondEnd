@@ -1,11 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { User } from '../user';
 import { http } from '../http-header';
+import { ToastrService } from 'ngx-toastr';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -24,8 +25,8 @@ export class UserComponent implements OnInit {
   userId = '';
   user: User;
   getUsers: User;
-  constructor(private http: HttpClient, private router: Router, private fb: FormBuilder) { }
-  displayedColumn: string[] = ['select', 'UserId', 'UserName', 'FullName', 'Email', 'Department', 'Position', 'Action'];
+  constructor(private http: HttpClient, private router: Router, private fb: FormBuilder,private toar:ToastrService) { }
+  displayedColumn: string[] = ['select', 'UserName', 'FullName', 'Email', 'Department', 'Position', 'Action'];
   dataSource = new MatTableDataSource<User>(this.users);
   selection = new SelectionModel<User>(true, []);
 
@@ -42,9 +43,15 @@ export class UserComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
   listuser() {
-    this.http.get<string>('http://localhost:65170/api/User',{ headers: http() }).subscribe(value => {
+    this.http.get<string>('http://localhost:65170/api/User',{ headers: http() }).subscribe({
+      next: (value) => {
       this.dataSource.data = JSON.parse(value).Data;
       console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
+      },
+      error: (err: HttpErrorResponse) => {
+        console.log(err);
+        alert(err.error.Message);
+      }
     });
   }
   Edit(userId: string) {
@@ -52,26 +59,50 @@ export class UserComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.http.get<string>('http://localhost:65170/api/User',{ headers: http() }).subscribe(value => {
+    this.http.get<string>('http://localhost:65170/api/User',{ headers: http() }).subscribe({
+      next:(value) => {
       this.dataSource.data = JSON.parse(value).Data;
       console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
+      },
+      error: (err: HttpErrorResponse) => {
+        console.log(err);
+        alert(err.error.Message);
+      }
     });
     this.filterForm = this.fb.group({
       Position: [''],
       Department: ['']
     });
-    this.http.get<string>('http://localhost:65170/api/User',{ headers: http() }).subscribe(value => {
+    this.http.get<string>('http://localhost:65170/api/User',{ headers: http() }).subscribe({
+      next:(value) => {
       this.PositionApi = JSON.parse(value).Data;
+    },
+    error: (err: HttpErrorResponse) => {
+      console.log(err);
+      alert(err.error.Message);
+    }      
     });
-    this.http.get<string>('http://localhost:65170/api/User',{ headers: http() }).subscribe(value => {
-      this.DepartmentApi = JSON.parse(value).Data;
+    this.http.get<string>('http://localhost:65170/api/User',{ headers: http() }).subscribe({
+        next:(value) => {
+        this.DepartmentApi = JSON.parse(value).Data;
+      },
+      error: (err: HttpErrorResponse) => {
+        console.log(err);
+        alert(err.error.Message);
+      }
     });
   }
 
   onSearch() {
-    this.http.get<string>('http://localhost:65170/api/User?searchString=' + this.searchString,{ headers: http() }).subscribe(value => {
+    this.http.get<string>('http://localhost:65170/api/User?searchString=' + this.searchString,{ headers: http() }).subscribe(
+      {next:(value) => {
       this.dataSource.data = JSON.parse(value).Data;
       console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
+      },
+      error: (err: HttpErrorResponse) => {
+        console.log(err);
+        alert(err.error.Message);
+      }
     });
   }
   isAllSelected() {
@@ -94,36 +125,61 @@ export class UserComponent implements OnInit {
     const value = this.filterForm.value;
     console.log(value);
     this.http.post<string>('http://localhost:65170/api/User/?action=filter', JSON.stringify(value),
-    { headers: http() }).subscribe(value => {
+    { headers: http() }).subscribe({
+      next:(value) => {
         this.dataSource.data = JSON.parse(value).Data;
+    },
+    error: (err: HttpErrorResponse) => {
+      console.log(err);
+      alert(err.error.Message);
+    }
       });
   }
   detail(id) {
     this.userId = id;
     console.log(this.userId);
-    this.http.get<string>('http://localhost:65170/api/User/?userid=' + this.userId,{ headers: http() }).subscribe(value => {
+    this.http.get<string>('http://localhost:65170/api/User/?userid=' + this.userId,{ headers: http() }).subscribe(
+      {next:(value) => {
       this.getUsers = JSON.parse(value);
       console.log(this.getUsers);
-    });
-    this.http.get<string>('http://localhost:65170/api/User/' + this.userId,{ headers: http() }).subscribe(value => {
+    },
+    error: (err: HttpErrorResponse) => {
+      console.log(err);
+      alert(err.error.Message);
+    }
+  });
+    this.http.get<string>('http://localhost:65170/api/User/' + this.userId,{ headers: http() }).subscribe(
+  {
+    next: (value) => {
       this.user = JSON.parse(value);
       console.log(value);
-    });
-
+    },
+  error: (err: HttpErrorResponse) => {
+    console.log(err);
+    alert(err.error.Message);
+  }   
+  });
   }
+
   onDelete(id: string) {
     if (confirm('Are you sure you want to delete this user?')) {
-      this.http.delete<string>('http://localhost:65170/api/User/' + id,{ headers: http() }).subscribe(res => {
+      this.http.delete<string>('http://localhost:65170/api/User/' + id, { headers: http() }).subscribe(
+        {next:(res) => {
         let result = JSON.parse(res);
         if (result.Success == 1) {
-          this.users = this.users.filter(b => b.UserId !== id);         
-          confirm('Delete success!');
+          this.users = this.users.filter(b => b.UserId !== id); 
+          this.toar.success('success','Delete User');        
           this.listuser();
         } else if (result.Success == 0) {
-          confirm('Error!This user is in use');
+          this.toar.warning('Error!This user is in use');
         } else {
-          confirm('Delete fail!');
+          this.toar.warning('Fail','Delete User');
         }
+      },
+      error: (err: HttpErrorResponse) => {
+      console.log(err);
+      alert(err.error.Message);
+      }   
       });
     }
   }
@@ -131,25 +187,32 @@ export class UserComponent implements OnInit {
   removeSelectedRows(id: string) {
     if (confirm('Delete selected?')) {
       this.selection.selected.forEach(item => {
-        this.http.delete<string>('http://localhost:65170/api/User/' + item.UserId,{ headers: http() }).subscribe(res => {
-          let result = JSON.parse(res);
-          if (result.Success == 1) {
-            this.dataSource.data = this.dataSource.data.filter(b => b.UserId !== item.UserId);
-            confirm('Delete success!');
-            this.listuser();
-          } else if (result.Success == 0) {
-            confirm('Error!This user is in use');
-          } else {
-            confirm('Delete fail!');
+        this.http.delete<string>('http://localhost:65170/api/User/' + item.UserId,{ headers: http() }).subscribe(
+         {
+          next:(res) => {
+            let result = JSON.parse(res);
+            if (result.Success == 1) {
+              this.dataSource.data = this.dataSource.data.filter(b => b.UserId !== item.UserId);
+              this.toar.success('success','Delete User');     
+              this.listuser();
+            } else if (result.Success == 0) {
+              this.toar.warning('Error!This user is in use');
+            } else {
+              this.toar.warning('Fail','Delete User');
+            }
+          },
+          error: (err: HttpErrorResponse) => {
+            console.log(err);
+            alert(err.error.Message);
           }
-        }
+         } 
         );
-        // this.dataSource = new MatTableDataSource<User>(this.dataSource.data);
       });
       this.selection = new SelectionModel<User>(true, []);
     }
   }
 }
+
 
 
 
