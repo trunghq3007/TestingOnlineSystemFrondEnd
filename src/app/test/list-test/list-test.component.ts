@@ -4,6 +4,7 @@ import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
+import { http } from 'src/app/http-header';
 export interface Exam {
   id: number;
   NameExam: string;
@@ -54,7 +55,7 @@ export class ListTestComponent implements OnInit {
 
   deleteTest(Id: number) {
     if (confirm('you want to delete record')) {
-      this.http.delete('http://localhost:65170/api/test/' + Id).subscribe
+      this.http.delete('http://localhost:65170/api/test/' + Id,{ headers: http() }).subscribe
         (
           res => {
             if (res == true) {
@@ -63,7 +64,7 @@ export class ListTestComponent implements OnInit {
             else if (res == false) {
               confirm("Is Public not Delete");
             }
-            this.http.get<string>('http://localhost:65170/api/Test').subscribe(
+            this.http.get<string>('http://localhost:65170/api/Test',{ headers: http() }).subscribe(
               value => {
                 this.dataSource.data = JSON.parse(value);
                 console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
@@ -74,7 +75,7 @@ export class ListTestComponent implements OnInit {
     }
   }
   ngOnInit() {
-    this.http.get<string>('http://localhost:65170/api/Test').subscribe(
+    this.http.get<string>('http://localhost:65170/api/Test',{ headers: http() }).subscribe(
       value => {
         this.dataSource.data = JSON.parse(value);
         console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
@@ -84,7 +85,7 @@ export class ListTestComponent implements OnInit {
   }
   detail(testID) {
 
-    this.http.get<string>('http://localhost:65170/api/test/' + testID).subscribe
+    this.http.get<string>('http://localhost:65170/api/test/' + testID,{ headers: http() }).subscribe
       (
         value => {
          
@@ -98,7 +99,7 @@ export class ListTestComponent implements OnInit {
     this.router.navigate(['/test', 'update', Id,]);
   }
   onSearch() {
-    this.http.get<string>('http://localhost:65170/api/Test?searchString=' + this.searchString).subscribe(value => {
+    this.http.get<string>('http://localhost:65170/api/Test?searchString=' + this.searchString,{ headers: http() }).subscribe(value => {
       this.dataSource.data = JSON.parse(value);
       console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
     });
