@@ -3,9 +3,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ResultObject } from '../result-object';
-const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-};
+import { http } from '../http-header';
+
 @Component({
   selector: 'app-import-question',
   templateUrl: './import-question.component.html',
@@ -34,7 +33,7 @@ export class ImportQuestionComponent implements OnInit {
     const formData = new FormData();
     formData.append('file', this.form.get('avatar').value);
 
-    this.http.post<ResultObject>('http://localhost:65170/upload/importquestion', formData)
+    this.http.post<ResultObject>('http://localhost:65170/upload/importquestion', formData,{ headers: http() })
       .subscribe(
         (res) => {
           if (res.Success >= 1) {
