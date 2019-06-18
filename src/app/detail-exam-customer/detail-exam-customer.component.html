@@ -6,7 +6,7 @@
   <div class="row" style="margin-left: 20%;margin-top: 70px">
 
     <div class="col-md-7 well" style="float: left; ">
-      <h2 style="font-size:27px;margin-top: 0">{{list.TestName}}</h2>
+      <h2 style="font-size:27px;margin-top: 0;text-transform: uppercase">{{list.TestName}}</h2>
       <hr/>
 
       <div class="col-md-12 col-sm-12" >
@@ -67,12 +67,21 @@
     </div>
 
     <div class="col-md-2" style="width: 40%;margin-top: -25px;border: 1px sandybrown;border-top: none" *ngIf="list">
-      <a [routerLink]="[this.chuoi ]">
+      <!-- <a [routerLink]="[this.chuoi ]">
         <li class="active" style="text-align:center;margin-top: 0px;margin-bottom: 20px;list-style-type: none; width: 100%;height: 50px; background:#009CDE;line-height: 50px;color: white;font-size: 18px ">
             <i class="fa fa-sign-in"></i>Vào Thi
         </li>
-      </a>
-      <ul class="nav nav-pills nav-stacked" style="border: solid 1px #d8d8d8;border-top: 2px solid #009CDE">
+      </a> -->
+      <li class=active style="list-style-type: none">
+      
+        <a [routerLink]="[this.chuoi ]" data-text="Vào Thi">
+            <i class="fa fa-sign-in"></i>
+          Vào Thi</a>
+          
+      
+
+    </li>
+      <ul class="nav nav-pills nav-stacked" style="border: solid 1px #d8d8d8;border-top: 2px solid #009CDE;margin-top: 90px;text-transform: uppercase" >
 
 
         <li >
@@ -90,17 +99,17 @@
 
         <li>
           <i class="fa fa-bar-chart-o fa-fw"></i>SỐ CÂU TRẮC NGHIỆM:
-        <span>{{list.NumberChoiceQuestion}}</span> 
+        <span>{{list.QuestionNumber}}</span> 
           </li>
         <hr />
 
-        <li>
+        <!-- <li>
           <i class="fa fa-table fa-fw"></i>SỐ CÂU TỰ LUẬN:
           
        <span>{{list.NumberStatementQuestion}}</span> 
          </li>
 
-        <hr />
+        <hr /> -->
         <li> <i class="fa fa-tasks fa-fw"></i>TỔNG ĐIỂM:
          
          <span> {{list.TotalScore}}</span>
