@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import {SelectModule} from 'ng2-select';
 import {
   MatButtonModule,
   MatSortModule,
@@ -165,6 +166,7 @@ import{ CandidatesComponent } from './candidates/candidates.component';
     CKEditorModule,
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
+    SelectModule,
     ToastrModule.forRoot(),
     NgxTrimDirectiveModule
   ],
