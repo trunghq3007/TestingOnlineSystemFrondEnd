@@ -135,7 +135,8 @@ this.selection.clear();
 
           this.toar.info('There are no questions in this category match with exam', ' Question Number');
         } else {
-          this.toar.success('inserted' + ' ' + error + ' ' + 'records in Exam', ' Question Number');
+        var  errors=error/2;
+          this.toar.success('inserted' + ' ' + errors + ' ' + 'records in Exam', ' Question Number');
         }
         this.listQuestion();
 
@@ -164,7 +165,8 @@ this.selection.clear();
         } else if (error == -2) {
           this.toar.warning('something went wrong', ' Question Number');
         } else {
-          this.toar.success('inserted' + ' ' + error + ' ' + 'records in Exam', ' Question Number');
+          var  errors=error/2;
+          this.toar.success('inserted' + ' ' + errors + ' ' + 'records in Exam', ' Question Number');
         }
 
         // confirm('inserted' + ' ' + error + ' ' + 'records in Exam');

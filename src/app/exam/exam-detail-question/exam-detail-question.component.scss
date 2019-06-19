@@ -28,3 +28,16 @@ text-align: right
 .action a{
 margin-left: 10px;
 }
+img{
+    width: 150px;
+  }
+  
+  td p figure img{
+  
+    width: 150px;
+  
+  }
+  :host ::ng-deep img {
+    max-width: 150px;
+  }
+  
