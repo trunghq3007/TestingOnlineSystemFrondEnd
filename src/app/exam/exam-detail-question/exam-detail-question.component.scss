@@ -29,15 +29,15 @@ text-align: right
 margin-left: 10px;
 }
 img{
-    width: 200px;
+    width: 150px;
   }
   
   td p figure img{
   
-    width: 200px;
+    width: 150px;
   
   }
   :host ::ng-deep img {
-    max-width: 200px;
+    max-width: 150px;
   }
   
