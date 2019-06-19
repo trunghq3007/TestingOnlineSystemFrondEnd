@@ -110,7 +110,7 @@
                       <th mat-header-cell *matHeaderCellDef mat-sort-header> Type </th>
                       <td mat-cell *matCellDef="let element"> {{element.Type}} </td>
                     </ng-container>
-                    <ng-container matColumnDef="Content">
+                    <ng-container  matColumnDef="Content">
                       <th mat-header-cell *matHeaderCellDef mat-sort-header> content </th>
                       <td mat-cell *matCellDef="let element">
                         <p style="width: 100px;" class="content-question" [innerHtml]="element.Content"></p>
