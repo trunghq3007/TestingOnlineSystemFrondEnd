@@ -7,9 +7,11 @@ import { TestProcessing } from '../test-processing';
 import { ProcessingTest } from '../processing-test'
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CountdownModule } from 'ngx-countdown';
+import { http } from '../http-header';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
+
 @Component({
   selector: 'app-testing',
   templateUrl: './testing.component.html',
@@ -37,7 +39,7 @@ export class TestingComponent implements OnInit {
   mang=[];
   checked=true;
   ngOnInit() {
-    this.http.get<string>('http://localhost:65170/api/SemesterExam/1?IsgetTestProcessing').subscribe(
+    this.http.get<string>('http://localhost:65170/api/SemesterExam/1?IsgetTestProcessing',httpOptions).subscribe(
       value => {
         this.testProcessings = JSON.parse(value);
         this.questions = this.testProcessings.Questions;
@@ -130,8 +132,11 @@ export class TestingComponent implements OnInit {
   }
   summit() {
     const Idtest = this.testProcessings.Id;
+    var arr=this.arrayId;
+    console.log(arr);
     console.log(Idtest);
-     this.http.post('http://localhost:65170/SemesterExam/'+Idtest , JSON.stringify(this.arrayId), httpOptions).subscribe(
+  
+     this.http.post('http://localhost:65170/SemesterExam/submid/1?userID=2', JSON.stringify(arr),httpOptions).subscribe(
        value => (console.log(value))
  
      )

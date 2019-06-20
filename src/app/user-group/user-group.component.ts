@@ -40,6 +40,7 @@ export class UserGroupComponent implements OnInit {
 
     const GroupId = this.activatedRoute.snapshot.paramMap.get('groupId');
 
+
     this.http.get<string>('http://localhost:65170/api/Group/' + GroupId, { headers: http() }).subscribe(value => {
       this.usergroup = JSON.parse(value).Data;
       console.log(this.usergroup);
