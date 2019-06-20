@@ -231,9 +231,6 @@ const routes: Routes = [
         {
           path: '',
           component: ViewListSemastertotestComponent,
-
-
-
         }
         ,
         {

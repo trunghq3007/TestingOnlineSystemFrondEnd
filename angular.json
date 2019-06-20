@@ -64,7 +64,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "OnlineSystem:build"
+            "browserTarget": "OnlineSystem:build",
+            "disableHostCheck": true
           },
           "configurations": {
             "production": {
