@@ -22,6 +22,8 @@ const httpOptions = {
   styleUrls: ['./view-list-semaster.component.scss']
 })
 export class ViewListSemasterComponent implements OnInit {
+  public dateTime: Date;
+  public dateTime1: Date;
   panelOpenState = false;
   searchString: string;
   ctForm: FormGroup;
@@ -176,7 +178,7 @@ export class ViewListSemasterComponent implements OnInit {
           });
         }
         this.list();
-        this.toastr.success('Create success!', '');
+        this.toastr.success('Clone success!', '');
       },
       error: (err) => {
         console.log(err);
@@ -197,7 +199,7 @@ export class ViewListSemasterComponent implements OnInit {
     this.cloneSemester.SemesterName = SemesterName + "_clone";
     this.cloneSemester.StartDay = StartDay;
     this.cloneSemester.EndDay = EndDay;
-    this.cloneSemester.status = "1";
+    this.cloneSemester.status = "2";
 
     console.log(this.cloneSemester.ID);
     console.log(this.cloneSemester.SemesterName);

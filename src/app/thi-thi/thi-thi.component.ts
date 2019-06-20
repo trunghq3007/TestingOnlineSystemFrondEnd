@@ -314,7 +314,7 @@ export class ThiThiComponent implements OnInit {
     if(confirm('Nop bai'))
     {
      
-      this.router.navigate(['/thi/'+this.Id+'/'+this.Idtest+'/ketqua']);
+      this.router.navigate(['/thi/'+this.Idtest+'/'+this.Idtest+'/ketqua']);
     }
 
   }
