@@ -6,7 +6,6 @@ import { MatDialog, MatTableDataSource } from '@angular/material';
 import { TestProcessing } from '../test-processing';
 import { ProcessingTest } from '../processing-test'
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { CountdownModule } from 'ngx-countdown';
 import { http } from '../http-header';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -21,7 +20,10 @@ const httpOptions = {
   name: 'minuteSeconds'
 })
 export class TestingComponent implements OnInit {
-
+  Users: string;
+  LisUser;
+  UserId: string;
+  UserName: string;
   constructor(private semaster: FormBuilder, private fb: FormBuilder, private http: HttpClient, private router: Router, public dialog: MatDialog, public activateRoute: ActivatedRoute) { }
   testProcessings: TestProcessing;
   questions: Question[];
@@ -51,7 +53,18 @@ export class TestingComponent implements OnInit {
        
         this.reset();
         this.start();
-      })
+      });
+      if (sessionStorage.getItem('user')) {
+        this.Users = sessionStorage.getItem('user');
+        this.LisUser = this.Users.split(',');
+        this.UserName = this.LisUser[1];
+        this.UserId = this.LisUser[0];
+       
+       
+      } else {
+        this.Users = null;
+      }
+     
   }
   Onclick(id, btnid) {
  
@@ -138,7 +151,7 @@ export class TestingComponent implements OnInit {
     console.log(arr);
     console.log(Idtest);
   
-     this.http.post('http://localhost:65170/SemesterExam/submid/'+this.Idtest+'?userID=2', JSON.stringify(arr),httpOptions).subscribe(
+     this.http.post('http://localhost:65170/SemesterExam/submid/'+this.Idtest+'?userID='+this.UserId, JSON.stringify(arr),httpOptions).subscribe(
        value => (console.log(value))
  
      )
