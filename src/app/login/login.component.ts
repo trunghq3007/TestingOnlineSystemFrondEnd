@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
@@ -21,9 +21,10 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   loading = false;
   submitted = false;
-
-  passwordPattern ="^[a-z0-9_@A-Z]*$";
-  usernamePattern="^[a-z0-9_@A-Z]*$";
+  userId: string;
+  currentUser:string;
+  passwordPattern = "^[a-z0-9_@A-Z]*$";
+  usernamePattern = "^[a-z0-9_@A-Z]*$";
   get username(): FormControl {
     return this.loginForm.get('username') as FormControl;
   }
@@ -74,6 +75,11 @@ export class LoginComponent implements OnInit {
         rememberMe: this.fb.control(false)
       });
     }
+    
+   
+
+   
+         
   }
   // onSubmit() {
   //   this.submitted = true;
@@ -93,14 +99,26 @@ export class LoginComponent implements OnInit {
   //   }
   //   console.log(this.loading);
   // }
+
   onSubmit() {
     this.submitted = true;
     this.loading = true;
     if (this.loginForm.valid) {
+
       const value = this.loginForm.value;
       this.http.post<ObjectResult>('http://localhost:65170/api/Login', JSON.stringify(value), httpOptions).subscribe({
         next: (res) => {
           if (res.Success === 1) {
+            
+            this.userId = JSON.parse( res.Data).Name;
+            this.http.get<string>('http://localhost:65170/api/User/'+this.userId+'?action=GetUser' ).subscribe(
+              value => {
+                
+                this.currentUser = JSON.parse(value).UserName  ;
+                sessionStorage.setItem('user', this.currentUser );
+        
+              });
+        
             sessionStorage.setItem('currentPermission', res.Data);
             const sessionId = sessionStorage.getItem('currentPermission');
             // debugger;

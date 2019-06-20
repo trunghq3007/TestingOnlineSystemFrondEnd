@@ -178,7 +178,7 @@ export class ViewListSemasterComponent implements OnInit {
           });
         }
         this.list();
-        this.toastr.success('Create success!', '');
+        this.toastr.success('Clone success!', '');
       },
       error: (err) => {
         console.log(err);

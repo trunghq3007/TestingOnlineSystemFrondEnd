@@ -16,30 +16,37 @@ export class AppmenuComponent implements OnInit {
   isMember = false;
   isManager = false;
   isAdmin = false;
-
+UserName:string;
     constructor(
       private router: Router,
       private authenticationService: AuthenticationService
     ) 
     {
-        this.currentUserSubscription = this.authenticationService.currentUser.subscribe(user => {
-            this.currentUser = JSON.parse(user);
-        });
-        if(this.currentUser.RoleId == '1')
-        {
-          this.isAdmin = true;
-        }
-        if(this.currentUser.RoleId == '2')
-        {
-          this.isManager = true;
-        }
-        if(this.currentUser.RoleId == '3')
-        {
-          this.isMember = true;
-        }
+        // this.currentUserSubscription = this.authenticationService.currentUser.subscribe(user => {
+        //     this.currentUser = JSON.parse(user);
+        // });
+        // if(this.currentUser.RoleId == '1')
+        // {
+        //   this.isAdmin = true;
+        // }
+        // if(this.currentUser.RoleId == '2')
+        // {
+        //   this.isManager = true;
+        // }
+        // if(this.currentUser.RoleId == '3')
+        // {
+        //   this.isMember = true;
+        // }
     }
 
   ngOnInit() {
+    if(sessionStorage.getItem('user')){
+      this.UserName = sessionStorage.getItem('user');
+     
+    }else{
+      this.UserName=null;
+    }
+     console.log(this.currentUser);
   }
 
 }

@@ -81,7 +81,7 @@ export class HomeComponent implements OnInit {
       }     
       );
     }else{
-    this.toasr.error('luong an loz');
+    this.toasr.error('');
     }
   }
 
