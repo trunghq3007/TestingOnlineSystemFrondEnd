@@ -207,5 +207,6 @@ export class GroupComponent implements OnInit {
   logout() {
     sessionStorage.removeItem('currentPermission');
     this.router.navigate(['']);
+    sessionStorage.removeItem('user');
   }
 }
