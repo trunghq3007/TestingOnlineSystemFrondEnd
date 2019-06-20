@@ -35,19 +35,17 @@ table {
   th.mat-sort-header-sorted {
     color: black;
   }
-  img{
-    width: 200px;
-  }
+ 
 
 img{
-  width: 200px;
+  width: 100px;
 }
 
 td p figure img{
 
-  width: 200px;
+  width: 100px;
 
 }
 :host ::ng-deep img {
-  max-width: 200px;
+  max-width: 100px;
 }
