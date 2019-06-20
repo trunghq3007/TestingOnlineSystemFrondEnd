@@ -64,6 +64,7 @@ export class ThiThiComponent implements OnInit {
         this.answerContent3 = this.testProcessings.Questions[this.i].Answers[this.j++].Content;
         this.answerContent4 = this.testProcessings.Questions[this.i].Answers[this.j++].Content;
         this.countDown();
+        console.log(this.countDown());
       }
     )
 

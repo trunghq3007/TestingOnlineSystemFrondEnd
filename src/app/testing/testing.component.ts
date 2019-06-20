@@ -38,14 +38,16 @@ export class TestingComponent implements OnInit {
   arrayId=[];
   mang=[];
   checked=true;
+  Idtest = this.activateRoute.snapshot.paramMap.get('TestId');
   ngOnInit() {
-    this.http.get<string>('http://localhost:65170/api/SemesterExam/1?IsgetTestProcessing',httpOptions).subscribe(
+    this.http.get<string>('http://localhost:65170/api/SemesterExam/'+this.Idtest+'?IsgetTestProcessing',httpOptions).subscribe(
       value => {
         this.testProcessings = JSON.parse(value);
         this.questions = this.testProcessings.Questions;
         console.log(this.testProcessings);
         console.log(this.questions = this.testProcessings.Questions);
         this.counting = this.testProcessings.TestTime;
+        console.log(this.counting);
        
         this.reset();
         this.start();
@@ -119,8 +121,8 @@ export class TestingComponent implements OnInit {
        
         this.message = 'Blast off!';
 
-        this.router.navigate(['/thi/8/2/ketqua']);
-        console.log(this.router.navigate(['/thi/8/2/ketqua']));
+        this.router.navigate(['/thi/'+this.Idtest+'/'+this.Idtest+'/ketqua']);
+        console.log( this.router.navigate(['/thi/'+this.Idtest+'/'+this.Idtest+'/ketqua']));
         
 
         this.clearTimer(); // thay bang goi den ham` ket qua thi
@@ -136,10 +138,15 @@ export class TestingComponent implements OnInit {
     console.log(arr);
     console.log(Idtest);
   
-     this.http.post('http://localhost:65170/SemesterExam/submid/1?userID=2', JSON.stringify(arr),httpOptions).subscribe(
+     this.http.post('http://localhost:65170/SemesterExam/submid/'+this.Idtest+'?userID=2', JSON.stringify(arr),httpOptions).subscribe(
        value => (console.log(value))
  
      )
+     if(confirm('Nop bai'))
+     {
+      
+       this.router.navigate(['/thi/'+this.Idtest+'/'+this.Idtest+'/ketqua']);
+     }
  
     
    }
