@@ -3,31 +3,128 @@
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 
 <div class="container">
-  <div class="row"  style="margin-left: 20%;margin-top: 70px">
-    
-    <div class="col-md-3" style="width: 30%;margin-top: -25px;"  *ngIf="list">
-        <ul class="nav nav-pills nav-stacked">
-           <a [routerLink]="[this.chuoi ]"><li class="active"><i class="fa fa-sign-in" style="text-align: center"></i>Vào Thi</li></a> 
-    
-            <li><i class="fa fa-list-alt fa-fw" ></i>Chủ đề thi:{{list.CategoryName}}</li>
+  <div class="row" style="margin-left: 20%;margin-top: 70px">
+
+    <div class="col-md-7 well" style="float: left; ">
+      <h2 style="font-size:27px;margin-top: 0;text-transform: uppercase">{{list.TestName}}</h2>
+      <hr/>
+
+      <div class="col-md-12 col-sm-12" >
+        <div class="portlet box blue-hoki tasks-widget"style="border: 1px solid #009CDE">
+          <div class="portlet-title">
+            <div class="caption"  style="color:white;font-size: 18px;border-top:1px solid #009CDE  ">
+              <i class="fa fa-calendar"></i>Thông tin chung 
+            </div>
+            <div class="tools">
+              <a  data-original-title="" title="" class="collapse"></a>
+            </div>
+          </div>
+
+          <div class="portlet-body">
+            <div class="row">
+              <div class="col-md-12">
+                <p class="h5" style="padding-bottom: 10px;margin-left: 10px">
+                  Bài thi: <b>{{list.TestName}}</b>
+                </p>
+               
+              </div>
+           
+            </div>
             
-            <li><i class="fa fa-file-o fa-fw"></i>Tổng số câu hỏi:{{list.QuestionNumber}}</li>
-            <li><i class="fa fa-bar-chart-o fa-fw"></i>Số câu trắc nhiệm:{{list.NumberChoiceQuestion}}</li>
-            <li><i class="fa fa-table fa-fw"></i>Số câu tự luận:{{list.NumberStatementQuestion}}</li>
-            <li><i class="fa fa-tasks fa-fw"></i>Tổng điểm:{{list.TotalScore}}</li>
-            <li><i class="fa fa-calendar fa-fw"></i>Thời gian làm bài:{{list.TestTime}}phút</li>
-            
-        </ul>
-    </div>
-    <div class="col-md-7 well" style="float: right">
-            <h2 style="font-size:27px;text-align: center">Tên Bài Thi:{{list.TestName}}</h2>
-    </div>
-</div>
-</div>
+          </div>
+           
 
+        </div>
+          <!-- binh luan-->
+<!--             
+          <div class="user-comment">
+              <div class="user-comment-title">
+                  <span class="uppercase bold" style="float: left;font-weight: 700 !important;"> BÌNH LUẬN </span>
+              </div>
+              <div class="chat-form">
+                  <div class="input-cont">
+                      <input placeholder="Nội dung bình luận..." id="NewComment_2-5255" class="form-control" type="text">
+                  </div>
+                  <div class="btn-cont">
+                      <span class="arrow"> </span>
+                      <a class="btn blue icn-only" onclick="CreateNewComment(2, 5255)"> Gửi</a>
+                  </div>
+              </div>
+              </div> -->
 
-
-
-
+           <!-- -->
 
         
+      </div>
+
+      
+
+      
+
+  
+
+     
+    </div>
+
+    <div class="col-md-2" style="width: 40%;margin-top: -25px;border: 1px sandybrown;border-top: none" *ngIf="list">
+      <!-- <a [routerLink]="[this.chuoi ]">
+        <li class="active" style="text-align:center;margin-top: 0px;margin-bottom: 20px;list-style-type: none; width: 100%;height: 50px; background:#009CDE;line-height: 50px;color: white;font-size: 18px ">
+            <i class="fa fa-sign-in"></i>Vào Thi
+        </li>
+      </a> -->
+      <li class=active style="list-style-type: none">
+      
+        <a [routerLink]="[this.chuoi ]" data-text="Vào Thi">
+            <i class="fa fa-sign-in"></i>
+          Vào Thi</a>
+          
+      
+
+    </li>
+      <ul class="nav nav-pills nav-stacked" style="border: solid 1px #d8d8d8;border-top: 2px solid #009CDE;margin-top: 90px;text-transform: uppercase" >
+
+
+        <li >
+         <i class="fa fa-list-alt fa-fw"></i>CHỦ ĐỀ THI:
+
+          <span>{{list.CategoryName}}</span></li>
+        <hr />
+
+        <li>
+           <i class="fa fa-file-o fa-fw"></i>TỔNG SỐ CÂU HỎI:
+        
+
+        <span> {{list.QuestionNumber}}</span> </li>
+        <hr />
+
+        <li>
+          <i class="fa fa-bar-chart-o fa-fw"></i>SỐ CÂU TRẮC NGHIỆM:
+        <span>{{list.QuestionNumber}}</span> 
+          </li>
+        <hr />
+
+        <!-- <li>
+          <i class="fa fa-table fa-fw"></i>SỐ CÂU TỰ LUẬN:
+          
+       <span>{{list.NumberStatementQuestion}}</span> 
+         </li>
+
+        <hr /> -->
+        <li> <i class="fa fa-tasks fa-fw"></i>TỔNG ĐIỂM:
+         
+         <span> {{list.TotalScore}}</span>
+        
+         </li>
+        <hr />
+        <li>
+            <i class="fa fa-calendar fa-fw"></i>THỜI GIAN LÀM BÀI:
+       
+          
+       <span>{{list.TestTime}}phút</span> 
+         </li>
+
+      </ul>
+    </div>
+
+  </div>
+</div>

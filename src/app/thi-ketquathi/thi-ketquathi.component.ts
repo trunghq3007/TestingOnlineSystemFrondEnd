@@ -3,6 +3,7 @@ import{Iresult} from '../iresult';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormGroup, FormBuilder, FormControl, Validators, ValidationErrors, FormControlName } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { http } from '../http-header';
 
 
 const httpOptions = {
@@ -40,6 +41,7 @@ get Category(): FormControl {
   return this.formApply.get('Category') as FormControl
 }
 
+
   constructor( private result:FormBuilder ,private activatedRoute: ActivatedRoute, private http: HttpClient, private router: Router) { }
 
   ngOnInit() {
@@ -53,7 +55,7 @@ get Category(): FormControl {
     });
 
     this.http
-    .get<string>('http://localhost:65170/semesterExam/result/' + this.Id)
+    .get<string>('http://localhost:65170/semesterExam/result/' + this.Id,{ headers: http() })
     .subscribe(
       value => {
         this.list = JSON.parse(value);
@@ -64,7 +66,12 @@ get Category(): FormControl {
         this.formApply.patchValue(this.list);//a tiep
       }
     );
-   
+  
+  }
+
+  submit()
+  {
+   this.router.navigate(['']);
   }
 
 }

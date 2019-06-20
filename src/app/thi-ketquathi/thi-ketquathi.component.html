@@ -9,26 +9,22 @@
                 <table class="information">
                     <tr>
                         <td>
-                            Tên bài thi:  <mat-form-field class="example-full-width">
-                                <input matInput formControlName="TestName">
-                            </mat-form-field>
+                            Tên bài thi:  
+                                
+                                    <label  >{{list.TestName}}</label>
+                           
                         </td>
                         <td class="td1">
-                            Tên kì thi:<mat-form-field class="example-full-width">
-                                <input matInput formControlName="SemesterName">
-                            </mat-form-field>
+                            Tên kì thi:
+                            <label  >{{list.SemesterName}}</label>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            Tên thí sinh: <mat-form-field class="example-full-width">
-                                <input matInput formControlName="FullName">
-                            </mat-form-field>
+                            Tên thí sinh:   <label >{{list.FullName}}</label>
                         </td>
                         <td class="td1">
-                            Email: <mat-form-field class="example-full-width">
-                                <input matInput formControlName="Email">
-                            </mat-form-field>
+                            Email:  <label  >{{list.Email}}</label>
                         </td>
                     </tr>
     
@@ -40,12 +36,13 @@
                 <tr>
                     <td>Lần 1: </td>
                     <td class="td2" >
-                            <div class="progress">
-                                    <div class="progress-bar"  role="progressbar" aria-valuenow="20"
-                                    aria-valuemin="0" aria-valuemax="100" style="width:20%">
-                                      20%
+                            <!-- <div class="progress">
+                                    <div class="progress-bar"  role="progressbar" aria-valuenow="80"
+                                    aria-valuemin="0" aria-valuemax="100" style="width:50%">
+                                      {{list.Score*10}}%
                                     </div>
-                                  </div>
+                                  </div> -->
+                                  <mat-progress-bar style="height: 20px" mode="determinate" value=" {{list.Score*10}}">  111111111111111111111</mat-progress-bar>
                     </td>
                 </tr>
                 <!-- <tr>
@@ -63,38 +60,31 @@
             <table class="tb3">
                 <tr>
                     <td>Lần thi</td>
-                    <td>Ngày thi</td>
+                   
                     <td>Ðiểm thi</td>
                     <td>Xếp loại</td>
                     <td>Trạng thái</td>
                 </tr>
                 <tr>
                     <td>1</td>
-                    <td>10/10/2019</td>
-                    <td><mat-form-field class="example-full-width">
-                        <input matInput formControlName="Score">
-                    </mat-form-field></td>
-                    <td><mat-form-field class="example-full-width">
-                        <input matInput formControlName="Category">
-                    </mat-form-field></td>
+                  
+                    <td>
+                            <label  >{{list.Score}}</label>
+                </td>
+                <td>
+                <label  >{{list.Category}}</label>
+                </td>
                     <td>Ðã thi</td>
                 </tr>
-                <!-- <tr>
-
-                    <td>2</td>
-                    <td>10/10/2019</td>
-                    <td>80</td>
-                    <td>Ðỗ</td>
-                    <td>Ðã thi</td>
-                </tr> -->
+             
             </table>
         </form>
         </div>
    
         <table class="tb4">
             <tr>
-                <td><button type="submit" class="apply"> Thi lại</button></td>
-                <td class="quaylai"><button type="submit" class="apply"> Quay lại</button></td>
+                <!-- <td><button type="submit" class="apply"> Thi lại</button></td> -->
+                <td class="quaylai"><button type="submit" (click)="submit()" class="apply"> Quay lại</button></td>
             </tr>
         </table>
    

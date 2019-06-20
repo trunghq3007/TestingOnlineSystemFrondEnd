@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ResultObject } from 'src/app/result-object';
+import { http } from 'src/app/http-header';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -17,7 +18,7 @@ exam:string;
   ngOnInit() {
     //confirm('Bạn có muốn lưu file ?? ')
     const examID = this.ac.snapshot.paramMap.get('Id');
-    this.http.get<string>('http://localhost:65170/api/Exam/' + examID+'?action=exportExam').subscribe({
+    this.http.get<string>('http://localhost:65170/api/Exam/' + examID+'?action=exportExam',{ headers: http() }).subscribe({
       next: (res) => {
         console.log(res);
         const res1 :ResultObject = JSON.parse(res);

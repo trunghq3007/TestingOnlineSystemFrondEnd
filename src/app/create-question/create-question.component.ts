@@ -6,12 +6,12 @@ import { Question } from '../question';
 import { Router } from '@angular/router';
 import { ResultObject } from '../result-object';
 import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
-import EasyImage from '@ckeditor/ckeditor5-easy-image/src/easyimage';
+import { Category } from '../ICategory';
+import { Tag } from '../Tag';
+import { http } from '../http-header';
+import { ToastrService } from 'ngx-toastr';
 
 
-const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-};
 
 
 @Component({
@@ -27,8 +27,8 @@ export class CreateQuestionComponent implements OnInit {
   EditorQuestion: { getData; setData; };
   answer: FormGroup;
   answers: FormArray;
-  tagsFormApi: [];
-  categoriesFormApi: [];
+  tagsFormApi: Tag[];
+  categoriesFormApi: Category[];
   ctForm: FormGroup;
   //  submitted = false;
 
@@ -53,7 +53,7 @@ export class CreateQuestionComponent implements OnInit {
   get Answers(): FormArray {
     return this.ctForm.get('Answers') as FormArray;
   }
-  constructor(private http: HttpClient, private fb: FormBuilder, private router: Router) { }
+  constructor(private http: HttpClient, private fb: FormBuilder, private router: Router,private toastr:ToastrService) { }
 
   public onChange({ editor }: ChangeEvent) {
     const data = editor.getData();
@@ -77,12 +77,12 @@ export class CreateQuestionComponent implements OnInit {
   }
 
   getApiTags() {
-    this.http.get<string>('http://localhost:65170/api/tag/').subscribe(value => {
+    this.http.get<string>('http://localhost:65170/api/tag/',{ headers: http() }).subscribe(value => {
       this.tagsFormApi = JSON.parse(value);
     });
   }
   getApiCategories() {
-    this.http.get<string>('http://localhost:65170/api/category/').subscribe(value => {
+    this.http.get<string>('http://localhost:65170/api/category/',{ headers: http() }).subscribe(value => {
       this.categoriesFormApi = JSON.parse(value);
     });
   }
@@ -102,22 +102,24 @@ export class CreateQuestionComponent implements OnInit {
         arrTags = [...arrTags, ...tag];
       }
       valueQuestion.Tags = arrTags;
-      valueQuestion.Category = this.categoriesFormApi.filter(s => s.Id == valueQuestion.Category.Id);
+      valueQuestion.Category = this.categoriesFormApi.filter(s  => s.Id == valueQuestion.Category.Id);
       valueQuestion.Category = valueQuestion.Category.length > 0 ? valueQuestion.Category[0] : {};
       valueQuestion.Answers.map(s => s.IsTrue = s.IsTrue ? 1 : 0);
       console.log(valueQuestion);
 
-      this.http.post<string>('http://localhost:65170/api/question/', JSON.stringify(valueQuestion), httpOptions)
+      this.http.post<string>('http://localhost:65170/api/question/', JSON.stringify(valueQuestion), { headers: http() })
         .subscribe({
           next: (res) => {
             const result: ResultObject = JSON.parse(res);
-            this.http.get<string>('http://localhost:65170/api/question/').subscribe(value => {
+            this.http.get<string>('http://localhost:65170/api/question/',{ headers: http() }).subscribe(value => {
               this.Questions = JSON.parse(value);
             });
             if (result.Success >= 1) {
-              confirm("Create success");
+              //confirm("Create success");
+              this.toastr.success('Create success!', '');
             } else {
-              confirm("Create Fail!");
+              //confirm("Create Fail!");
+              this.toastr.error('Create Fail!', '');
             }
             this.ctForm.reset();
           },

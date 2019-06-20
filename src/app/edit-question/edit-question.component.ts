@@ -5,6 +5,10 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Question } from '../question';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ResultObject } from '../result-object';
+import { Tag } from '../Tag';
+import { Category } from '../ICategory';
+import { http } from '../http-header';
+import { ToastrService } from 'ngx-toastr';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -24,8 +28,8 @@ export class EditQuestionComponent implements OnInit {
   EditorAnswers: [];
   answer: FormGroup;
   answers: FormArray;
-  tagsFormApi: [];
-  categoriesFormApi: [];
+  tagsFormApi: Tag[];
+  categoriesFormApi: Category[];
   ctForm: FormGroup;
   //  submitted = false;
 
@@ -38,7 +42,7 @@ export class EditQuestionComponent implements OnInit {
   get Answers(): FormArray {
     return this.ctForm.get('Answers') as FormArray;
   }
-  constructor(private http: HttpClient, private fb: FormBuilder, private router: Router, private activedRoute: ActivatedRoute) { }
+  constructor(private http: HttpClient, private toastr: ToastrService, private fb: FormBuilder, private router: Router, private activedRoute: ActivatedRoute) { }
 
   createAnswer(): FormGroup {
     return this.fb.group({
@@ -59,12 +63,12 @@ export class EditQuestionComponent implements OnInit {
   }
 
   getApiTags() {
-    this.http.get<string>('http://localhost:65170/api/tag/').subscribe(value => {
+    this.http.get<string>('http://localhost:65170/api/tag/', { headers: http() }).subscribe(value => {
       this.tagsFormApi = JSON.parse(value);
     });
   }
   getApiCategories() {
-    this.http.get<string>('http://localhost:65170/api/category/').subscribe(value => {
+    this.http.get<string>('http://localhost:65170/api/category/', { headers: http() }).subscribe(value => {
       this.categoriesFormApi = JSON.parse(value);
     });
   }
@@ -87,21 +91,26 @@ export class EditQuestionComponent implements OnInit {
       valueQuestion.Answers.map(s => s.IsTrue = s.IsTrue ? 1 : 0);
       valueQuestion.Content = this.EditorQuestion.getData();
       console.log(valueQuestion);
-     
+
       const IdQuestion = this.activedRoute.snapshot.paramMap.get('id')
-      this.http.put<string>('http://localhost:65170/api/question/' + IdQuestion, JSON.stringify(valueQuestion), httpOptions)
+      this.http.put<string>('http://localhost:65170/api/question/' + IdQuestion, JSON.stringify(valueQuestion), { headers: http() })
         .subscribe({
           next: (res) => {
             const result: ResultObject = JSON.parse(res);
             console.log(result);
-            this.http.get<string>('http://localhost:65170/api/question/').subscribe(value => {
+            this.http.get<string>('http://localhost:65170/api/question/', { headers: http() }).subscribe(value => {
               this.Questions = JSON.parse(value);
             });
             if (result.Success >= 1) {
-              confirm("Update success!");
+              //confirm('Update success!');
+              this.toastr.success('Update success!', '');
             }
-            else{
-              confirm("Update fail");
+            else if (result.Success == -9) {
+              this.toastr.error('Câu hỏi đang có trong đề thi ', '');
+            }
+            else {
+              this.toastr.error('Update fail! ', '');
+
             }
             this.ctForm.reset();
           },
@@ -125,7 +134,7 @@ export class EditQuestionComponent implements OnInit {
         Type: '',
         Suggestion: '',
         Level: '',
-        Content: ['',[Validators.required]],
+        Content: ['', [Validators.required]],
         TagId: '',
         Answers: this.fb.array(
           [
@@ -135,7 +144,7 @@ export class EditQuestionComponent implements OnInit {
 
     //////
     const IdQuestion = this.activedRoute.snapshot.paramMap.get('id')
-    this.http.get<string>('http://localhost:65170/api/question/' + IdQuestion).subscribe(value => {
+    this.http.get<string>('http://localhost:65170/api/question/' + IdQuestion, { headers: http() }).subscribe(value => {
 
       const qs: Question = JSON.parse(value).Data;
       qs.CategoryId = qs.Category.Id;
@@ -158,39 +167,7 @@ export class EditQuestionComponent implements OnInit {
   }
 
   initCkeditor(data, selector) {
-    ClassicEditorBuild.defaultConfig = {
-      toolbar: {
-        items: [
-          'heading',
-          '|',
-          'alignment',                                                 // <--- ADDED
-          'bold',
-          'italic',
-          'link',
-          'bulletedList',
-          'numberedList',
-          'imageUpload',
-          'blockQuote',
-          'undo',
-          'redo',
-          'Image',
-          'ImageCaption',
-          'ImageStyle',
-          'ImageToolbar',
 
-        ]
-      },
-      image: {
-        toolbar: [
-          'imageStyle:full',
-          'imageStyle:side',
-          '|',
-          'imageTextAlternative'
-        ]
-      },
-      // This value must be kept in sync with the language defined in webpack.config.js.
-      language: 'en'
-    };
     ClassicEditorBuild.create(document.querySelector(selector), {
       ckfinder: {
         uploadUrl: 'http://localhost:65170/Upload/UploadCkeditor',
@@ -199,10 +176,10 @@ export class EditQuestionComponent implements OnInit {
       this.EditorQuestion = newEditor;
       this.EditorQuestion.setData(data);
     })
-      .catch(error => {
-        console.error(error);
-      });
-    ;
+      // .catch(error => {
+      //   console.error(error);
+      // });
+      ;
 
   }
 }

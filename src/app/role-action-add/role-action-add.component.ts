@@ -29,7 +29,7 @@ export class RoleActionAddComponent implements OnInit {
   constructor(private fb: FormBuilder, private http: HttpClient, private router: Router, private activatedRoute: ActivatedRoute) {
 
   }
-  displayedColumn: string[] = ['ActionId', 'ActionName', 'Description', 'Action'];
+  displayedColumn: string[] = [ 'ActionName', 'Description', 'Action'];
   dataSource = new MatTableDataSource<RoleActionAdd>(this.roleactionadds);
   selection = new SelectionModel<RoleActionAdd>(true, []);
 

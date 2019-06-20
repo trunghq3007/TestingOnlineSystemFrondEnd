@@ -9,6 +9,7 @@ export interface Exam {
     Status: boolean,
     SpaceQuestionNumber: number,
     CreateAt: Date,
+    EnDate:Date;
 
     Categorys: object,
     Category: Category,
@@ -17,4 +18,7 @@ export interface Exam {
     NameCategory: string,
     StartDate:Date;
     TestName:string;
+    SemesterName:string;
+    SemesterExam:[{SemesterName:string}]
+    Tags: [{ Id: string; Name: string }]
 }

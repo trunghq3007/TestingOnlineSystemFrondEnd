@@ -1,20 +1,13 @@
-<div class="container" fxLayout style="margin-left: 40%;margin-top: 15px;">
-  <div fxLayout fxLayoutAlign="center">
-    <mat-form-field fxFlex="25%" style="margin-left: -30%">
-      <p></p>
-      <input style=" height: 25px; width: 40%" placeholder="search here...." matInput type="text"
-        (keyup)="doFilter($event.target.value)">
-
-    </mat-form-field>
-
-  </div>
+<div class="container" fxLayout style="margin-left: 20%;margin-top: 15px;">
+ <input  type="text" #input placeholder="Search ">
+      <button (click)="doFilter(input.value)" type="submit"><i class="fa fa-search"></i></button>
 </div>
 
 
 <!-- style="border: 1px solid crimson; height: 30px; width: 40%" -->
 <div class="container">
   <span data-placement="top" data-toggle="tooltip"><button class="btn btn-primary " data-toggle="modal"
-      (click)="reset()" data-target="#create" style="margin-left: 107.5%;margin-bottom: 5px;"
+      (click)="reset()" data-target="#create" style="margin-left: 101%;margin-bottom: 5px;"
       id="Create"><span>Create</span></button></span>
 </div>
 
@@ -280,3 +273,7 @@
     </div>
   </div>
 </div>
+
+
+<!--  -->
+
