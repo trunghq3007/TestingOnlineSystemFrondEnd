@@ -42,6 +42,7 @@ import { RoleActionAddComponent } from './role-action-add/role-action-add.compon
 import { AuthGuard } from './_guards/auth.guard';
 import { ExportExamComponent } from './exam/exam-list/export-exam/export-exam.component';
 import { ExamDetailQuestionComponent } from './exam/exam-detail-question/exam-detail-question.component';
+import { TestingComponent } from './testing/testing.component';
 const routes: Routes = [
   {
     path: '',
@@ -292,7 +293,12 @@ const routes: Routes = [
   {
     path: 'SemesterExamManager',
     component: ViewListSemasterComponent, canActivate: [AuthGuard]
+  },
+  {
+    path: 'testing',
+    component: TestingComponent, 
   }
+
 ];
 
 const fullRoutes = [...routes, ...QuestionRouting];
