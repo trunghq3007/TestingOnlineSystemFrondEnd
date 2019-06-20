@@ -115,8 +115,10 @@ export class LoginComponent implements OnInit {
               value => {
                 
                 this.currentUser = JSON.parse(value).UserName  ;
-                sessionStorage.setItem('user', this.currentUser );
-        
+                var userName= this.userId +','+this.currentUser;
+                sessionStorage.setItem('user', userName );
+             
+                console.log(userName);
               });
         
             sessionStorage.setItem('currentPermission', res.Data);

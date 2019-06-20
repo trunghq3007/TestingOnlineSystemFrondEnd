@@ -16,7 +16,11 @@ export class AppmenuComponent implements OnInit {
   isMember = false;
   isManager = false;
   isAdmin = false;
-UserName:string;
+
+Users: string;
+LisUser;
+UserId: string;
+UserName: string;
     constructor(
       private router: Router,
       private authenticationService: AuthenticationService
@@ -40,13 +44,17 @@ UserName:string;
     }
 
   ngOnInit() {
-    if(sessionStorage.getItem('user')){
-      this.UserName = sessionStorage.getItem('user');
+    if (sessionStorage.getItem('user')) {
+      this.Users = sessionStorage.getItem('user');
+      this.LisUser = this.Users.split(',');
+      this.UserName = this.LisUser[1];
+      this.UserId = this.LisUser[0];
      
-    }else{
-      this.UserName=null;
+     
+    } else {
+      this.Users = null;
     }
-     console.log(this.currentUser);
+   
   }
 
 }

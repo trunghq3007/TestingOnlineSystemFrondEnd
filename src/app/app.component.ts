@@ -12,8 +12,9 @@ import { http } from './http-header';
 })
 export class AppComponent  {
  
-  currentUser = null;
+  currentUser : User;
  checked:boolean;
+ Users:string;
   // initUser(value: User) {
   //   this.currentUser = value;
   // }
@@ -28,7 +29,7 @@ export class AppComponent  {
     // });
     // }
     
-    this.currentUser = sessionStorage.getItem('user');
+    
     
   }
   // @HostListener('window:unload', ['$event'])
@@ -40,7 +41,7 @@ ngDoCheck(){
    
  
     if(sessionStorage.getItem('user')){
-      this.currentUser = sessionStorage.getItem('user');
+      this.Users= sessionStorage.getItem('user');
       this.checked=true;
     }else{
       this.checked=false;
@@ -48,7 +49,8 @@ ngDoCheck(){
      
 }
   ngOnInit() {
-   
+    
+ 
   }
 }
 
