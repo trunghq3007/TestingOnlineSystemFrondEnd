@@ -76,6 +76,11 @@
                       </fieldset>
                     </div>
                   </div>
+                  <div *ngIf="!RoleName.valid && RoleName.touched " style="color: red">
+                    <div *ngIf="RoleName.hasError('required')">
+                      Role is required
+                    </div>                   
+                  </div>
                   <!-- FullName -->
                   <div class="form-group row">
                     <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">FullName*</label>
@@ -199,11 +204,17 @@
                   <div class="form-group row">
                     <label for="inputPassword3" class="col-sm-2 control-label">Status*</label>
                     <div class="col-sm-10">
-                      <select formControlName="Status" class="form-control select2 select2-hidden-accessible"
+                      <select formControlName="Status"  class="form-control select2 select2-hidden-accessible"
                         style="width: 100%;" tabindex="-1" aria-hidden="true">
-                        <option value="true">True</option>
+                        <option  value="true" >True</option>
                         <option value="false">False</option>
                       </select>
+                    </div>
+                    <div *ngIf="!Status.valid && Status.touched " style="color: red">
+                      <div *ngIf="Status.hasError('required')">
+                        Status is required
+                      </div>
+                      
                     </div>
                   </div>
                 </div>

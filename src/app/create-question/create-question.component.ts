@@ -9,6 +9,7 @@ import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
 import { Category } from '../ICategory';
 import { Tag } from '../Tag';
 import { http } from '../http-header';
+import { ToastrService } from 'ngx-toastr';
 
 
 
@@ -52,7 +53,7 @@ export class CreateQuestionComponent implements OnInit {
   get Answers(): FormArray {
     return this.ctForm.get('Answers') as FormArray;
   }
-  constructor(private http: HttpClient, private fb: FormBuilder, private router: Router) { }
+  constructor(private http: HttpClient, private fb: FormBuilder, private router: Router,private toastr:ToastrService) { }
 
   public onChange({ editor }: ChangeEvent) {
     const data = editor.getData();
@@ -114,9 +115,11 @@ export class CreateQuestionComponent implements OnInit {
               this.Questions = JSON.parse(value);
             });
             if (result.Success >= 1) {
-              confirm("Create success");
+              //confirm("Create success");
+              this.toastr.success('Create success!', '');
             } else {
-              confirm("Create Fail!");
+              //confirm("Create Fail!");
+              this.toastr.error('Create Fail!', '');
             }
             this.ctForm.reset();
           },

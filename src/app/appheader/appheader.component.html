@@ -29,16 +29,19 @@
         <li class="dropdown user user-menu">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ02t10e803wAb6yvCxp94Sv9XxVMtqOFDganij2UVcDK4uqUNB" class="user-image">
-            <span class="hidden-xs">{{currentUser.FullName}}</span>
+            <span class="hidden-xs">{{UserName}}</span>
           </a>
           <ul class="dropdown-menu">
             <!-- User image -->
             <li class="user-header">
               <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ02t10e803wAb6yvCxp94Sv9XxVMtqOFDganij2UVcDK4uqUNB" class="img-circle">
 
-              <p>
+              <!-- <p>
                 {{currentUser.FullName}} - {{currentUser.Position}}
                 <small>Member since {{currentUser.CreatedDate|date}}</small>
+              </p> -->
+              <p>
+                {{UserName}}
               </p>
         
             <!-- Menu Body -->

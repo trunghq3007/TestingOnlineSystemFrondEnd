@@ -31,7 +31,7 @@ import { ViewlistTestbySemesterComponent } from './viewlist-testby-semester/view
 import { ThiChitietbaithiComponent } from './thi-chitietbaithi/thi-chitietbaithi.component';
 import { ThiThiComponent } from './thi-thi/thi-thi.component';
 import { RoleComponent } from './role/role.component';
-
+import{CandidatesComponent}from './candidates/candidates.component';
 import { from } from 'rxjs';
 import { ListExamUserComponent } from './list-exam-user/list-exam-user.component';
 import { DetailExamCustomerComponent } from './detail-exam-customer/detail-exam-customer.component';
@@ -42,6 +42,7 @@ import { RoleActionAddComponent } from './role-action-add/role-action-add.compon
 import { AuthGuard } from './_guards/auth.guard';
 import { ExportExamComponent } from './exam/exam-list/export-exam/export-exam.component';
 import { ExamDetailQuestionComponent } from './exam/exam-detail-question/exam-detail-question.component';
+import { TestingComponent } from './testing/testing.component';
 const routes: Routes = [
   {
     path: '',
@@ -61,6 +62,10 @@ const routes: Routes = [
 
     ]
   },
+  // { path: '**',
+  //   redirectTo:'login',
+  //   pathMatch: 'full' 
+  // },
   // { path: 'error', component: ErrorsComponent },
   {
     path: 'Role',
@@ -80,8 +85,7 @@ const routes: Routes = [
   },
   {
     path: 'login',
-    component: LoginComponent,
-    pathMatch: 'full'
+    component: LoginComponent
   },
   {
     path: 'tag',
@@ -215,7 +219,7 @@ const routes: Routes = [
           component: SemesterDetailComponent
 
 
-        },
+        }
 
       ], canActivate: [AuthGuard]
   }
@@ -228,9 +232,6 @@ const routes: Routes = [
         {
           path: '',
           component: ViewListSemastertotestComponent,
-
-
-
         }
         ,
         {
@@ -292,7 +293,12 @@ const routes: Routes = [
   {
     path: 'SemesterExamManager',
     component: ViewListSemasterComponent, canActivate: [AuthGuard]
+  },
+  {
+    path: 'testing',
+    component: TestingComponent, 
   }
+
 ];
 
 const fullRoutes = [...routes, ...QuestionRouting];

@@ -5,6 +5,7 @@ import * as ClassicEditorBuild from '@ckeditor/ckeditor5-build-classic';
 import { User } from '../user';
 import { ResultObject } from '../result-object';
 import { http } from '../http-header';
+import { ToastrService } from 'ngx-toastr';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -33,6 +34,9 @@ export class UserCreateComponent implements OnInit {
   }
   get RoleId(): FormControl {
     return this.createForm.get('RoleId') as FormControl;
+  }
+  get RoleName(): FormControl {
+    return this.createForm.get('Roles.RoleId') as FormControl;
   }
   get CreatedDate(): FormControl {
     return this.createForm.get('CreatedDate') as FormControl;
@@ -67,7 +71,7 @@ export class UserCreateComponent implements OnInit {
   get Note(): FormControl {
     return this.createForm.get('Note') as FormControl;
   }
-  constructor(private fb: FormBuilder, private http: HttpClient) { }
+  constructor(private fb: FormBuilder, private http: HttpClient,private toar:ToastrService) { }
 
   getApiRoles() {
     this.http.get<string>('http://localhost:65170/api/role/',{ headers: http() }).subscribe(value => {
@@ -89,18 +93,20 @@ export class UserCreateComponent implements OnInit {
       Department: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(30)]],
       Position: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(30)]],
       Roles: this.fb.group({
-        RoleId: [''],
+        RoleId: ['',Validators.required],
       }),
-      Status: [''],
+      Status: ['',Validators.required],
       Avatar: [''],
       CreatedDate: [''],
       EditedDate: [''],
       Note: ['']
     });
+   
   }
   
   onSubmit(userName) {
     console.log(this.createForm.value);
+   
     if (this.createForm.valid) {
       const value = this.createForm.value;
       value.Roles = this.RolesFormApi.filter(s => s.RoleId == value.Roles.RoleId);
@@ -116,9 +122,9 @@ export class UserCreateComponent implements OnInit {
             next: (res) => {
               const result: ResultObject = JSON.parse(res);
               if (result.Success >= 1) {
-                confirm('Create success!');
+                this.toar.success('success',' Create User');
               } else {
-                confirm('Create Fail!');
+                this.toar.warning('false',' Create User');
               }
               this.createForm.reset();
             },
@@ -128,7 +134,7 @@ export class UserCreateComponent implements OnInit {
           });
         }
         else {
-          confirm("User name is exist");
+          this.toar.warning('User name is exist');
         }
       });
       }
@@ -145,7 +151,9 @@ export class UserCreateComponent implements OnInit {
       this.createForm.get('Position').markAsTouched();
       this.createForm.get('Phone').markAsTouched();
       this.createForm.get('Password').markAsTouched();
-      this.createForm.get('RoleId').markAsTouched();
+      this.createForm.get('Roles.RoleId').markAsTouched();
+      this.createForm.get('Status').markAsTouched();
+      
       return;
     }
   }

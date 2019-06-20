@@ -79,7 +79,8 @@ export class ExamDetailQuestionComponent implements OnInit {
           this.toar.warning('something went wrong', ' Question Number');
         }
         else {
-          this.toar.success('deleted' + ' ' + value + ' ' + 'records in Exam', ' Question Number');
+          var  values=value/2;
+          this.toar.success('deleted' + ' ' + values + ' ' + 'records in Exam', ' Question Number');
 
         }
 

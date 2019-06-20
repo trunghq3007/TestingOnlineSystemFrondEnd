@@ -5,6 +5,7 @@ import * as ClassicEditorBuild from '@ckeditor/ckeditor5-build-classic';
 import { ActivatedRoute } from '@angular/router';
 import { User } from '../user';
 import { http } from '../http-header';
+import { ToastrService } from 'ngx-toastr';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -21,7 +22,7 @@ export class UserUpdateComponent implements OnInit {
   editform: FormGroup;
   RolesFormApi: User[] = [];
   rolename: string;
-  constructor(private fb: FormBuilder, private http: HttpClient, private ac: ActivatedRoute) { }
+  constructor(private fb: FormBuilder, private http: HttpClient, private ac: ActivatedRoute,private toar:ToastrService) { }
 
   get UserName(): FormControl {
     return this.editform.get('UserName') as FormControl;
@@ -113,18 +114,18 @@ export class UserUpdateComponent implements OnInit {
         ...this.user,
         ...value
       };
-      debugger;
+
       let temp = this.RolesFormApi.filter(s => s.RoleId == value.RoleId);
       value.Role = temp.length > 0 ? temp[0] : null;
       console.log(value);
       this.http.put('http://localhost:65170/api/User/' + formData.UserId, formData, { headers: http() }).subscribe({
         next: (res) => {
           console.log(res);
-          confirm('Update success!');
+          this.toar.success('success', 'Update User');
         },
         error: (err) => {
           console.log(err);
-          confirm("Error!Update fail!");
+          this.toar.warning('Fail', 'Update User');
         }
       });
     }
@@ -143,5 +144,4 @@ validateForm() {
     return;
   }
 }
-
 }

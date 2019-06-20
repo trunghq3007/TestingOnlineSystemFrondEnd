@@ -34,7 +34,7 @@ import { ViewListQuestionComponent } from './view-list-question/view-list-questi
 import { CreateQuestionComponent } from './create-question/create-question.component';
 import * as ClassicEditor from '@ckeditor/ckeditor5-angular';
 import { GroupComponent } from './group/group.component';
-
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { GroupDetailComponent } from './group-detail/group-detail.component';
 import { UserGroupComponent } from './user-group/user-group.component';
 import { UserGroupAddComponent } from './user-group-add/user-group-add.component';
@@ -83,6 +83,8 @@ import { RoleActionComponent } from './roleaction/roleaction.component';
 import { AuthGuard } from './_guards/auth.guard';
 import { CookieService } from 'ngx-cookie-service';
 import { ExportExamComponent } from './exam/exam-list/export-exam/export-exam.component';
+import { TestingComponent } from './testing/testing.component';
+
 import{ CandidatesComponent } from './candidates/candidates.component';
 @NgModule({
   declarations: [
@@ -142,6 +144,8 @@ import{ CandidatesComponent } from './candidates/candidates.component';
     RoleActionComponent,
 
     ExportExamComponent,
+
+    TestingComponent,
     CandidatesComponent
   ],
   imports: [
@@ -164,6 +168,7 @@ import{ CandidatesComponent } from './candidates/candidates.component';
     MatNativeDateModule,
     MatSelectModule,
     CKEditorModule,
+    MatProgressBarModule,
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
     SelectModule,
