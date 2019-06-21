@@ -7,6 +7,8 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { RoleComponent } from '../role/role.component';
 import { ResultObject } from '../result-object';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import { http } from '../http-header';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -26,7 +28,7 @@ export class RoleActionAddComponent implements OnInit {
   get RoleName(): FormControl {
     return this.ObjFormGroup.get('RoleName') as FormControl;
   }
-  constructor(private fb: FormBuilder, private http: HttpClient, private router: Router, private activatedRoute: ActivatedRoute) {
+  constructor(private fb: FormBuilder, private http: HttpClient, private router: Router, private activatedRoute: ActivatedRoute,private toastr: ToastrService) {
 
   }
   displayedColumn: string[] = [ 'ActionName', 'Description', 'Action'];
@@ -40,7 +42,7 @@ export class RoleActionAddComponent implements OnInit {
   ngOnInit() {
     const RoleId = this.activatedRoute.snapshot.paramMap.get('RoleId');
     console.log(RoleId);
-    this.http.get<string>('http://localhost:65170/api/RoleAction/?idRole=' + RoleId).subscribe(value => {
+    this.http.get<string>('http://localhost:65170/api/RoleAction/?idRole=' + RoleId,{ headers: http() }).subscribe(value => {
       this.dataSource.data = JSON.parse(value).Data;
       console.log(this.roleactionadds);
       this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort;
@@ -58,18 +60,18 @@ export class RoleActionAddComponent implements OnInit {
       console.log(RoleId);
       //  this.dataSource.data.splice(index,1);
       this.http.post<string>('http://localhost:65170/api/RoleAction/?idAction= ' + actionId
-        + '&idRole=' + RoleId, httpOptions).subscribe(
+        + '&idRole=' + RoleId, { headers: http() }).subscribe(
           value => {
             const result: ResultObject = JSON.parse(value);
             if (result.Success >= 1) {
-              confirm('Create success!');
-              this.http.get<string>('http://localhost:65170/api/RoleAction/?idRole=' + RoleId).subscribe(value => {
+              this.toastr.success('Create success !', '');
+              this.http.get<string>('http://localhost:65170/api/RoleAction/?idRole=' + RoleId,{ headers: http() }).subscribe(value => {
                 this.dataSource.data = JSON.parse(value).Data;
                 console.log(this.roleactionadds);
                 this.dataSource = new MatTableDataSource<RoleActionAdd>(this.dataSource.data);
               });
             } else {
-              confirm('Create Fail!');
+              this.toastr.success('Create fail !', '');
             }
 
           }
