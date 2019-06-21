@@ -7,6 +7,8 @@ import { RoleComponent } from '../role/role.component';
 import { ResultObject } from '../result-object';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { Roleaction } from '../roleaction';
+import { http } from '../http-header';
+import { ToastrService } from 'ngx-toastr';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -25,7 +27,7 @@ export class RoleActionComponent implements OnInit {
   get RoleName(): FormControl {
     return this.ObjFormGroup.get('RoleName') as FormControl;
   }
-  constructor(private fb: FormBuilder, private http: HttpClient, private router: Router, private activatedRoute: ActivatedRoute) {
+  constructor(private fb: FormBuilder, private http: HttpClient, private router: Router, private activatedRoute: ActivatedRoute,private toastr: ToastrService) {
 
   }
   displayedColumn: string[] = [ 'ActionName', 'Description', 'Action'];
@@ -42,11 +44,11 @@ export class RoleActionComponent implements OnInit {
 
     const RoleId = this.activatedRoute.snapshot.paramMap.get('RoleId');
 
-    this.http.get<string>('http://localhost:65170/api/RoleAction/?RoleId=' + RoleId).subscribe(value => {
+    this.http.get<string>('http://localhost:65170/api/RoleAction/?RoleId=' + RoleId,{ headers: http() }).subscribe(value => {
       this.roleaction = JSON.parse(value);
     });
 
-    this.http.get<string>('http://localhost:65170/api/RoleAction/?RoleId=' + RoleId).subscribe(value => {
+    this.http.get<string>('http://localhost:65170/api/RoleAction/?RoleId=' + RoleId,{ headers: http() }).subscribe(value => {
       this.dataSource.data = JSON.parse(value).Data;
       console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
     });
@@ -70,7 +72,7 @@ export class RoleActionComponent implements OnInit {
 
   listRoleAction() {
     const RoleId = this.activatedRoute.snapshot.paramMap.get('RoleId');
-    this.http.get<string>('http://localhost:65170/api/RoleAction/?RoleId=' + RoleId).subscribe(value => {
+    this.http.get<string>('http://localhost:65170/api/RoleAction/?RoleId=' + RoleId,{ headers: http() }).subscribe(value => {
       this.dataSource.data = JSON.parse(value).Data;
       console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
     });
@@ -81,14 +83,14 @@ export class RoleActionComponent implements OnInit {
   DeleteRoleAction(idAction: string) {
     if (confirm('Are you sure you to delete this Action?')) {
       const RoleId = this.activatedRoute.snapshot.paramMap.get('RoleId');
-      this.http.delete<string>('http://localhost:65170/api/RoleAction/?idAction=' + idAction + '&idRole=' + RoleId).subscribe((res) => {
+      this.http.delete<string>('http://localhost:65170/api/RoleAction/?idAction=' + idAction + '&idRole=' + RoleId,{ headers: http() }).subscribe((res) => {
         let result = JSON.parse(res);
         if (result.Success == 1) {
           this.roleactions = this.roleactions.filter(b => b.ActionId !== this.actionId);
-          confirm('Delete success!');
+          this.toastr.success('Delete success!', '');
           this.listRoleAction();
         } else {
-          confirm('Delete failed!');
+          this.toastr.success('Delete fail !', '');
         }
 
       });
