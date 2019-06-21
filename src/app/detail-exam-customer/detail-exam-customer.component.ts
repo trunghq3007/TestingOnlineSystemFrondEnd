@@ -31,5 +31,12 @@ export class DetailExamCustomerComponent implements OnInit {
         this.chuoi = '/thi/1/'+IdQuestion+'/thi' ;
       });
   }
+  test(){
+    var time = new Date();
+       
+    console.log(time.getHours());
+    var getdate= time.getHours()*60+ time.getMinutes();
+    localStorage.setItem('SecondTest', getdate.toString());
+  }
 
 }
