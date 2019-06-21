@@ -19,7 +19,10 @@ export class ThiKetquathiComponent implements OnInit {
 
 list:Iresult={} as Iresult;
 formApply: FormGroup;
-
+Users: string;
+LisUser;
+UserId: string;
+UserName: string;
 Id = this.activatedRoute.snapshot.paramMap.get('Id');
 
 get TestName(): FormControl {
@@ -53,9 +56,18 @@ get Category(): FormControl {
       Score: [''],
       Category: [''],
     });
-
+    if (sessionStorage.getItem('user')) {
+      this.Users = sessionStorage.getItem('user');
+      this.LisUser = this.Users.split(',');
+      this.UserName = this.LisUser[1];
+      this.UserId = this.LisUser[0];
+     
+     
+    } else {
+      this.Users = null;
+    }
     this.http
-    .get<string>('http://localhost:65170/semesterExam/result/' + this.Id,{ headers: http() })
+    .get<string>('http://localhost:65170/semesterExam/result/' + this.Id+'?userId='+this.UserId,{ headers: http() })
     .subscribe(
       value => {
         this.list = JSON.parse(value);
