@@ -31,7 +31,6 @@ import { ViewlistTestbySemesterComponent } from './viewlist-testby-semester/view
 import { ThiChitietbaithiComponent } from './thi-chitietbaithi/thi-chitietbaithi.component';
 import { ThiThiComponent } from './thi-thi/thi-thi.component';
 import { RoleComponent } from './role/role.component';
-import { CandidatesComponent } from './candidates/candidates.component';
 import { from } from 'rxjs';
 import { ListExamUserComponent } from './list-exam-user/list-exam-user.component';
 import { DetailExamCustomerComponent } from './detail-exam-customer/detail-exam-customer.component';
@@ -296,10 +295,33 @@ const routes: Routes = [
       }
     ], canActivate: [AuthGuard]
   },
+  // {
+  //   path: 'SemesterExamManager',
+  //   component: ViewListSemasterComponent, canActivate: [AuthGuard]
+  // },
   {
     path: 'SemesterExamManager',
-    component: ViewListSemasterComponent, canActivate: [AuthGuard]
-  },
+
+    children:
+      [
+        {
+          path: '',
+          component: ViewListSemasterComponent,
+          pathMatch: 'full'
+        }
+        ,
+
+        {
+          path: 'detail/:Id',
+
+          component: SemesterDetailComponent
+
+
+        }
+
+      ], canActivate: [AuthGuard]
+  }
+  ,
   {
     path: 'question',
     children: [
