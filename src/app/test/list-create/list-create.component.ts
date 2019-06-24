@@ -8,6 +8,8 @@ import { AuthenticationService } from 'src/app/_services/authentication.service'
 import { User } from 'src/app/user';
 import { Subscription } from 'rxjs';
 import { http } from 'src/app/http-header';
+import { MyserviceService } from 'src/app/myservice.service';
+import { Router } from '@angular/router';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -45,8 +47,10 @@ export class ListCreateComponent implements OnInit {
   exams:exam[]=[];
   form: FormGroup;
   semasters:semaster[]=[];
-  constructor(private insert: FormBuilder, private http: HttpClient,private toar:ToastrService, private authenticationService: AuthenticationService) {
-   
+  constructor(private myservice:MyserviceService, private router: Router, private insert: FormBuilder, private http: HttpClient,private toar:ToastrService, private authenticationService: AuthenticationService) {
+    this.router.events.subscribe((event) => {
+      this.myservice.changeMessage('1');
+   });
   }
 
 

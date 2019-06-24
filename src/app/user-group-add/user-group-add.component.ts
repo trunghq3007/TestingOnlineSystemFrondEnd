@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { UserGroupAdd } from '../user-group-add';
+import { MyserviceService } from '../myservice.service';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -17,7 +18,11 @@ const httpOptions = {
 })
 export class UserGroupAddComponent implements OnInit {
   addusergroups: UserGroupAdd[] = [];
-  constructor(private activatedRoute: ActivatedRoute, private http: HttpClient, private router: Router) { }
+  constructor(private myservice:MyserviceService ,private activatedRoute: ActivatedRoute, private http: HttpClient, private router: Router) {
+    this.router.events.subscribe((event) => {
+      this.myservice.changeMessage('1');
+   });
+   }
   displayedColumn: string[] = ['select', 'UserId', 'UserName', 'FullName'];
   dataSource = new MatTableDataSource<UserGroupAdd>(this.addusergroups);
   selection = new SelectionModel<UserGroupAdd>(true, []);
