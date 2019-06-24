@@ -8,6 +8,7 @@ import { Group } from '../group';
 import { ResultObject } from '../result-object';
 import { Testbysemester } from '../testbysemester';
 import { Isemaster } from '../isemaster';
+import { MyserviceService } from '../myservice.service';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -40,7 +41,11 @@ export class ViewlistTestbySemesterComponent implements OnInit {
 
   dataSource = new MatTableDataSource<Testbysemester>(this.Tests);
   dataSource2 = new MatTableDataSource<Testbysemester>(this.Tests2);
-  constructor(private semaster: FormBuilder, private fb: FormBuilder, private http: HttpClient, private router: Router, public dialog: MatDialog, public activateRoute: ActivatedRoute) { }
+  constructor(private myservice:MyserviceService ,private semaster: FormBuilder, private fb: FormBuilder, private http: HttpClient, private router: Router, public dialog: MatDialog, public activateRoute: ActivatedRoute) {
+    this.router.events.subscribe((event) => {
+      this.myservice.changeMessage('2');
+   });
+   }
   displayedColumn: string[] = ['select', 'Id', 'TestName', 'Status', 'TestTime', 'NumberTime', 'Action'];
   ngOnInit() {
     this.http.get<string>('http://localhost:65170/api/SemesterExam/' + this.Id + '?IsGetTests').subscribe(value => {

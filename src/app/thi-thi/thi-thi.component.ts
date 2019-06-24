@@ -6,6 +6,7 @@ import { MatDialog, MatTableDataSource } from '@angular/material';
 import { TestProcessing } from '../test-processing';
 import { ProcessingTest } from '../processing-test'
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { MyserviceService } from '../myservice.service';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -40,7 +41,11 @@ export class ThiThiComponent implements OnInit {
   message = '';
   remainingTime: number;
   // dataSource = new  MatTableDataSource<TestProcessing>(this.testProcessings);
-  constructor(private semaster: FormBuilder, private fb: FormBuilder, private http: HttpClient, private router: Router, public dialog: MatDialog, public activateRoute: ActivatedRoute) { }
+  constructor(private myservice:MyserviceService, private semaster: FormBuilder, private fb: FormBuilder, private http: HttpClient, private router: Router, public dialog: MatDialog, public activateRoute: ActivatedRoute) {
+    this.router.events.subscribe((event) => {
+      this.myservice.changeMessage('2');
+   });
+   }
   @Input()
   seconds = 200;
   

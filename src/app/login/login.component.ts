@@ -6,6 +6,7 @@ import { AuthenticationService } from '../_services/authentication.service';
 import { first } from 'rxjs/operators';
 import { ObjectResult } from '../object-result';
 import { CookieService } from 'ngx-cookie-service';
+import { MyserviceService } from '../myservice.service';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -35,10 +36,13 @@ export class LoginComponent implements OnInit {
     return this.loginForm.get('rememberMe') as FormControl;
   }
   constructor(private fb: FormBuilder, private http: HttpClient,
-    private router: Router, private route: ActivatedRoute, private authenticationService: AuthenticationService, private cookieService: CookieService) {
+    private router: Router, private route: ActivatedRoute,private myservice:MyserviceService, private authenticationService: AuthenticationService, private cookieService: CookieService) {
     if (sessionStorage.getItem('currentPermission')) {
       this.router.navigate(['']);
     }
+    this.router.events.subscribe((event) => {
+      this.myservice.changeMessage('2');
+   });
   }
 
   ngOnInit() {

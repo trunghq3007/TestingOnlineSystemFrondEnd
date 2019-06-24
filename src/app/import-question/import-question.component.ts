@@ -5,6 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ResultObject } from '../result-object';
 import { http } from '../http-header';
 import { ToastrService } from 'ngx-toastr';
+import { MyserviceService } from '../myservice.service';
 
 @Component({
   selector: 'app-import-question',
@@ -16,7 +17,11 @@ export class ImportQuestionComponent implements OnInit {
   error: string;
   uploadResponse: string;
 
-  constructor(private http: HttpClient, private toa: ToastrService, private formBuilder: FormBuilder, private router: Router) { }
+  constructor(private http: HttpClient,private myservice:MyserviceService, private toa: ToastrService, private formBuilder: FormBuilder, private router: Router) {
+    this.router.events.subscribe((event) => {
+      this.myservice.changeMessage('1');
+   });
+   }
 
   ngOnInit() {
     this.form = this.formBuilder.group({

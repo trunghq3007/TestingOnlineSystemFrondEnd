@@ -10,6 +10,7 @@ import { Category } from '../ICategory';
 import { Tag } from '../Tag';
 import { http } from '../http-header';
 import { ToastrService } from 'ngx-toastr';
+import { MyserviceService } from '../myservice.service';
 
 
 
@@ -53,7 +54,11 @@ export class CreateQuestionComponent implements OnInit {
   get Answers(): FormArray {
     return this.ctForm.get('Answers') as FormArray;
   }
-  constructor(private http: HttpClient, private fb: FormBuilder, private router: Router,private toastr:ToastrService) { }
+  constructor(private http: HttpClient,private myservice:MyserviceService, private fb: FormBuilder, private router: Router,private toastr:ToastrService) { 
+    this.router.events.subscribe((event) => {
+      this.myservice.changeMessage('1');
+   });
+  }
 
   public onChange({ editor }: ChangeEvent) {
     const data = editor.getData();

@@ -7,6 +7,7 @@ import { GroupUser } from '../group-user';
 import { ResultObject } from '../result-object';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { http } from '../http-header';
+import { MyserviceService } from '../myservice.service';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -24,7 +25,11 @@ export class UserGroupComponent implements OnInit {
   get GroupName(): FormControl {
     return this.ObjFormGroup.get('GroupName') as FormControl;
   }
-  constructor(private fb: FormBuilder, private http: HttpClient, private router: Router, private activatedRoute: ActivatedRoute) { }
+  constructor(private myservice:MyserviceService, private fb: FormBuilder, private http: HttpClient, private router: Router, private activatedRoute: ActivatedRoute) {
+    this.router.events.subscribe((event) => {
+      this.myservice.changeMessage('1');
+   });
+   }
   displayedColumn: string[] = ['select', 'UserId', 'UserName', 'FullName', 'Action'];
   dataSource = new MatTableDataSource<GroupUser>(this.usergroups);
   selection = new SelectionModel<GroupUser>(true, []);
