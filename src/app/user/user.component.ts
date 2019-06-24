@@ -7,6 +7,7 @@ import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { User } from '../user';
 import { http } from '../http-header';
 import { ToastrService } from 'ngx-toastr';
+import { MyserviceService } from '../myservice.service';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -25,7 +26,11 @@ export class UserComponent implements OnInit {
   userId = '';
   user: User;
   getUsers: User;
-  constructor(private http: HttpClient, private router: Router, private fb: FormBuilder,private toar:ToastrService) { }
+  constructor(private myservice:MyserviceService, private http: HttpClient, private router: Router, private fb: FormBuilder,private toar:ToastrService) {
+    this.router.events.subscribe((event) => {
+      this.myservice.changeMessage('1');
+   });
+   }
   displayedColumn: string[] = ['select', 'UserName', 'FullName', 'Email', 'Department', 'Position', 'Action'];
   dataSource = new MatTableDataSource<User>(this.users);
   selection = new SelectionModel<User>(true, []);

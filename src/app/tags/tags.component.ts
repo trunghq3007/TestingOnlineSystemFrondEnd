@@ -9,6 +9,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Sort } from '@angular/material';
 import { ToastrService } from 'ngx-toastr';
 import { http } from '../http-header';
+import { MyserviceService } from '../myservice.service';
 
 
 
@@ -72,7 +73,11 @@ export class TagsComponent implements OnInit {
 
  
 
-  constructor(private activatedRoute: ActivatedRoute, private http: HttpClient, private toastr: ToastrService) { }
+  constructor(private myservice:MyserviceService, private router: Router, private activatedRoute: ActivatedRoute, private http: HttpClient, private toastr: ToastrService) {
+    this.router.events.subscribe((event) => {
+      this.myservice.changeMessage('1');
+   });
+   }
 
   ngOnInit() {
     this.refreshTable();

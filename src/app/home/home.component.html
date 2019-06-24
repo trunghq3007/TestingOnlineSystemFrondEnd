@@ -5,13 +5,26 @@
       <a [routerLink]="['']" routerLinkActive="active"><img src="../../assets/image/logo_vn_white.png"
           height="35px" /></a>
     </div>
-    <ul class="nav navbar-nav pull-right" style="margin-right: 5%">
-      <li><a>Home</a></li>
+    <div *ngIf="UserName; then thenBlock else elseBlock"></div>
+    <ng-template #thenBlock> <ul  class="nav navbar-nav pull-right" style="margin-right: 5%">
+     
+      <li><a (click)="Logout()">Log Out</a></li>
       <li>
-        <a class="btn" [routerLink]="['login']" routerLinkActive="active"><span><i
-              class="fa fa-user fa-fw"></i></span>Sign in</a>
+        <a class="btn"  routerLinkActive="active"><span><i
+              class="fa fa-user fa-fw"></i></span>{{UserName}}</a>
       </li>
     </ul>
+  </ng-template>
+    <ng-template #elseBlock> <ul  class="nav navbar-nav pull-right" style="margin-right: 5%">
+     
+      <li><a>Register</a></li>
+      <li>
+        <a class="btn" [routerLink]="['login']" routerLinkActive="active"><span><i
+              class="fa fa-user fa-fw"></i></span>Sign In</a>
+      </li>
+    </ul>
+  </ng-template>
+   
   </div>
 </div>
 

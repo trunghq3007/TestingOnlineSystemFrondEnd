@@ -7,6 +7,8 @@ import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { http } from '../http-header';
+import { MyserviceService } from '../myservice.service';
+import { Router } from '@angular/router';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -24,7 +26,11 @@ export class GroupDetailComponent implements OnInit {
   PositionApi: [];
   DepartmentApi: [];
 
-  constructor(private activatedRoute: ActivatedRoute, private http: HttpClient, private fb: FormBuilder) { }
+  constructor(private activatedRoute: ActivatedRoute,private router: Router, private http: HttpClient,private myservice:MyserviceService, private fb: FormBuilder) { 
+    this.router.events.subscribe((event) => {
+      this.myservice.changeMessage('1');
+   });
+  }
   displayedColumn: string[] = ['UserId', 'UserName', 'FullName', 'Email', 'Department', 'Position'];
   dataSource = new MatTableDataSource<GroupUser>(this.usergroups);
   selection = new SelectionModel<GroupUser>(true, []);

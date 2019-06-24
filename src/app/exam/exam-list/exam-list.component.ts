@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { http } from 'src/app/http-header';
+import { MyserviceService } from 'src/app/myservice.service';
 @Component({
   selector: 'app-exam-list',
   templateUrl: './exam-list.component.html',
@@ -25,8 +26,12 @@ export class ExamListComponent implements OnInit {
   selection = new SelectionModel<Exam>(true, []);
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  constructor(private http: HttpClient, private router: Router
-    , private toasr: ToastrService, private fb: FormBuilder) { }
+  constructor(private myservice:MyserviceService,private http: HttpClient, private router: Router, private toasr: ToastrService, private fb: FormBuilder) {
+
+    this.router.events.subscribe((event) => {
+      this.myservice.changeMessage('1');
+   });
+     }
 
 
 
@@ -63,7 +68,7 @@ export class ExamListComponent implements OnInit {
         this.exams = JSON.parse(value);
         for (let i = 0; i < this.exams.length; i++) {
           if(this.exams[i].Category != null){
-            console.log(this.exams[i].Category);
+            // console.log(this.exams[i].Category);
             this.exams[i].NameCategory = this.exams[i].Category.Name;
           }
         }
@@ -88,7 +93,10 @@ export class ExamListComponent implements OnInit {
     });
     this.listexams();
     this.dataSource.sort = this.sort;
+    // this.myservice.changeMessage('2');
+   
   }
+  
   detail(examID) {
     this.http.get<string>('http://localhost:65170/api/Exam/' + examID,{ headers: http() }).subscribe
       (

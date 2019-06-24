@@ -4,6 +4,7 @@ import { Isemaster } from '../isemaster';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Exam } from '../exam';
 import { http } from '../http-header';
+import { MyserviceService } from '../myservice.service';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 }
@@ -15,7 +16,11 @@ const httpOptions = {
 export class ListExamUserComponent implements OnInit {
   semester: Exam[] = [];
   notify: boolean=true;
-  constructor(private http: HttpClient, private router: Router, private activedRoute: ActivatedRoute) { }
+  constructor(private http: HttpClient, private router: Router,private myservice:MyserviceService, private activedRoute: ActivatedRoute) {
+    this.router.events.subscribe((event) => {
+      this.myservice.changeMessage('2');
+   });
+   }
 
   ngOnInit() {
     const IdQuestion = this.activedRoute.snapshot.paramMap.get('id')

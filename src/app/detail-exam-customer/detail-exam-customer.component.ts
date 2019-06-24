@@ -4,6 +4,7 @@ import { Isemaster } from '../isemaster';
 import { Router ,ActivatedRoute} from '@angular/router';
 import { DetailExam } from '../detailExams';
 import { http } from '../http-header';
+import { MyserviceService } from '../myservice.service';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })}
 @Component({
@@ -13,7 +14,11 @@ const httpOptions = {
 })
 export class DetailExamCustomerComponent implements OnInit {
   list: DetailExam;
-  constructor(private http: HttpClient, private router: Router, private activedRoute: ActivatedRoute) { }
+  constructor(private http: HttpClient,private myservice:MyserviceService, private router: Router, private activedRoute: ActivatedRoute) { 
+    this.router.events.subscribe((event) => {
+      this.myservice.changeMessage('2');
+   });
+  }
   
   chuoi : string;
   
@@ -30,6 +35,13 @@ export class DetailExamCustomerComponent implements OnInit {
         console.log(value);
         this.chuoi = '/thi/1/'+IdQuestion+'/thi' ;
       });
+  }
+  test(){
+    var time = new Date();
+       
+    console.log(time.getHours());
+    var getdate= time.getHours()*60+ time.getMinutes();
+    localStorage.setItem('SecondTest', getdate.toString());
   }
 
 }

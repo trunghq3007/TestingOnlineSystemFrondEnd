@@ -8,6 +8,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReportSemester } from '../report-semester';
 import { ObjectResult } from '../object-result'
+import { MyserviceService } from '../myservice.service';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -21,7 +22,11 @@ const httpOptions = {
 export class ManagerSemesterExamReportComponent implements OnInit {
 
   report: ReportSemester;
-  constructor(private http: HttpClient, private router: Router, private activeRoute: ActivatedRoute) { }
+  constructor(private http: HttpClient, private router: Router, private myservice:MyserviceService,private activeRoute: ActivatedRoute) { 
+    this.router.events.subscribe((event) => {
+      this.myservice.changeMessage('1');
+   });
+  }
   low: number = 0;
   good: number = 0;
   medium: number = 0;

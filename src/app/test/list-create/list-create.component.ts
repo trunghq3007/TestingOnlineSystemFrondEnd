@@ -8,6 +8,8 @@ import { AuthenticationService } from 'src/app/_services/authentication.service'
 import { User } from 'src/app/user';
 import { Subscription } from 'rxjs';
 import { http } from 'src/app/http-header';
+import { MyserviceService } from 'src/app/myservice.service';
+import { Router } from '@angular/router';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -32,6 +34,11 @@ export class semaster{
   styleUrls: ['./list-create.component.scss']
 })
 export class ListCreateComponent implements OnInit {
+  Users: string;
+  LisUser;
+  UserId: string;
+  UserName: string;
+  //name:string;
   currentUser: User;
   currentUserSubscription: Subscription;
   isMember = false;
@@ -40,8 +47,10 @@ export class ListCreateComponent implements OnInit {
   exams:exam[]=[];
   form: FormGroup;
   semasters:semaster[]=[];
-  constructor(private insert: FormBuilder, private http: HttpClient,private toar:ToastrService, private authenticationService: AuthenticationService) {
-   
+  constructor(private myservice:MyserviceService, private router: Router, private insert: FormBuilder, private http: HttpClient,private toar:ToastrService, private authenticationService: AuthenticationService) {
+    this.router.events.subscribe((event) => {
+      this.myservice.changeMessage('1');
+   });
   }
 
 
@@ -63,12 +72,23 @@ regTotal="^[0-9]{1,2}$";
 regPassScore="^[0-9]{1,3}$"
 
   ngOnInit() {
+    if (sessionStorage.getItem('user')) {
+      this.Users = sessionStorage.getItem('user');
+      this.LisUser = this.Users.split(',');
+      this.UserName = this.LisUser[1];
+      this.UserId = this.LisUser[0];
+     
+     
+    } else {
+      this.Users = null;
+    }
+    console.log(''+this.UserName);
     this.form = this.insert.group({
       ExamId: ['', [Validators.required]],
       SemasterExamId: ['',[Validators.required]],
       TestName: ['', [Validators.required,Validators.maxLength(50)]],
       
-      CreateBy: ['', [Validators.required]],
+      CreateBy: [this.UserName],
       
       PassScore: ['', [Validators.required,Validators.pattern]],
       TotalTest: ['', [Validators.required,Validators.pattern]],

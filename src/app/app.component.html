@@ -1,9 +1,10 @@
-
-    <app-appheader *ngIf="checked" ></app-appheader>
-    <app-appmenu *ngIf="checked"></app-appmenu>
+    <!-- <app-user-header *ngIf="message"></app-user-header> -->
+    <app-appheader *ngIf="message" ></app-appheader>
+    <app-appmenu *ngIf="message"></app-appmenu>
     <router-outlet ></router-outlet>
     <!-- <app-home *ngIf="!currentUser"></app-home> -->
-    <app-appfooter *ngIf="checked"></app-appfooter>
-    <app-appsetting *ngIf="checked"></app-appsetting>
+    <app-appfooter *ngIf="message"></app-appfooter>
+    <app-appsetting *ngIf="message"></app-appsetting>
     <!-- <app-exam-update></app-exam-update> -->
+   
 

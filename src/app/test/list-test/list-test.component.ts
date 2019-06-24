@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 import { http } from 'src/app/http-header';
+import { MyserviceService } from 'src/app/myservice.service';
 export interface Exam {
   id: number;
   NameExam: string;
@@ -50,8 +51,11 @@ export class ListTestComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private http: HttpClient, private router: Router, private fb: FormBuilder
-  ) { }
+  constructor(private myservice:MyserviceService, private http: HttpClient, private router: Router, private fb: FormBuilder) {
+    this.router.events.subscribe((event) => {
+      this.myservice.changeMessage('1');
+   });
+   }
 
   deleteTest(Id: number) {
     if (confirm('you want to delete record')) {

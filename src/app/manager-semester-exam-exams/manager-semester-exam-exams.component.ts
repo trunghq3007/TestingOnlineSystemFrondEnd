@@ -5,6 +5,7 @@ import { Exam } from '../exam';
 import { MatTableDataSource } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { BrowserModule } from '@angular/platform-browser';
+import { MyserviceService } from '../myservice.service';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -29,7 +30,11 @@ export class ManagerSemesterExamExamsComponent implements OnInit {
   displayedColumn: string[] = ['select', 'Id', 'NameExam', 'CreateBy', 'QuestionNumber', 'Status']
   dataSource = new MatTableDataSource<Exam>(this.ListExams);
   dataSource2 = new MatTableDataSource<Exam>(this.ListAllExams);
-  constructor(private http: HttpClient, private router: Router, private activateRoute: ActivatedRoute) { }
+  constructor(private http: HttpClient, private router: Router,private myservice:MyserviceService, private activateRoute: ActivatedRoute) { 
+    this.router.events.subscribe((event) => {
+      this.myservice.changeMessage('1');
+   });
+  }
 
 
   selection = new SelectionModel<Exam>(true, []);

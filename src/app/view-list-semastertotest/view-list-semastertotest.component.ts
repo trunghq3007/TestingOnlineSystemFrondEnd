@@ -7,6 +7,7 @@ import { MatPaginator } from '@angular/material';
 import { FormGroup, FormBuilder, FormControl, Validators, ValidationErrors } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { MyserviceService } from '../myservice.service';
 
 @Component({
   selector: 'app-view-list-semastertotest',
@@ -16,7 +17,11 @@ import { Router } from '@angular/router';
 export class ViewListSemastertotestComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  constructor(private semaster: FormBuilder, private fl: FormBuilder, private http: HttpClient, private router: Router, public dialog: MatDialog) { }
+  constructor(private myservice:MyserviceService, private semaster: FormBuilder, private fl: FormBuilder, private http: HttpClient, private router: Router, public dialog: MatDialog) {
+    this.router.events.subscribe((event) => {
+      this.myservice.changeMessage('2');
+   });
+   }
   semesterExams: Isemaster[] = [];
   displayedColumn: string[] = ['ID', 'SemesterName', 'StartDay', 'EndDay', 'Code', 'status'];
   dataSource = new MatTableDataSource<Isemaster>(this.semesterExams);

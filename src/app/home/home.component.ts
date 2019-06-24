@@ -7,7 +7,7 @@ import { User } from '../user';
 import { Isemaster } from '../isemaster';
 import { ToastrService } from 'ngx-toastr';
 import { http } from '../http-header';
-
+import { MyserviceService } from '../myservice.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -25,17 +25,24 @@ export class HomeComponent implements OnInit {
   currentSlide = 0;
   tests;
   semesterExamCode = '';
- 
+  Users: string;
+  LisUser;
+  UserId: string;
+  UserName: string;
   semester:Isemaster;
   semesters :Isemaster [] = [];
 
   constructor(private http: HttpClient, private router: Router, private authenticationService: AuthenticationService,
-    private toasr: ToastrService) {
+    private toasr: ToastrService,private myservice:MyserviceService) {
     this.changeSlide();
     this.currentUserSubscription = this.authenticationService.currentUser.subscribe(user => {
       this.currentUser = user;
     });
     this.gotoLogin = this.authenticationService.gotoLogin;
+    
+    this.router.events.subscribe((event) => {
+      this.myservice.changeMessage('2');
+   });
   }
 
   ngOnInit() {
@@ -45,8 +52,16 @@ export class HomeComponent implements OnInit {
         this.semesters = JSON.parse(value).Data;
         console.log(value);
       });
-      
-
+      if (sessionStorage.getItem('user')) {
+        this.Users = sessionStorage.getItem('user');
+        this.LisUser = this.Users.split(',');
+        this.UserName = this.LisUser[1];
+        this.UserId = this.LisUser[0];
+       
+       
+      } else {
+        this.Users = null;
+      }
   }
   changeSlide() {
     this.currentSlide++;
@@ -84,7 +99,13 @@ export class HomeComponent implements OnInit {
     this.toasr.error('');
     }
   }
+  Logout(){
+    sessionStorage.removeItem('currentPermission');
+    this.router.navigate(['']);
+    location.reload();
 
+    sessionStorage.removeItem('user');
+  }
   change(e) {
     this.semesterExamCode = e.value;
     console.log(this.semesterExamCode);

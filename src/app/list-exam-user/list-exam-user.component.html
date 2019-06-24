@@ -1,3 +1,31 @@
+<div class="navbar navbar-inverse navbar-fixed-top opaque-navbar" *ngIf="!currentUser">
+    <div class="container-fluid">
+      <div class="navbar-header logo">
+        <a [routerLink]="['']" routerLinkActive="active"><img src="../../assets/image/logo_vn_white.png"
+            height="35px" /></a>
+      </div>
+      <div *ngIf="UserName; then thenBlock else elseBlock"></div>
+      <ng-template #thenBlock> <ul  class="nav navbar-nav pull-right" style="margin-right: 5%">
+       
+        <li><a (click)="Logout()">Log Out</a></li>
+        <li>
+          <a class="btn"  routerLinkActive="active"><span><i
+                class="fa fa-user fa-fw"></i></span>{{UserName}}</a>
+        </li>
+      </ul>
+    </ng-template>
+      <ng-template #elseBlock> <ul  class="nav navbar-nav pull-right" style="margin-right: 5%">
+       
+        <li><a>Register</a></li>
+        <li>
+          <a class="btn" [routerLink]="['login']" routerLinkActive="active"><span><i
+                class="fa fa-user fa-fw"></i></span>Sign In</a>
+        </li>
+      </ul>
+    </ng-template>
+     
+    </div>
+  </div>
 <div *ngIf="notify; then thenBlock else elseBlock">
 </div>
 <ng-template #thenBlock>
@@ -10,13 +38,17 @@
 
 </ng-template>
 <ng-template #elseBlock>
-    <h1 style="margin-left: 300px">View List Bài Thi </h1>
-<a class="btn btn-danger" href="" style="float: right;margin-right: 5%;" routerLink="/">Go Back</a>
+    <div style="margin-top: 30px"> <span style="margin-left: 300px;font-size: 30px">View List Bài Thi </span>
+        <span>  
+           <a class="btn btn-danger" href="" style="float: right;margin-right: 5%;" routerLink="/">Go Back</a>
+        </span>
+       
+       </div>
 <div class="content-master-hot bxslider" *ngFor="let st of semester" style="margin-left: 300px">
     
   
     
-    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 box-info-home"  style="margin-top:  10px" >
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 box-info-home"  style="margin-top:  10px;margin-right: 7px; background: rgb(240,240,240);"  >
       
         <div class="list-exam" data-toggle="tooltip" data-placement="top" title="" data-original-title="Exam_Technical_BTNB_Final_18_01">
             <div class="col-md-3 no-padding " style="margin-top: 0">
@@ -35,7 +67,7 @@
             </div>
             <div class="col-md-9 col-xs-9 margin-top-10 padding-left-15 pull-left" style="overflow: hidden">
                     <a  routerLink="/DetailExamCustomer/{{st.Id}}">
-                        <span class="exam-title">
+                        <span class="exam-title" style="text-transform: uppercase">
                            {{st.TestName}}
                            <p>{{st.SemesterExam.SemesterName}}</p>
                         </span>

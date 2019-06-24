@@ -8,6 +8,7 @@ import { Testbysemester } from '../testbysemester';
 import { Isemaster } from '../isemaster';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { MyserviceService } from '../myservice.service';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -18,7 +19,11 @@ const httpOptions = {
 })
 export class ThiChitietbaithiComponent implements OnInit {
   TestId = this.activateRoute.snapshot.paramMap.get('TestId');
-  constructor(private semaster: FormBuilder, private fb: FormBuilder, private http: HttpClient, private router: Router, public dialog: MatDialog, public activateRoute: ActivatedRoute) { }
+  constructor(private myservice:MyserviceService, private semaster: FormBuilder, private fb: FormBuilder, private http: HttpClient, private router: Router, public dialog: MatDialog, public activateRoute: ActivatedRoute) {
+    this.router.events.subscribe((event) => {
+      this.myservice.changeMessage('2');
+   });
+   }
 
   ngOnInit() {
   }

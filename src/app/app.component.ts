@@ -4,6 +4,8 @@ import { Subscription } from 'rxjs';
 import { User } from './user';
 import { HttpClient } from '@angular/common/http';
 import { http } from './http-header';
+import { MyserviceService } from './myservice.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -11,45 +13,45 @@ import { http } from './http-header';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent  {
- 
+  message;
   currentUser : User;
  checked:boolean;
  Users:string;
+ changeDetected=true;
   // initUser(value: User) {
   //   this.currentUser = value;
   // }
   // currentUserSubscription: Subscription;
 
   constructor(
-    private authenticationService: AuthenticationService,private http: HttpClient
+    private authenticationService: AuthenticationService,private http: HttpClient,private myservice:MyserviceService,private router: Router
   ) {
-    // if (this.currentUser != null) {
-    // this.currentUserSubscription = this.authenticationService.currentUser.subscribe(user => {
-    //   this.currentUser = user;
-    // });
-    // }
-    
-    
-    
+    this.router.events.subscribe((event) => {
+      this.changeDetected=false;
+   });
   }
-  // @HostListener('window:unload', ['$event'])
-  //   unloadHandler(event) {
-  //       window.sessionStorage.clear();
-  //   }
+  
  
 ngDoCheck(){
    
  
-    if(sessionStorage.getItem('user')){
-      this.Users= sessionStorage.getItem('user');
-      this.checked=true;
+  if(!this.changeDetected){
+    
+    if(this.message==1){
+      this.message=true;
     }else{
-      this.checked=false;
+      this.message=false
     }
+    this.changeDetected=true;
+   
+  }
+    
+    this.changeDetected = false;
      
 }
+
   ngOnInit() {
-    
+    this.myservice.currentMessage.subscribe(message => this.message = message);
  
   }
 }

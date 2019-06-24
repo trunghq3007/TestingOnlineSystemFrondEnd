@@ -21,6 +21,7 @@ Users: string;
 LisUser;
 UserId: string;
 UserName: string;
+detect=true;
     constructor(
       private router: Router,
       private authenticationService: AuthenticationService
@@ -42,19 +43,30 @@ UserName: string;
         //   this.isMember = true;
         // }
     }
-
-  ngOnInit() {
-    if (sessionStorage.getItem('user')) {
-      this.Users = sessionStorage.getItem('user');
-      this.LisUser = this.Users.split(',');
-      this.UserName = this.LisUser[1];
-      this.UserId = this.LisUser[0];
-     
-     
-    } else {
-      this.Users = null;
+    ngDoCheck(){
+      if (sessionStorage.getItem('user')) {
+        this.Users = sessionStorage.getItem('user');
+        this.LisUser = this.Users.split(',');
+        this.UserName = this.LisUser[1];
+        this.UserId = this.LisUser[0];
+       
+       
+      } else {
+        this.Users = null;
+      }
     }
-   
+  ngOnInit() {
+  //   if (sessionStorage.getItem('user')) {
+  //     this.Users = sessionStorage.getItem('user');
+  //     this.LisUser = this.Users.split(',');
+  //     this.UserName = this.LisUser[1];
+  //     this.UserId = this.LisUser[0];
+     
+     
+  //   } else {
+  //     this.Users = null;
+  //   }
+  //  console.log(this.UserName);
   }
 
 }

@@ -9,6 +9,7 @@ import { AuthenticationService } from 'src/app/_services/authentication.service'
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { http } from 'src/app/http-header';
+import { MyserviceService } from 'src/app/myservice.service';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -19,7 +20,10 @@ const httpOptions = {
   styleUrls: ['./create-exam.component.scss']
 })
 export class CreateExamComponent implements OnInit {
- 
+  Users: string;
+  LisUser;
+  UserId: string;
+  UserName: string;
   name:string;
   public Editor = ClassicEditorBuild;
   // submited = false;
@@ -27,11 +31,13 @@ export class CreateExamComponent implements OnInit {
   examForm: FormGroup;
   number = "^([1-9][0-9]{0,3}|^2000)$";
   // regex = "^[A-Za-z0-9@/._#] +$";
-
+  
   CategoryFormApi = [];
-  constructor(private fb: FormBuilder,private toar:ToastrService, private http: HttpClient, private authenticationService: AuthenticationService
-    ,private route:Router ) {
-   
+  constructor(private myservice:MyserviceService,private fb: FormBuilder,private toar:ToastrService, private http: HttpClient, private authenticationService: AuthenticationService
+    ,private router:Router ) {
+      this.router.events.subscribe((event) => {
+        this.myservice.changeMessage('1');
+     });
    }
   get NameExam(): FormControl {
     return this.examForm.get('NameExam') as FormControl;
@@ -60,10 +66,21 @@ export class CreateExamComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (sessionStorage.getItem('user')) {
+      this.Users = sessionStorage.getItem('user');
+      this.LisUser = this.Users.split(',');
+      this.UserName = this.LisUser[1];
+      this.UserId = this.LisUser[0];
+     
+     
+    } else {
+      this.Users = null;
+    }
+    console.log(''+this.UserName);
     this.getApiCategory();
     this.examForm = this.fb.group({
       NameExam: ['', [Validators.required, Validators.maxLength(50)]],
-      CreateBy: ['',Validators.required],
+      CreateBy: [this.UserName],
       QuestionNumber: ['', [Validators.required, Validators.pattern]],
       //status: ['', [{value: 'false', disabled: true}]],
      
@@ -75,7 +92,7 @@ export class CreateExamComponent implements OnInit {
 
 
     });
-  
+    
   }
   getApiCategory() {
     this.http.get<string>('http://localhost:65170/api/Category/',{ headers: http() }).subscribe(value => {
@@ -104,19 +121,25 @@ export class CreateExamComponent implements OnInit {
       value.Category = value.Category.length > 0 ? value.Category[0] : null;
      
       this.http.post<string>('http://localhost:65170/api/Exam', JSON.stringify(value),{ headers: http() }).subscribe({
-        next: (res) => {
+        next: (response) => {
           
        
-          this.toar.success('success',' Create Exam');
-          this.examForm.reset();
+          if(response==2){
+            this.toar.success('Successful',' Create exam');
+           
+          }else{
+            this.toar.warning('something went wrong',' Create exam');
+          }
+         console.log(response)
         },
 
         error: (err) => {
-          this.toar.warning('false',' Create Exam');
+          this.toar.warning('Fail',' Create exam');
           //this.examForm.reset();
         }
         
       });
+      console.log(this.examForm.value);
     }
     //this.route.navigate(['/exam'])
   }
