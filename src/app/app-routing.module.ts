@@ -292,10 +292,33 @@ const routes: Routes = [
       }
     ], canActivate: [AuthGuard]
   },
+  // {
+  //   path: 'SemesterExamManager',
+  //   component: ViewListSemasterComponent, canActivate: [AuthGuard]
+  // },
   {
     path: 'SemesterExamManager',
-    component: ViewListSemasterComponent, canActivate: [AuthGuard]
-  },
+
+    children:
+      [
+        {
+          path: '',
+          component: ViewListSemasterComponent,
+          pathMatch: 'full'
+        }
+        ,
+
+        {
+          path: 'detail/:Id',
+
+          component: SemesterDetailComponent
+
+
+        }
+
+      ], canActivate: [AuthGuard]
+  }
+  ,
   { path: '**', canActivate: [AuthGuard], component: ErrorpageComponent }
 ];
 
