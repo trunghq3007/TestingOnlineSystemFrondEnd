@@ -68,7 +68,7 @@ export class ExamListComponent implements OnInit {
         this.exams = JSON.parse(value);
         for (let i = 0; i < this.exams.length; i++) {
           if(this.exams[i].Category != null){
-            console.log(this.exams[i].Category);
+            // console.log(this.exams[i].Category);
             this.exams[i].NameCategory = this.exams[i].Category.Name;
           }
         }

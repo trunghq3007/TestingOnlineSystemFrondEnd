@@ -9,6 +9,7 @@ import { AuthenticationService } from 'src/app/_services/authentication.service'
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { http } from 'src/app/http-header';
+import { MyserviceService } from 'src/app/myservice.service';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -32,9 +33,11 @@ export class CreateExamComponent implements OnInit {
   // regex = "^[A-Za-z0-9@/._#] +$";
   
   CategoryFormApi = [];
-  constructor(private fb: FormBuilder,private toar:ToastrService, private http: HttpClient, private authenticationService: AuthenticationService
-    ,private route:Router ) {
-   
+  constructor(private myservice:MyserviceService,private fb: FormBuilder,private toar:ToastrService, private http: HttpClient, private authenticationService: AuthenticationService
+    ,private router:Router ) {
+      this.router.events.subscribe((event) => {
+        this.myservice.changeMessage('1');
+     });
    }
   get NameExam(): FormControl {
     return this.examForm.get('NameExam') as FormControl;

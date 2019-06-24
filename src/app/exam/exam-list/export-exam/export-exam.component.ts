@@ -16,7 +16,7 @@ export class ExportExamComponent implements OnInit {
 exam:string;
   constructor(private myservice:MyserviceService,private http: HttpClient, private router: Router, private ac: ActivatedRoute) {
     this.router.events.subscribe((event) => {
-      this.myservice.changeMessage('2');
+      this.myservice.changeMessage('1');
    });
    }
 

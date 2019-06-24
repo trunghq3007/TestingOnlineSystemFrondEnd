@@ -2,10 +2,11 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { http } from 'src/app/http-header';
+import { MyserviceService } from 'src/app/myservice.service';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -42,7 +43,11 @@ export class ExamDetailQuestionComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   selection = new SelectionModel<detailExam>(true, []);
-  constructor(private http: HttpClient, private ac: ActivatedRoute, private fb: FormBuilder, private toar: ToastrService) { }
+  constructor(private myservice:MyserviceService,private router:Router,private http: HttpClient, private ac: ActivatedRoute, private fb: FormBuilder, private toar: ToastrService) { 
+    this.router.events.subscribe((event) => {
+      this.myservice.changeMessage('1');
+   });
+  }
 
   ngOnInit() {
     this.listQuestionDetail();

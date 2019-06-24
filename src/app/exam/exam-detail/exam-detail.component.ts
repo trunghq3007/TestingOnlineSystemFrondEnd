@@ -1,12 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Exam } from 'src/app/exam';
 import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { http } from 'src/app/http-header';
+import { MyserviceService } from 'src/app/myservice.service';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -53,7 +54,11 @@ export class ExamDetailComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private http: HttpClient, private ac: ActivatedRoute, private fb: FormBuilder, private toar: ToastrService) { }
+  constructor(private router:Router,private myservice:MyserviceService,private http: HttpClient, private ac: ActivatedRoute, private fb: FormBuilder, private toar: ToastrService) {
+    this.router.events.subscribe((event) => {
+      this.myservice.changeMessage('1');
+   });
+   }
   get StartDate(): FormControl {
     return this.filterForm.get('CreatedDate') as FormControl;
   }

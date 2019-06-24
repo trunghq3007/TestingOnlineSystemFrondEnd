@@ -6,6 +6,7 @@ import * as ClassicEditorBuild from '@ckeditor/ckeditor5-build-classic';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { http } from 'src/app/http-header';
+import { MyserviceService } from 'src/app/myservice.service';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -29,8 +30,12 @@ export class ExamUpdateComponent implements OnInit {
   categoryname: {};
 
 
-  constructor(private fb: FormBuilder, private toar: ToastrService, private http: HttpClient, private ac: ActivatedRoute,
-    private router: Router) { }
+  constructor(private myservice:MyserviceService,private fb: FormBuilder, private toar: ToastrService, private http: HttpClient, private ac: ActivatedRoute,
+    private router: Router) {
+      this.router.events.subscribe((event) => {
+        this.myservice.changeMessage('1');
+     });
+     }
   get NameExam(): FormControl {
     return this.editForm.get('NameExam') as FormControl;
   }
