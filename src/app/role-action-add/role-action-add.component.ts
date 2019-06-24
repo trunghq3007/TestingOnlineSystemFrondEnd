@@ -58,9 +58,9 @@ export class RoleActionAddComponent implements OnInit {
       const RoleId = this.activatedRoute.snapshot.paramMap.get('RoleId');
       console.log(this.actionId);
       console.log(RoleId);
+      var arr={ ActionId:actionId,roleId:RoleId};
       //  this.dataSource.data.splice(index,1);
-      this.http.post<string>('http://localhost:65170/api/RoleAction/?idAction= ' + actionId
-        + '&idRole=' + RoleId, { headers: http() }).subscribe(
+      this.http.post<string>('http://localhost:65170/api/RoleAction/',JSON.stringify(arr), { headers: http() }).subscribe(
           value => {
             const result: ResultObject = JSON.parse(value);
             if (result.Success >= 1) {
@@ -69,6 +69,7 @@ export class RoleActionAddComponent implements OnInit {
                 this.dataSource.data = JSON.parse(value).Data;
                 console.log(this.roleactionadds);
                 this.dataSource = new MatTableDataSource<RoleActionAdd>(this.dataSource.data);
+                this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort;
               });
             } else {
               this.toastr.success('Create fail !', '');
