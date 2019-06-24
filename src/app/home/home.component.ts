@@ -25,7 +25,10 @@ export class HomeComponent implements OnInit {
   currentSlide = 0;
   tests;
   semesterExamCode = '';
- 
+  Users: string;
+  LisUser;
+  UserId: string;
+  UserName: string;
   semester:Isemaster;
   semesters :Isemaster [] = [];
 
@@ -49,8 +52,16 @@ export class HomeComponent implements OnInit {
         this.semesters = JSON.parse(value).Data;
         console.log(value);
       });
-      
-
+      if (sessionStorage.getItem('user')) {
+        this.Users = sessionStorage.getItem('user');
+        this.LisUser = this.Users.split(',');
+        this.UserName = this.LisUser[1];
+        this.UserId = this.LisUser[0];
+       
+       
+      } else {
+        this.Users = null;
+      }
   }
   changeSlide() {
     this.currentSlide++;
@@ -88,7 +99,13 @@ export class HomeComponent implements OnInit {
     this.toasr.error('');
     }
   }
+  Logout(){
+    sessionStorage.removeItem('currentPermission');
+    this.router.navigate(['']);
+    location.reload();
 
+    sessionStorage.removeItem('user');
+  }
   change(e) {
     this.semesterExamCode = e.value;
     console.log(this.semesterExamCode);
