@@ -172,7 +172,7 @@ export class TestingComponent implements OnInit {
 
     )
     if (confirm('Nop bai')) {
-
+      localStorage.clear();
       this.router.navigate(['/thi/' + this.Idtest + '/' + this.Idtest + '/ketqua']);
     }
 

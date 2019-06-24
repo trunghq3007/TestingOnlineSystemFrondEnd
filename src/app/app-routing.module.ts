@@ -47,7 +47,7 @@ const routes: Routes = [
   {
     path: '',
     children: [{
-      path: '',
+      path: 'Home',
       component: HomeComponent,
     },
     {
