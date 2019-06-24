@@ -202,7 +202,7 @@ const routes: Routes = [
     ], canActivate: [AuthGuard]
   },
   {
-    path: 'SemesterExamManager',
+    path: '',
 
     children:
       [
