@@ -84,6 +84,13 @@ export class ListTestComponent implements OnInit {
         this.dataSource.data = JSON.parse(value);
         console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
 
+      },
+      err=>{
+        if(err.status==401){
+          // this.router.navigate(['group']);
+         
+        }
+       
       });
       this.dataSource.sort = this.sort;
   }
