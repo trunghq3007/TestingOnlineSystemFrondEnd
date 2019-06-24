@@ -50,7 +50,7 @@ export class ViewListSemasterComponent implements OnInit {
   semesterExams: Isemaster[] = [];
   constructor(private myservice:MyserviceService, private semaster: FormBuilder, private fl: FormBuilder, private http: HttpClient, private router: Router, public dialog: MatDialog,private toastr:ToastrService) {
     this.router.events.subscribe((event) => {
-      this.myservice.changeMessage('2');
+      this.myservice.changeMessage('1');
    });
    }
   displayedColumn: string[] = ['select', 'ID', 'SemesterName', 'StartDay', 'EndDay', 'Code', 'status', 'action'];
