@@ -8,6 +8,7 @@ import { ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material';
 import { FormGroup, FormBuilder, FormControl, Validators, ValidationErrors } from '@angular/forms';
 import { Iuser } from '../iuser';
+import { MyserviceService } from '../myservice.service';
 // import { parse } from 'path';
 
 const httpOptions = {
@@ -48,7 +49,12 @@ export class CandidatesComponent implements OnInit {
   Users: Iuser[] = [];
   searchString: string = "";
   candi:Icandidates;
-  constructor(private http: HttpClient, private router: Router, private candidate: FormBuilder, private activatedRoute: ActivatedRoute) { }
+  constructor(private http: HttpClient, private myservice:MyserviceService,private router: Router, private candidate: FormBuilder, private activatedRoute: ActivatedRoute) {
+    this.router.events.subscribe((event) => {
+      this.myservice.changeMessage('1');
+   });
+
+   }
   displayedColumn: string[] = ['select', 'UserId', 'UserName', 'FullName', 'Email', 'Department', 'Position', 'action'];
   dataSource = new MatTableDataSource<Icandidates>(this.candidates);
   dataSource1 = new MatTableDataSource<Iuser>(this.Users);

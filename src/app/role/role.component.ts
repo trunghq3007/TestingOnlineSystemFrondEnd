@@ -9,6 +9,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { ResultObject } from '../result-object';
 import { http } from '../http-header';
 import { ToastrService } from 'ngx-toastr';
+import { MyserviceService } from '../myservice.service';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -22,7 +23,11 @@ export class RoleComponent implements OnInit {
   roles: Role[] = [];
   RoleId: '';
   public Editor = ClassicEditorBuild;
-  constructor(private http: HttpClient, private router: Router, private fb: FormBuilder,private toastr: ToastrService) { }
+  constructor(private http: HttpClient,private myservice:MyserviceService, private router: Router, private fb: FormBuilder,private toastr: ToastrService) {
+    this.router.events.subscribe((event) => {
+      this.myservice.changeMessage('1');
+   });
+   }
   displayedColumn: string[] = [ 'RoleName', 'Description', 'Action'];
   dataSource = new MatTableDataSource<Role>(this.roles);
   selection = new SelectionModel<Role>(true, []);

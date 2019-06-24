@@ -9,6 +9,7 @@ import { Tag } from '../Tag';
 import { Category } from '../ICategory';
 import { http } from '../http-header';
 import { ToastrService } from 'ngx-toastr';
+import { MyserviceService } from '../myservice.service';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -42,7 +43,11 @@ export class EditQuestionComponent implements OnInit {
   get Answers(): FormArray {
     return this.ctForm.get('Answers') as FormArray;
   }
-  constructor(private http: HttpClient, private toastr: ToastrService, private fb: FormBuilder, private router: Router, private activedRoute: ActivatedRoute) { }
+  constructor(private http: HttpClient,private myservice:MyserviceService, private toastr: ToastrService, private fb: FormBuilder, private router: Router, private activedRoute: ActivatedRoute) { 
+    this.router.events.subscribe((event) => {
+      this.myservice.changeMessage('1');
+   });
+  }
 
   createAnswer(): FormGroup {
     return this.fb.group({
