@@ -10,6 +10,7 @@ import { ResultObject } from '../result-object';
 import { Category } from '../ICategory';
 import { Tag } from '../Tag';
 import { http } from '../http-header';
+import { MyserviceService } from '../myservice.service';
 @Component({
   selector: 'app-view-list-question',
   templateUrl: './view-list-question.component.html',
@@ -25,7 +26,11 @@ export class ViewListQuestionComponent implements OnInit {
   Question: Question[] = [];
   tagsFormApi: Tag[];
   categoriesFormApi: Category[];
-  constructor(private http: HttpClient, private router: Router, private toastr: ToastrService) { }
+  constructor(private myservice:MyserviceService ,private http: HttpClient, private router: Router, private toastr: ToastrService) {
+    this.router.events.subscribe((event) => {
+      this.myservice.changeMessage('2');
+   });
+   }
   displayedColumn: string[] = ['select', 'Category', 'CreatedBy', 'CreatedDate', 'Level', 'Content', 'Tag', 'Action'];
   dataSource = new MatTableDataSource<Question>(this.Question);
   formFillter: FormGroup = new FormBuilder().group({

@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ResultObject } from 'src/app/result-object';
 import { http } from 'src/app/http-header';
+import { MyserviceService } from 'src/app/myservice.service';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -13,7 +14,11 @@ const httpOptions = {
 })
 export class ExportExamComponent implements OnInit {
 exam:string;
-  constructor(private http: HttpClient, private router: Router, private ac: ActivatedRoute) { }
+  constructor(private myservice:MyserviceService,private http: HttpClient, private router: Router, private ac: ActivatedRoute) {
+    this.router.events.subscribe((event) => {
+      this.myservice.changeMessage('1');
+   });
+   }
 
   ngOnInit() {
     //confirm('Bạn có muốn lưu file ?? ')

@@ -8,6 +8,7 @@ import { Group } from '../group';
 import { ResultObject } from '../result-object';
 import { http } from '../http-header';
 import { Message } from '@angular/compiler/src/i18n/i18n_ast';
+import { MyserviceService } from '../myservice.service';
 
 
 
@@ -25,7 +26,11 @@ export class GroupComponent implements OnInit {
   searchString: string;
   groups: Group[] = [];
   groupId = '';
-  constructor(private http: HttpClient, private router: Router, private fb: FormBuilder) { }
+  constructor(private http: HttpClient, private router: Router, private fb: FormBuilder,private myservice:MyserviceService) { 
+    this.router.events.subscribe((event) => {
+      this.myservice.changeMessage('1');
+   });
+  }
   displayedColumn: string[] = ['select', 'GroupId', 'GroupName', 'Creator', 'Description', 'CreatedDate', 'EditedDate', 'Action'];
   dataSource = new MatTableDataSource<Group>(this.groups);
   selection = new SelectionModel<Group>(true, []);

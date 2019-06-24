@@ -43,7 +43,9 @@ import { AuthGuard } from './_guards/auth.guard';
 import { ExportExamComponent } from './exam/exam-list/export-exam/export-exam.component';
 import { ExamDetailQuestionComponent } from './exam/exam-detail-question/exam-detail-question.component';
 import { TestingComponent } from './testing/testing.component';
+import { ErrorpageComponent } from './errorpage/errorpage.component';
 const routes: Routes = [
+  
   {
     path: '',
     children: [{
@@ -202,7 +204,7 @@ const routes: Routes = [
     ], canActivate: [AuthGuard]
   },
   {
-    path: 'SemesterExamManager',
+    path: '',
 
     children:
       [
@@ -293,8 +295,8 @@ const routes: Routes = [
   {
     path: 'SemesterExamManager',
     component: ViewListSemasterComponent, canActivate: [AuthGuard]
-  }
-
+  },
+  { path: '**', canActivate: [AuthGuard], component: ErrorpageComponent }
 ];
 
 const fullRoutes = [...routes, ...QuestionRouting];

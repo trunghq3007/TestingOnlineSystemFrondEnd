@@ -7,7 +7,7 @@ import { User } from '../user';
 import { Isemaster } from '../isemaster';
 import { ToastrService } from 'ngx-toastr';
 import { http } from '../http-header';
-
+import { MyserviceService } from '../myservice.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -30,12 +30,16 @@ export class HomeComponent implements OnInit {
   semesters :Isemaster [] = [];
 
   constructor(private http: HttpClient, private router: Router, private authenticationService: AuthenticationService,
-    private toasr: ToastrService) {
+    private toasr: ToastrService,private myservice:MyserviceService) {
     this.changeSlide();
     this.currentUserSubscription = this.authenticationService.currentUser.subscribe(user => {
       this.currentUser = user;
     });
     this.gotoLogin = this.authenticationService.gotoLogin;
+    
+    this.router.events.subscribe((event) => {
+      this.myservice.changeMessage('2');
+   });
   }
 
   ngOnInit() {

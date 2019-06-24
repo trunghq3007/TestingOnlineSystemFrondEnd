@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Question } from '../question';
 import { FormBuilder, FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { http } from '../http-header';
+import { MyserviceService } from '../myservice.service';
 
 @Component({
   selector: 'app-detail-question',
@@ -14,7 +15,11 @@ export class DetailQuestionComponent implements OnInit {
 
   Question: Question;
 
-  constructor(private http: HttpClient, private fb: FormBuilder, private router: Router, private activedRoute: ActivatedRoute) { }
+  constructor(private http: HttpClient,private myservice:MyserviceService, private fb: FormBuilder, private router: Router, private activedRoute: ActivatedRoute) { 
+    this.router.events.subscribe((event) => {
+      this.myservice.changeMessage('1');
+   });
+  }
   question: Question;
   ngOnInit() {
     debugger;

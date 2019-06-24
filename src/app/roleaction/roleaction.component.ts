@@ -9,6 +9,7 @@ import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
 import { Roleaction } from '../roleaction';
 import { http } from '../http-header';
 import { ToastrService } from 'ngx-toastr';
+import { MyserviceService } from '../myservice.service';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -27,8 +28,10 @@ export class RoleActionComponent implements OnInit {
   get RoleName(): FormControl {
     return this.ObjFormGroup.get('RoleName') as FormControl;
   }
-  constructor(private fb: FormBuilder, private http: HttpClient, private router: Router, private activatedRoute: ActivatedRoute,private toastr: ToastrService) {
-
+  constructor(private fb: FormBuilder, private http: HttpClient,private myservice:MyserviceService, private router: Router, private activatedRoute: ActivatedRoute,private toastr: ToastrService) {
+    this.router.events.subscribe((event) => {
+      this.myservice.changeMessage('1');
+   });
   }
   displayedColumn: string[] = [ 'ActionName', 'Description', 'Action'];
   dataSource = new MatTableDataSource<Roleaction>(this.roleactions);

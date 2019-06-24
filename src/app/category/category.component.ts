@@ -9,6 +9,7 @@ import { FormBuilder, FormGroup, Validators, FormControl, ReactiveFormsModule } 
 
 import { ToastrService } from 'ngx-toastr';
 import { http } from '../http-header';
+import { MyserviceService } from '../myservice.service';
 
 @Component({
   selector: 'app-category',
@@ -24,8 +25,12 @@ export class CategoryComponent implements OnInit {
   insertForm: FormGroup;
   unamePattern = "^[A-Za-z-vxyàáâãèéêìíòóôõùúýỳỹỷỵựửữừứưụủũợởỡờớơộổỗồốọỏịỉĩệểễềếẹẻẽặẳẵằắăậẩẫầấạảđ₫]+[A-Za-z0-9a-z-vxyàáâãèéêìíòóôõùúýỳỹỷỵựửữừứưụủũợởỡờớơộổỗồốọỏịỉĩệểễềếẹẻẽặẳẵằắăậẩẫầấạảđ₫.''/# ]*$";
   public dataLength: number;
-  constructor(private http: HttpClient,
-    private router: Router, private toastr: ToastrService) { }
+  constructor(private http: HttpClient,private myservice:MyserviceService,
+    private router: Router, private toastr: ToastrService) {
+      this.router.events.subscribe((event) => {
+        this.myservice.changeMessage('1');
+     });
+     }
   displayedColumn: string[] = ['select', 'Name', 'Description', 'Status', 'CreatedBy', 'CreatedDate', 'Action'];
   dataSource = new MatTableDataSource<Category>(this.categorys);
 
