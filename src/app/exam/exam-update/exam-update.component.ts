@@ -15,21 +15,21 @@ const httpOptions = {
   templateUrl: './exam-update.component.html',
   styleUrls: ['./exam-update.component.scss']
 })
-export class ExamUpdateComponent  implements OnInit {
+export class ExamUpdateComponent implements OnInit {
 
   public Editor = ClassicEditorBuild;
   // submited = false;
   // disabled = false;
   exam: Exam[] = [];
-  
+
   editForm: FormGroup;
   number = "^([1-9][0-9]{0,3}|^2000)$";
   //regex = "^[A-Za-z0-9\s _]+$";
   CategoryFormApi = [];
   categoryname: {};
-  
 
-  constructor(private fb: FormBuilder,private toar:ToastrService, private http: HttpClient, private ac: ActivatedRoute,
+
+  constructor(private fb: FormBuilder, private toar: ToastrService, private http: HttpClient, private ac: ActivatedRoute,
     private router: Router) { }
   get NameExam(): FormControl {
     return this.editForm.get('NameExam') as FormControl;
@@ -59,7 +59,7 @@ export class ExamUpdateComponent  implements OnInit {
     return this.editForm.get('Note') as FormControl;
   }
   getApiCategory() {
-    this.http.get<string>('http://localhost:65170/api/Category/',{ headers: http() }).subscribe(value => {
+    this.http.get<string>('http://localhost:65170/api/Category/', { headers: http() }).subscribe(value => {
       this.CategoryFormApi = JSON.parse(value);
       console.log(this.CategoryFormApi);
     });
@@ -80,19 +80,19 @@ export class ExamUpdateComponent  implements OnInit {
     });
 
     const examID = this.ac.snapshot.paramMap.get('Id');
-    this.http.get<string>('http://localhost:65170/api/Exam/' + examID,{ headers: http() }).subscribe(value => {
+    this.http.get<string>('http://localhost:65170/api/Exam/' + examID, { headers: http() }).subscribe(value => {
       this.categoryname = value;
       console.log(value);
     });
-    this.http.get<string>('http://localhost:65170/api/Exam/' + examID,{ headers: http() }).subscribe(value => {
+    this.http.get<string>('http://localhost:65170/api/Exam/' + examID, { headers: http() }).subscribe(value => {
       this.exam = JSON.parse(value).Data[0];
-      
+
       // if(this.exam.Category){
       //   this.exam.CategoryId= this.exam.Category.Id;
       // }
       this.editForm.patchValue(this.exam);
 
-      
+
     });
   }
 
@@ -102,8 +102,8 @@ export class ExamUpdateComponent  implements OnInit {
       this.editForm.get('CreateBy').markAsTouched();
       this.editForm.get('QuestionNumber').markAsTouched();
       this.editForm.get('SpaceQuestionNumber').markAsTouched();
-       //this.editForm.get('CategoryId').markAsTouched();
-       return;
+      //this.editForm.get('CategoryId').markAsTouched();
+      return;
 
     }
 
@@ -111,32 +111,33 @@ export class ExamUpdateComponent  implements OnInit {
   onSubmit() {
     const value = this.editForm.value;
     console.log(this.editForm.value);
+
+    // let temp=this.CategoryFormApi.filter(s => s.CategoryId == value.CategoryId);
+    let temp = this.CategoryFormApi.filter(s => s.Id == value.CategoryId);
+    console.log(temp);
+    //value.Category = this.CategoryFormApi.filter(s => s.Id == value.CategoryId);
+    value.Category = temp.length > 0 ? temp[0] : null;
+    console.log(value);
     if (this.editForm.valid) {
       const formData = {
         ...this.exam,
         ...value
       };
-      let temp=this.CategoryFormApi.filter(s => s.CategoryId == value.CategoryId);
-      //value.Category = this.CategoryFormApi.filter(s => s.Id == value.CategoryId);
-      value.Category = temp.length > 0 ? temp[0] : null;
-      console.log(value);
-      this.http.put('http://localhost:65170/api/Exam/' + formData.Id, formData,{ headers: http() }).subscribe({
+      this.http.put('http://localhost:65170/api/Exam/' + formData.Id, formData, { headers: http() }).subscribe({
         next: (res) => {
-          if(res ==1){
-            this.toar.success('success',' Update Exam');
-          }else{
-            this.toar.error('false',' Update Exam');
-          }
+          this.toar.success('true','Update Success');
          
+        
+
         }
         ,
         error: (err) => {
-          this.toar.warning('false','  Update Exam');
+          this.toar.warning('false', '  Update Exam');
         }
       });
       console.log(this.editForm.value);
     }
-    this.router.navigate(['/exam'])
+    // this.router.navigate(['/exam'])
   }
 
 

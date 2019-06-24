@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnDestroy, Pipe } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, Pipe, SimpleChanges } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Question } from '../question';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -6,7 +6,6 @@ import { MatDialog, MatTableDataSource } from '@angular/material';
 import { TestProcessing } from '../test-processing';
 import { ProcessingTest } from '../processing-test'
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { CountdownModule } from 'ngx-countdown';
 import { http } from '../http-header';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -21,7 +20,10 @@ const httpOptions = {
   name: 'minuteSeconds'
 })
 export class TestingComponent implements OnInit {
-
+  Users: string;
+  LisUser;
+  UserId: string;
+  UserName: string;
   constructor(private semaster: FormBuilder, private fb: FormBuilder, private http: HttpClient, private router: Router, public dialog: MatDialog, public activateRoute: ActivatedRoute) { }
   testProcessings: TestProcessing;
   questions: Question[];
@@ -35,24 +37,44 @@ export class TestingComponent implements OnInit {
   remainingTime: number;
   private intervalId = 0;
   message = '';
-  arrayId=[];
-  mang=[];
-  checked=true;
+  arrayId = [];
+  mang = [];
+  checked = true;
+  EndTest;
+  startTest;
+  time;
+  CheckTime;
+  second:number;
+  Idtest = this.activateRoute.snapshot.paramMap.get('TestId');
   ngOnInit() {
-    this.http.get<string>('http://localhost:65170/api/SemesterExam/1?IsgetTestProcessing',httpOptions).subscribe(
+    
+    this.http.get<string>('http://localhost:65170/api/SemesterExam/' + this.Idtest + '?IsgetTestProcessing', httpOptions).subscribe(
       value => {
         this.testProcessings = JSON.parse(value);
         this.questions = this.testProcessings.Questions;
         console.log(this.testProcessings);
         console.log(this.questions = this.testProcessings.Questions);
-        this.counting = this.testProcessings.TestTime;
-       
+        this.second = this.testProcessings.TestTime;
+        console.log(this.second);
+
         this.reset();
         this.start();
-      })
+       
+      });
+    if (sessionStorage.getItem('user')) {
+      this.Users = sessionStorage.getItem('user');
+      this.LisUser = this.Users.split(',');
+      this.UserName = this.LisUser[1];
+      this.UserId = this.LisUser[0];
+
+
+    } else {
+      this.Users = null;
+    }
+
   }
   Onclick(id, btnid) {
- 
+
     this.a = this.questions.findIndex(d => d.Id == btnid);
     this.answer = this.questions[this.a].Answers;
     let dem = 0;
@@ -60,28 +82,25 @@ export class TestingComponent implements OnInit {
 
       if (document.getElementById("check" + this.questions[this.a].Answers[i].Id).checked) {
         dem++;
-        if(this.arrayId.indexOf(this.questions[this.a].Answers[i].Id)==-1)
-             {
-                this.arrayId.push(this.questions[this.a].Answers[i].Id);
-               
-           }
+        if (this.arrayId.indexOf(this.questions[this.a].Answers[i].Id) == -1) {
+          this.arrayId.push(this.questions[this.a].Answers[i].Id);
+
+        }
         if (dem > 0) {
           document.getElementById("btn" + btnid).classList.add("button-selected");
         }
       }
-    
+
     }
 
     if (!document.getElementById("check" + id).checked) {
       dem--;
-      for(var n=0;n<this.arrayId.length;n++)
-      {
-        if(this.arrayId[n]==id)
-        {
-          this.arrayId.splice(n,1);
+      for (var n = 0; n < this.arrayId.length; n++) {
+        if (this.arrayId[n] == id) {
+          this.arrayId.splice(n, 1);
           console.log(this.arrayId)
         }
-      } 
+      }
       if (dem === -1) {
         document.getElementById("btn" + btnid).classList.remove("button-selected");
       }
@@ -97,9 +116,10 @@ export class TestingComponent implements OnInit {
   start() {
     this.countDown();
     if (this.remainingTime <= 0) {
-      this.remainingTime = this.counting;
+      this.remainingTime = this.second;
     }
   }
+ 
   stop() {
     this.clearTimer();
     this.message = `Holding at T-${this.remainingTime} seconds`;
@@ -115,32 +135,47 @@ export class TestingComponent implements OnInit {
     this.intervalId = window.setInterval(() => {
       this.remainingTime -= 1;
      
-      if (this.remainingTime === 0) {
+      var session=null;
+      if(localStorage.getItem('SecondTest')){
+         session = localStorage.getItem('SecondTest');
+      }else{
+        session=0;
+      }
+    
+        var a = new Date();
+        this.EndTest = a.getHours() * 60 + a.getMinutes();
+      
+        this.startTest = +session;
        
-        this.message = 'Blast off!';
-
-        this.router.navigate(['/thi/8/2/ketqua']);
-        console.log(this.router.navigate(['/thi/8/2/ketqua']));
+      
+       
+       if (this.EndTest - this.startTest >= this.second) {
+         localStorage.clear();
+         this.router.navigate(['/thi/8/2/ketqua']);
         
-
-        this.clearTimer(); // thay bang goi den ham` ket qua thi
-      } else {
-        this.message = `T-${this.remainingTime} seconds and counting`;
+       
+      
       }
     }, 1000);
 
   }
+
+
   summit() {
     const Idtest = this.testProcessings.Id;
-    var arr=this.arrayId;
+    var arr = this.arrayId;
     console.log(arr);
     console.log(Idtest);
-  
-     this.http.post('http://localhost:65170/SemesterExam/submid/1?userID=2', JSON.stringify(arr),httpOptions).subscribe(
-       value => (console.log(value))
- 
-     )
- 
-    
-   }
+
+    this.http.post('http://localhost:65170/SemesterExam/submid/' + this.Idtest + '?userID=' + this.UserId, JSON.stringify(arr), httpOptions).subscribe(
+      value => (console.log(value))
+
+    )
+    if (confirm('Nop bai')) {
+
+      this.router.navigate(['/thi/' + this.Idtest + '/' + this.Idtest + '/ketqua']);
+    }
+
+
+  }
 }

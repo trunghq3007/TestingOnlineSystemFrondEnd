@@ -256,7 +256,7 @@ const routes: Routes = [
                     ,
                     {
                       path: 'thi',
-                      component: ThiThiComponent
+                      component: TestingComponent
                     },
                     {
                       path: 'ketqua',
@@ -293,10 +293,6 @@ const routes: Routes = [
   {
     path: 'SemesterExamManager',
     component: ViewListSemasterComponent, canActivate: [AuthGuard]
-  },
-  {
-    path: 'testing',
-    component: TestingComponent, 
   }
 
 ];
