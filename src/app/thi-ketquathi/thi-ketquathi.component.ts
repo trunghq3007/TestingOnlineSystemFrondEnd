@@ -86,9 +86,6 @@ get Category(): FormControl {
   
   }
 
-  submit()
-  {
-   this.router.navigate(['']);
-  }
+  
 
 }

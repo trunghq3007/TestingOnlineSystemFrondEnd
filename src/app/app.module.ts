@@ -86,6 +86,7 @@ import { ExportExamComponent } from './exam/exam-list/export-exam/export-exam.co
 import { TestingComponent } from './testing/testing.component';
 
 import{ CandidatesComponent } from './candidates/candidates.component';
+import { ErrorpageComponent } from './errorpage/errorpage.component';
 @NgModule({
   declarations: [
     ExamListComponent,
@@ -146,7 +147,8 @@ import{ CandidatesComponent } from './candidates/candidates.component';
     ExportExamComponent,
 
     TestingComponent,
-    CandidatesComponent
+    CandidatesComponent,
+    ErrorpageComponent
   ],
   imports: [
     MatTabsModule,
