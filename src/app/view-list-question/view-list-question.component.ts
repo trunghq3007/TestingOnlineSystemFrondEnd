@@ -28,7 +28,7 @@ export class ViewListQuestionComponent implements OnInit {
   categoriesFormApi: Category[];
   constructor(private myservice:MyserviceService ,private http: HttpClient, private router: Router, private toastr: ToastrService) {
     this.router.events.subscribe((event) => {
-      this.myservice.changeMessage('2');
+      this.myservice.changeMessage('1');
    });
    }
   displayedColumn: string[] = ['select', 'Category', 'CreatedBy', 'CreatedDate', 'Level', 'Content', 'Tag', 'Action'];
@@ -176,12 +176,13 @@ export class ViewListQuestionComponent implements OnInit {
 
   fillterClick() {
     console.log(this.formFillter.value);
+    debugger;
     this.http.post<string>('http://localhost:65170/api/question?action=fillter',
       JSON.stringify(this.formFillter.value),{ headers: http() }).subscribe(value => {
 
         const source = JSON.parse(value).Data;
 
-
+debugger;
         for (let index = 0; index < source.length; index++) {
           let tagNames = '';
           const element = source[index];

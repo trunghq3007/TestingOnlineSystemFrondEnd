@@ -31,7 +31,7 @@ import { ViewlistTestbySemesterComponent } from './viewlist-testby-semester/view
 import { ThiChitietbaithiComponent } from './thi-chitietbaithi/thi-chitietbaithi.component';
 import { ThiThiComponent } from './thi-thi/thi-thi.component';
 import { RoleComponent } from './role/role.component';
-import{CandidatesComponent}from './candidates/candidates.component';
+import { CandidatesComponent } from './candidates/candidates.component';
 import { from } from 'rxjs';
 import { ListExamUserComponent } from './list-exam-user/list-exam-user.component';
 import { DetailExamCustomerComponent } from './detail-exam-customer/detail-exam-customer.component';
@@ -44,8 +44,12 @@ import { ExportExamComponent } from './exam/exam-list/export-exam/export-exam.co
 import { ExamDetailQuestionComponent } from './exam/exam-detail-question/exam-detail-question.component';
 import { TestingComponent } from './testing/testing.component';
 import { ErrorpageComponent } from './errorpage/errorpage.component';
+import { CreateQuestionComponent } from './create-question/create-question.component';
+import { DetailQuestionComponent } from './detail-question/detail-question.component';
+import { EditQuestionComponent } from './edit-question/edit-question.component';
+import { ImportQuestionComponent } from './import-question/import-question.component';
 const routes: Routes = [
-  
+
   {
     path: '',
     children: [{
@@ -117,7 +121,7 @@ const routes: Routes = [
     },
     ], canActivate: [AuthGuard]
   },
- 
+
   {
     path: 'exam',
     children: [
@@ -127,7 +131,7 @@ const routes: Routes = [
         pathMatch: 'full'
       },
       {
-        path:'export/:Id',
+        path: 'export/:Id',
         component: ExportExamComponent
       },
       {
@@ -138,10 +142,10 @@ const routes: Routes = [
         path: ':examID',
         component: ExamDetailComponent
       },
-{
-  path:'examquestion/:examID',
-  component:ExamDetailQuestionComponent
-},
+      {
+        path: 'examquestion/:examID',
+        component: ExamDetailQuestionComponent
+      },
 
       {
         path: 'update/:Id',
@@ -296,6 +300,35 @@ const routes: Routes = [
     path: 'SemesterExamManager',
     component: ViewListSemasterComponent, canActivate: [AuthGuard]
   },
+  {
+    path: 'question',
+    children: [
+      {
+        path: '',
+        component: ViewListQuestionComponent,
+        pathMatch: 'full'
+      },
+      {
+        path: 'create',
+        component: CreateQuestionComponent
+      },
+      {
+        path: ':id/detail',
+        component: DetailQuestionComponent
+      },
+      {
+        path: ':id/update',
+        component: EditQuestionComponent
+      },
+      {
+        path: 'import',
+        component: ImportQuestionComponent
+      }
+
+    ],
+  },
+
+
   { path: '**', canActivate: [AuthGuard], component: ErrorpageComponent }
 ];
 
