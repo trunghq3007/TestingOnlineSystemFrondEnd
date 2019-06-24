@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormGroup, FormBuilder, FormControl, Validators, ValidationErrors, FormControlName } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { http } from '../http-header';
+import { MyserviceService } from '../myservice.service';
 
 
 const httpOptions = {
@@ -45,7 +46,11 @@ get Category(): FormControl {
 }
 
 
-  constructor( private result:FormBuilder ,private activatedRoute: ActivatedRoute, private http: HttpClient, private router: Router) { }
+  constructor(private myservice:MyserviceService, private result:FormBuilder ,private activatedRoute: ActivatedRoute, private http: HttpClient, private router: Router) {
+    this.router.events.subscribe((event) => {
+      this.myservice.changeMessage('2');
+   });
+   }
 
   ngOnInit() {
     this.formApply=this.result.group({

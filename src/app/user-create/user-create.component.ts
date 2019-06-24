@@ -6,6 +6,8 @@ import { User } from '../user';
 import { ResultObject } from '../result-object';
 import { http } from '../http-header';
 import { ToastrService } from 'ngx-toastr';
+import { MyserviceService } from '../myservice.service';
+import { Router } from '@angular/router';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -71,7 +73,11 @@ export class UserCreateComponent implements OnInit {
   get Note(): FormControl {
     return this.createForm.get('Note') as FormControl;
   }
-  constructor(private fb: FormBuilder, private http: HttpClient,private toar:ToastrService) { }
+  constructor(private myservice:MyserviceService, private router: Router, private fb: FormBuilder, private http: HttpClient,private toar:ToastrService) {
+    this.router.events.subscribe((event) => {
+      this.myservice.changeMessage('1');
+   });
+   }
 
   getApiRoles() {
     this.http.get<string>('http://localhost:65170/api/role/',{ headers: http() }).subscribe(value => {

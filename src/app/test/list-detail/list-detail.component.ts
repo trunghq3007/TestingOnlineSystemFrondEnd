@@ -1,10 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Test } from '../list-test/list-test.component';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { http } from 'src/app/http-header';
+import { MyserviceService } from 'src/app/myservice.service';
 
 @Component({
   selector: 'app-list-detail',
@@ -20,8 +21,11 @@ export class ListDetailComponent implements OnInit {
   selection = new SelectionModel<Test>(true, []);
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  constructor(private ac: ActivatedRoute,
-    private http: HttpClient) { }
+  constructor(private myservice:MyserviceService, private router: Router, private ac: ActivatedRoute, private http: HttpClient) {
+    this.router.events.subscribe((event) => {
+      this.myservice.changeMessage('1');
+   });
+   }
   private UserId: string;
 
   ngOnInit() {

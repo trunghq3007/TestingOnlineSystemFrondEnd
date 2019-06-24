@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { http } from 'src/app/http-header';
+import { MyserviceService } from 'src/app/myservice.service';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -44,8 +45,10 @@ export class ListUpdateComponent implements OnInit {
   form: FormGroup;
   semasters: semaster[] = [];
   
-  constructor(private insert: FormBuilder, private http: HttpClient, private ac: ActivatedRoute,private toar:ToastrService) {
-
+  constructor(private myservice:MyserviceService, private router: Router, private insert: FormBuilder, private http: HttpClient, private ac: ActivatedRoute,private toar:ToastrService) {
+    this.router.events.subscribe((event) => {
+      this.myservice.changeMessage('1');
+   });
   }
 
 

@@ -6,6 +6,7 @@ import { FormGroup, FormBuilder, FormControl, Validators, ValidationErrors, Form
 import { and } from '@angular/router/src/utils/collection';
 import { Isemaster } from '../isemaster';
 import { http } from '../http-header';
+import { MyserviceService } from '../myservice.service';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -49,7 +50,11 @@ export class SemesterDetailComponent implements OnInit {
   date2 = new FormControl(new Date(this.list.EndDay));
   
   
-  constructor(private semester: FormBuilder , private activatedRoute: ActivatedRoute, private http: HttpClient, private router: Router) { }
+  constructor(private myservice:MyserviceService, private semester: FormBuilder , private activatedRoute: ActivatedRoute, private http: HttpClient, private router: Router) {
+    this.router.events.subscribe((event) => {
+      this.myservice.changeMessage('1');
+   });
+   }
 
   ngOnInit() {
     this.formApply = this.semester.group({
