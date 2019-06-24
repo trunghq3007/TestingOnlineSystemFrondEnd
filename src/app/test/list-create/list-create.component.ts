@@ -32,6 +32,11 @@ export class semaster{
   styleUrls: ['./list-create.component.scss']
 })
 export class ListCreateComponent implements OnInit {
+  Users: string;
+  LisUser;
+  UserId: string;
+  UserName: string;
+  //name:string;
   currentUser: User;
   currentUserSubscription: Subscription;
   isMember = false;
@@ -63,12 +68,23 @@ regTotal="^[0-9]{1,2}$";
 regPassScore="^[0-9]{1,3}$"
 
   ngOnInit() {
+    if (sessionStorage.getItem('user')) {
+      this.Users = sessionStorage.getItem('user');
+      this.LisUser = this.Users.split(',');
+      this.UserName = this.LisUser[1];
+      this.UserId = this.LisUser[0];
+     
+     
+    } else {
+      this.Users = null;
+    }
+    console.log(''+this.UserName);
     this.form = this.insert.group({
       ExamId: ['', [Validators.required]],
       SemasterExamId: ['',[Validators.required]],
       TestName: ['', [Validators.required,Validators.maxLength(50)]],
       
-      CreateBy: ['', [Validators.required]],
+      CreateBy: [this.UserName],
       
       PassScore: ['', [Validators.required,Validators.pattern]],
       TotalTest: ['', [Validators.required,Validators.pattern]],
