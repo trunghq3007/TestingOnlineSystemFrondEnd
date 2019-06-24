@@ -49,7 +49,7 @@ const routes: Routes = [
   {
     path: '',
     children: [{
-      path: 'Home',
+      path: '',
       component: HomeComponent,
     },
     {
