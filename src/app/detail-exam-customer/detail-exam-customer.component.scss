@@ -73,11 +73,11 @@ h2{
     }
 
     // css button
-    a{
+    a.abcd{
         position: absolute;
         
        
-        width: 92%;
+        width: 93%;
         height: 50px;
         line-height: 50px;
         font-size: 20px;
@@ -89,7 +89,7 @@ h2{
         text-align: center;
         
     }
-    a:before{
+    a.abcd:before{
         content:attr(data-text);
         position:absolute;
         top:0;
@@ -105,11 +105,11 @@ h2{
         
         
     }
-    a:hover:before{
+    a.abcd:hover:before{
         transform:translateY(0) rotateX(0deg);
     }
 
-    a:after{
+    a.abcd:after{
         content:attr(data-text);
         position:absolute;
         top:0;
@@ -125,8 +125,12 @@ h2{
         
         
     }
-    a:hover:after{
+    a.abcd:hover:after{
         transform:translateY(100%) rotateX(90deg);
+    }
+    
+    .pull-right {
+        margin-top: -25px;
     }
     
 

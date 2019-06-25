@@ -54,6 +54,8 @@ export class ExamListComponent implements OnInit {
           error: (err) => {
 
             console.log('false');
+            var errors=err.status+','+err.message;
+            this.myservice.changeError(errors);
           }
 
         });
@@ -75,14 +77,29 @@ export class ExamListComponent implements OnInit {
         this.dataSource.data = this.exams;
         console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
 
-      });
+      },
+      err=>{
+        
+        var errors=err.status+','+err.message;
+        this.myservice.changeError(errors);
+      }
+      );
   }
 
   ngOnInit() {
     this.http.post<string>('http://localhost:65170/api/Exam?action=getfilter', {},{ headers: http() }).subscribe(
       value => {
         this.listExam = JSON.parse(value);
-      });
+      },
+      err=>{
+        
+        // this.router.navigate(['group']);
+        var errors=err.status+','+err.message;
+        this.myservice.changeError(errors);
+       
+      
+     
+    });
     this.filterExam = this.fb.group({
       Timetest: ['',],
       CreateBy: ['',],
@@ -103,7 +120,16 @@ export class ExamListComponent implements OnInit {
         value => {
           this.examInfo = JSON.parse(value).Data;
           console.log(this.examInfo);
-        }
+        },
+        err=>{
+        
+          // this.router.navigate(['group']);
+          var errors=err.status+','+err.message;
+          this.myservice.changeError(errors);
+         
+        
+       
+      }
       );
   }
   detailQuestion(examID) {
@@ -113,7 +139,16 @@ export class ExamListComponent implements OnInit {
         value => {
           this.examInfo = JSON.parse(value);
 
-        }
+        },
+        err=>{
+        
+          // this.router.navigate(['group']);
+          var errors=err.status+','+err.message;
+          this.myservice.changeError(errors);
+         
+        
+       
+      }
       );
   }
   onFilter() {
@@ -121,7 +156,16 @@ export class ExamListComponent implements OnInit {
     this.http.post<string>('http://localhost:65170/api/Exam/?action=filter', JSON.stringify(value),{ headers: http() }).subscribe(value => {
       this.dataSource.data = JSON.parse(value);
       console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
-    });
+    },
+    err=>{
+        
+      // this.router.navigate(['group']);
+      var errors=err.status+','+err.message;
+      this.myservice.changeError(errors);
+     
+    
+   
+  });
 
     // const value = this.filterExam.value;
     // this.http.post<string>('http://localhost:65170/api/Exam?action=getfilter', JSON.stringify(value)).subscribe(value => {
@@ -132,7 +176,16 @@ export class ExamListComponent implements OnInit {
     this.http.get<string>('http://localhost:65170/api/Exam?searchString=' + this.searchString,{ headers: http() }).subscribe(value => {
       this.dataSource.data = JSON.parse(value);
       console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
-    });
+    },
+    err=>{
+        
+      // this.router.navigate(['group']);
+      var errors=err.status+','+err.message;
+      this.myservice.changeError(errors);
+     
+    
+   
+  });
   }
 
   isAllSelected() {
@@ -161,7 +214,16 @@ export class ExamListComponent implements OnInit {
             this.listexams();
             this.toasr.warning('Export Successfully', 'Exam.Export');
 
-          });
+          },
+          err=>{
+        
+            // this.router.navigate(['group']);
+            var errors=err.status+','+err.message;
+            this.myservice.changeError(errors);
+           
+          
+         
+        });
     }
   }
 
@@ -180,7 +242,16 @@ export class ExamListComponent implements OnInit {
             this.listexams();
            
 
-          });
+          },
+          err=>{
+        
+            // this.router.navigate(['group']);
+            var errors=err.status+','+err.message;
+            this.myservice.changeError(errors);
+           
+          
+         
+        });
     }
   }
 
