@@ -63,7 +63,7 @@ export class ExamDetailQuestionComponent implements OnInit {
 
       }, err=>{
         
-        // this.router.navigate(['group']);
+       
         var errors=err.status+','+err.message;
         this.myservice.changeError(errors);
        
@@ -101,7 +101,7 @@ export class ExamDetailQuestionComponent implements OnInit {
 
       }, err=>{
         
-        // this.router.navigate(['group']);
+       
         var errors=err.status+','+err.message;
         this.myservice.changeError(errors);
        

@@ -109,7 +109,7 @@ export class ExamDetailComponent implements OnInit {
       },
       err=>{
         
-        // this.router.navigate(['group']);
+      
         var errors=err.status+','+err.message;
         this.myservice.changeError(errors);
        
@@ -130,7 +130,7 @@ export class ExamDetailComponent implements OnInit {
       },
       err=>{
         
-        // this.router.navigate(['group']);
+      
         var errors=err.status+','+err.message;
         this.myservice.changeError(errors);
        
@@ -168,7 +168,7 @@ this.selection.clear();
       },
       err=>{
         
-        // this.router.navigate(['group']);
+        
         var errors=err.status+','+err.message;
         this.myservice.changeError(errors);
        
@@ -208,7 +208,7 @@ this.selection.clear();
       },
       err=>{
         
-        // this.router.navigate(['group']);
+       
         var errors=err.status+','+err.message;
         this.myservice.changeError(errors);
        
@@ -234,7 +234,7 @@ this.selection.clear();
       console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
     }, err=>{
         
-      // this.router.navigate(['group']);
+      
       var errors=err.status+','+err.message;
       this.myservice.changeError(errors);
      
@@ -251,7 +251,7 @@ this.selection.clear();
 
     }, err=>{
         
-      // this.router.navigate(['group']);
+      
       var errors=err.status+','+err.message;
       this.myservice.changeError(errors);
      
