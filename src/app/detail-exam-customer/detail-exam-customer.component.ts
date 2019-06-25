@@ -14,6 +14,12 @@ const httpOptions = {
 })
 export class DetailExamCustomerComponent implements OnInit {
   list: DetailExam;
+
+  notify: boolean = true;
+  Users: string;
+  LisUser;
+  UserId: string;
+  UserName: string;
   constructor(private http: HttpClient,private myservice:MyserviceService, private router: Router, private activedRoute: ActivatedRoute) { 
     this.router.events.subscribe((event) => {
       this.myservice.changeMessage('2');
@@ -35,7 +41,34 @@ export class DetailExamCustomerComponent implements OnInit {
         console.log(value);
         this.chuoi = '/thi/1/'+IdQuestion+'/thi' ;
       });
+
+
+      
+    if (sessionStorage.getItem('user')) {
+      this.Users = sessionStorage.getItem('user');
+      this.LisUser = this.Users.split(',');
+      this.UserName = this.LisUser[1];
+      this.UserId = this.LisUser[0];
+
+
+    } else {
+      this.Users = null;
+    }
+
   }
+  listExam(id) {
+
+  }
+
+  Logout() {
+    sessionStorage.removeItem('currentPermission');
+   this.router.navigate(['/']);
+
+
+    sessionStorage.removeItem('user');
+  }
+
+  
   test(){
     var checked=localStorage.getItem('SecondTest');
     if(checked==null){
