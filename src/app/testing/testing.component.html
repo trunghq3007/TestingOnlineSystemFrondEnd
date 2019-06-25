@@ -1,22 +1,22 @@
 <div class="content-wrapper" style="width: 100%;margin-left: 0px;background-color: white" >
 <div style="width: 25%;float: left;margin-top: 5%" *ngIf="testProcessings">
     
-    <button type="button" class="btn btn-primary" (click)="summit()" style="margin-left: 23px;margin-right: 5px" >Submit</button>
-    <button class="btn btn-primary"  >
+    <button type="button" class="btn btn-primary" (click)="summit()" style="margin-left: 23px;margin-right: 5px;width: 100px" >Submit</button>
+    <button class="btn btn-danger"  style="margin-left: 50px;width: 100px" >
       <span class="magin-right magin-left"  >{{second -(EndTest - startTest)  }}Phut</span>
     </button>
-    <div style="margin-left: 23px;margin-top: 5%">
+    <div style="margin-left: 23px;margin-top: 6%">
       
-    <span>Tổng số câu hỏi: {{testCount}}</span>
+    <span><i class="fa fa-question-circle"></i>Tổng số câu hỏi: {{testCount}}</span>
    </div>
-   <div style="margin-left: 23px;">
-      <span>Thời gian : {{second}} Phút </span>
+   <div style="margin-left: 23px;margin-top: 10px">
+      <span><i class="fa fa-clock-o"></i>Thời gian : {{second}} Phút </span>
      </div>
-   <div style="margin-left: 23px;">
+   <div style="margin-left: 23px;margin-top: 10px">
       <button type="button" class="btn btn-success"></button>
       <span>Câu hỏi đã trả lời</span>
    </div>
-   <div style="margin-left: 23px;margin-bottom: 5%">
+   <div style="margin-left: 23px;margin-bottom: 5%;margin-top: 10px">
       <button type="button" class="btn btn-secondary"></button>
       <span>Câu hỏi chưa trả lời</span>
    </div>

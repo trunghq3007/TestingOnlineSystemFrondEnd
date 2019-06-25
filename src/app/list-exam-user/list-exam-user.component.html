@@ -7,7 +7,12 @@
     <div *ngIf="UserName; then thenBlock else elseBlock"></div>
     <ng-template #thenBlock>
       <ul class="nav navbar-nav pull-right" style="margin-right: 5%">
+          <li ><a routerLink="/group"><i class="fa fa-lock"></i>Admin Manager</a></li>
 
+
+          <li>
+              <a class="btn" [routerLink]="['']" routerLinkActive="active"><span><i class="fa fa-home"></i></span>Home</a>
+            </li>
         <li class="pointer"><a (click)="Logout()">
             <i class="fa fa-sign-out"></i>Sign out</a></li>
 
@@ -30,9 +35,7 @@
     <ul class="nav navbar-nav pull-right">
 
 
-      <li>
-        <a class="btn" [routerLink]="['']" routerLinkActive="active"><span><i class="fa fa-home"></i></span>Home</a>
-      </li>
+     
     </ul>
 
 
