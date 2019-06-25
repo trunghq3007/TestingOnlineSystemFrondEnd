@@ -163,8 +163,9 @@ export class TagsComponent implements OnInit {
           next: (res) => {
             this.http.get<string>('http://localhost:65170/api/Tag/').subscribe(value => {
               this.dataSource.data = this.FormatData(JSON.parse(value));
-              this.toastr.info('Create success!', ' Tag!');
+             
             });
+            this.toastr.info('Create success!', ' Tag!');
             this.ctForm.reset();
           },
           error: (err) => {
@@ -203,8 +204,9 @@ export class TagsComponent implements OnInit {
             next: (res) => {
               this.http.get<string>('http://localhost:65170/api/Tag/',{ headers: http() }).subscribe(value => {
                 this.dataSource.data = this.FormatData(JSON.parse(value));
-                this.toastr.info('Edit success!', 'List Tag!');
+                
               });
+              this.toastr.info('Edit success!', 'List Tag!');
 
             },
 
