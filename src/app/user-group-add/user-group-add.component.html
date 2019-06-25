@@ -6,8 +6,8 @@
         </mat-form-field>
       <!-- <input style="height: 34px;" type="text" placeholder="Search.." name="search"> -->
       <!-- <button style="height: 34px; width: 34px;" type="submit"><i class="fa fa-search"></i></button> -->
-      <button  data-title="Delete" data-toggle="modal"
-      data-target="#delete" type="submit" style="margin-left: 35%; width: 82px" class="btn btn-primary">Add</button>
+      <button  data-title="Delete" (click)="AddSelectedRows()"
+      data-target="#add" type="submit" style="margin-left: 35%; width: 82px" class="btn btn-primary">Add</button>
       <button (click)="clickToRoute()" type="submit" style="margin-left: 2%" class="btn btn-danger">Go Back</button>
     </form>
  

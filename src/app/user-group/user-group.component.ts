@@ -8,6 +8,7 @@ import { ResultObject } from '../result-object';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { http } from '../http-header';
 import { MyserviceService } from '../myservice.service';
+import { ToastrService } from 'ngx-toastr';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -25,11 +26,11 @@ export class UserGroupComponent implements OnInit {
   get GroupName(): FormControl {
     return this.ObjFormGroup.get('GroupName') as FormControl;
   }
-  constructor(private myservice:MyserviceService, private fb: FormBuilder, private http: HttpClient, private router: Router, private activatedRoute: ActivatedRoute) {
+  constructor(private toar: ToastrService, private myservice: MyserviceService, private fb: FormBuilder, private http: HttpClient, private router: Router, private activatedRoute: ActivatedRoute) {
     this.router.events.subscribe((event) => {
       this.myservice.changeMessage('1');
-   });
-   }
+    });
+  }
   displayedColumn: string[] = ['select', 'UserId', 'UserName', 'FullName', 'Action'];
   dataSource = new MatTableDataSource<GroupUser>(this.usergroups);
   selection = new SelectionModel<GroupUser>(true, []);
@@ -83,36 +84,38 @@ export class UserGroupComponent implements OnInit {
   getId(id) {
     this.userId = id;
   }
-  DeleteUserGroup() {
-    const GroupId = this.activatedRoute.snapshot.paramMap.get('groupId');
-    this.http.delete<string>('http://localhost:65170/api/UserGroup/?idgroup=' + GroupId + '&iduser=' + this.userId, { headers: http() }).subscribe((res) => {
-      let result = JSON.parse(res);
-      if (result.Success == 1) {
-        this.usergroups = this.usergroups.filter(b => b.UserId !== this.userId);
-        confirm('Delete success!');
-        this.listUserGroup();
-      } else {
-        confirm('Delete failed!');
-      }
+  DeleteUserGroup(userId) {
+    if (confirm('Are you sure you want to delete this user?')) {
+      const GroupId = this.activatedRoute.snapshot.paramMap.get('groupId');
+      this.http.delete<string>('http://localhost:65170/api/UserGroup/?idgroup=' + GroupId + '&iduser=' + userId, { headers: http() }).subscribe((res) => {
+        let result = JSON.parse(res);
+        if (result.Success == 1) {
+          this.usergroups = this.usergroups.filter(b => b.UserId !== this.userId);
+          this.toar.success('Delete success !', '');
+          this.listUserGroup();
+        } else {
+          this.toar.error('Delete Fail !', '');
+        }
 
-    });
+      });
+    }
   }
 
   removeSelectedRows() {
-    this.selection.selected.forEach(item => {
-      const UserGroupId = this.activatedRoute.snapshot.paramMap.get('groupId');
-      this.http.delete<string>('http://localhost:65170/api/UserGroup/?idgroup=' + UserGroupId + '&iduser=' + item.UserId, { headers: http() }).subscribe(res => {
-        let result = JSON.parse(res);
-        if (result.Success == 1) {
-          this.usergroups = this.usergroups.filter(b => b.UserId !== item.UserId);
-          confirm('Delete success!');
-          this.listUserGroup();
-        } else {
-          confirm('Delete failed!');
-        }
+    if (confirm('Are you sure you want to delete this user?')) {
+      this.selection.selected.forEach(item => {
+        const UserGroupId = this.activatedRoute.snapshot.paramMap.get('groupId');
+        this.http.delete<string>('http://localhost:65170/api/UserGroup/?idgroup=' + UserGroupId + '&iduser=' + item.UserId, { headers: http() }).subscribe(res => {
+          let result = JSON.parse(res);
+          if (result.Success == 1) {
+            this.usergroups = this.usergroups.filter(b => b.UserId !== item.UserId);
+            this.listUserGroup();
+          } else {
+          }
+        });
       });
-    });
-    this.selection = new SelectionModel<GroupUser>(true, []);
+      this.selection = new SelectionModel<GroupUser>(true, []);
+    }
   }
 
   clickToRoute() {
