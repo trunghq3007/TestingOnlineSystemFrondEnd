@@ -156,7 +156,7 @@ export class TestingComponent implements OnInit {
        
        if (this.EndTest - this.startTest >= this.second) {
          localStorage.clear();
-         this.router.navigate(['/thi/8/2/ketqua']);
+         this.router.navigate(['/thi/' + this.Idtest + '/' + this.Idtest + '/ketqua']);
         
        
       
