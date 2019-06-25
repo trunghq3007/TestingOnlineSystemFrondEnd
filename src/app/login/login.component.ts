@@ -144,7 +144,8 @@ export class LoginComponent implements OnInit {
               this.cookieService.delete('password');
             }
             //
-            this.router.navigate(['group']);
+            this.router.navigate(['']);
+         
           } else {
             // check looix
             this.loading = false;

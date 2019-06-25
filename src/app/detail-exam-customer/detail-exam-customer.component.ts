@@ -70,11 +70,15 @@ export class DetailExamCustomerComponent implements OnInit {
 
   
   test(){
-    var time = new Date();
+    var checked=localStorage.getItem('SecondTest');
+    if(checked==null){
+      var time = new Date();
        
-    console.log(time.getHours());
-    var getdate= time.getHours()*60+ time.getMinutes();
-    localStorage.setItem('SecondTest', getdate.toString());
+      console.log(time.getHours());
+      var getdate= time.getHours()*60+ time.getMinutes();
+      localStorage.setItem('SecondTest', getdate.toString());
+    }
+    
   }
 
 }

@@ -106,7 +106,16 @@ export class ExamDetailComponent implements OnInit {
         this.listfilter = JSON.parse(value);
         this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort;
 
-      });
+      },
+      err=>{
+        
+        // this.router.navigate(['group']);
+        var errors=err.status+','+err.message;
+        this.myservice.changeError(errors);
+       
+      
+     
+    });
 
 
   }
@@ -118,7 +127,16 @@ export class ExamDetailComponent implements OnInit {
         (this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
 
 
-      });
+      },
+      err=>{
+        
+        // this.router.navigate(['group']);
+        var errors=err.status+','+err.message;
+        this.myservice.changeError(errors);
+       
+      
+     
+    });
 this.selection.clear();
   }
 
@@ -147,7 +165,16 @@ this.selection.clear();
 
 
 
-      });
+      },
+      err=>{
+        
+        // this.router.navigate(['group']);
+        var errors=err.status+','+err.message;
+        this.myservice.changeError(errors);
+       
+      
+     
+    });
     } else {
       this.toar.info('please choice question', ' Question Number');
     }
@@ -178,7 +205,16 @@ this.selection.clear();
         this.listQuestion();
 
         console.log(error)
-      });
+      },
+      err=>{
+        
+        // this.router.navigate(['group']);
+        var errors=err.status+','+err.message;
+        this.myservice.changeError(errors);
+       
+      
+     
+    });
       console.log(this.randomForm.value);
     }
   }
@@ -196,7 +232,15 @@ this.selection.clear();
     this.http.get<string>('http://localhost:65170/api/ExamQuestions?searchString=' + this.searchString,{ headers: http() }).subscribe(value => {
       this.dataSource.data = JSON.parse(value);
       console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
-    });
+    }, err=>{
+        
+      // this.router.navigate(['group']);
+      var errors=err.status+','+err.message;
+      this.myservice.changeError(errors);
+     
+    
+   
+  });
   }
   onFilter() {
     const value = this.filterForm.value;
@@ -205,7 +249,15 @@ this.selection.clear();
       this.dataSource.data = JSON.parse(value);
       this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort;
 
-    });
+    }, err=>{
+        
+      // this.router.navigate(['group']);
+      var errors=err.status+','+err.message;
+      this.myservice.changeError(errors);
+     
+    
+   
+  });
   }
   isAllSelected() {
     const numSelected = this.selection.selected.length;

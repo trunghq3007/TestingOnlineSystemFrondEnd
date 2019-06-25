@@ -88,6 +88,7 @@ import { TestingComponent } from './testing/testing.component';
 import{ CandidatesComponent } from './candidates/candidates.component';
 import { ErrorpageComponent } from './errorpage/errorpage.component';
 import { UserHeaderComponent } from './user-header/user-header.component';
+import { QuestionRouting } from './question-router';
 @NgModule({
   declarations: [
     ExamListComponent,
@@ -156,7 +157,6 @@ import { UserHeaderComponent } from './user-header/user-header.component';
     MatTabsModule,
     BrowserModule,
     HttpClientModule,
-    AppRoutingModule,
     BrowserAnimationsModule,
     FormsModule, ReactiveFormsModule,
     RouterModule,
@@ -177,7 +177,8 @@ import { UserHeaderComponent } from './user-header/user-header.component';
     OwlNativeDateTimeModule,
     SelectModule,
     ToastrModule.forRoot(),
-    NgxTrimDirectiveModule
+    NgxTrimDirectiveModule,
+    AppRoutingModule,
   ],
   providers: [
     AuthenticationService,

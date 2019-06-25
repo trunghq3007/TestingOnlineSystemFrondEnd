@@ -5,9 +5,11 @@ import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { UserGroupAdd } from '../user-group-add';
 import { MyserviceService } from '../myservice.service';
+import { http } from '../http-header';
+
 
 const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  headers: new HttpHeaders().append('Content-Type', 'application/json')
 };
 
 
@@ -35,12 +37,14 @@ export class UserGroupAddComponent implements OnInit {
   ngOnInit() {
     const UserGroupId = this.activatedRoute.snapshot.paramMap.get('groupId');
     console.log(UserGroupId);
-    this.http.get<string>('http://localhost:65170/api/UserGroup/?idgroup=' + UserGroupId).subscribe(value => {
+    this.http.get<string>('http://localhost:65170/api/UserGroup/?idgroup=' + UserGroupId, { headers: http() }).subscribe(value => {
       this.dataSource.data = JSON.parse(value).Data;
       console.log(this.addusergroups);
       this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort;
     });
   }
+
+
 
   isAllSelected() {
     const numSelected = this.selection.selected.length;
@@ -67,13 +71,13 @@ export class UserGroupAddComponent implements OnInit {
       this.userId = this.activatedRoute.snapshot.paramMap.get('UserId');
       console.log(item.UserId);
       console.log(UserGroupId);
-      //  this.dataSource.data.splice(index,1);
-      this.http.post<string>('http://localhost:65170/api/UserGroup/?idgroup= ' + UserGroupId
-        + '&iduser=' + item.UserId, httpOptions).subscribe(
+      var arr={ UserId:item.UserId,GroupId:UserGroupId};
+      console.log(arr)
+      //ebugger;
+      this.http.post<string>('http://localhost:65170/api/UserGroup',JSON.stringify(arr),{ headers: http() }).subscribe(
           value => {
             this.dataSource.data = JSON.parse(value).Data;
-
-            this.http.get<string>('http://localhost:65170/api/UserGroup/?idgroup=' + UserGroupId).subscribe(value => {
+            this.http.get<string>('http://localhost:65170/api/UserGroup/?idgroup=' + UserGroupId, { headers: http() }).subscribe(value => {
               this.dataSource.data = JSON.parse(value).Data;
               console.log(this.addusergroups);
             });

@@ -1,12 +1,16 @@
 <div class="row">
   <br><br><br><br>
-  <div class="col-md-10 col-md-offset-1">
+  <div class="col-md-11 col-md-offset-1">
     
-      <div class="col-md-4  col-md-offset-1">
-        <mat-form-field fxFlex="30%">
+      <div class="col-md-4  col-md-offset-2">
+        <!-- <mat-form-field fxFlex="30%">
           <input matInput class="form-control border-secondary py-2" type="text" (keyup)="doFilter($event.target.value)"
             placeholder="Search" style="height: 20px">
-        </mat-form-field>
+        </mat-form-field> -->
+        <!-- <div class="container" fxLayout style="margin-left: 20%;margin-top: 15px;"> -->
+          <input  type="text" #input placeholder="Search ">
+               <button (click)="doFilter(input.value)" type="submit"><i class="fa fa-search"></i></button>
+         <!-- </div> -->
       </div>
       <div class=" col-md-6">
         <div class="col-md-3 col-sm-3 col-xs-3"> <a routerLink="/question/import"> <button type="button"
@@ -21,7 +25,7 @@
       <!-- <div style="width: 1200px;height: 1px;background:gray;"></div> -->
       <br><br><br><br><br><br>
       <!-- *ngIf="bdown"  -->
-      <div class="col-md-11 col-md-offset-1">
+      <div class="col-md-11 col-md-offset-1" style="margin-left: 9%;">
       <mat-accordion>
         <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
           <mat-expansion-panel-header>
@@ -135,9 +139,9 @@
 
         </th>
         <td mat-cell *matCellDef="let row">
-          <mat-checkbox (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)"
+          <!-- <mat-checkbox (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)"
             [aria-label]="checkboxLabel(row)">
-          </mat-checkbox>
+          </mat-checkbox> -->
         </td>
       </ng-container>
 
@@ -178,12 +182,12 @@
       <ng-container matColumnDef="Action">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
 
-        <td mat-cell *matCellDef="let element">
-          <span (click)="navigateToDetail(element.Id)" data-placement="top" title="Detail"><button
+        <td mat-cell *matCellDef="let element" >
+          <span (click)="navigateToDetail(element.Id)" data-placement="top" title="Detail" style="margin-right: 10px;"><button
               class="btn btn-success btn-xs" data-title="Detai" data-target="#detail"><span
                 class="glyphicon glyphicon-list"></span></button></span>
 
-          <span (click)="navigateToEdit(element.Id)" data-placement="top" title="Edit"><button
+          <span (click)="navigateToEdit(element.Id)" data-placement="top" title="Edit"  style="margin-right: 10px;"><button
               class="btn btn-primary btn-xs" data-title="Edit" data-target="#edit"><span
                 class="glyphicon glyphicon-pencil"></span></button></span>
 
