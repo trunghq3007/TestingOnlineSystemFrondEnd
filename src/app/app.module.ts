@@ -86,6 +86,7 @@ import { ExportExamComponent } from './exam/exam-list/export-exam/export-exam.co
 import { TestingComponent } from './testing/testing.component';
 
 import{ CandidatesComponent } from './candidates/candidates.component';
+import { ExamImportComponent } from './exam/exam-import/exam-import.component';
 import { ErrorpageComponent } from './errorpage/errorpage.component';
 import { UserHeaderComponent } from './user-header/user-header.component';
 import { QuestionRouting } from './question-router';
@@ -129,6 +130,7 @@ import { QuestionRouting } from './question-router';
     ViewlistTestbySemesterComponent,
     ThiChitietbaithiComponent,
     ThiThiComponent,
+    ExamImportComponent,
     ViewListSemasterComponent,
     SemesterDetailComponent,
     DetailQuestionComponent,

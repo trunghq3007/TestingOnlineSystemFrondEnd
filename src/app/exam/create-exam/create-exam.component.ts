@@ -100,7 +100,7 @@ export class CreateExamComponent implements OnInit {
     },
     err=>{
         
-      // this.router.navigate(['group']);
+      
       var errors=err.status+','+err.message;
       this.myservice.changeError(errors);
      
@@ -137,7 +137,11 @@ export class CreateExamComponent implements OnInit {
           if(response==2){
             this.toar.success('Successful',' Create exam');
            
-          }else{
+          }else if(response==-2){
+            this.toar.warning('exam is exist',' Create exam');
+          }
+          
+          else{
             this.toar.warning('something went wrong',' Create exam');
           }
          console.log(response)

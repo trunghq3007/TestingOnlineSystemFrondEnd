@@ -15,12 +15,20 @@
       <div style="padding: 10px;">
         <input [(ngModel)]="searchString" type="text" placeholder="Search..">
         <button (click)="onSearch()" type="submit"><i class="fa fa-search"></i></button>
-        <div class="container col-md-12">
-            <span data-placement="top" data-toggle="tooltip"><button class="btn btn-primary " routerLink="/exam/create" data-title="Create"
-                    data-toggle="modal" data-target="#create" style="margin-left: 90.5%;margin-bottom: 5px;"
-                    id="Create"><span>Create</span></button></span>
-                    
+        
+        <div class="container col-md-6" style="margin-left: 75%;">
+          
+          <!-- <div>
+              <span data-placement="top" data-toggle="tooltip"><button class="btn btn-primary " routerLink="/exam/create" data-title="Create"
+                data-toggle="modal" data-target="#create" style="margin-left: 90.5%;margin-bottom: 5px;"
+                id="Create"><span>Create</span></button></span>
+          </div> -->
+          <div class="col-md-3 col-sm-3 col-xs-3"> <a routerLink="/exam/import"> <button type="button"
+            class="btn btn-primary">Import</button></a></div>
+            <div class="col-md-3 col-sm-3 col-xs-3"> <a routerLink="/exam/create"> <button type="button"
+              class="btn btn-primary">Create</button></a></div>
         </div>
+        
         <hr />
        
             
@@ -62,12 +70,6 @@
                   </mat-option>
                 </mat-select>
               </mat-form-field>
-              <!-- <mat-form-field class="col-md-4">
-                <mat-label>CreateAt</mat-label>
-                <input matInput [matDatepicker]="picker" placeholder="Choose a date" formControlName="CreateAt">
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
-              </mat-form-field> -->
               <mat-form-field class="col-md-4">
                 <mat-label>CreateBy</mat-label>
                 <mat-select formControlName="CreateBy">
@@ -98,15 +100,15 @@
         </form>
       </div>
     </div>
-    <div class="container" style="margin-top: 2%">
+    <div class="container" style="margin-top: 2%; margin-right: 5%;">
     </div>
     <div class="container col-md-12" style="text-align: center">
       <h2>List Exam
-        <button style="float: right" mat-raised-button color="warn">Delete</button>
+        <button style="float: right; margin-right: 4%;" mat-raised-button color="warn">Delete</button>
       </h2>
   
     </div>
-    <div style="margin-top: 2%">
+    <div style="margin-top: 2%;">
   
       <table mat-table [dataSource]="dataSource" matSort>
   

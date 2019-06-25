@@ -89,13 +89,24 @@ export class ListUpdateComponent implements OnInit {
       value => {
         this.exams = JSON.parse(value);
 
-      });
+      }, err=>{
+        
+      
+        var errors=err.status+','+err.message;
+        this.myservice.changeError(errors);
+       
+      
+     
+    });
    
     this.http.get<string>('http://localhost:65170/api/Semaster', { headers: http() }).subscribe(
       value => {
         this.semasters = JSON.parse(value);
 
-      });
+      }, err=>{
+        var errors=err.status+','+err.message;
+        this.myservice.changeError(errors);
+        });
     const TestID = this.ac.snapshot.paramMap.get('Id');
    
     this.http.get<string>('http://localhost:65170/api/test/'+TestID+ '?action=DetailUpdate' , { headers: http() }).subscribe(value => {
@@ -103,7 +114,10 @@ export class ListUpdateComponent implements OnInit {
      
       this.form.patchValue(JSON.parse(value));
       console.log(JSON.parse(value) );
-    });
+    }, err=>{
+      var errors=err.status+','+err.message;
+      this.myservice.changeError(errors);
+      });
   }
   get exam(): FormControl {
     return this.form.get('ExamId') as FormControl;
