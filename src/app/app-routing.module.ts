@@ -351,7 +351,7 @@ const routes: Routes = [
     ],
   },
 
-
+  {path:'Error',component:ErrorpageComponent},
   { path: '**', canActivate: [AuthGuard], component: ErrorpageComponent }
 ];
 

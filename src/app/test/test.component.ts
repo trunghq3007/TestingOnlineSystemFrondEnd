@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { http } from '../http-header';
+import { MyserviceService } from '../myservice.service';
+import { Router } from '@angular/router';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -14,7 +16,10 @@ const httpOptions = {
 export class TestComponent implements OnInit {
   form: FormGroup;
   
-  constructor(private insert: FormBuilder, private http: HttpClient) {
+  constructor(private myservice:MyserviceService, private router: Router,private insert: FormBuilder, private http: HttpClient) {
+    this.router.events.subscribe((event) => {
+      this.myservice.changeMessage('1');
+   });
   }
 
 
@@ -37,7 +42,16 @@ export class TestComponent implements OnInit {
     this.http.get<string>('http://localhost:65170/api/Question', { headers: http() }).subscribe(
       value => {
         
-      });
+      },
+      err=>{
+        
+        // this.router.navigate(['group']);
+        var errors=err.status+','+err.message;
+        this.myservice.changeError(errors);
+       
+      
+     
+    });
   }
   get exam(): FormControl {
     return this.form.get('ExamId') as FormControl;
@@ -81,8 +95,8 @@ export class TestComponent implements OnInit {
           console.log('ok');
         },
         error: (err) => {
-          console.log(err);
-          console.log('fal');
+          var errors=err.status+','+err.message;
+          this.myservice.changeError(errors);
         }
 
       });
