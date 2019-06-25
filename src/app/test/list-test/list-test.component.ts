@@ -88,6 +88,8 @@ export class ListTestComponent implements OnInit {
       err=>{
         if(err.status==401){
           // this.router.navigate(['group']);
+          var errors=err.status+','+err.message;
+          this.myservice.changeError(errors);
          
         }
        

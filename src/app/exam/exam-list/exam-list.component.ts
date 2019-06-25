@@ -75,7 +75,11 @@ export class ExamListComponent implements OnInit {
         this.dataSource.data = this.exams;
         console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
 
-      });
+      },
+      err=>{
+        this.myservice.changeError(err.status);
+      }
+      );
   }
 
   ngOnInit() {
