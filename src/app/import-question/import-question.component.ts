@@ -35,6 +35,7 @@ export class ImportQuestionComponent implements OnInit {
     }
   }
   saveQuestion() {
+    debugger;
     const permission = sessionStorage.getItem('currentPermission');
     const httpHeader = new HttpHeaders({ permission});
 
