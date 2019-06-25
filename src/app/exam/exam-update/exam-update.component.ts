@@ -67,7 +67,16 @@ export class ExamUpdateComponent implements OnInit {
     this.http.get<string>('http://localhost:65170/api/Category/', { headers: http() }).subscribe(value => {
       this.CategoryFormApi = JSON.parse(value);
       console.log(this.CategoryFormApi);
-    });
+    },
+    err=>{
+        
+      // this.router.navigate(['group']);
+      var errors=err.status+','+err.message;
+      this.myservice.changeError(errors);
+     
+    
+   
+  });
   }
 
   ngOnInit() {
@@ -88,7 +97,16 @@ export class ExamUpdateComponent implements OnInit {
     this.http.get<string>('http://localhost:65170/api/Exam/' + examID, { headers: http() }).subscribe(value => {
       this.categoryname = value;
       console.log(value);
-    });
+    },
+    err=>{
+        
+      // this.router.navigate(['group']);
+      var errors=err.status+','+err.message;
+      this.myservice.changeError(errors);
+     
+    
+   
+  });
     this.http.get<string>('http://localhost:65170/api/Exam/' + examID, { headers: http() }).subscribe(value => {
       this.exam = JSON.parse(value).Data[0];
 
@@ -98,7 +116,16 @@ export class ExamUpdateComponent implements OnInit {
       this.editForm.patchValue(this.exam);
 
 
-    });
+    },
+    err=>{
+        
+      // this.router.navigate(['group']);
+      var errors=err.status+','+err.message;
+      this.myservice.changeError(errors);
+     
+    
+   
+  });
   }
 
   validateForm() {
@@ -115,14 +142,14 @@ export class ExamUpdateComponent implements OnInit {
   }
   onSubmit() {
     const value = this.editForm.value;
-    console.log(this.editForm.value);
+    
 
     // let temp=this.CategoryFormApi.filter(s => s.CategoryId == value.CategoryId);
     let temp = this.CategoryFormApi.filter(s => s.Id == value.CategoryId);
-    console.log(temp);
+    
     //value.Category = this.CategoryFormApi.filter(s => s.Id == value.CategoryId);
     value.Category = temp.length > 0 ? temp[0] : null;
-    console.log(value);
+    
     if (this.editForm.valid) {
       const formData = {
         ...this.exam,
@@ -130,17 +157,23 @@ export class ExamUpdateComponent implements OnInit {
       };
       this.http.put('http://localhost:65170/api/Exam/' + formData.Id, formData, { headers: http() }).subscribe({
         next: (res) => {
-          this.toar.success('true','Update Success');
          
-        
+         if(res==1){
+          this.toar.success('true','Update Success');
+          console.log(res);
+         }
+      
 
-        }
-        ,
+        },
+        
         error: (err) => {
-          this.toar.warning('false', '  Update Exam');
+         
+          var errors=err.status+','+err.message;
+      this.myservice.changeError(errors);
+     
         }
       });
-      console.log(this.editForm.value);
+     
     }
     // this.router.navigate(['/exam'])
   }

@@ -61,7 +61,15 @@ export class ExamDetailQuestionComponent implements OnInit {
 
         (this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
 
-      });
+      }, err=>{
+        
+       
+        var errors=err.status+','+err.message;
+        this.myservice.changeError(errors);
+       
+      
+     
+    });
       this.selection.clear();
   }
 
@@ -91,7 +99,15 @@ export class ExamDetailQuestionComponent implements OnInit {
 
         this.listQuestionDetail();
 
-      })
+      }, err=>{
+        
+       
+        var errors=err.status+','+err.message;
+        this.myservice.changeError(errors);
+       
+      
+     
+    })
     }else{
       this.toar.info('please choice question', ' Question Number');
     }

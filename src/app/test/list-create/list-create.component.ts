@@ -102,14 +102,30 @@ regPassScore="^[0-9]{1,3}$"
         this.exams = JSON.parse(value)  ;
         
 
-      });
+      }, err=>{
+        
+      
+        var errors=err.status+','+err.message;
+        this.myservice.changeError(errors);
+       
+      
+     
+    });
    
       this.http.get<string>('http://localhost:65170/api/Semaster', { headers: http() }).subscribe(
       value => {
         this.semasters = JSON.parse(value)  ;
         
 
-      });
+      }, err=>{
+        
+      
+        var errors=err.status+','+err.message;
+        this.myservice.changeError(errors);
+       
+      
+     
+    });
       
   }
   get exam(): FormControl {
@@ -160,8 +176,9 @@ regPassScore="^[0-9]{1,3}$"
         
         },
         error: (err) => {
-          this.toar.warning('Fail',' Create Test');
-          
+        
+          var errors=err.status+','+err.message;
+      this.myservice.changeError(errors);
         }
 
       });
