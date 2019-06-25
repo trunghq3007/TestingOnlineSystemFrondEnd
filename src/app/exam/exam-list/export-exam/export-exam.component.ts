@@ -34,7 +34,11 @@ exam:string;
       error: (err) => {
        
         console.log('false');
-      }
+        var errors=err.status+','+err.message;
+        this.myservice.changeError(errors);
+       
+      },
+     
 
     });
     setTimeout(()=>{

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MyserviceService } from '../myservice.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-errorpage',
@@ -12,7 +13,11 @@ status;
 message;
 description;
 checked=true;
-  constructor(private myservice:MyserviceService) { }
+  constructor(private myservice:MyserviceService,private router:Router) {
+    this.router.events.subscribe((event) => {
+      this.myservice.changeMessage('2');
+   });
+   }
 
   ngOnInit() {
     
