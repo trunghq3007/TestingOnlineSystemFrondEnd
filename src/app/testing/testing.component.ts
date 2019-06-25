@@ -50,8 +50,9 @@ export class TestingComponent implements OnInit {
   time;
   CheckTime;
   second:number;
-  Idtest = this.activateRoute.snapshot.paramMap.get('TestId');
+  NameExam:string;
   testCount:number;
+  Idtest = this.activateRoute.snapshot.paramMap.get('TestId');
   ngOnInit() {
     
     this.http.get<string>('http://localhost:65170/api/SemesterExam/' + this.Idtest + '?IsgetTestProcessing', httpOptions).subscribe(
@@ -64,7 +65,8 @@ export class TestingComponent implements OnInit {
         console.log(this.questions = this.testProcessings.Questions);
         this.second = this.testProcessings.TestTime;
         console.log(this.second);
-
+this.NameExam=this.testProcessings.TestName;
+ console.log(this.NameExam);
         this.reset();
         this.start();
        
@@ -159,7 +161,7 @@ export class TestingComponent implements OnInit {
        
        if (this.EndTest - this.startTest >= this.second) {
          localStorage.clear();
-         this.router.navigate(['/thi/' + this.Idtest + '/' + this.Idtest + '/ketqua']);
+         this.router.navigate(['/thi/8/2/ketqua']);
         
        
       
@@ -181,6 +183,7 @@ export class TestingComponent implements OnInit {
     )
     if (confirm('Nop bai')) {
       localStorage.clear();
+    
       this.router.navigate(['/thi/' + this.Idtest + '/' + this.Idtest + '/ketqua']);
     }
 
