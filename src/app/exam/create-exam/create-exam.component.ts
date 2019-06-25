@@ -97,7 +97,17 @@ export class CreateExamComponent implements OnInit {
   getApiCategory() {
     this.http.get<string>('http://localhost:65170/api/Category/',{ headers: http() }).subscribe(value => {
       this.CategoryFormApi = JSON.parse(value);
-    });
+    },
+    err=>{
+        
+      // this.router.navigate(['group']);
+      var errors=err.status+','+err.message;
+      this.myservice.changeError(errors);
+     
+    
+   
+  }
+    );
   }
   validateForm() {
     if (this.examForm.invalid) {
@@ -134,11 +144,16 @@ export class CreateExamComponent implements OnInit {
         },
 
         error: (err) => {
-          this.toar.warning('Fail',' Create exam');
+         // this.toar.warning('Fail',' Create exam');
           //this.examForm.reset();
+          var errors=err.status+','+err.message;
+          this.myservice.changeError(errors);
         }
         
-      });
+      }
+     
+      
+      );
       console.log(this.examForm.value);
     }
     //this.route.navigate(['/exam'])

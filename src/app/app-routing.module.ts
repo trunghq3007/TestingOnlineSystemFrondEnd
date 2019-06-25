@@ -271,7 +271,8 @@ const routes: Routes = [
               }
             ]
         }
-      ], canActivate: [AuthGuard]
+      ],canActivate: [AuthGuard],
+      
   },
   {
     path: 'test',
