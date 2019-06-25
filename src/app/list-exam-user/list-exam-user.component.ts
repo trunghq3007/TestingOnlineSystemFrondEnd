@@ -15,12 +15,16 @@ const httpOptions = {
 })
 export class ListExamUserComponent implements OnInit {
   semester: Exam[] = [];
-  notify: boolean=true;
-  constructor(private http: HttpClient, private router: Router,private myservice:MyserviceService, private activedRoute: ActivatedRoute) {
+  notify: boolean = true;
+  Users: string;
+  LisUser;
+  UserId: string;
+  UserName: string;
+  constructor(private http: HttpClient, private router: Router, private myservice: MyserviceService, private activedRoute: ActivatedRoute, ) {
     this.router.events.subscribe((event) => {
       this.myservice.changeMessage('2');
-   });
-   }
+    });
+  }
 
   ngOnInit() {
     const IdQuestion = this.activedRoute.snapshot.paramMap.get('id')
@@ -30,19 +34,38 @@ export class ListExamUserComponent implements OnInit {
         this.semester = JSON.parse(value).Data;
         // console.log(IdQuestion);
         // console.log(value);
-       
-        if (this.semester.length > 0 && typeof  this.semester !=='undefined') {
-          
+
+        if (this.semester.length > 0 && typeof this.semester !== 'undefined') {
+
           this.notify = false;
         } else {
           this.notify = true;
         }
-        
+
       });
-    
+
+    if (sessionStorage.getItem('user')) {
+      this.Users = sessionStorage.getItem('user');
+      this.LisUser = this.Users.split(',');
+      this.UserName = this.LisUser[1];
+      this.UserId = this.LisUser[0];
+
+
+    } else {
+      this.Users = null;
+    }
+
   }
   listExam(id) {
 
+  }
+
+  Logout() {
+    sessionStorage.removeItem('currentPermission');
+   this.router.navigate(['/']);
+
+
+    sessionStorage.removeItem('user');
   }
 
 }
