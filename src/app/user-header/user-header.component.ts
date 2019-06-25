@@ -25,9 +25,9 @@ export class UserHeaderComponent implements OnInit {
   constructor(private http: HttpClient, private router: Router,private myservice:MyserviceService) {
    
    
-    this.router.events.subscribe((event) => {
-      this.myservice.changeMessage('2');
-   });
+  //   this.router.events.subscribe((event) => {
+  //     this.myservice.changeMessage('2');
+  //  });
   }
 
   ngOnInit() {

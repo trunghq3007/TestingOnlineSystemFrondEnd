@@ -52,16 +52,20 @@ export class HomeComponent implements OnInit {
         this.semesters = JSON.parse(value).Data;
         console.log(value);
       });
-      if (sessionStorage.getItem('user')) {
-        this.Users = sessionStorage.getItem('user');
-        this.LisUser = this.Users.split(',');
-        this.UserName = this.LisUser[1];
-        this.UserId = this.LisUser[0];
-       
-       
-      } else {
-        this.Users = null;
-      }
+     
+  }
+  ngDoCheck() {
+    if (sessionStorage.getItem('user')) {
+      this.Users = sessionStorage.getItem('user');
+      this.LisUser = this.Users.split(',');
+      this.UserName = this.LisUser[1];
+      this.UserId = this.LisUser[0];
+     
+     
+    } else {
+      this.Users = null;
+    }
+    
   }
   changeSlide() {
     this.currentSlide++;

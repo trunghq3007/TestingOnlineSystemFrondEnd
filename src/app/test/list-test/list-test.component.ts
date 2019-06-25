@@ -73,17 +73,49 @@ export class ListTestComponent implements OnInit {
                 this.dataSource.data = JSON.parse(value);
                 console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
 
-              });
+              },
+              err=>{
+        
+                // this.router.navigate(['group']);
+                var errors=err.status+','+err.message;
+                this.myservice.changeError(errors);
+               
+              
+             
+            }
+              );
 
-          });
+          },
+          err=>{
+        
+            // this.router.navigate(['group']);
+            var errors=err.status+','+err.message;
+            this.myservice.changeError(errors);
+           
+          
+         
+        }
+          );
     }
   }
   ngOnInit() {
+    
     this.http.get<string>('http://localhost:65170/api/Test',{ headers: http() }).subscribe(
       value => {
+        
         this.dataSource.data = JSON.parse(value);
         console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
 
+      },
+      
+      err=>{
+        
+          // this.router.navigate(['group']);
+          var errors=err.status+','+err.message;
+          this.myservice.changeError(errors);
+         
+        
+       
       });
       this.dataSource.sort = this.sort;
   }
@@ -96,7 +128,16 @@ export class ListTestComponent implements OnInit {
           this.tests=JSON.parse(value);
           //console.log(this.examInfo);
 
-        }
+        },
+        err=>{
+        
+          // this.router.navigate(['group']);
+          var errors=err.status+','+err.message;
+          this.myservice.changeError(errors);
+         
+        
+       
+      }
       );
   }
   navigateToEdit(Id: string) {
@@ -106,7 +147,16 @@ export class ListTestComponent implements OnInit {
     this.http.get<string>('http://localhost:65170/api/Test?searchString=' + this.searchString,{ headers: http() }).subscribe(value => {
       this.dataSource.data = JSON.parse(value);
       console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
-    });
+    },
+    err=>{
+        
+      // this.router.navigate(['group']);
+      var errors=err.status+','+err.message;
+      this.myservice.changeError(errors);
+     
+    
+   
+  });
   }
   isAllSelected() {
     const numSelected = this.selection.selected.length;
