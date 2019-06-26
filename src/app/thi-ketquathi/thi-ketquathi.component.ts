@@ -87,5 +87,11 @@ get Category(): FormControl {
   }
 
   
+  Logout(){
+    sessionStorage.removeItem('currentPermission');
+    this.router.navigate(['']);
+    location.reload();
 
+    sessionStorage.removeItem('user');
+  }
 }
