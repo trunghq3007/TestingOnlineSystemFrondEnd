@@ -162,7 +162,7 @@ this.NameExam=this.testProcessings.TestName;
        if (this.EndTest - this.startTest >= this.second) {
          localStorage.clear();
          this.router.navigate(['/thi/' + this.Idtest + '/' + this.Idtest + '/ketqua']);
-        
+        window.location.reload();
        
       
       }
@@ -181,12 +181,12 @@ this.NameExam=this.testProcessings.TestName;
       value => (console.log(value))
 
     )
-    if (confirm('Nop bai')) {
+    if (confirm('Bạn có muốn nộp bài')) {
       localStorage.clear();
     
       this.router.navigate(['/thi/' + this.Idtest + '/' + this.Idtest + '/ketqua']);
     }
 
-
+    window.location.reload();
   }
 }

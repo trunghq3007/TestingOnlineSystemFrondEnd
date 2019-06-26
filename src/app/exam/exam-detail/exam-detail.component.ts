@@ -152,15 +152,18 @@ this.selection.clear();
     })
     if (Arr.length > 0) {
       this.http.post<string>('http://localhost:65170/api/ExamQuestions/?action=AddMutiple', JSON.stringify(Arr),{ headers: http() }).subscribe((error) => {
-        if (error == -2) {
-          this.toar.warning('something went wrong', ' Question Number');
+        if (error >0) {
+          var  errors=error/2;
+          this.toar.success('inserted' + ' ' + errors + ' ' + 'records in Exam', ' Question Number');
+          // this.toar.warning('something went wrong', ' Question Number');
         } else if (error == 0) {
 
           this.toar.info('There are no questions in this category match with exam', ' Question Number');
         } else {
-        var  errors=error/2;
-          this.toar.success('inserted' + ' ' + errors + ' ' + 'records in Exam', ' Question Number');
+          var errorss=201+','+JSON.parse(error.toString()).Message;
+          this.myservice.changeError(errorss);
         }
+        
         this.listQuestion();
 
 

@@ -22,11 +22,11 @@ export class exam {
   TypeExam: string;
   CreateAt: Date;
   Note: string;
-  
+
 }
-export class semaster{
-  ID:number;
-  SemesterName:string
+export class semaster {
+  ID: number;
+  SemesterName: string
 }
 @Component({
   selector: 'app-list-create',
@@ -44,13 +44,13 @@ export class ListCreateComponent implements OnInit {
   isMember = false;
   isManager = false;
   isAdmin = false;
-  exams:exam[]=[];
+  exams: exam[] = [];
   form: FormGroup;
-  semasters:semaster[]=[];
-  constructor(private myservice:MyserviceService, private router: Router, private insert: FormBuilder, private http: HttpClient,private toar:ToastrService, private authenticationService: AuthenticationService) {
+  semasters: semaster[] = [];
+  constructor(private myservice: MyserviceService, private router: Router, private insert: FormBuilder, private http: HttpClient, private toar: ToastrService, private authenticationService: AuthenticationService) {
     this.router.events.subscribe((event) => {
       this.myservice.changeMessage('1');
-   });
+    });
   }
 
 
@@ -67,9 +67,9 @@ export class ListCreateComponent implements OnInit {
       return;
     }
     // do something else
-}
-regTotal="^[0-9]{1,2}$";
-regPassScore="^[0-9]{1,3}$"
+  }
+  regTotal = "^[0-9]{1,2}$";
+  regPassScore = "^[0-9]{1,3}$"
 
   ngOnInit() {
     if (sessionStorage.getItem('user')) {
@@ -77,56 +77,47 @@ regPassScore="^[0-9]{1,3}$"
       this.LisUser = this.Users.split(',');
       this.UserName = this.LisUser[1];
       this.UserId = this.LisUser[0];
-     
-     
+
+
     } else {
       this.Users = null;
     }
-    console.log(''+this.UserName);
+    console.log('' + this.UserName);
     this.form = this.insert.group({
       ExamId: ['', [Validators.required]],
-      SemasterExamId: ['',[Validators.required]],
-      TestName: ['', [Validators.required,Validators.maxLength(50)]],
-      
+      SemasterExamId: ['', [Validators.required]],
+      TestName: ['', [Validators.required, Validators.maxLength(50)]],
+
       CreateBy: [this.UserName],
-      
-      PassScore: ['', [Validators.required,Validators.pattern]],
-      TotalTest: ['', [Validators.required,Validators.pattern]],
+
+      PassScore: ['', [Validators.required, Validators.pattern]],
+      TotalTest: ['', [Validators.required, Validators.pattern]],
       Status: ['', [Validators.required]],
-      TestTime: ['', [Validators.required,Validators.pattern]],
+      TestTime: ['', [Validators.required, Validators.pattern]],
 
     });
-   
+
     this.http.get<string>('http://localhost:65170/api/exam', { headers: http() }).subscribe(
       value => {
-        this.exams = JSON.parse(value)  ;
-        
-
-      }, err=>{
-        
-      
-        var errors=err.status+','+err.message;
+        this.exams = JSON.parse(value);
+      }, err => {
+        var errors = err.status + ',' + err.message;
         this.myservice.changeError(errors);
-       
-      
-     
-    });
-   
-      this.http.get<string>('http://localhost:65170/api/Semaster', { headers: http() }).subscribe(
+      });
+
+    this.http.get<string>('http://localhost:65170/api/Semaster', { headers: http() }).subscribe(
       value => {
-        this.semasters = JSON.parse(value)  ;
-        
+        this.semasters = JSON.parse(value);
 
-      }, err=>{
-        
-      
-        var errors=err.status+','+err.message;
+
+      }, err => {
+        var errors = err.status + ',' + err.message;
         this.myservice.changeError(errors);
-       
-      
-     
-    });
-      
+
+
+
+      });
+
   }
   get exam(): FormControl {
     return this.form.get('ExamId') as FormControl;
@@ -146,7 +137,7 @@ regPassScore="^[0-9]{1,3}$"
   get CreateBy(): FormControl {
     return this.form.get('CreateBy') as FormControl;
   }
-  
+
   get PassScore(): FormControl {
     return this.form.get('PassScore') as FormControl;
   }
@@ -160,30 +151,34 @@ regPassScore="^[0-9]{1,3}$"
     return this.form.get('TestTime') as FormControl;
   }
   onSubmit() {
-    
+
 
     if (this.form.valid) {
       const value = this.form.value;
-     
+
       this.http.post('http://localhost:65170/api/Test', JSON.stringify(value), { headers: http() }).subscribe({
         next: (response) => {
-          if(response==-2){
-            this.toar.warning('something went wrong',' Create Test');
-          }else{
-            this.toar.success('Successful',' Create Test');
+          if (response ==1) {
+            this.toar.success('Successful', ' Create Test');
+            // this.toar.warning('something went wrong', ' Create Test');
+          } else {
+            var errorss=201+','+JSON.parse(response.toString()).Message;
+          this.myservice.changeError(errorss);
           }
-         
-        
+          console.log('dsds'+response)
+
         },
+
         error: (err) => {
-        
-          var errors=err.status+','+err.message;
-      this.myservice.changeError(errors);
+
+          var errors = err.status + ',' + err.message;
+          this.myservice.changeError(errors);
         }
 
       });
       console.log(this.form.value);
     }
+
   }
 
 }
