@@ -123,7 +123,7 @@ export class CreateExamComponent implements OnInit {
   }
   onSubmit() {
     
-    
+    console.log(this.examForm.value);
     if (this.examForm.valid) {
       console.log(this.examForm.value);
       const value = this.examForm.value;

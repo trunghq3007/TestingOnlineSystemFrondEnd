@@ -159,15 +159,19 @@ export class ExamUpdateComponent implements OnInit {
         next: (res) => {
          
          if(res==1){
-          this.toar.success('true','Update Success');
+          this.toar.success('Update Success','Update Exam');
           console.log(res);
-         }else{
+         }else if(res==0){
+           this.toar.warning('exam is public','Update Exam')
+         }
+         
+         else{
           var errors=201+','+JSON.parse(res.toString()).Message;
           this.myservice.changeError(errors);
           //  this.toar.warning(JSON.parse(res.toString()).Message,'Update')
          }
-      console.log(JSON.parse(res.toString()).Message.substring(0,10))
-         console.log(JSON.parse(res.toString()) )
+      // console.log(JSON.parse(res.toString()).Message.substring(0,10))
+      //    console.log(JSON.parse(res.toString()) )
         },
         
         error: (err) => {
