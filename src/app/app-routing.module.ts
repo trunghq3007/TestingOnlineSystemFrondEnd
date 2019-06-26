@@ -47,6 +47,7 @@ import { CreateQuestionComponent } from './create-question/create-question.compo
 import { DetailQuestionComponent } from './detail-question/detail-question.component';
 import { EditQuestionComponent } from './edit-question/edit-question.component';
 import { ImportQuestionComponent } from './import-question/import-question.component';
+import { ExamImportComponent } from './exam/exam-import/exam-import.component';
 const routes: Routes = [
 
   {
@@ -128,6 +129,10 @@ const routes: Routes = [
         path: '',
         component: ExamListComponent,
         pathMatch: 'full'
+      },
+      {
+        path:'import',
+        component: ExamImportComponent,
       },
       {
         path: 'export/:Id',

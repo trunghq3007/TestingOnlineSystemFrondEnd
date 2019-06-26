@@ -62,6 +62,8 @@ export class ViewListQuestionComponent implements OnInit {
 
   }
   initListQuestion() {
+    debugger;
+    
     this.dataSource.data = [];
     this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort;
     this.http.get<string>('http://localhost:65170/api/question/', { headers: http() }).subscribe(value => {
