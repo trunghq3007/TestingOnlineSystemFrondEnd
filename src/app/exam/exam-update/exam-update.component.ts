@@ -161,9 +161,13 @@ export class ExamUpdateComponent implements OnInit {
          if(res==1){
           this.toar.success('true','Update Success');
           console.log(res);
+         }else{
+          var errors=201+','+JSON.parse(res.toString()).Message;
+          this.myservice.changeError(errors);
+          //  this.toar.warning(JSON.parse(res.toString()).Message,'Update')
          }
-      
-
+      console.log(JSON.parse(res.toString()).Message.substring(0,10))
+         console.log(JSON.parse(res.toString()) )
         },
         
         error: (err) => {

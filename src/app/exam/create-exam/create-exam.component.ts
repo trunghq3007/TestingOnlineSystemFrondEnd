@@ -142,7 +142,8 @@ export class CreateExamComponent implements OnInit {
           }
           
           else{
-            this.toar.warning('something went wrong',' Create exam');
+            var errors=201+','+JSON.parse(response.toString()).Message;
+          this.myservice.changeError(errors);
           }
          console.log(response)
         },

@@ -88,15 +88,17 @@ export class ExamDetailQuestionComponent implements OnInit {
 
           this.toar.info('There are no questions found in this exam', ' Question Number');
 
-        } else if (value == -2) {
-          this.toar.warning('something went wrong', ' Question Number');
-        }
-        else {
+        } else if (value >0) {
           var  values=value/2;
           this.toar.success('deleted' + ' ' + values + ' ' + 'records in Exam', ' Question Number');
-
+          // this.toar.warning('something went wrong', ' Question Number');
         }
-
+        else {
+         
+          var errorss=201+','+JSON.parse(value.toString()).Message;
+          this.myservice.changeError(errorss);
+        }
+        
         this.listQuestionDetail();
 
       }, err=>{

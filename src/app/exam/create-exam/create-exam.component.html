@@ -36,7 +36,7 @@
           </div>
         <!-- <div class="col-10">
           <input type="text"   class="form-control"  id="example-text-input" formControlName="CreateBy">
-          <!-- <select class="bootstrap-select" style="width: 100%; height: 35px;" >
+          <select class="bootstrap-select" style="width: 100%; height: 35px;" >
               <option value="admin" selected="selected">admin</option>
               <option value="manager">manager</option>
             
@@ -44,11 +44,25 @@
         <!-- </div>  -->
 
       </div>
-      <div *ngIf="!CreateBy.valid && CreateBy.touched" style="color: red">
+      <!-- <div *ngIf="!CreateBy.valid && CreateBy.touched" style="color: red">
         <span *ngIf="CreateBy.hasError('required')">
           Create by is required
         </span>
       
+      </div> -->
+      <div class="form-group row">
+        <label for="example-email-input" class="col-2 col-form-label">
+          Category:
+        </label><br />
+        <!-- <div class="col-10">
+            <input class="form-control" type="" formControlName="createBy" id="example-email-input">
+          </div> -->
+        <div class="col-10">
+              <select  class="bootstrap-select" style="width: 100%; height: 35px;" formControlName="CategoryId">
+                  <option  *ngFor="let item of CategoryFormApi" value="{{item.Id}}">{{item.Name}}</option>
+                </select>
+        </div>
+
       </div>
       <div class="form-group row">
         <label for="example-url-fb" class="col-2 col-form-label">
@@ -69,30 +83,7 @@
      
 
       </div> 
-      <!-- <div class="form-group row">
-          <label >Status</label>
-          <select  [value]='false'  disabled="disabled"   class="form-control"  formControlName="status">
-            <option  value="false" selected>Dark</option>
-            
-          
-          </select>
-        </div> -->
-      <!-- <div class="form-group row">
-        <label for="example-email-input" class="col-2 col-form-label">
-          Status:
-        </label><br />
-         <div class="col-10">
-            <input class="form-control" type="" formControlName="createBy" id="example-email-input">
-          </div> -->
-        <!-- <div class="col-10">
-          <select class="bootstrap-select" style="width: 100%; height: 35px;" formControlName="Status">
-            <option value="false" selected="selected">draft</option>
-            <option value="true">public</option>
-
-          </select>
-        </div>
-
-      </div>  -->
+     
 
       
 
@@ -101,11 +92,11 @@
                 Space QuestionNumber:
               </label>
               <div class="col-10">
-                <input class="form-control" type="text" [pattern]="number"
+                <input class="form-control" type="text" value={{100}} [readonly]=true [pattern]="number"
                   formControlName="SpaceQuestionNumber" id="example-url-fb">
               </div>
             </div>
-            <div *ngIf="!SpaceQuestionNumber.valid && SpaceQuestionNumber.touched" style="color: red">
+            <!-- <div *ngIf="!SpaceQuestionNumber.valid && SpaceQuestionNumber.touched" style="color: red">
               <div *ngIf="SpaceQuestionNumber.hasError('required')">
                 Space QuestionNumber is required
               </div>
@@ -114,22 +105,9 @@
               </div>
            
       
-            </div>
+            </div> -->
             
-            <div class="form-group row">
-              <label for="example-email-input" class="col-2 col-form-label">
-                Category:
-              </label><br />
-              <!-- <div class="col-10">
-                  <input class="form-control" type="" formControlName="createBy" id="example-email-input">
-                </div> -->
-              <div class="col-10">
-                    <select  class="bootstrap-select" style="width: 100%; height: 35px;" formControlName="CategoryId">
-                        <option  *ngFor="let item of CategoryFormApi" value="{{item.Id}}">{{item.Name}}</option>
-                      </select>
-              </div>
-      
-            </div>
+          
       <div class="form-group row">
         <label for="example-tel-input" class="col-2 col-form-label">
           Note:
