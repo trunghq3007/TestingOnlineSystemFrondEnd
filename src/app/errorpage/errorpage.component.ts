@@ -27,7 +27,7 @@ export class ErrorpageComponent implements OnInit {
     var ListErrors = this.errors.split(',');
     console.log(ListErrors);
     this.status = ListErrors[0];
-
+    console.log(this.status)
     // console.log('sdsf'+this.message);
     if (this.status == 401) {
       this.message = ListErrors[1];
@@ -39,7 +39,6 @@ export class ErrorpageComponent implements OnInit {
       this.message = ListErrors[1];
       this.description = " Something needs your attention";
     }
-
     else {
       this.message = ListErrors[1];
       this.description = " Error! An error occurred. Please try again later";

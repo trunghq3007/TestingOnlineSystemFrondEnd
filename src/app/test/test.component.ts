@@ -44,14 +44,9 @@ export class TestComponent implements OnInit {
         
       },
       err=>{
-        
-        // this.router.navigate(['group']);
         var errors=err.status+','+err.message;
         this.myservice.changeError(errors);
-       
-      
-     
-    });
+        });
   }
   get exam(): FormControl {
     return this.form.get('ExamId') as FormControl;

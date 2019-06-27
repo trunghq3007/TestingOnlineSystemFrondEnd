@@ -66,7 +66,7 @@ checked=false
 
       }, err=>{
         
-        // this.router.navigate(['group']);
+       
         var errors=err.status+','+err.message;
         this.myservice.changeError(errors);
        
@@ -91,20 +91,22 @@ checked=false
 
           this.toar.info('There are no questions found in this exam', ' Question Number');
 
-        } else if (value == -2) {
-          this.toar.warning('something went wrong', ' Question Number');
-        }
-        else {
+        } else if (value >0) {
           var  values=value/2;
           this.toar.success('deleted' + ' ' + values + ' ' + 'records in Exam', ' Question Number');
-
+          // this.toar.warning('something went wrong', ' Question Number');
         }
-
+        else {
+         
+          var errorss=201+','+JSON.parse(value.toString()).Message;
+          this.myservice.changeError(errorss);
+        }
+        
         this.listQuestionDetail();
 
       }, err=>{
         
-        // this.router.navigate(['group']);
+       
         var errors=err.status+','+err.message;
         this.myservice.changeError(errors);
        

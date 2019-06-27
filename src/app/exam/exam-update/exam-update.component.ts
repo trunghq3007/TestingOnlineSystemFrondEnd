@@ -142,14 +142,14 @@ export class ExamUpdateComponent implements OnInit {
   }
   onSubmit() {
     const value = this.editForm.value;
-    console.log(this.editForm.value);
+    
 
     // let temp=this.CategoryFormApi.filter(s => s.CategoryId == value.CategoryId);
     let temp = this.CategoryFormApi.filter(s => s.Id == value.CategoryId);
-    console.log(temp);
+    
     //value.Category = this.CategoryFormApi.filter(s => s.Id == value.CategoryId);
     value.Category = temp.length > 0 ? temp[0] : null;
-    console.log(value);
+    
     if (this.editForm.valid) {
       const formData = {
         ...this.exam,
@@ -157,10 +157,21 @@ export class ExamUpdateComponent implements OnInit {
       };
       this.http.put('http://localhost:65170/api/Exam/' + formData.Id, formData, { headers: http() }).subscribe({
         next: (res) => {
-          this.toar.success('true','Update Success');
          
-        
-
+         if(res==1){
+          this.toar.success('Update Success','Update Exam');
+          console.log(res);
+         }else if(res==0){
+           this.toar.warning('exam is public','Update Exam')
+         }
+         
+         else{
+          var errors=201+','+JSON.parse(res.toString()).Message;
+          this.myservice.changeError(errors);
+          //  this.toar.warning(JSON.parse(res.toString()).Message,'Update')
+         }
+      // console.log(JSON.parse(res.toString()).Message.substring(0,10))
+      //    console.log(JSON.parse(res.toString()) )
         },
         
         error: (err) => {
@@ -170,7 +181,7 @@ export class ExamUpdateComponent implements OnInit {
      
         }
       });
-      console.log(this.editForm.value);
+     
     }
     // this.router.navigate(['/exam'])
   }
