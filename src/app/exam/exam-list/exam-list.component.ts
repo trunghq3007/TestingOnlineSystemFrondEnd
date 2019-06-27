@@ -85,7 +85,16 @@ export class ExamListComponent implements OnInit {
       }
       );
   }
-
+  updateQuestion(id){
+    this.router.navigate(['/exam/examquestion',id])
+   setInterval(() => {
+    location.reload()
+    }, 10);
+    
+  }
+ 
+  
+  
   ngOnInit() {
     this.http.post<string>('http://localhost:65170/api/Exam?action=getfilter', {},{ headers: http() }).subscribe(
       value => {

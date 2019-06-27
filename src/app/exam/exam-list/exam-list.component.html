@@ -226,11 +226,11 @@
               <button type="button" class="close" data-dismiss="modal">&times;</button>
               <h4 class="modal-title">Detail Exam</h4>
             </div>
-            <div class="box box-warning">
+            <div class="box box-warning" *ngFor="let item of examInfo">
               <div class="box-header with-border">
                 <b>
                   <h3 class="text-center"></h3>
-                  <div class="pull-left" style="margin-left: 5%"  *ngFor="let item of examInfo">
+                  <div class="pull-left" style="margin-left: 5%"  >
   
                     <p>ID: {{item.Id}} </p>
                     <p>NameExam: {{item.NameExam}}</p>
@@ -241,8 +241,7 @@
                     <p>Status: {{item.Status?"Public":"Draft"}}</p>
                     <p>Note: {{item.Note}}</p>
                     <p>Category Name: {{item.NameCategory}}</p>
-                    <button [routerLink]="['/exam', item.Id]" class="btn btn-default" data-dismiss="modal">Update
-                      Question</button>
+                    
                   </div>
                   <div class="pull-right" style="padding-right: 5%">
   
@@ -251,6 +250,8 @@
                 </b>
               </div>
               <div class="modal-footer">
+                  <button  (click)="updateQuestion(item.Id)" class="btn btn-default" data-dismiss="modal">Update
+                    Question</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
   
               </div>

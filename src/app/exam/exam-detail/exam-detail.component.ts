@@ -57,6 +57,7 @@ export class ExamDetailComponent implements OnInit {
   constructor(private router:Router,private myservice:MyserviceService,private http: HttpClient, private ac: ActivatedRoute, private fb: FormBuilder, private toar: ToastrService) {
     this.router.events.subscribe((event) => {
       this.myservice.changeMessage('1');
+     
    });
    }
   get StartDate(): FormControl {
@@ -83,8 +84,10 @@ export class ExamDetailComponent implements OnInit {
   get RandomNumber(): FormControl {
     return this.randomForm.get('Total') as FormControl;
   }
+ 
   regTotal = "^[0-9]{1,4}$";
   ngOnInit() {
+   
     this.filterForm = this.fb.group({
       // CreatedDate: [''],
       CategoryName: [''],
@@ -116,7 +119,7 @@ export class ExamDetailComponent implements OnInit {
       
      
     });
-
+   
 
   }
   listQuestion() {
