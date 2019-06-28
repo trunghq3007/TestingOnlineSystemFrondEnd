@@ -26,11 +26,13 @@ export class CreateExamComponent implements OnInit {
   UserName: string;
   name:string;
   public Editor = ClassicEditorBuild;
+
+  
   // submited = false;
   // disabled = false;
   examForm: FormGroup;
   number = "^([1-9][0-9]{0,3}|^2000)$";
-  // regex = "^[A-Za-z0-9@/._#] +$";
+   regex = '^([A-Za-z0-9# ]{0,100})$';
   
   CategoryFormApi = [];
   constructor(private myservice:MyserviceService,private fb: FormBuilder,private toar:ToastrService, private http: HttpClient, private authenticationService: AuthenticationService
@@ -79,12 +81,12 @@ export class CreateExamComponent implements OnInit {
     console.log(''+this.UserName);
     this.getApiCategory();
     this.examForm = this.fb.group({
-      NameExam: ['', [Validators.required, Validators.maxLength(50)]],
+      NameExam: ['', [Validators.required, Validators.maxLength(50), Validators.pattern]],
       CreateBy: [this.UserName],
       QuestionNumber: ['', [Validators.required, Validators.pattern]],
       //status: ['', [{value: 'false', disabled: true}]],
      
-      SpaceQuestionNumber: ['', [Validators.required, Validators.pattern]],
+      SpaceQuestionNumber: [100, [Validators.required, Validators.pattern]],
       CreateAt: [''],
         CategoryId: [''],
       Note: [''],
