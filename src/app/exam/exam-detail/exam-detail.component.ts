@@ -197,11 +197,13 @@ this.selection.clear();
       this.http.post<string>('http://localhost:65170/api/ExamQuestions?action=random', JSON.stringify(value),{ headers: http() }).subscribe((error) => {
         if (error == 0) {
           this.toar.info('There are no questions in this category', ' Question Number');
-        } else if (error == -2) {
-          this.toar.warning('something went wrong', ' Question Number');
-        } else {
+        } else if (error>0) {
           var  errors=error/2;
           this.toar.success('inserted' + ' ' + errors + ' ' + 'records in Exam', ' Question Number');
+          
+        } else {
+          var errorss=201+','+JSON.parse(error.toString()).Message;
+          this.myservice.changeError(errorss);
         }
 
         // confirm('inserted' + ' ' + error + ' ' + 'records in Exam');
