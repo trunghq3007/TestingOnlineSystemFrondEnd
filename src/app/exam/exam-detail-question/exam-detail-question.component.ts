@@ -36,7 +36,7 @@ export class ExamDetailQuestionComponent implements OnInit {
   searchString: string;
   examID = this.ac.snapshot.paramMap.get('examID');
   dataSource = new MatTableDataSource<detailExam>(this.detailExams);
-
+checked=false
   @ViewChild(MatSort) sort: MatSort;
   displayedColumns: string[] = ['select', 'QuesId', 'Category', 'nameExam', 'Content', 'Level', 'Space', 'CreatedBy', 'CreatedDate'];
 
@@ -45,11 +45,14 @@ export class ExamDetailQuestionComponent implements OnInit {
   selection = new SelectionModel<detailExam>(true, []);
   constructor(private myservice:MyserviceService,private router:Router,private http: HttpClient, private ac: ActivatedRoute, private fb: FormBuilder, private toar: ToastrService) { 
     this.router.events.subscribe((event) => {
+      
       this.myservice.changeMessage('1');
+      
    });
   }
 
   ngOnInit() {
+   
     this.listQuestionDetail();
   }
   listQuestionDetail() {

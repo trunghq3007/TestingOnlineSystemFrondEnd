@@ -16,7 +16,7 @@ import { MyserviceService } from 'src/app/myservice.service';
 
 export class ListDetailComponent implements OnInit {
   test: Test[] = [];
-  displayedColumn: string[] = ['select', 'NameUser', 'NameExam', 'NameCategory', 'TestName', 'SemsesterName'];
+  displayedColumn: string[] = ['select', 'NameUser', 'TotalTest', 'Score'];
   dataSource = new MatTableDataSource<Test>(this.test);
   selection = new SelectionModel<Test>(true, []);
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -26,28 +26,41 @@ export class ListDetailComponent implements OnInit {
       this.myservice.changeMessage('1');
    });
    }
-  private UserId: string;
-
+  Users: string;
+  LisUser;
+  UserId: string;
+  UserName: string;
+  testName:string;
   ngOnInit() {
+    this.testName=this.ac.snapshot.paramMap.get('TestName');
+    console.log(this.testName);
     const testID = this.ac.snapshot.paramMap.get('testID');
-    this.http.get<string>('http://localhost:65170/api/test/' + testID + '?action=detail', { headers: http() }).subscribe
+    const userid=1;
+    if (sessionStorage.getItem('user')) {
+      this.Users = sessionStorage.getItem('user');
+      this.LisUser = this.Users.split(',');
+      this.UserName = this.LisUser[1];
+      this.UserId = this.LisUser[0];
+    } else {
+      this.Users = null;
+    }
+    this.http.get<string>('http://localhost:65170/api/test/'+testID+'?action=detail&&userid='+this.UserId, { headers: http() }).subscribe
       (
         value => {
-          this.dataSource.data = JSON.parse(value);
-          console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
-          console.log('value' + value);
-
-        },err=>{
-        
+         
+            this.dataSource.data = JSON.parse(value);
+            console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
+            console.log('value' + value);
+         
           
+        }        
+        ,err=>{
+          // this.router.navigate(['group']);
           var errors=err.status+','+err.message;
           this.myservice.changeError(errors);
-         
-        
-       
       }
-
       );
+  
     this.dataSource.sort = this.sort;
   }
   isAllSelected() {

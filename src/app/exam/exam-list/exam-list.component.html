@@ -9,7 +9,7 @@
         integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
     <title></title>
   </head> -->
-
+  <div style="height: 95vh;  overflow-y: scroll;  overflow-x: hidden;">
   <div class="content-wrapper">
     <div class="container col-md-12">
       <div style="padding: 10px;">
@@ -228,11 +228,11 @@
               <button type="button" class="close" data-dismiss="modal">&times;</button>
               <h4 class="modal-title">Detail Exam</h4>
             </div>
-            <div class="box box-warning">
+            <div class="box box-warning" *ngFor="let item of examInfo">
               <div class="box-header with-border">
                 <b>
                   <h3 class="text-center"></h3>
-                  <div class="pull-left" style="margin-left: 5%"  *ngFor="let item of examInfo">
+                  <div class="pull-left" style="margin-left: 5%"  >
   
                     <p>ID: {{item.Id}} </p>
                     <p>NameExam: {{item.NameExam}}</p>
@@ -243,8 +243,7 @@
                     <p>Status: {{item.Status?"Public":"Draft"}}</p>
                     <p>Note: {{item.Note}}</p>
                     <p>Category Name: {{item.NameCategory}}</p>
-                    <button [routerLink]="['/exam', item.Id]" class="btn btn-default" data-dismiss="modal">Update
-                      Question</button>
+                    
                   </div>
                   <div class="pull-right" style="padding-right: 5%">
   
@@ -253,6 +252,8 @@
                 </b>
               </div>
               <div class="modal-footer">
+                  <button style="float: left"  (click)="updateQuestion(item.Id)" class="btn btn-primary" data-dismiss="modal">Update
+                    Question</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
   
               </div>
@@ -267,3 +268,4 @@
     </div>
     <!-- Trigger the modal with a button -->
     <!-- Modal -->
+  </div>

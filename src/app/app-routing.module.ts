@@ -361,7 +361,7 @@ const routes: Routes = [
 ];
 
 const fullRoutes = [...routes, ...QuestionRouting];
-console.log(fullRoutes);
+// console.log(fullRoutes);
 @NgModule({
   imports: [RouterModule.forRoot(fullRoutes)],
   exports: [RouterModule]
