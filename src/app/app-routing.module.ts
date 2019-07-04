@@ -29,7 +29,6 @@ import { ManagerSemesterExamTestComponent } from './manager-semester-exam-test/m
 import { ViewListSemastertotestComponent } from './view-list-semastertotest/view-list-semastertotest.component';
 import { ViewlistTestbySemesterComponent } from './viewlist-testby-semester/viewlist-testby-semester.component';
 import { ThiChitietbaithiComponent } from './thi-chitietbaithi/thi-chitietbaithi.component';
-import { ThiThiComponent } from './thi-thi/thi-thi.component';
 import { RoleComponent } from './role/role.component';
 import { from } from 'rxjs';
 import { ListExamUserComponent } from './list-exam-user/list-exam-user.component';

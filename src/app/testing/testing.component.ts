@@ -162,7 +162,7 @@ this.NameExam=this.testProcessings.TestName;
        if (this.EndTest - this.startTest >= this.second) {
          localStorage.clear();
          this.router.navigate(['/thi/' + this.Idtest + '/' + this.Idtest + '/ketqua']);
-        window.location.reload();
+      
        
       
       }
@@ -187,6 +187,6 @@ this.NameExam=this.testProcessings.TestName;
       this.router.navigate(['/thi/' + this.Idtest + '/' + this.Idtest + '/ketqua']);
     }
 
-    window.location.reload();
+   
   }
 }

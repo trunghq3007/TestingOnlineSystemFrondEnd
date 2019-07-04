@@ -56,7 +56,6 @@ import { SemesterDetailComponent } from './semester-detail/semester-detail.compo
 import { ViewListSemastertotestComponent } from './view-list-semastertotest/view-list-semastertotest.component';
 import { ViewlistTestbySemesterComponent } from './viewlist-testby-semester/viewlist-testby-semester.component';
 import { ThiChitietbaithiComponent } from './thi-chitietbaithi/thi-chitietbaithi.component';
-import { ThiThiComponent } from './thi-thi/thi-thi.component';
 
 
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
@@ -129,7 +128,6 @@ import { QuestionRouting } from './question-router';
     ViewListSemastertotestComponent,
     ViewlistTestbySemesterComponent,
     ThiChitietbaithiComponent,
-    ThiThiComponent,
     ExamImportComponent,
     ViewListSemasterComponent,
     SemesterDetailComponent,
