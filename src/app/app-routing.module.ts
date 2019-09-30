@@ -47,6 +47,7 @@ import { DetailQuestionComponent } from './detail-question/detail-question.compo
 import { EditQuestionComponent } from './edit-question/edit-question.component';
 import { ImportQuestionComponent } from './import-question/import-question.component';
 import { ExamImportComponent } from './exam/exam-import/exam-import.component';
+import { TestAssignmentComponent } from './test-assignment/test-assignment.component';
 const routes: Routes = [
 
   {
@@ -178,6 +179,16 @@ const routes: Routes = [
         component: ListUpdateComponent
       }
     ], //canActivate: [AuthGuard]
+  },
+  {
+    path: 'TestAssignment/:Id',
+    children: [
+      {
+        path: '',
+        component: TestAssignmentComponent,
+        pathMatch: 'full'
+      }
+    ], 
   },
   {
     path: 'group',

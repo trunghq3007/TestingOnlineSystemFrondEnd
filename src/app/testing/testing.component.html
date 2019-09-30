@@ -57,16 +57,23 @@
             </td>
           </tr>
         </table>
-        <div *ngFor="let items of item.Answers" style="width: 100%">
-          <table >
-            <tr>
-              <td><input type="checkbox" id="check{{items.Id}}"   id-ans="items.Id" (click)="Onclick(items.Id,item.Id)"/></td>
-              <td style="padding-top: 1%;padding-left: 10px">
-                <h5 [innerHtml]="items.Content"  style="line-height: 0"> </h5>
-              </td>
-            </tr>
-          </table>
-        </div>  
+        <div *ngIf="item.Type==1; then thenBlock else elseBlock"></div>
+<ng-template #thenBlock>
+  <textarea style="width:90%;height: 100px;"></textarea>
+</ng-template>
+<ng-template #elseBlock>
+    <div *ngFor="let items of item.Answers" style="width: 100%">
+        <table >
+          <tr>
+            <td><input type="checkbox" id="check{{items.Id}}"   id-ans="items.Id" (click)="Onclick(items.Id,item.Id)"/></td>
+            <td style="padding-top: 1%;padding-left: 10px">
+              <h5 [innerHtml]="items.Content"  style="line-height: 0"> </h5>
+            </td>
+          </tr>
+        </table>
+      </div>  
+</ng-template>
+        
       </div>
 </div>
 

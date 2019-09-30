@@ -11,7 +11,7 @@ export interface Question {
     UpdatedDate: string;
     CreatedDate: string;
     Level: string;
-    QuestionType: string;
+    Type: string;
     Tags: [{ Id: string; Name: string }]
     TagsId: string;
     Status: string;

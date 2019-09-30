@@ -20,18 +20,18 @@ export class ExamListComponent implements OnInit {
 
   searchString: string;
   filter: [];
-  examInfo: Exam []=[];
+  examInfo: Exam[] = [];
   displayedColumn: string[] = ['select', 'NameExam', 'CreateBy', 'QuestionNumber', 'SpaceQuestionNumber', 'NameCategory', 'Status', 'CreateAt', 'Note', 'Action'];
   dataSource = new MatTableDataSource<Exam>(this.exams);
   selection = new SelectionModel<Exam>(true, []);
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  constructor(private myservice:MyserviceService,private http: HttpClient, private router: Router, private toasr: ToastrService, private fb: FormBuilder) {
+  constructor(private myservice: MyserviceService, private http: HttpClient, private router: Router, private toasr: ToastrService, private fb: FormBuilder) {
 
     this.router.events.subscribe((event) => {
       this.myservice.changeMessage('1');
-   });
-     }
+    });
+  }
 
 
 
@@ -54,7 +54,7 @@ export class ExamListComponent implements OnInit {
           error: (err) => {
 
             console.log('false');
-            var errors=err.status+','+err.message;
+            var errors = err.status + ',' + err.message;
             this.myservice.changeError(errors);
           }
 
@@ -65,11 +65,11 @@ export class ExamListComponent implements OnInit {
 
 
   listexams() {
-    this.http.get<string>('http://localhost:65170/api/Exam',{ headers: http() }).subscribe(
+    this.http.get<string>('http://localhost:65170/api/Exam', { headers: http() }).subscribe(
       value => {
         this.exams = JSON.parse(value);
         for (let i = 0; i < this.exams.length; i++) {
-          if(this.exams[i].Category != null){
+          if (this.exams[i].Category != null) {
             // console.log(this.exams[i].Category);
             this.exams[i].NameCategory = this.exams[i].Category.Name;
           }
@@ -78,37 +78,37 @@ export class ExamListComponent implements OnInit {
         console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
 
       },
-      err=>{
-        
-        var errors=err.status+','+err.message;
+      err => {
+
+        var errors = err.status + ',' + err.message;
         this.myservice.changeError(errors);
       }
-      );
+    );
   }
-  updateQuestion(id){
-    this.router.navigate(['/exam/examquestion',id])
-   setInterval(() => {
-    location.reload()
+  updateQuestion(id) {
+    this.router.navigate(['/exam/examquestion', id])
+    setInterval(() => {
+      location.reload()
     }, 10);
-    
+
   }
  
-  
-  
+
+
   ngOnInit() {
-    this.http.post<string>('http://localhost:65170/api/Exam?action=getfilter', {},{ headers: http() }).subscribe(
+    this.http.post<string>('http://localhost:65170/api/Exam?action=getfilter', {}, { headers: http() }).subscribe(
       value => {
         this.listExam = JSON.parse(value);
       },
-      err=>{
-        
-       
-        var errors=err.status+','+err.message;
+      err => {
+
+
+        var errors = err.status + ',' + err.message;
         this.myservice.changeError(errors);
-       
-      
-     
-    });
+
+
+
+      });
     this.filterExam = this.fb.group({
       Timetest: ['',],
       CreateBy: ['',],
@@ -120,60 +120,60 @@ export class ExamListComponent implements OnInit {
     this.listexams();
     this.dataSource.sort = this.sort;
     // this.myservice.changeMessage('2');
-   
+
   }
-  
+
   detail(examID) {
-    this.http.get<string>('http://localhost:65170/api/Exam/' + examID,{ headers: http() }).subscribe
+    this.http.get<string>('http://localhost:65170/api/Exam/' + examID, { headers: http() }).subscribe
       (
         value => {
           this.examInfo = JSON.parse(value).Data;
           console.log(this.examInfo);
         },
-        err=>{
-        
-          var errors=err.status+','+err.message;
+        err => {
+
+          var errors = err.status + ',' + err.message;
           this.myservice.changeError(errors);
-         
-        
-       
-      }
+
+
+
+        }
       );
   }
   detailQuestion(examID) {
 
-    this.http.get<string>('http://localhost:65170/api/ExamQuestions/' + examID,{ headers: http() }).subscribe
+    this.http.get<string>('http://localhost:65170/api/ExamQuestions/' + examID, { headers: http() }).subscribe
       (
         value => {
           this.examInfo = JSON.parse(value);
 
         },
-        err=>{
-        
-        
-          var errors=err.status+','+err.message;
+        err => {
+
+
+          var errors = err.status + ',' + err.message;
           this.myservice.changeError(errors);
-         
-        
-       
-      }
+
+
+
+        }
       );
   }
   onFilter() {
     const value = this.filterExam.value;
-    this.http.post<string>('http://localhost:65170/api/Exam/?action=filter', JSON.stringify(value),{ headers: http() }).subscribe(value => {
+    this.http.post<string>('http://localhost:65170/api/Exam/?action=filter', JSON.stringify(value), { headers: http() }).subscribe(value => {
       this.dataSource.data = JSON.parse(value);
       console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
     },
-    err=>{
-        
-      
-      var errors=err.status+','+err.message;
-      this.myservice.changeError(errors);
-     
-    
-   
-  });
+      err => {
+
+
+        var errors = err.status + ',' + err.message;
+        this.myservice.changeError(errors);
+
+
+
+      });
 
     // const value = this.filterExam.value;
     // this.http.post<string>('http://localhost:65170/api/Exam?action=getfilter', JSON.stringify(value)).subscribe(value => {
@@ -181,19 +181,19 @@ export class ExamListComponent implements OnInit {
     // });
   }
   onSearch() {
-    this.http.get<string>('http://localhost:65170/api/Exam?searchString=' + this.searchString,{ headers: http() }).subscribe(value => {
+    this.http.get<string>('http://localhost:65170/api/Exam?searchString=' + this.searchString, { headers: http() }).subscribe(value => {
       this.dataSource.data = JSON.parse(value);
       console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
     },
-    err=>{
-        
-     
-      var errors=err.status+','+err.message;
-      this.myservice.changeError(errors);
-     
-    
-   
-  });
+      err => {
+
+
+        var errors = err.status + ',' + err.message;
+        this.myservice.changeError(errors);
+
+
+
+      });
   }
 
   isAllSelected() {
@@ -216,28 +216,28 @@ export class ExamListComponent implements OnInit {
 
   exportExam(examID: number) {
     if (confirm('you want to export record')) {
-      this.http.get<string>('http://localhost:65170/api/Exam/' + examID + '?action=export',{ headers: http() }).subscribe
+      this.http.get<string>('http://localhost:65170/api/Exam/' + examID + '?action=export', { headers: http() }).subscribe
         (
           res => {
             this.listexams();
             this.toasr.warning('Export Successfully', 'Exam.Export');
 
           },
-          err=>{
-        
-           
-            var errors=err.status+','+err.message;
+          err => {
+
+
+            var errors = err.status + ',' + err.message;
             this.myservice.changeError(errors);
-           
-          
-         
-        });
+
+
+
+          });
     }
   }
 
   deleteExam(examID: number) {
     if (confirm('you want to delete record')) {
-      this.http.delete('http://localhost:65170/api/Exam/' + examID,{ headers: http() }).subscribe
+      this.http.delete('http://localhost:65170/api/Exam/' + examID, { headers: http() }).subscribe
         (
           res => {
             if (res == 1) {
@@ -248,18 +248,18 @@ export class ExamListComponent implements OnInit {
               this.toasr.error('Delete Fail because exam has been public', 'Exam Delete');
             }
             this.listexams();
-           
+
 
           },
-          err=>{
-        
-           
-            var errors=err.status+','+err.message;
+          err => {
+
+
+            var errors = err.status + ',' + err.message;
             this.myservice.changeError(errors);
-           
-          
-         
-        });
+
+
+
+          });
     }
   }
 

@@ -146,6 +146,9 @@
         <a routerLink="/semestercustomer/{{item.ID}}">
           <h1 style="font-size: 16px;"><h3 style="color: #009CDE; font-family:Georgia, 'Times New Roman', Times, serif">{{item.SemesterName}}</h3> <br /><span>
            StartDay: {{item.StartDay| date: 'dd/MM/yyyy'}}   </span><h5 style="font-size: 13px">Enday:{{item.EndDay| date: 'dd/MM/yyyy'}}</h5><br />
+           <div *ngIf="item.status==4; then thenBlock else elseBlock"></div>
+           <ng-template #thenBlock>Đề thi tự luận</ng-template>
+<ng-template #elseBlock>Đề thi trắc nghiệm</ng-template>
           </h1>
         </a>
       </div>

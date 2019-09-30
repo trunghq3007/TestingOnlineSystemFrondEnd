@@ -24,23 +24,27 @@ export class CreateExamComponent implements OnInit {
   LisUser;
   UserId: string;
   UserName: string;
-  name:string;
+  name: string;
   public Editor = ClassicEditorBuild;
 
-  
+
   // submited = false;
   // disabled = false;
   examForm: FormGroup;
   number = "^([1-9][0-9]{0,3}|^2000)$";
-   regex = '^([A-Za-z0-9# ]{0,100})$';
-  
+  regex = '^([A-Za-z0-9# ]{0,100})$';
+
   CategoryFormApi = [];
-  constructor(private myservice:MyserviceService,private fb: FormBuilder,private toar:ToastrService, private http: HttpClient, private authenticationService: AuthenticationService
-    ,private router:Router ) {
-      this.router.events.subscribe((event) => {
-        this.myservice.changeMessage('1');
-     });
-   }
+  constructor(private myservice: MyserviceService,
+    private fb: FormBuilder,
+    private toar: ToastrService,
+    private http: HttpClient,
+    private authenticationService: AuthenticationService
+    , private router: Router) {
+    this.router.events.subscribe((event) => {
+      this.myservice.changeMessage('1');
+    });
+  }
   get NameExam(): FormControl {
     return this.examForm.get('NameExam') as FormControl;
   }
@@ -73,42 +77,42 @@ export class CreateExamComponent implements OnInit {
       this.LisUser = this.Users.split(',');
       this.UserName = this.LisUser[1];
       this.UserId = this.LisUser[0];
-     
-     
+
+
     } else {
       this.Users = null;
     }
-    console.log(''+this.UserName);
+    console.log('' + this.UserName);
     this.getApiCategory();
     this.examForm = this.fb.group({
       NameExam: ['', [Validators.required, Validators.maxLength(50), Validators.pattern]],
       CreateBy: [this.UserName],
       QuestionNumber: ['', [Validators.required, Validators.pattern]],
       //status: ['', [{value: 'false', disabled: true}]],
-     
+
       SpaceQuestionNumber: [100, [Validators.required, Validators.pattern]],
       CreateAt: [''],
-        CategoryId: [''],
+      CategoryId: [''],
       Note: [''],
 
 
 
     });
-    
+
   }
   getApiCategory() {
-    this.http.get<string>('http://localhost:65170/api/Category/',{ headers: http() }).subscribe(value => {
+    this.http.get<string>('http://localhost:65170/api/Category/', { headers: http() }).subscribe(value => {
       this.CategoryFormApi = JSON.parse(value);
     },
-    err=>{
-        
-      
-      var errors=err.status+','+err.message;
-      this.myservice.changeError(errors);
-     
-    
-   
-  }
+      err => {
+
+
+        var errors = err.status + ',' + err.message;
+        this.myservice.changeError(errors);
+
+
+
+      }
     );
   }
   validateForm() {
@@ -124,42 +128,42 @@ export class CreateExamComponent implements OnInit {
     // do something else
   }
   onSubmit() {
-    
+
     console.log(this.examForm.value);
     if (this.examForm.valid) {
       console.log(this.examForm.value);
       const value = this.examForm.value;
       value.Category = this.CategoryFormApi.filter(s => s.Id == value.CategoryId);
       value.Category = value.Category.length > 0 ? value.Category[0] : null;
-     
-      this.http.post<string>('http://localhost:65170/api/Exam', JSON.stringify(value),{ headers: http() }).subscribe({
+
+      this.http.post<string>('http://localhost:65170/api/Exam', JSON.stringify(value), { headers: http() }).subscribe({
         next: (response) => {
-          
-       
-          if(response==2){
-            this.toar.success('Successful',' Create exam');
-           
-          }else if(response==-2){
-            this.toar.warning('exam is exist',' Create exam');
+
+
+          if (response == 2) {
+            this.toar.success('Successful', ' Create exam');
+
+          } else if (response == -2) {
+            this.toar.warning('exam is exist', ' Create exam');
           }
-          
-          else{
-            var errors=201+','+JSON.parse(response.toString()).Message;
-          this.myservice.changeError(errors);
+
+          else {
+            var errors = 201 + ',' + JSON.parse(response.toString()).Message;
+            this.myservice.changeError(errors);
           }
-         console.log(response)
+          console.log(response)
         },
 
         error: (err) => {
-         // this.toar.warning('Fail',' Create exam');
+          // this.toar.warning('Fail',' Create exam');
           //this.examForm.reset();
-          var errors=err.status+','+err.message;
+          var errors = err.status + ',' + err.message;
           this.myservice.changeError(errors);
         }
-        
+
       }
-     
-      
+
+
       );
       console.log(this.examForm.value);
     }
