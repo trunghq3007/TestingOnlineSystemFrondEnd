@@ -48,6 +48,7 @@ import { EditQuestionComponent } from './edit-question/edit-question.component';
 import { ImportQuestionComponent } from './import-question/import-question.component';
 import { ExamImportComponent } from './exam/exam-import/exam-import.component';
 import { TestAssignmentComponent } from './test-assignment/test-assignment.component';
+import { ListUserAssignmentComponent } from './list-user-assignment/list-user-assignment.component';
 const routes: Routes = [
 
   {
@@ -186,6 +187,16 @@ const routes: Routes = [
       {
         path: '',
         component: TestAssignmentComponent,
+        pathMatch: 'full'
+      }
+    ], 
+  },
+  {
+    path: 'ListUser/:Id',
+    children: [
+      {
+        path: '',
+        component: ListUserAssignmentComponent,
         pathMatch: 'full'
       }
     ], 

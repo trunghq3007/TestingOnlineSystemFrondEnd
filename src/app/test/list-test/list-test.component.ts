@@ -109,7 +109,7 @@ export class ListTestComponent implements OnInit {
   }
 
   testAssignt(id) {
-    this.router.navigate(['/TestAssignment', id])
+    this.router.navigate(['/TestAssignment/', id])
   }
   detail(testID) {
 

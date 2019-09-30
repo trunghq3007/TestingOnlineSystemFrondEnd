@@ -5,8 +5,9 @@ import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { http } from 'src/app/http-header';
 import { MyserviceService } from 'src/app/myservice.service';
+import { ToastrService } from 'ngx-toastr';
 export interface User {
-  Id: number;
+  UserId: number;
   UserName: string;
   FullName: string;
   Phone: string;
@@ -24,24 +25,29 @@ export class TestAssignmentComponent implements OnInit {
   testAssignment: User[] = [];
   dataSource = new MatTableDataSource<User>(this.testAssignment);
   selection = new SelectionModel<User>(true, []);
-  displayedColumn: string[] = ['select', 'UserName', 'FullName', 'Phone', 'Email', 'Address', 'Status', 'Action'];
+  Id = this.ac.snapshot.paramMap.get('Id');
+  displayedColumn: string[] = ['select','UserId', 'UserName', 'FullName', 'Phone', 'Email', 'Address', 'Status', 'Action'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  constructor(private myservice: MyserviceService, private http: HttpClient, private ac: ActivatedRoute, private router: Router) {
+  constructor(private myservice: MyserviceService, private http: HttpClient, private ac: ActivatedRoute, private router: Router, private toar: ToastrService) {
     this.router.events.subscribe((event) => {
       this.myservice.changeMessage('1');
     });
   }
 
   ngOnInit() {
+    this.ListUser();
+    
+  }
+  ListUser(){
     const testID = this.ac.snapshot.paramMap.get('Id');
     console.log(testID)
     this.http.get<string>('http://localhost:65170/api/TestAssignment/' + testID + '?action=GetById', { headers: http() }).subscribe(
       value => {
-        
+
         this.dataSource.data = JSON.parse(value);
         this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort;
-        
+
       },
       err => {
         var errors = err.status + ',' + err.message;
@@ -49,6 +55,32 @@ export class TestAssignmentComponent implements OnInit {
       });
     console.log(this.dataSource)
     this.dataSource.sort = this.sort;
+    this.selection.clear()
+  }
+  Remove() {
+    let Arr = [];
+    this.selection.selected.forEach(item => {
+      Arr.push({ TestId: this.Id, UserId: item.UserId });
+
+    })
+    if (Arr.length > 0) {
+      // tslint:disable-next-line: max-line-length
+      this.http.post<string>('http://localhost:65170/api/TestAssignment?action=DeleteMutiple', JSON.stringify(Arr), { headers: http() }).subscribe((error) => {
+        // tslint:disable-next-line: radix
+        if (error > 0) {
+          this.toar.success('success', ' User Number');
+        }
+        this.ListUser();
+        this.selection.clear()
+      },
+        err => {
+          var errors = err.status + ',' + err.message;
+          this.myservice.changeError(errors);
+        });
+    } else {
+      this.toar.info('please choice user', ' User Number');
+    }
+
   }
   isAllSelected() {
     const numSelected = this.selection.selected.length;
