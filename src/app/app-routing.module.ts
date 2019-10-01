@@ -47,6 +47,9 @@ import { DetailQuestionComponent } from './detail-question/detail-question.compo
 import { EditQuestionComponent } from './edit-question/edit-question.component';
 import { ImportQuestionComponent } from './import-question/import-question.component';
 import { ExamImportComponent } from './exam/exam-import/exam-import.component';
+import { TestAssignmentComponent } from './test-assignment/test-assignment.component';
+import { ListUserAssignmentComponent } from './list-user-assignment/list-user-assignment.component';
+import { ThiTuLuanComponent } from './thi-tu-luan/thi-tu-luan.component';
 const routes: Routes = [
 
   {

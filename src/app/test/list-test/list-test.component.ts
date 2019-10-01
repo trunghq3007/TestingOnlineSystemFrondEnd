@@ -51,15 +51,15 @@ export class ListTestComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private myservice:MyserviceService, private http: HttpClient, private router: Router, private fb: FormBuilder) {
+  constructor(private myservice: MyserviceService, private http: HttpClient, private router: Router, private fb: FormBuilder) {
     this.router.events.subscribe((event) => {
       this.myservice.changeMessage('1');
-   });
-   }
+    });
+  }
 
   deleteTest(Id: number) {
     if (confirm('you want to delete record')) {
-      this.http.delete('http://localhost:65170/api/test/' + Id,{ headers: http() }).subscribe
+      this.http.delete('http://localhost:65170/api/test/' + Id, { headers: http() }).subscribe
         (
           res => {
             if (res == true) {
@@ -68,95 +68,87 @@ export class ListTestComponent implements OnInit {
             else if (res == false) {
               confirm("Is Public not Delete");
             }
-            this.http.get<string>('http://localhost:65170/api/Test',{ headers: http() }).subscribe(
+            this.http.get<string>('http://localhost:65170/api/Test', { headers: http() }).subscribe(
               value => {
                 this.dataSource.data = JSON.parse(value);
                 console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
 
               },
-              err=>{
-        
-                
-                var errors=err.status+','+err.message;
+              err => {
+                var errors = err.status + ',' + err.message;
                 this.myservice.changeError(errors);
-               
-              
-             
-            }
-              );
+              }
+            );
 
           },
-          err=>{
-        
-           
-            var errors=err.status+','+err.message;
+          err => {
+
+
+            var errors = err.status + ',' + err.message;
             this.myservice.changeError(errors);
-           
-          
-         
-        }
-          );
+
+
+
+          }
+        );
     }
   }
   ngOnInit() {
-    
-    this.http.get<string>('http://localhost:65170/api/Test',{ headers: http() }).subscribe(
-      value => {
-        
-        this.dataSource.data = JSON.parse(value);
-        console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
 
+    this.http.get<string>('http://localhost:65170/api/Test', { headers: http() }).subscribe(
+      value => {
+
+        this.dataSource.data = JSON.parse(value);
+        this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort;
       },
-      
-      err=>{
-        
-          
-          var errors=err.status+','+err.message;
-          this.myservice.changeError(errors);
-         
-        
-       
+      err => {
+        var errors = err.status + ',' + err.message;
+        this.myservice.changeError(errors);
       });
-      this.dataSource.sort = this.sort;
+    this.dataSource.sort = this.sort;
+  }
+
+  testAssignt(id) {
+    this.router.navigate(['/TestAssignment/', id])
   }
   detail(testID) {
 
-    this.http.get<string>('http://localhost:65170/api/test/' + testID,{ headers: http() }).subscribe
+    this.http.get<string>('http://localhost:65170/api/test/' + testID, { headers: http() }).subscribe
       (
         value => {
-         
-          this.tests=JSON.parse(value);
+
+          this.tests = JSON.parse(value);
           //console.log(this.examInfo);
 
         },
-        err=>{
-        
-          
-          var errors=err.status+','+err.message;
+        err => {
+
+
+          var errors = err.status + ',' + err.message;
           this.myservice.changeError(errors);
-         
-        
-       
-      }
+
+
+
+        }
       );
   }
   navigateToEdit(Id: string) {
     this.router.navigate(['/test', 'update', Id,]);
   }
   onSearch() {
-    this.http.get<string>('http://localhost:65170/api/Test?searchString=' + this.searchString,{ headers: http() }).subscribe(value => {
+    this.http.get<string>('http://localhost:65170/api/Test?searchString=' + this.searchString, { headers: http() }).subscribe(value => {
       this.dataSource.data = JSON.parse(value);
       console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
     },
-    err=>{
-        
-     
-      var errors=err.status+','+err.message;
-      this.myservice.changeError(errors);
-     
-    
-   
-  });
+      err => {
+
+
+        var errors = err.status + ',' + err.message;
+        this.myservice.changeError(errors);
+
+
+
+      });
   }
   isAllSelected() {
     const numSelected = this.selection.selected.length;

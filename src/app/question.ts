@@ -5,13 +5,14 @@ export interface Question {
         Name: string;
     };
     CategoryId: string;
+    Answer?: string;
     Content: string;
     CreatedBy: string;
     UpdatedBy: string;
     UpdatedDate: string;
     CreatedDate: string;
     Level: string;
-    QuestionType: string;
+    Type: string;
     Tags: [{ Id: string; Name: string }]
     TagsId: string;
     Status: string;
@@ -28,6 +29,4 @@ export interface Question {
             UpdatedDate: string;
         }
     ];
-
-
 }

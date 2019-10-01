@@ -54,12 +54,12 @@ export class ExamDetailComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private router:Router,private myservice:MyserviceService,private http: HttpClient, private ac: ActivatedRoute, private fb: FormBuilder, private toar: ToastrService) {
+  constructor(private router: Router, private myservice: MyserviceService, private http: HttpClient, private ac: ActivatedRoute, private fb: FormBuilder, private toar: ToastrService) {
     this.router.events.subscribe((event) => {
       this.myservice.changeMessage('1');
-     
-   });
-   }
+
+    });
+  }
   get StartDate(): FormControl {
     return this.filterForm.get('CreatedDate') as FormControl;
   }
@@ -84,10 +84,10 @@ export class ExamDetailComponent implements OnInit {
   get RandomNumber(): FormControl {
     return this.randomForm.get('Total') as FormControl;
   }
- 
+
   regTotal = "^[0-9]{1,4}$";
   ngOnInit() {
-   
+
     this.filterForm = this.fb.group({
       // CreatedDate: [''],
       CategoryName: [''],
@@ -104,43 +104,43 @@ export class ExamDetailComponent implements OnInit {
     });
     this.listQuestion();
 
-    this.http.get<string>('http://localhost:65170/api/ExamQuestions/1?action=getfillter',{ headers: http() }).subscribe(
+    this.http.get<string>('http://localhost:65170/api/ExamQuestions/1?action=getfillter', { headers: http() }).subscribe(
       value => {
         this.listfilter = JSON.parse(value);
         this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort;
 
       },
-      err=>{
-        
-      
-        var errors=err.status+','+err.message;
+      err => {
+
+
+        var errors = err.status + ',' + err.message;
         this.myservice.changeError(errors);
-       
-      
-     
-    });
-   
+
+
+
+      });
+
 
   }
   listQuestion() {
     const examID = this.ac.snapshot.paramMap.get('examID');
-    this.http.get<string>('http://localhost:65170/api/ExamQuestions/' + examID + '?action=GetAll',{ headers: http() }).subscribe(
+    this.http.get<string>('http://localhost:65170/api/ExamQuestions/' + examID + '?action=GetAll', { headers: http() }).subscribe(
       value => {
         this.dataSource.data = JSON.parse(value);
         (this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
 
 
       },
-      err=>{
-        
-      
-        var errors=err.status+','+err.message;
+      err => {
+
+
+        var errors = err.status + ',' + err.message;
         this.myservice.changeError(errors);
-       
-      
-     
-    });
-this.selection.clear();
+
+
+
+      });
+    this.selection.clear();
   }
 
   addQuestion(Id) {
@@ -154,33 +154,33 @@ this.selection.clear();
 
     })
     if (Arr.length > 0) {
-      this.http.post<string>('http://localhost:65170/api/ExamQuestions/?action=AddMutiple', JSON.stringify(Arr),{ headers: http() }).subscribe((error) => {
-        if (error >0) {
-          var  errors=error/2;
+      this.http.post<string>('http://localhost:65170/api/ExamQuestions/?action=AddMutiple', JSON.stringify(Arr), { headers: http() }).subscribe((error) => {
+        if (error > 0) {
+          var errors = error / 2;
           this.toar.success('inserted' + ' ' + errors + ' ' + 'records in Exam', ' Question Number');
           // this.toar.warning('something went wrong', ' Question Number');
         } else if (error == 0) {
 
           this.toar.info('There are no questions in this category match with exam', ' Question Number');
         } else {
-          var errorss=201+','+JSON.parse(error.toString()).Message;
+          var errorss = 201 + ',' + JSON.parse(error.toString()).Message;
           this.myservice.changeError(errorss);
         }
-        
+
         this.listQuestion();
 
 
 
       },
-      err=>{
-        
-        
-        var errors=err.status+','+err.message;
-        this.myservice.changeError(errors);
-       
-      
-     
-    });
+        err => {
+
+
+          var errors = err.status + ',' + err.message;
+          this.myservice.changeError(errors);
+
+
+
+        });
     } else {
       this.toar.info('please choice question', ' Question Number');
     }
@@ -195,17 +195,17 @@ this.selection.clear();
 
 
     if (this.randomForm.valid) {
-    
+
       const value = this.randomForm.value;
-      this.http.post<string>('http://localhost:65170/api/ExamQuestions?action=random', JSON.stringify(value),{ headers: http() }).subscribe((error) => {
+      this.http.post<string>('http://localhost:65170/api/ExamQuestions?action=random', JSON.stringify(value), { headers: http() }).subscribe((error) => {
         if (error == 0) {
           this.toar.info('There are no questions in this category', ' Question Number');
-        } else if (error>0) {
-          var  errors=error/2;
+        } else if (error > 0) {
+          var errors = error / 2;
           this.toar.success('inserted' + ' ' + errors + ' ' + 'records in Exam', ' Question Number');
-          
+
         } else {
-          var errorss=201+','+JSON.parse(error.toString()).Message;
+          var errorss = 201 + ',' + JSON.parse(error.toString()).Message;
           this.myservice.changeError(errorss);
         }
 
@@ -214,15 +214,15 @@ this.selection.clear();
 
         console.log(error)
       },
-      err=>{
-        
-       
-        var errors=err.status+','+err.message;
-        this.myservice.changeError(errors);
-       
-      
-     
-    });
+        err => {
+
+
+          var errors = err.status + ',' + err.message;
+          this.myservice.changeError(errors);
+
+
+
+        });
       console.log(this.randomForm.value);
     }
   }
@@ -237,35 +237,35 @@ this.selection.clear();
   }
 
   onSearch() {
-    this.http.get<string>('http://localhost:65170/api/ExamQuestions?searchString=' + this.searchString,{ headers: http() }).subscribe(value => {
+    this.http.get<string>('http://localhost:65170/api/ExamQuestions?searchString=' + this.searchString, { headers: http() }).subscribe(value => {
       this.dataSource.data = JSON.parse(value);
       console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
-    }, err=>{
-        
-      
-      var errors=err.status+','+err.message;
+    }, err => {
+
+
+      var errors = err.status + ',' + err.message;
       this.myservice.changeError(errors);
-     
-    
-   
-  });
+
+
+
+    });
   }
   onFilter() {
     const value = this.filterForm.value;
     console.log(value);
-    this.http.post<string>('http://localhost:65170/api/ExamQuestions', JSON.stringify(value),{ headers: http() }).subscribe(value => {
+    this.http.post<string>('http://localhost:65170/api/ExamQuestions', JSON.stringify(value), { headers: http() }).subscribe(value => {
       this.dataSource.data = JSON.parse(value);
       this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort;
 
-    }, err=>{
-        
-      
-      var errors=err.status+','+err.message;
+    }, err => {
+
+
+      var errors = err.status + ',' + err.message;
       this.myservice.changeError(errors);
-     
-    
-   
-  });
+
+
+
+    });
   }
   isAllSelected() {
     const numSelected = this.selection.selected.length;

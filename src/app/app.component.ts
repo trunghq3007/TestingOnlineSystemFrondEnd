@@ -12,47 +12,47 @@ import { Router } from '@angular/router';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent  {
+export class AppComponent {
   message;
-  currentUser : User;
- checked:boolean;
- Users:string;
- changeDetected=true;
+  currentUser: User;
+  checked: boolean;
+  Users: string;
+  changeDetected = true;
   // initUser(value: User) {
   //   this.currentUser = value;
   // }
   // currentUserSubscription: Subscription;
 
   constructor(
-    private authenticationService: AuthenticationService,private http: HttpClient,private myservice:MyserviceService,private router: Router
+    private authenticationService: AuthenticationService, private http: HttpClient, private myservice: MyserviceService, private router: Router
   ) {
     this.router.events.subscribe((event) => {
-      this.changeDetected=false;
-   });
+      this.changeDetected = false;
+    });
   }
-  
- 
-ngDoCheck(){
-   
- 
-  if(!this.changeDetected){
-    
-    if(this.message==1){
-      this.message=true;
-    }else{
-      this.message=false
+
+
+  ngDoCheck() {
+
+
+    if (!this.changeDetected) {
+
+      if (this.message == 1) {
+        this.message = true;
+      } else {
+        this.message = false
+      }
+      this.changeDetected = true;
+
     }
-    this.changeDetected=true;
-   
-  }
-    
+
     this.changeDetected = false;
-     
-}
+
+  }
 
   ngOnInit() {
     this.myservice.currentMessage.subscribe(message => this.message = message);
- 
+
   }
 }
 

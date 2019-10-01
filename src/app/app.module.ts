@@ -89,6 +89,9 @@ import { ExamImportComponent } from './exam/exam-import/exam-import.component';
 import { ErrorpageComponent } from './errorpage/errorpage.component';
 import { UserHeaderComponent } from './user-header/user-header.component';
 import { QuestionRouting } from './question-router';
+import { ThiTuLuanComponent } from './thi-tu-luan/thi-tu-luan.component';
+import { TestAssignmentComponent } from './test-assignment/test-assignment.component';
+import { ListUserAssignmentComponent } from './list-user-assignment/list-user-assignment.component';
 @NgModule({
   declarations: [
     ExamListComponent,
@@ -151,7 +154,10 @@ import { QuestionRouting } from './question-router';
     TestingComponent,
     CandidatesComponent,
     ErrorpageComponent,
-    UserHeaderComponent
+    UserHeaderComponent,
+    ThiTuLuanComponent,
+    TestAssignmentComponent,
+    ListUserAssignmentComponent
   ],
   imports: [
     MatTabsModule,
