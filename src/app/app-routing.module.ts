@@ -183,36 +183,6 @@ const routes: Routes = [
     ], //canActivate: [AuthGuard]
   },
   {
-    path: 'TestAssignment/:Id',
-    children: [
-      {
-        path: '',
-        component: TestAssignmentComponent,
-        pathMatch: 'full'
-      }
-    ], 
-  },
-  {
-    path: 'ListUser/:Id',
-    children: [
-      {
-        path: '',
-        component: ListUserAssignmentComponent,
-        pathMatch: 'full'
-      }
-    ], 
-  },
-  {
-    path: 'MarkExam/:testId/:testTimeNo',
-    children: [
-      {
-        path: '',
-        component: ThiTuLuanComponent,
-        pathMatch: 'full'
-      }
-    ], 
-  },
-  {
     path: 'group',
     children: [
       {
