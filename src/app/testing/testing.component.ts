@@ -8,10 +8,12 @@ import { ProcessingTest } from '../processing-test'
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { http } from '../http-header';
 import { MyserviceService } from '../myservice.service';
+import { forEach } from '@angular/router/src/utils/collection';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
+// tslint:disable-next-line: use-pipe-transform-interface
 @Component({
   selector: 'app-testing',
   templateUrl: './testing.component.html',
@@ -25,11 +27,11 @@ export class TestingComponent implements OnInit {
   LisUser;
   UserId: string;
   UserName: string;
-  constructor(private myservice:MyserviceService, private semaster: FormBuilder, private fb: FormBuilder, private http: HttpClient, private router: Router, public dialog: MatDialog, public activateRoute: ActivatedRoute) {
+  constructor(private myservice: MyserviceService, private semaster: FormBuilder, private fb: FormBuilder, private http: HttpClient, private router: Router, public dialog: MatDialog, public activateRoute: ActivatedRoute) {
     this.router.events.subscribe((event) => {
       this.myservice.changeMessage('2');
-   });
-   }
+    });
+  }
   testProcessings: TestProcessing;
   questions: Question[];
   i: number;
@@ -49,27 +51,27 @@ export class TestingComponent implements OnInit {
   startTest;
   time;
   CheckTime;
-  second:number;
-  NameExam:string;
-  testCount:number;
+  second: number;
+  NameExam: string;
+  testCount: number;
   Idtest = this.activateRoute.snapshot.paramMap.get('TestId');
   ngOnInit() {
-    
+
     this.http.get<string>('http://localhost:65170/api/SemesterExam/' + this.Idtest + '?IsgetTestProcessing', httpOptions).subscribe(
       value => {
         this.testProcessings = JSON.parse(value);
-        this.testCount=this.testProcessings.Questions.length;
+        this.testCount = this.testProcessings.Questions.length;
         console.log(this.testCount);
         this.questions = this.testProcessings.Questions;
         console.log(this.testProcessings);
         console.log(this.questions = this.testProcessings.Questions);
         this.second = this.testProcessings.TestTime;
         console.log(this.second);
-this.NameExam=this.testProcessings.TestName;
- console.log(this.NameExam);
+        this.NameExam = this.testProcessings.TestName;
+        console.log(this.NameExam);
         this.reset();
         this.start();
-       
+
       });
     if (sessionStorage.getItem('user')) {
       this.Users = sessionStorage.getItem('user');
@@ -129,7 +131,7 @@ this.NameExam=this.testProcessings.TestName;
       this.remainingTime = this.second;
     }
   }
- 
+
   stop() {
     this.clearTimer();
     this.message = `Holding at T-${this.remainingTime} seconds`;
@@ -144,49 +146,48 @@ this.NameExam=this.testProcessings.TestName;
     this.clearTimer();
     this.intervalId = window.setInterval(() => {
       this.remainingTime -= 1;
-     
-      var session=null;
-      if(localStorage.getItem('SecondTest')){
-         session = localStorage.getItem('SecondTest');
-      }else{
-        session=0;
+
+      var session = null;
+      if (localStorage.getItem('SecondTest')) {
+        session = localStorage.getItem('SecondTest');
+      } else {
+        session = 0;
       }
-    
-        var a = new Date();
-        this.EndTest = a.getHours() * 60 + a.getMinutes();
-      
-        this.startTest = +session;
-       
-      
-       
-       if (this.EndTest - this.startTest >= this.second) {
-         localStorage.clear();
-         this.router.navigate(['/thi/' + this.Idtest + '/' + this.Idtest + '/ketqua']);
-      
-       
-      
+
+      var a = new Date();
+      this.EndTest = a.getHours() * 60 + a.getMinutes();
+
+      this.startTest = +session;
+
+      if (this.EndTest - this.startTest >= this.second) {
+        localStorage.clear();
+        this.router.navigate(['/thi/' + this.Idtest + '/' + this.Idtest + '/ketqua']);
       }
     }, 1000);
 
   }
 
-
   summit() {
-    const Idtest = this.testProcessings.Id;
     var arr = this.arrayId;
-    console.log(arr);
-    console.log(Idtest);
 
-    this.http.post('http://localhost:65170/SemesterExam/submid/' + this.Idtest + '?userID=' + this.UserId, JSON.stringify(arr), httpOptions).subscribe(
-      value => (console.log(value))
-
-    )
+    var contentsArr = [];
     if (confirm('Bạn có muốn nộp bài')) {
+      this.http.post('http://localhost:65170/api/TestAssignment?testId=' + this.Idtest + '&userId=' + this.UserId
+        , JSON.stringify(this.questions), httpOptions).subscribe(
+          value => (console.log(value))
+
+        )
+      this.http.post('http://localhost:65170/SemesterExam/submid/' + this.Idtest + '?userID=' + this.UserId, JSON.stringify(arr), httpOptions).subscribe(
+        value => (console.log(value))
+
+      )
       localStorage.clear();
-    
+
       this.router.navigate(['/thi/' + this.Idtest + '/' + this.Idtest + '/ketqua']);
+    } else {
+      contentsArr = [];
     }
 
-   
+
   }
 }

@@ -49,6 +49,7 @@ import { ImportQuestionComponent } from './import-question/import-question.compo
 import { ExamImportComponent } from './exam/exam-import/exam-import.component';
 import { TestAssignmentComponent } from './test-assignment/test-assignment.component';
 import { ListUserAssignmentComponent } from './list-user-assignment/list-user-assignment.component';
+import { ThiTuLuanComponent } from './thi-tu-luan/thi-tu-luan.component';
 const routes: Routes = [
 
   {
@@ -197,6 +198,16 @@ const routes: Routes = [
       {
         path: '',
         component: ListUserAssignmentComponent,
+        pathMatch: 'full'
+      }
+    ], 
+  },
+  {
+    path: 'MarkExam/:testId/:testTimeNo',
+    children: [
+      {
+        path: '',
+        component: ThiTuLuanComponent,
         pathMatch: 'full'
       }
     ], 

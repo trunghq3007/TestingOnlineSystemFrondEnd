@@ -6,6 +6,14 @@ import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { http } from 'src/app/http-header';
 import { MyserviceService } from 'src/app/myservice.service';
+import { User } from 'src/app/user';
+
+export interface Users {
+  dep: number;
+  sum: string;
+  user: User;
+}
+
 
 @Component({
   selector: 'app-list-detail',
@@ -15,64 +23,66 @@ import { MyserviceService } from 'src/app/myservice.service';
 
 
 export class ListDetailComponent implements OnInit {
-  test: Test[] = [];
-  displayedColumn: string[] = ['select', 'NameUser', 'TotalTest', 'Score'];
-  dataSource = new MatTableDataSource<Test>(this.test);
-  selection = new SelectionModel<Test>(true, []);
+  test: Users[] = [];
+  testID = this.ac.snapshot.paramMap.get('testID');
+  displayedColumn: string[] = ['select', 'user.UserName', 'TotalTest', 'Score', 'Action'];
+  dataSource = new MatTableDataSource<Users>(this.test);
+  selection = new SelectionModel<Users>(true, []);
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  constructor(private myservice:MyserviceService, private router: Router, private ac: ActivatedRoute, private http: HttpClient) {
+  constructor(private myservice: MyserviceService, private router: Router, private ac: ActivatedRoute, private http: HttpClient) {
     this.router.events.subscribe((event) => {
       this.myservice.changeMessage('1');
-   });
-   }
-  Users: string;
-  LisUser;
-  UserId: string;
-  UserName: string;
-  testName:string;
+    });
+  }
+  // Users: string;
+  // LisUser;
+  // UserId: string;
+  // UserName: string;
+  // testName: string;
   ngOnInit() {
-    this.testName=this.ac.snapshot.paramMap.get('TestName');
-    console.log(this.testName);
-    const testID = this.ac.snapshot.paramMap.get('testID');
-    const userid=1;
-    if (sessionStorage.getItem('user')) {
-      this.Users = sessionStorage.getItem('user');
-      this.LisUser = this.Users.split(',');
-      this.UserName = this.LisUser[1];
-      this.UserId = this.LisUser[0];
-    } else {
-      this.Users = null;
-    }
-    this.http.get<string>('http://localhost:65170/api/test/'+testID+'?action=detail&&userid='+this.UserId, { headers: http() }).subscribe
+    //  this.testName=this.ac.snapshot.paramMap.get('TestName');
+    //   console.log(this.testName);
+   
+    //   const userid=1;
+      // if (sessionStorage.getItem('user')) {
+      //   this.Users = sessionStorage.getItem('user');
+      //   this.LisUser = this.Users.split(',');
+      //   this.UserName = this.LisUser[1];
+      //   this.UserId = this.LisUser[0];
+      // } else {
+      //   this.Users = null;
+      // } 
+    this.http.get<string>('http://localhost:65170/api/test/' + this.testID + '?action=detail', { headers: http() }).subscribe
       (
         value => {
+          this.dataSource.data = JSON.parse(value);
+          console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
+          console.log('value' + value);
+        }
+        , err => {
          
-            this.dataSource.data = JSON.parse(value);
-            console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
-            console.log('value' + value);
-         
-          
-        }        
-        ,err=>{
-          // this.router.navigate(['group']);
-          var errors=err.status+','+err.message;
+          var errors = err.status + ',' + err.message;
           this.myservice.changeError(errors);
-      }
+        }
       );
-  
+
     this.dataSource.sort = this.sort;
   }
+  testAssignt(testTimeNo){
+ this.router.navigate(['/MarkExam',this.testID,testTimeNo]);
+  }
+
   isAllSelected() {
     const numSelected = this.selection.selected.length;
     const numRows = this.dataSource.data.length;
     return numSelected === numRows;
   }
-  checkboxLabel(row?: Test): string {
+  checkboxLabel(row?: Users): string {
     if (!row) {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.TestName + 1}`;
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.dep + 1}`;
   }
   masterToggle() {
     this.isAllSelected() ?

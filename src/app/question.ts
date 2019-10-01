@@ -5,6 +5,7 @@ export interface Question {
         Name: string;
     };
     CategoryId: string;
+    Answer?: string;
     Content: string;
     CreatedBy: string;
     UpdatedBy: string;
@@ -28,6 +29,4 @@ export interface Question {
             UpdatedDate: string;
         }
     ];
-
-
 }
