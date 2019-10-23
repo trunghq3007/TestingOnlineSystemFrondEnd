@@ -1,19 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Icandidates } from 'src/app/Icandidates';
-import { MatTableDataSource, MatSort, MatDialog, MAT_DIALOG_DATA } from '@angular/material';
-import { ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material';
-import { FormGroup, FormBuilder, FormControl, Validators, ValidationErrors } from '@angular/forms';
+import { MatPaginator, MatTableDataSource } from '@angular/material';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Iuser } from '../iuser';
 import { MyserviceService } from '../myservice.service';
 // import { parse } from 'path';
 
 const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  headers: new HttpHeaders({'Content-Type': 'application/json'})
 };
+
 @Component({
   selector: 'app-candidates',
   templateUrl: './candidates.component.html',
@@ -22,63 +21,69 @@ const httpOptions = {
 export class CandidatesComponent implements OnInit {
   Id = this.activatedRoute.snapshot.paramMap.get('Id');
   CandidatesForm: FormGroup;
-  get UserId(): FormControl {
-    return this.CandidatesForm.get('UserId') as FormControl
-  }
-  get UserName(): FormControl {
-    return this.CandidatesForm.get('UserName') as FormControl
-  }
-  get FulName(): FormControl {
-    return this.CandidatesForm.get('FulName') as FormControl
-  }
-  get Email(): FormControl {
-    return this.CandidatesForm.get('Email') as FormControl
-  }
-  get Department(): FormControl {
-    return this.CandidatesForm.get('Department') as FormControl
-  }
-  get Position(): FormControl {
-    return this.CandidatesForm.get('Position') as FormControl
-  }
-
   // -------------------------UserId------------------------
   userId = '';
-  // -------------------------------------------------------
-
   candidates: Icandidates[] = [];
   Users: Iuser[] = [];
-  searchString: string = "";
-  candi:Icandidates;
-  constructor(private http: HttpClient, private myservice:MyserviceService,private router: Router, private candidate: FormBuilder, private activatedRoute: ActivatedRoute) {
-    this.router.events.subscribe((event) => {
-      this.myservice.changeMessage('1');
-   });
-
-   }
+  searchString = '';
+  candi: Icandidates;
   displayedColumn: string[] = ['select', 'UserId', 'UserName', 'FullName', 'Email', 'Department', 'Position', 'action'];
   dataSource = new MatTableDataSource<Icandidates>(this.candidates);
+  // -------------------------------------------------------
   dataSource1 = new MatTableDataSource<Iuser>(this.Users);
   selection = new SelectionModel<Icandidates>(true, []);
   selection1 = new SelectionModel<Iuser>(true, []);
   userIdDelete: number;
-  getId:'';
+  getId: '';
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatPaginator) paginator2: MatPaginator;
-
   totalRow: number;
   totalRowUser: number;
+
+  constructor(private http: HttpClient, private myservice: MyserviceService, private router: Router, private candidate: FormBuilder, private activatedRoute: ActivatedRoute) {
+    this.router.events.subscribe((event) => {
+      this.myservice.changeMessage('1');
+    });
+
+  }
+
+  get UserId(): FormControl {
+    return this.CandidatesForm.get('UserId') as FormControl;
+  }
+
+  get UserName(): FormControl {
+    return this.CandidatesForm.get('UserName') as FormControl;
+  }
+
+  get FulName(): FormControl {
+    return this.CandidatesForm.get('FulName') as FormControl;
+  }
+
+  get Email(): FormControl {
+    return this.CandidatesForm.get('Email') as FormControl;
+  }
+
+  get Department(): FormControl {
+    return this.CandidatesForm.get('Department') as FormControl;
+  }
+
+  get Position(): FormControl {
+    return this.CandidatesForm.get('Position') as FormControl;
+  }
 
   isAllSelected() {
     const numSelected = this.selection.selected.length;
     const numRows = this.dataSource.data.length;
     return numSelected === numRows;
   }
+
   masterToggle() {
     this.isAllSelected() ?
-    this.selection.clear() :
-    this.dataSource.data.forEach(row => this.selection.select(row));
+      this.selection.clear() :
+      this.dataSource.data.forEach(row => this.selection.select(row));
     console.log(this.dataSource.data);
   }
+
   checkboxLabel(row?: Icandidates): string {
     if (!row) {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
@@ -101,13 +106,16 @@ export class CandidatesComponent implements OnInit {
       Email: [''],
       Department: [''],
       Position: ['']
-    })
+    });
     this.http.get<string>('http://localhost:65170/api/semesterexamuser/1&userid=' + this.userId).subscribe(value => {
       this.candi = JSON.parse(value);
       console.log(this.candi);
-  });
+    });
   }
-  onKey(event) { this.searchString = event.target.value; }
+
+  onKey(event) {
+    this.searchString = event.target.value;
+  }
 
   // -------------------------------------------Delete----------------------------------------------------
   DeleteCandidates() {
@@ -119,6 +127,7 @@ export class CandidatesComponent implements OnInit {
       this.ngOnInit();
     });
   }
+
   // -------------------------------------------Delete----------------------------------------------------
 
 
@@ -128,24 +137,24 @@ export class CandidatesComponent implements OnInit {
   //   this.router.navigate(['/candidates/create/', SemesterExamId]);
   // }
   // ---------------------------------------ClickToRoute--------------------------------------------------
-getIdUser(id)
-{
-  this.getId=id;
-  console.log(this.getId);
-}
-removeSelectedRows() {
+  getIdUser(id) {
+    this.getId = id;
+    console.log(this.getId);
+  }
+
+  removeSelectedRows() {
 
 
-  this.selection.selected.forEach(item => {
+    this.selection.selected.forEach(item => {
 
-    console.log(item.UserId);
-    this.http.delete('http://localhost:65170/api/semesterexamuser/' + item.UserId + '?semesterid=1',httpOptions).subscribe((res) => {
-            this.dataSource.data = this.dataSource.data.filter(b => b.UserId !== item.UserId);
-          });
-          this.dataSource = new MatTableDataSource<Icandidates>(this.dataSource.data);
-        });
-         this.selection = new SelectionModel<Icandidates>(true, []);
-}
+      console.log(item.UserId);
+      this.http.delete('http://localhost:65170/api/semesterexamuser/' + item.UserId + '?semesterid=1', httpOptions).subscribe((res) => {
+        this.dataSource.data = this.dataSource.data.filter(b => b.UserId !== item.UserId);
+      });
+      this.dataSource = new MatTableDataSource<Icandidates>(this.dataSource.data);
+    });
+    this.selection = new SelectionModel<Icandidates>(true, []);
+  }
 
 
   onSubmit() {
@@ -166,8 +175,9 @@ removeSelectedRows() {
   }
 
   ClickDelete(row?: Iuser) {
+
     this.userIdDelete = parseInt(row.UserId);
-    console.log(this.userIdDelete)
+    console.log(this.userIdDelete);
   }
 
   loadUser() {
@@ -185,7 +195,7 @@ removeSelectedRows() {
     console.log(this.searchString);
     this.http.get<string>('http://localhost:65170/api/semesterexamuser?searchString=' + this.searchString + '&id=1' + '&type=2').subscribe(value => {
       this.dataSource.data = JSON.parse(value);
-      console.log(value)
+      console.log(value);
       console.log(this.dataSource.paginator = this.paginator);
     });
   }
@@ -194,8 +204,8 @@ removeSelectedRows() {
   //   this.selection.selected.forEach(item => {
 
 
-      //  this.dataSource.data.splice(index,1);
-        // this.http.delete('http://localhost:65170/api/UserGroup/?idgroup=' + UserGroupId + '&iduser=' + item.UserId).subscribe((res) => {
+  //  this.dataSource.data.splice(index,1);
+  // this.http.delete('http://localhost:65170/api/UserGroup/?idgroup=' + UserGroupId + '&iduser=' + item.UserId).subscribe((res) => {
   //       this.http.delete('http://localhost:65170/api/semesterexamuser/' + this.getId + '?semesterid=1').subscribe((res) => {
   //       this.dataSource.data = this.dataSource.data.filter(b => b.UserId !== this.getId);
   //     });
@@ -222,7 +232,6 @@ removeSelectedRows() {
   //   });
   // }
   // }
-
 
 
   // deleteAllCandidates(SemesterId: string) {

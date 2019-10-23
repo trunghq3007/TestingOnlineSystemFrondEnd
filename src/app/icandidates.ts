@@ -1,5 +1,5 @@
 export interface Icandidates {
-    UserId: string;
+  UserId: string;
   UserName: string;
   FullName: string;
   Email: string;

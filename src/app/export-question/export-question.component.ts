@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { MyserviceService } from '../myservice.service';
 
 @Component({
@@ -9,9 +9,11 @@ import { MyserviceService } from '../myservice.service';
 })
 export class ExportQuestionComponent implements OnInit {
 
-  constructor(private myservice:MyserviceService, private router: Router) {  this.router.events.subscribe((event) => {
-    this.myservice.changeMessage('1');
- });}
+  constructor(private myservice: MyserviceService, private router: Router) {
+    this.router.events.subscribe((event) => {
+      this.myservice.changeMessage('1');
+    });
+  }
 
   ngOnInit() {
   }

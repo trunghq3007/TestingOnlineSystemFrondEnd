@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { Exam } from 'src/app/exam';
-import { MatTableDataSource } from '@angular/material';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { AuthenticationService } from 'src/app/_services/authentication.service';
 import { User } from 'src/app/user';
@@ -10,9 +8,11 @@ import { Subscription } from 'rxjs';
 import { http } from 'src/app/http-header';
 import { MyserviceService } from 'src/app/myservice.service';
 import { Router } from '@angular/router';
+
 const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  headers: new HttpHeaders({'Content-Type': 'application/json'})
 };
+
 export class exam {
   Id: number;
   NameExam: string;
@@ -24,10 +24,12 @@ export class exam {
   Note: string;
 
 }
+
 export class semaster {
   ID: number;
   SemesterName: string
 }
+
 @Component({
   selector: 'app-list-create',
   templateUrl: './list-create.component.html',
@@ -47,12 +49,54 @@ export class ListCreateComponent implements OnInit {
   exams: exam[] = [];
   form: FormGroup;
   semasters: semaster[] = [];
+  regTotal = "^[0-9]{1,2}$";
+  regPassScore = "^[0-9]{1,3}$";
+
   constructor(private myservice: MyserviceService, private router: Router, private insert: FormBuilder, private http: HttpClient, private toar: ToastrService, private authenticationService: AuthenticationService) {
     this.router.events.subscribe((event) => {
       this.myservice.changeMessage('1');
     });
   }
 
+  get exam(): FormControl {
+    return this.form.get('ExamId') as FormControl;
+  }
+
+  get Semaster(): FormControl {
+    return this.form.get('SemasterExamId') as FormControl;
+  }
+
+  get name(): FormControl {
+    return this.form.get('TestName') as FormControl;
+  }
+
+  get StartDate(): FormControl {
+    return this.form.get('StartDate') as FormControl;
+  }
+
+  get EndDate(): FormControl {
+    return this.form.get('EndDate') as FormControl;
+  }
+
+  get CreateBy(): FormControl {
+    return this.form.get('CreateBy') as FormControl;
+  }
+
+  get PassScore(): FormControl {
+    return this.form.get('PassScore') as FormControl;
+  }
+
+  get TotalTest(): FormControl {
+    return this.form.get('TotalTest') as FormControl;
+  }
+
+  get status(): FormControl {
+    return this.form.get('Status') as FormControl;
+  }
+
+  get TestTime(): FormControl {
+    return this.form.get('TestTime') as FormControl;
+  }
 
   validateForm() {
     if (this.form.invalid) {
@@ -68,8 +112,6 @@ export class ListCreateComponent implements OnInit {
     }
     // do something else
   }
-  regTotal = "^[0-9]{1,2}$";
-  regPassScore = "^[0-9]{1,3}$"
 
   ngOnInit() {
     if (sessionStorage.getItem('user')) {
@@ -97,7 +139,7 @@ export class ListCreateComponent implements OnInit {
 
     });
 
-    this.http.get<string>('http://localhost:65170/api/exam', { headers: http() }).subscribe(
+    this.http.get<string>('http://localhost:65170/api/exam', {headers: http()}).subscribe(
       value => {
         this.exams = JSON.parse(value);
       }, err => {
@@ -105,7 +147,7 @@ export class ListCreateComponent implements OnInit {
         this.myservice.changeError(errors);
       });
 
-    this.http.get<string>('http://localhost:65170/api/Semaster', { headers: http() }).subscribe(
+    this.http.get<string>('http://localhost:65170/api/Semaster', {headers: http()}).subscribe(
       value => {
         this.semasters = JSON.parse(value);
 
@@ -115,57 +157,26 @@ export class ListCreateComponent implements OnInit {
         this.myservice.changeError(errors);
 
 
-
       });
 
   }
-  get exam(): FormControl {
-    return this.form.get('ExamId') as FormControl;
-  }
-  get Semaster(): FormControl {
-    return this.form.get('SemasterExamId') as FormControl;
-  }
-  get name(): FormControl {
-    return this.form.get('TestName') as FormControl;
-  }
-  get StartDate(): FormControl {
-    return this.form.get('StartDate') as FormControl;
-  }
-  get EndDate(): FormControl {
-    return this.form.get('EndDate') as FormControl;
-  }
-  get CreateBy(): FormControl {
-    return this.form.get('CreateBy') as FormControl;
-  }
 
-  get PassScore(): FormControl {
-    return this.form.get('PassScore') as FormControl;
-  }
-  get TotalTest(): FormControl {
-    return this.form.get('TotalTest') as FormControl;
-  }
-  get status(): FormControl {
-    return this.form.get('Status') as FormControl;
-  }
-  get TestTime(): FormControl {
-    return this.form.get('TestTime') as FormControl;
-  }
   onSubmit() {
 
 
     if (this.form.valid) {
       const value = this.form.value;
 
-      this.http.post('http://localhost:65170/api/Test', JSON.stringify(value), { headers: http() }).subscribe({
+      this.http.post('http://localhost:65170/api/Test', JSON.stringify(value), {headers: http()}).subscribe({
         next: (response) => {
-          if (response ==1) {
+          if (response == 1) {
             this.toar.success('Successful', ' Create Test');
             // this.toar.warning('something went wrong', ' Create Test');
           } else {
-            var errorss=201+','+JSON.parse(response.toString()).Message;
-          this.myservice.changeError(errorss);
+            var errorss = 201 + ',' + JSON.parse(response.toString()).Message;
+            this.myservice.changeError(errorss);
           }
-          console.log('dsds'+response)
+          console.log('dsds' + response)
 
         },
 

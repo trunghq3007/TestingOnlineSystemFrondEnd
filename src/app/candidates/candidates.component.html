@@ -15,7 +15,7 @@
         <a class="nav-link" href="#">Danh sách bài thi</a>
       </li>
       <li class="nav-item col-md-12 bg bg-info">
-        <a class="nav-link disabled" href="#" [routerLink]="['/SemesterExamManager/Report',Id]">Báo cáo </a>
+        <a [routerLink]="['/SemesterExamManager/Report',Id]" class="nav-link disabled" href="#">Báo cáo </a>
       </li>
       <li class="nav-item col-md-12 bg bg-info">
         <a [routerLink]="['/SemesterExamManager/Thisinh',Id]" class="nav-link disabled" href="#">Danh Sách
@@ -27,32 +27,33 @@
   </div>
   <div class="container col-md-9">
     <div style="padding: 10px;">
-      <input (keyup)="onKey($event)" type="text" placeholder="Search.." name="search">
+      <input (keyup)="onKey($event)" name="search" placeholder="Search.." type="text">
       <button (click)="onSearch()" type="submit"><i class="fa fa-search"></i></button>
       <div class="container col-md-12">
         <span data-placement="top" data-toggle="tooltip">
 
-          <button [routerLink]="['/SemesterExamManager/ThemThisinh',Id]" class="btn btn-primary" data-title="Create"
-            data-toggle="modal" data-target="#create" style="margin-left: 74%;margin-bottom: 5px;width: 90px;"
-            id="Create">
+          <button [routerLink]="['/SemesterExamManager/ThemThisinh',Id]" class="btn btn-primary" data-target="#create"
+                  data-title="Create" data-toggle="modal" id="Create"
+                  style="margin-left: 74%;margin-bottom: 5px;width: 90px;">
             <span>Add</span>
           </button>
 
 
           <!--
             <button style="float: right;width: 90px;" type="button" class="btn btn-danger"
-  
+
             >Delete</button>
             -->
         </span>
 
         <!-- -----------------------------Modal------------------------------------ -->
-        <button type="submit" style="float: right;width: 90px;" data-title="Delete" data-toggle="modal"
-          data-target="#deleteAll" class="btn btn-danger">Delete</button>
+        <button class="btn btn-danger" data-target="#deleteAll" data-title="Delete" data-toggle="modal"
+                style="float: right;width: 90px;" type="submit">Delete
+        </button>
         <!-- -----------------------------Modal------------------------------------ -->
 
       </div>
-      <hr />
+      <hr/>
     </div>
     <!-- <div class="col-md-12">
         <div class="col-md-6" style="padding: 15px 0px 15px 0px">
@@ -138,78 +139,78 @@
 
     </div>
     <div style="margin-top: 2%">
-      <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" style="width: 100%;margin: 15px 0px;">
+      <table [dataSource]="dataSource" class="mat-elevation-z8" mat-table matSort style="width: 100%;margin: 15px 0px;">
 
         <ng-container matColumnDef="select">
-          <th mat-header-cell *matHeaderCellDef>
-            <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
-              [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
+          <th *matHeaderCellDef mat-header-cell>
+            <mat-checkbox (change)="$event ? masterToggle() : null" [aria-label]="checkboxLabel()"
+                          [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()">
             </mat-checkbox>
           </th>
-          <td mat-cell *matCellDef="let row">
-            <mat-checkbox (click)="getIdUser(row.UserId)" (change)="$event ? selection.toggle(row) : null"
-              [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
+          <td *matCellDef="let row" mat-cell>
+            <mat-checkbox (change)="$event ? selection.toggle(row) : null" (click)="getIdUser(row.UserId)"
+                          [aria-label]="checkboxLabel(row)" [checked]="selection.isSelected(row)">
             </mat-checkbox>
           </td>
         </ng-container>
 
 
-        <ng-container matColumnDef="UserId" class="tr">
-          <th mat-header-cell *matHeaderCellDef class="th"> UserId </th>
-          <td mat-cell *matCellDef="let element"> {{element.UserId}} </td>
+        <ng-container class="tr" matColumnDef="UserId">
+          <th *matHeaderCellDef class="th" mat-header-cell> UserId</th>
+          <td *matCellDef="let element" mat-cell> {{element.UserId}} </td>
         </ng-container>
 
 
-        <ng-container matColumnDef="UserName" class="tr">
-          <th mat-header-cell *matHeaderCellDef class="th"> UserName </th>
-          <td mat-cell *matCellDef="let element"> {{element.UserName}} </td>
+        <ng-container class="tr" matColumnDef="UserName">
+          <th *matHeaderCellDef class="th" mat-header-cell> UserName</th>
+          <td *matCellDef="let element" mat-cell> {{element.UserName}} </td>
         </ng-container>
 
 
-        <ng-container matColumnDef="FullName" class="tr">
-          <th mat-header-cell *matHeaderCellDef class="th"> FullName </th>
-          <td mat-cell *matCellDef="let element"> {{element.FullName}} </td>
+        <ng-container class="tr" matColumnDef="FullName">
+          <th *matHeaderCellDef class="th" mat-header-cell> FullName</th>
+          <td *matCellDef="let element" mat-cell> {{element.FullName}} </td>
         </ng-container>
 
 
-        <ng-container matColumnDef="Email" class="tr">
-          <th mat-header-cell *matHeaderCellDef> Email </th>
-          <td mat-cell *matCellDef="let element"> {{element.Email}} </td>
+        <ng-container class="tr" matColumnDef="Email">
+          <th *matHeaderCellDef mat-header-cell> Email</th>
+          <td *matCellDef="let element" mat-cell> {{element.Email}} </td>
         </ng-container>
 
-        <ng-container matColumnDef="Department" class="tr">
-          <th mat-header-cell *matHeaderCellDef> Department </th>
-          <td mat-cell *matCellDef="let element"> {{element.Department}} </td>
+        <ng-container class="tr" matColumnDef="Department">
+          <th *matHeaderCellDef mat-header-cell> Department</th>
+          <td *matCellDef="let element" mat-cell> {{element.Department}} </td>
         </ng-container>
 
-        <ng-container matColumnDef="Position" class="tr">
-          <th mat-header-cell *matHeaderCellDef> Position </th>
-          <td mat-cell *matCellDef="let element"> {{element.Position}} </td>
+        <ng-container class="tr" matColumnDef="Position">
+          <th *matHeaderCellDef mat-header-cell> Position</th>
+          <td *matCellDef="let element" mat-cell> {{element.Position}} </td>
         </ng-container>
 
         <ng-container matColumnDef="action">
-          <th mat-header-cell *matHeaderCellDef> Action </th>
-          <td mat-cell *matCellDef="let element">
+          <th *matHeaderCellDef mat-header-cell> Action</th>
+          <td *matCellDef="let element" mat-cell>
             <!-- <button><i class="fas fa-clone"></i></button>
             <button><i class="fas fa-info-circle"></i></button> -->
-            <button><i class="fas fa-trash-alt" (click)="DeleteCandidates()"></i></button>
+            <button><i (click)="DeleteCandidates()" class="fas fa-trash-alt"></i></button>
           </td>
         </ng-container>
-        <tr mat-header-row *matHeaderRowDef="displayedColumn"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumn;"></tr>
+        <tr *matHeaderRowDef="displayedColumn" mat-header-row></tr>
+        <tr *matRowDef="let row; columns: displayedColumn;" mat-row></tr>
       </table>
 
-      <mat-paginator #paginator [pageSizeOptions]="[1,5]" [length]="dataSource.data.length" (page)="pageEvent = $event">
+      <mat-paginator #paginator (page)="pageEvent = $event" [length]="dataSource.data.length" [pageSizeOptions]="[1,5]">
         >
       </mat-paginator>
 
     </div>
-    <div class="modal fade" id="deleteAll" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+    <div aria-hidden="true" aria-labelledby="edit" class="modal fade" id="deleteAll" role="dialog" tabindex="-1">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span
-                class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button"><span
+              aria-hidden="true" class="glyphicon glyphicon-remove"></span></button>
             <h4 class="modal-title custom_align" id="Heading">Delete this entry</h4>
           </div>
           <div class="modal-body">
@@ -217,14 +218,17 @@
             <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span> Are you sure you
               want
               to
-              delete this Record?</div>
+              delete this Record?
+            </div>
 
           </div>
           <div class="modal-footer ">
-            <button (click)="removeSelectedRows()" type="button" class="btn btn-success" data-dismiss="modal"><span
-                class="glyphicon glyphicon-ok-sign"></span> Yes</button>
-            <button type="button" class="btn btn-default" data-dismiss="modal"><span
-                class="glyphicon glyphicon-remove"></span> No</button>
+            <button (click)="removeSelectedRows()" class="btn btn-success" data-dismiss="modal" type="button"><span
+              class="glyphicon glyphicon-ok-sign"></span> Yes
+            </button>
+            <button class="btn btn-default" data-dismiss="modal" type="button"><span
+              class="glyphicon glyphicon-remove"></span> No
+            </button>
           </div>
         </div>
       </div>
@@ -240,10 +244,10 @@
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span
               class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
           <h3 class="modal-title custom_align" id="Heading" style="text-align:center">Add Candidates</h3>
-  
+
           <table mat-table [dataSource]="dataSource1" matSort class="mat-elevation-z8"
             style="width: 100%;margin: 15px 0px;">
-  
+
             <ng-container matColumnDef="select">
               <th mat-header-cell *matHeaderCellDef>
                 <mat-checkbox (change)="$event ? masterToggle() : null"
@@ -257,49 +261,49 @@
                 </mat-checkbox>
               </td>
             </ng-container>
-  
+
             <ng-container matColumnDef="UserId" class="tr">
               <th mat-header-cell *matHeaderCellDef class="th"> UserId </th>
               <td mat-cell *matCellDef="let element"> {{element.UserId}} </td>
             </ng-container>
-  
-  
+
+
             <ng-container matColumnDef="UserName" class="tr">
               <th mat-header-cell *matHeaderCellDef class="th"> UserName </th>
               <td mat-cell *matCellDef="let element"> {{element.UserName}} </td>
             </ng-container>
-  
-  
+
+
             <ng-container matColumnDef="FullName" class="tr">
               <th mat-header-cell *matHeaderCellDef class="th"> FullName </th>
               <td mat-cell *matCellDef="let element"> {{element.FullName}} </td>
             </ng-container>
-  
-  
+
+
             <ng-container matColumnDef="Email" class="tr">
               <th mat-header-cell *matHeaderCellDef> Email </th>
               <td mat-cell *matCellDef="let element"> {{element.Email}} </td>
             </ng-container>
-  
+
             <ng-container matColumnDef="Department" class="tr">
               <th mat-header-cell *matHeaderCellDef> Department </th>
               <td mat-cell *matCellDef="let element"> {{element.Department}} </td>
             </ng-container>
-  
+
             <ng-container matColumnDef="Position" class="tr">
               <th mat-header-cell *matHeaderCellDef> Position </th>
               <td mat-cell *matCellDef="let element"> {{element.Position}} </td>
             </ng-container>
-  
+
             <tr mat-header-row *matHeaderRowDef="displayedColumn"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumn;"></tr>
           </table>
-  
+
           <mat-paginator #paginator2 [pageSizeOptions]="[2,5]" [length]="totalRowUser"></mat-paginator>
           <button type="button" class="modal-btn btn btn-primary">Add</button>
           <button type="button" class="modal-btn btn btn-danger">Cancel</button>
         </div>
-  
+
       </div>
     </div>
   </div> -->

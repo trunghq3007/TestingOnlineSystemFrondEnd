@@ -1,8 +1,7 @@
-
 <div class="row">
   <br><br>
   <h2 style="margin-left: 45%;">Detail Question</h2>
-  <button style="margin-left: 80%;" type=" button" class="btn btn-danger" routerLink="/question">Back Home</button>
+  <button class="btn btn-danger" routerLink="/question" style="margin-left: 80%;" type=" button">Back Home</button>
   <div class="col-md-offset-3" style="height: 411px;">
 
     <div class="col-md-2">
@@ -45,9 +44,9 @@
       <div *ngFor="let item of Question.Answers;let i = index;">
         <div>
           <div class="col-md-2">
-            <h4 style="float: right">{{i+1}}</h4>
+            <h4 style="float: right">{{i + 1}}</h4>
           </div>
-          <div class="col-md-9" style="border: 1px solid grey;margin-bottom: 20px; padding: 10px;" >
+          <div class="col-md-9" style="border: 1px solid grey;margin-bottom: 20px; padding: 10px;">
             <!-- <div class="col-md-2">
               Question Id
             </div>
@@ -60,19 +59,20 @@
             <div class="col-md-10">{{item.Status}}</div>
 
             <div class="col-md-2">Content:</div>
-            <div class="col-md-10" [innerHtml]=item.Content></div>
+            <div [innerHtml]=item.Content class="col-md-10"></div>
             <div class="col-md-2">Istrue</div>
-            <div class="col-md-10" >{{item.IsTrue}}</div>
-            
+            <div class="col-md-10">{{item.IsTrue}}</div>
+
             <div class="col-md-2">Createdate:</div>
             <div class="col-md-4"><span>.</span> <span>{{item.CreatedDate| date: 'dd/MM/yyyy'}}</span></div>
             <div class="col-md-2">Create by</div>
             <div class="col-md-4"><span>.</span> <span *ngIf="item.CreatedBy">{{item.CreatedBy}}</span></div>
 
             <div class="col-md-2">Update date</div>
-            <div class="col-md-4"> <span>.</span>  <span *ngIf="item.UpdatedDate">{{item.UpdatedDate|date: 'dd/MM/yyyy'}}</span> </div>  
+            <div class="col-md-4"><span>.</span> <span
+              *ngIf="item.UpdatedDate">{{item.UpdatedDate|date: 'dd/MM/yyyy'}}</span></div>
             <div class="col-md-2">Update by:</div>
-            <div class="col-md-4"> <span>.</span> <span *ngIf="item.UpdatedBy">{{item.UpdatedBy}}</span></div>     
+            <div class="col-md-4"><span>.</span> <span *ngIf="item.UpdatedBy">{{item.UpdatedBy}}</span></div>
           </div>
         </div>
       </div>

@@ -1,15 +1,15 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Exam } from 'src/app/exam';
-import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
+import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { http } from 'src/app/http-header';
 import { MyserviceService } from 'src/app/myservice.service';
+
 const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  headers: new HttpHeaders({'Content-Type': 'application/json'})
 };
 
 export interface questions {
@@ -26,8 +26,6 @@ export interface questions {
   UpdatedDate: Date;
   CategoryName: string;
 }
-
-
 
 
 @Component({
@@ -53,39 +51,53 @@ export class ExamDetailComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  regTotal = '^[0-9]{1,4}$';
 
-  constructor(private router: Router, private myservice: MyserviceService, private http: HttpClient, private ac: ActivatedRoute, private fb: FormBuilder, private toar: ToastrService) {
+  constructor(private router: Router,
+              private myservice: MyserviceService,
+              // tslint:disable-next-line:no-shadowed-variable
+              private http: HttpClient,
+              private ac: ActivatedRoute,
+              private fb: FormBuilder,
+              private toar: ToastrService) {
     this.router.events.subscribe((event) => {
       this.myservice.changeMessage('1');
 
     });
   }
+
   get StartDate(): FormControl {
     return this.filterForm.get('CreatedDate') as FormControl;
   }
+
   get EndDate(): FormControl {
     return this.filterForm.get('CreatedBy') as FormControl;
   }
+
   get Level(): FormControl {
     return this.filterForm.get('Level') as FormControl;
   }
+
   get Type(): FormControl {
     return this.filterForm.get('Type') as FormControl;
   }
+
   get Category(): FormControl {
     return this.filterForm.get('CategoryName') as FormControl;
   }
+
   get TypeQuestion(): FormControl {
     return this.randomForm.get('Type') as FormControl;
   }
+
   get QuestionCategory(): FormControl {
     return this.randomForm.get('CategoryName') as FormControl;
   }
+
   get RandomNumber(): FormControl {
     return this.randomForm.get('Total') as FormControl;
   }
 
-  regTotal = "^[0-9]{1,4}$";
   ngOnInit() {
 
     this.filterForm = this.fb.group({
@@ -104,7 +116,7 @@ export class ExamDetailComponent implements OnInit {
     });
     this.listQuestion();
 
-    this.http.get<string>('http://localhost:65170/api/ExamQuestions/1?action=getfillter', { headers: http() }).subscribe(
+    this.http.get<string>('http://localhost:65170/api/ExamQuestions/1?action=getfillter', {headers: http()}).subscribe(
       value => {
         this.listfilter = JSON.parse(value);
         this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort;
@@ -113,18 +125,18 @@ export class ExamDetailComponent implements OnInit {
       err => {
 
 
-        var errors = err.status + ',' + err.message;
+        const errors = err.status + ',' + err.message;
         this.myservice.changeError(errors);
-
 
 
       });
 
 
   }
+
   listQuestion() {
     const examID = this.ac.snapshot.paramMap.get('examID');
-    this.http.get<string>('http://localhost:65170/api/ExamQuestions/' + examID + '?action=GetAll', { headers: http() }).subscribe(
+    this.http.get<string>('http://localhost:65170/api/ExamQuestions/' + examID + '?action=GetAll', {headers: http()}).subscribe(
       value => {
         this.dataSource.data = JSON.parse(value);
         (this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
@@ -134,9 +146,8 @@ export class ExamDetailComponent implements OnInit {
       err => {
 
 
-        var errors = err.status + ',' + err.message;
+        const errors = err.status + ',' + err.message;
         this.myservice.changeError(errors);
-
 
 
       });
@@ -146,38 +157,39 @@ export class ExamDetailComponent implements OnInit {
   addQuestion(Id) {
 
   }
+
   AddMutiple() {
-    let Arr = [];
+    const Arr = [];
     const examID = this.ac.snapshot.paramMap.get('examID');
     this.selection.selected.forEach(item => {
-      Arr.push({ ExamId: examID, QuestionId: item.QuesId });
+      Arr.push({ExamId: examID, QuestionId: item.QuesId});
 
-    })
+    });
     if (Arr.length > 0) {
-      this.http.post<string>('http://localhost:65170/api/ExamQuestions/?action=AddMutiple', JSON.stringify(Arr), { headers: http() }).subscribe((error) => {
-        if (error > 0) {
-          var errors = error / 2;
-          this.toar.success('inserted' + ' ' + errors + ' ' + 'records in Exam', ' Question Number');
-          // this.toar.warning('something went wrong', ' Question Number');
-        } else if (error == 0) {
+      // tslint:disable-next-line:max-line-length
+      this.http.post<string>('http://localhost:65170/api/ExamQuestions/?action=AddMutiple', JSON.stringify(Arr), {headers: http()}).subscribe((error) => {
+          const err = parseInt(error, 10);
+          if (err > 0) {
+            const errors = err / 2;
+            this.toar.success('inserted' + ' ' + errors + ' ' + 'records in Exam', ' Question Number');
+            // this.toar.warning('something went wrong', ' Question Number');
+          } else if (err === 0) {
 
-          this.toar.info('There are no questions in this category match with exam', ' Question Number');
-        } else {
-          var errorss = 201 + ',' + JSON.parse(error.toString()).Message;
-          this.myservice.changeError(errorss);
-        }
+            this.toar.info('There are no questions in this category match with exam', ' Question Number');
+          } else {
+            const errorss = 201 + ',' + JSON.parse(error.toString()).Message;
+            this.myservice.changeError(errorss);
+          }
 
-        this.listQuestion();
+          this.listQuestion();
 
 
-
-      },
+        },
         err => {
 
 
-          var errors = err.status + ',' + err.message;
+          const errors = err.status + ',' + err.message;
           this.myservice.changeError(errors);
-
 
 
         });
@@ -191,41 +203,44 @@ export class ExamDetailComponent implements OnInit {
 
 
   }
+
   onSubmit() {
 
 
     if (this.randomForm.valid) {
 
       const value = this.randomForm.value;
-      this.http.post<string>('http://localhost:65170/api/ExamQuestions?action=random', JSON.stringify(value), { headers: http() }).subscribe((error) => {
-        if (error == 0) {
-          this.toar.info('There are no questions in this category', ' Question Number');
-        } else if (error > 0) {
-          var errors = error / 2;
-          this.toar.success('inserted' + ' ' + errors + ' ' + 'records in Exam', ' Question Number');
+      // tslint:disable-next-line:max-line-length
+      this.http.post<string>('http://localhost:65170/api/ExamQuestions?action=random', JSON.stringify(value), {headers: http()}).subscribe((error) => {
+          const err = parseInt(error, 10);
+          if (err === 0) {
+            this.toar.info('There are no questions in this category', ' Question Number');
+          } else if (err > 0) {
+            const errors = err / 2;
+            this.toar.success('inserted' + ' ' + errors + ' ' + 'records in Exam', ' Question Number');
 
-        } else {
-          var errorss = 201 + ',' + JSON.parse(error.toString()).Message;
-          this.myservice.changeError(errorss);
-        }
+          } else {
+            const errorss = 201 + ',' + JSON.parse(error.toString()).Message;
+            this.myservice.changeError(errorss);
+          }
 
-        // confirm('inserted' + ' ' + error + ' ' + 'records in Exam');
-        this.listQuestion();
+          // confirm('inserted' + ' ' + error + ' ' + 'records in Exam');
+          this.listQuestion();
 
-        console.log(error)
-      },
+          console.log(error);
+        },
         err => {
 
 
-          var errors = err.status + ',' + err.message;
+          const errors = err.status + ',' + err.message;
           this.myservice.changeError(errors);
-
 
 
         });
       console.log(this.randomForm.value);
     }
   }
+
   validateForm() {
     if (this.randomForm.invalid) {
       this.randomForm.get('Type').markAsTouched();
@@ -237,36 +252,37 @@ export class ExamDetailComponent implements OnInit {
   }
 
   onSearch() {
-    this.http.get<string>('http://localhost:65170/api/ExamQuestions?searchString=' + this.searchString, { headers: http() }).subscribe(value => {
+    // tslint:disable-next-line:max-line-length
+    this.http.get<string>('http://localhost:65170/api/ExamQuestions?searchString=' + this.searchString, {headers: http()}).subscribe(value => {
       this.dataSource.data = JSON.parse(value);
       console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
     }, err => {
 
 
-      var errors = err.status + ',' + err.message;
+      const errors = err.status + ',' + err.message;
       this.myservice.changeError(errors);
-
 
 
     });
   }
+
   onFilter() {
     const value = this.filterForm.value;
     console.log(value);
-    this.http.post<string>('http://localhost:65170/api/ExamQuestions', JSON.stringify(value), { headers: http() }).subscribe(value => {
+    this.http.post<string>('http://localhost:65170/api/ExamQuestions', JSON.stringify(value), {headers: http()}).subscribe(value => {
       this.dataSource.data = JSON.parse(value);
       this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort;
 
     }, err => {
 
 
-      var errors = err.status + ',' + err.message;
+      const errors = err.status + ',' + err.message;
       this.myservice.changeError(errors);
-
 
 
     });
   }
+
   isAllSelected() {
     const numSelected = this.selection.selected.length;
     const numRows = this.dataSource.data.length;
@@ -287,10 +303,6 @@ export class ExamDetailComponent implements OnInit {
     }
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.QuesId + 1}`;
   }
-
-
-
-
 
 
 }

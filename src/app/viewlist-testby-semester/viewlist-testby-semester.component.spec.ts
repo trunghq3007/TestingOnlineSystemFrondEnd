@@ -8,9 +8,9 @@ describe('ViewlistTestbySemesterComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ViewlistTestbySemesterComponent ]
+      declarations: [ViewlistTestbySemesterComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

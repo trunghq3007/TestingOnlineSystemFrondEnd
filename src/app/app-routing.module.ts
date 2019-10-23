@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { GroupComponent } from './group/group.component';
 import { GroupDetailComponent } from './group-detail/group-detail.component';
 import { UserGroupComponent } from './user-group/user-group.component';
@@ -25,12 +25,10 @@ import { QuestionRouting } from './question-router';
 
 
 import { SemesterDetailComponent } from './semester-detail/semester-detail.component';
-import { ManagerSemesterExamTestComponent } from './manager-semester-exam-test/manager-semester-exam-test.component';
 import { ViewListSemastertotestComponent } from './view-list-semastertotest/view-list-semastertotest.component';
 import { ViewlistTestbySemesterComponent } from './viewlist-testby-semester/viewlist-testby-semester.component';
 import { ThiChitietbaithiComponent } from './thi-chitietbaithi/thi-chitietbaithi.component';
 import { RoleComponent } from './role/role.component';
-import { from } from 'rxjs';
 import { ListExamUserComponent } from './list-exam-user/list-exam-user.component';
 import { DetailExamCustomerComponent } from './detail-exam-customer/detail-exam-customer.component';
 
@@ -47,9 +45,9 @@ import { DetailQuestionComponent } from './detail-question/detail-question.compo
 import { EditQuestionComponent } from './edit-question/edit-question.component';
 import { ImportQuestionComponent } from './import-question/import-question.component';
 import { ExamImportComponent } from './exam/exam-import/exam-import.component';
-import { TestAssignmentComponent } from './test-assignment/test-assignment.component';
-import { ListUserAssignmentComponent } from './list-user-assignment/list-user-assignment.component';
-import { ThiTuLuanComponent } from './thi-tu-luan/thi-tu-luan.component';
+// import { TestAssignmentComponent } from './test-assignment/test-assignment.component';
+// import { ListUserAssignmentComponent } from './list-user-assignment/list-user-assignment.component';
+// import { ThiTuLuanComponent } from './thi-tu-luan/thi-tu-luan.component';
 const routes: Routes = [
 
   {
@@ -58,21 +56,21 @@ const routes: Routes = [
       path: '',
       component: HomeComponent,
     },
-    {
-      path: 'semestercustomer/:id',
-      component: ListExamUserComponent,
-    },
-    {
-      path: 'DetailExamCustomer/:id',
-      component: DetailExamCustomerComponent,
-    }
+      {
+        path: 'semestercustomer/:id',
+        component: ListExamUserComponent,
+      },
+      {
+        path: 'DetailExamCustomer/:id',
+        component: DetailExamCustomerComponent,
+      }
 
 
     ]
   },
   // { path: '**',
   //   redirectTo:'login',
-  //   pathMatch: 'full' 
+  //   pathMatch: 'full'
   // },
   // { path: 'error', component: ErrorsComponent },
   {
@@ -81,14 +79,14 @@ const routes: Routes = [
       path: '',
       component: RoleComponent,
     },
-    {
-      path: ':RoleId',
-      component: RoleActionComponent
-    },
-    {
-      path: 'RoleActionAdd/:RoleId',
-      component: RoleActionAddComponent
-    }
+      {
+        path: ':RoleId',
+        component: RoleActionComponent
+      },
+      {
+        path: 'RoleActionAdd/:RoleId',
+        component: RoleActionAddComponent
+      }
     ], canActivate: [AuthGuard]
   },
   {
@@ -113,14 +111,14 @@ const routes: Routes = [
       path: '',
       component: UserComponent,
     },
-    {
-      path: 'create',
-      component: UserCreateComponent
-    },
-    {
-      path: 'update/:Id',
-      component: UserUpdateComponent
-    },
+      {
+        path: 'create',
+        component: UserCreateComponent
+      },
+      {
+        path: 'update/:Id',
+        component: UserUpdateComponent
+      },
     ], canActivate: [AuthGuard]
   },
 
@@ -133,7 +131,7 @@ const routes: Routes = [
         pathMatch: 'full'
       },
       {
-        path:'import',
+        path: 'import',
         component: ExamImportComponent,
       },
       {
@@ -278,8 +276,8 @@ const routes: Routes = [
               }
             ]
         }
-      ],canActivate: [AuthGuard],
-      
+      ], canActivate: [AuthGuard],
+
   },
   {
     path: 'test',
@@ -358,14 +356,16 @@ const routes: Routes = [
     ],
   },
 
-  {path:'Error',component:ErrorpageComponent},
-  { path: '**', canActivate: [AuthGuard], component: ErrorpageComponent }
+  {path: 'Error', component: ErrorpageComponent},
+  {path: '**', canActivate: [AuthGuard], component: ErrorpageComponent}
 ];
 
 const fullRoutes = [...routes, ...QuestionRouting];
+
 // console.log(fullRoutes);
 @NgModule({
   imports: [RouterModule.forRoot(fullRoutes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { } 
+export class AppRoutingModule {
+}

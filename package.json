@@ -38,6 +38,7 @@
     "ngx-toastr": "^10.0.4",
     "ngx-trim-directive": "^1.0.3",
     "rxjs": "~6.3.3",
+    "toastr": "^2.1.4",
     "tslib": "^1.9.0",
     "zone.js": "~0.8.26"
   },

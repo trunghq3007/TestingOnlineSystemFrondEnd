@@ -8,9 +8,9 @@ describe('ManagerSemesterExamExamsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ManagerSemesterExamExamsComponent ]
+      declarations: [ManagerSemesterExamExamsComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

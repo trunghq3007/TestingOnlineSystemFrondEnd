@@ -2,18 +2,18 @@
   <div class="container col-md-12" style="padding: 0;">
     <div class="container col-md-12">
       <div class="container col-md-6" style="padding: 2% 0 2% 0">
-        <input [(ngModel)]="searchString" type="text" placeholder="Search by Full Name">
+        <input [(ngModel)]="searchString" placeholder="Search by Full Name" type="text">
         <button (click)="onSearch()" type="submit"><i class="fa fa-search"></i></button>
       </div>
       <div class="container col-md-6" style="padding: 2% 0 2% 0">
         <span data-placement="top" data-toggle="tooltip">
-          <button routerLink="/user/create" class="btn btn-primary" style="float: right;" data-title="Create"
-            data-target="#create" id="Create">
+          <button class="btn btn-primary" data-target="#create" data-title="Create" id="Create"
+                  routerLink="/user/create" style="float: right;">
             <span>Create</span>
           </button>
         </span>
       </div>
-      <hr />
+      <hr/>
     </div>
     <div class="col-md-12">
       <mat-accordion>
@@ -24,7 +24,7 @@
             </mat-panel-description>
           </mat-expansion-panel-header>
 
-          <form novalidate (ngSubmit)="onFilter()" [formGroup]="filterForm">
+          <form (ngSubmit)="onFilter()" [formGroup]="filterForm" novalidate>
             <div class="col-md-12">
               <mat-form-field class="col-md-5">
                 <mat-label>Position</mat-label>
@@ -46,11 +46,13 @@
                 </mat-select>
               </mat-form-field>
 
-              <button type="submit" mat-raised-button style="color: white;background-color: #3f51b5;" class="col-md-1">Filter</button>
+              <button class="col-md-1" mat-raised-button style="color: white;background-color: #3f51b5;" type="submit">
+                Filter
+              </button>
             </div>
           </form>
         </mat-expansion-panel>
-        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+        <mat-expansion-panel (closed)="panelOpenState = false" (opened)="panelOpenState = true">
           <p>I'm visible because I am open</p>
         </mat-expansion-panel>
       </mat-accordion>
@@ -59,114 +61,114 @@
 
   <div class="container col-md-12" style="text-align: center">
     <h2>List User
-      <button (click)="removeSelectedRows()" style="float: right" mat-raised-button color="warn">Delete</button>
+      <button (click)="removeSelectedRows()" color="warn" mat-raised-button style="float: right">Delete</button>
     </h2>
   </div>
 
   <div>
-    <table mat-table [dataSource]="dataSource" matSort>
+    <table [dataSource]="dataSource" mat-table matSort>
 
       <!-- Checkbox Column -->
       <ng-container matColumnDef="select">
-        <th mat-header-cell *matHeaderCellDef>
-          <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
-            [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
+        <th *matHeaderCellDef mat-header-cell>
+          <mat-checkbox (change)="$event ? masterToggle() : null" [aria-label]="checkboxLabel()"
+                        [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()">
           </mat-checkbox>
         </th>
-        <td mat-cell *matCellDef="let row">
-          <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
-            [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
+        <td *matCellDef="let row" mat-cell>
+          <mat-checkbox (change)="$event ? selection.toggle(row) : null" (click)="$event.stopPropagation()"
+                        [aria-label]="checkboxLabel(row)" [checked]="selection.isSelected(row)">
           </mat-checkbox>
         </td>
       </ng-container>
       <!-- UserName Column -->
       <ng-container matColumnDef="UserName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> User Name </th>
-        <td mat-cell *matCellDef="let element"> {{element.UserName}} </td>
+        <th *matHeaderCellDef mat-header-cell mat-sort-header> User Name</th>
+        <td *matCellDef="let element" mat-cell> {{element.UserName}} </td>
       </ng-container>
 
       <!-- FullName Column -->
       <ng-container matColumnDef="FullName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Full Name </th>
-        <td mat-cell *matCellDef="let element"> {{element.FullName}} </td>
+        <th *matHeaderCellDef mat-header-cell mat-sort-header> Full Name</th>
+        <td *matCellDef="let element" mat-cell> {{element.FullName}} </td>
       </ng-container>
 
       <!-- Enail Column -->
       <ng-container matColumnDef="Email">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
-        <td mat-cell *matCellDef="let element"> {{element.Email}} </td>
+        <th *matHeaderCellDef mat-header-cell mat-sort-header> Email</th>
+        <td *matCellDef="let element" mat-cell> {{element.Email}} </td>
       </ng-container>
       <!-- Department column-->
       <ng-container matColumnDef="Department">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Department </th>
-        <td mat-cell *matCellDef="let element"> {{element.Department}} </td>
+        <th *matHeaderCellDef mat-header-cell mat-sort-header> Department</th>
+        <td *matCellDef="let element" mat-cell> {{element.Department}} </td>
       </ng-container>
       <!-- Position column-->
       <ng-container matColumnDef="Position">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Position </th>
-        <td mat-cell *matCellDef="let element"> {{element.Position}} </td>
+        <th *matHeaderCellDef mat-header-cell mat-sort-header> Position</th>
+        <td *matCellDef="let element" mat-cell> {{element.Position}} </td>
       </ng-container>
 
       <ng-container matColumnDef="Action">
-        <th mat-header-cell *matHeaderCellDef> Action </th>
-        <td mat-cell *matCellDef="let element">
-          <span data-placement="top" >
-            <button data-toggle="modal" title="Detail" class="btn btn-success btn-xs" data-title="Detail"
-             (click)="detail(element.UserId)" data-target="#Detail">
+        <th *matHeaderCellDef mat-header-cell> Action</th>
+        <td *matCellDef="let element" mat-cell>
+          <span data-placement="top">
+            <button (click)="detail(element.UserId)" class="btn btn-success btn-xs" data-target="#Detail" data-title="Detail"
+                    data-toggle="modal" title="Detail">
               <span class="glyphicon glyphicon-list-alt"></span>
             </button>
-           
+
           </span>
           <span data-placement="top" data-toggle="tooltip" title="Update">
-            <button class="btn btn-primary btn-xs" (click)="Edit(element.UserId)"><span
-                class="glyphicon glyphicon-pencil"></span></button>
+            <button (click)="Edit(element.UserId)" class="btn btn-primary btn-xs"><span
+              class="glyphicon glyphicon-pencil"></span></button>
           </span>
           <span data-placement="top" data-toggle="tooltip" title="Delete">
-            <button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete"
-              (click)="onDelete(element.UserId)">
+            <button (click)="onDelete(element.UserId)" class="btn btn-danger btn-xs" data-target="#delete" data-title="Delete"
+                    data-toggle="modal">
               <span class="glyphicon glyphicon-trash"></span>
             </button></span>
-            
+
         </td>
       </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumn"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumn;"></tr>
+      <tr *matHeaderRowDef="displayedColumn" mat-header-row></tr>
+      <tr *matRowDef="let row; columns: displayedColumn;" mat-row></tr>
     </table>
     <mat-paginator [pageSizeOptions]="[5, 10, 15,20]" showFirstLastButtons></mat-paginator>
   </div>
 
-  <div class="modal fade" id="Detail" tabindex="-1" role="dialog" aria-labelledby="Detail" aria-hidden="true">
+  <div aria-hidden="true" aria-labelledby="Detail" class="modal fade" id="Detail" role="dialog" tabindex="-1">
     <div class="modal-dialog" style="width: 500px">
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span
-              class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-              <h4 style="margin-left: 35%">Profile User</h4>
+          <button aria-hidden="true" class="close" data-dismiss="modal" type="button"><span
+            aria-hidden="true" class="glyphicon glyphicon-remove"></span></button>
+          <h4 style="margin-left: 35%">Profile User</h4>
         </div>
-        <div class="modal-body"  style="height: 300px">
-              <div *ngIf="getUsers">
-                  <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">FullName :</label>
-                  <div class="col-sm-9"><p>{{getUsers.FullName}}</p></div>
-                  <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">UserName :</label>
-                  <div class="col-sm-9"><p>{{getUsers.UserName}}</p></div>
-                  <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Email :</label>
-                  <div class ="col-sm-9"><p>{{getUsers.Email}}</p></div>
-                  <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Department :</label>
-                  <div class="col-sm-9"><p>{{getUsers.Department}}</p></div>
-                  <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Position :</label>
-                  <div class="col-sm-9"><p>{{getUsers.Position}}</p></div>
+        <div class="modal-body" style="height: 300px">
+          <div *ngIf="getUsers">
+            <label class="col-sm-3 col-form-label col-form-label-sm" for="colFormLabelSm">FullName :</label>
+            <div class="col-sm-9"><p>{{getUsers.FullName}}</p></div>
+            <label class="col-sm-3 col-form-label col-form-label-sm" for="colFormLabelSm">UserName :</label>
+            <div class="col-sm-9"><p>{{getUsers.UserName}}</p></div>
+            <label class="col-sm-3 col-form-label col-form-label-sm" for="colFormLabelSm">Email :</label>
+            <div class="col-sm-9"><p>{{getUsers.Email}}</p></div>
+            <label class="col-sm-3 col-form-label col-form-label-sm" for="colFormLabelSm">Department :</label>
+            <div class="col-sm-9"><p>{{getUsers.Department}}</p></div>
+            <label class="col-sm-3 col-form-label col-form-label-sm" for="colFormLabelSm">Position :</label>
+            <div class="col-sm-9"><p>{{getUsers.Position}}</p></div>
 
-              </div>       
-              <div >
-                  <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Group :</label>
-                 <div class="col-sm-9">
-                    <p *ngFor="let users of user">{{users.GroupName}}</p>
-                 </div>
-              </div>   
+          </div>
+          <div>
+            <label class="col-sm-3 col-form-label col-form-label-sm" for="colFormLabelSm">Group :</label>
+            <div class="col-sm-9">
+              <p *ngFor="let users of user">{{users.GroupName}}</p>
+            </div>
+          </div>
         </div>
-        
+
       </div>
     </div>
   </div>
-  </div>
+</div>

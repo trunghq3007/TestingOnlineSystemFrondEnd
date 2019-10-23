@@ -8,9 +8,9 @@ describe('ThiKetquathiComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ThiKetquathiComponent ]
+      declarations: [ThiKetquathiComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

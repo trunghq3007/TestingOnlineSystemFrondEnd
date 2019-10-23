@@ -8,9 +8,9 @@ describe('ObjectResultComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ObjectResultComponent ]
+      declarations: [ObjectResultComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

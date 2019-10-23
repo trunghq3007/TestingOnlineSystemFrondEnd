@@ -1,4 +1,4 @@
 export interface GroupFilter {
-    StartDate: string;
-    EndDate: string;
+  StartDate: string;
+  EndDate: string;
 }

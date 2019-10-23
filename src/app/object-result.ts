@@ -1,12 +1,9 @@
 export interface ObjectResult {
 
-    Status :number;
-    Message:string;
-    Data:any;
-    Success:number;
-
-
-
+  Status: number;
+  Message: string;
+  Data: any;
+  Success: number;
 
 
 }

@@ -9,7 +9,7 @@
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
         <li class="active">Dashboard</li>
       </ol>
-    
+
     </section> -->
 
   <!-- Main content -->
@@ -29,18 +29,18 @@
 
 
         <div class="header clearfix">
-          <a class="btn btn-danger" href="" style="float: right;" routerLink="/test">Go Back</a>
+          <a class="btn btn-danger" href="" routerLink="/test" style="float: right;">Go Back</a>
 
         </div>
         <div class="content">
           <h1 style="margin-left: 45%;">Create Test</h1>
-          <form novalidate (ngSubmit)="onSubmit()" [formGroup]="form" style="margin-bottom: 0px;">
+          <form (ngSubmit)="onSubmit()" [formGroup]="form" novalidate style="margin-bottom: 0px;">
             <div class="formTest ">
               <div class="col-md-6">
                 <div class="form-group row">
-                  <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Exam</label>
+                  <label class="col-sm-2 col-form-label col-form-label-sm" for="colFormLabelSm">Exam</label>
                   <div class="col-sm-10">
-                    <select name="" id="" class="form-control form-control-sm" formControlName="ExamId">
+                    <select class="form-control form-control-sm" formControlName="ExamId" id="" name="">
 
                       <option *ngFor="let item of exams" value="{{item.Id}}">{{item.NameExam}}</option>
                     </select>
@@ -54,7 +54,7 @@
 
                 </div>
                 <div class="form-group row">
-                  <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Semaster</label>
+                  <label class="col-sm-2 col-form-label col-form-label-sm" for="colFormLabelSm">Semaster</label>
                   <div class="col-sm-10">
                     <select class="form-control form-control-sm" formControlName="SemasterExamId">
                       <option *ngFor="let item of semasters" value="{{item.ID}}">{{item.SemesterName}}</option>
@@ -71,9 +71,9 @@
 
                 </div>
                 <div class="form-group row">
-                  <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">TestName</label>
+                  <label class="col-sm-2 col-form-label col-form-label-sm" for="colFormLabelSm">TestName</label>
                   <div class="col-sm-10">
-                    <input type="text" class="form-control form-control-sm" [maxLength]=50 formControlName="TestName">
+                    <input [maxLength]=50 class="form-control form-control-sm" formControlName="TestName" type="text">
 
                   </div>
                 </div>
@@ -89,10 +89,10 @@
                 </div>
 
                 <div class="form-group row">
-                  <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">TestTime</label>
+                  <label class="col-sm-2 col-form-label col-form-label-sm" for="colFormLabelSm">TestTime</label>
                   <div class="col-sm-10">
-                    <input type="text" class="form-control form-control-sm" [pattern]="regPassScore"
-                      formControlName="TestTime">
+                    <input [pattern]="regPassScore" class="form-control form-control-sm" formControlName="TestTime"
+                           type="text">
 
                   </div>
                 </div>
@@ -112,10 +112,10 @@
 
 
                 <div class="form-group row">
-                  <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">CreateBy</label>
+                  <label class="col-sm-2 col-form-label col-form-label-sm" for="colFormLabelSm">CreateBy</label>
                   <div class="col-sm-10">
-                    <input type="text" value={{UserName}} [readonly]=true class="form-control form-control-sm"
-                      formControlName="CreateBy">
+                    <input [readonly]=true class="form-control form-control-sm" formControlName="CreateBy" type="text"
+                           value={{UserName}}>
 
                   </div>
                 </div>
@@ -127,10 +127,10 @@
 
                 </div>
                 <div class="form-group row">
-                  <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">PassScore</label>
+                  <label class="col-sm-2 col-form-label col-form-label-sm" for="colFormLabelSm">PassScore</label>
                   <div class="col-sm-10">
-                    <input type="text" class="form-control form-control-sm" [pattern]="regPassScore"
-                      formControlName="PassScore">
+                    <input [pattern]="regPassScore" class="form-control form-control-sm" formControlName="PassScore"
+                           type="text">
 
                   </div>
                 </div>
@@ -145,10 +145,10 @@
 
                 </div>
                 <div class="form-group row">
-                  <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">TotalTest</label>
+                  <label class="col-sm-2 col-form-label col-form-label-sm" for="colFormLabelSm">TotalTest</label>
                   <div class="col-sm-10">
-                    <input type="text" class="form-control form-control-sm" formControlName="TotalTest"
-                      [pattern]="regTotal">
+                    <input [pattern]="regTotal" class="form-control form-control-sm" formControlName="TotalTest"
+                           type="text">
 
                   </div>
                 </div>
@@ -164,9 +164,9 @@
                 </div>
 
                 <div class="form-group row">
-                  <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Status</label>
+                  <label class="col-sm-2 col-form-label col-form-label-sm" for="colFormLabelSm">Status</label>
                   <div class="col-sm-10">
-                    <select name="" id="" class="form-control form-control-sm" formControlName="Status">
+                    <select class="form-control form-control-sm" formControlName="Status" id="" name="">
                       <option value="0">drak</option>
                       <option value="1">public</option>
                     </select>
@@ -181,15 +181,13 @@
 
                 </div>
               </div>
-              <button type="submit" (click)="validateForm()" mat-flat-button color="primary">Save</button>
+              <button (click)="validateForm()" color="primary" mat-flat-button type="submit">Save</button>
             </div>
           </form>
         </div>
 
 
-
       </div>
-
 
 
       <!-- right col -->

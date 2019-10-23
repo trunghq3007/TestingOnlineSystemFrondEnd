@@ -1,5 +1,4 @@
-export interface IcandidateAdd
-{
+export interface IcandidateAdd {
   UserId: string;
   SemesterExamId: string;
   UserName: string;

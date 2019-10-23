@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as ClassicEditorBuild from '@ckeditor/ckeditor5-build-classic';
-import { FormBuilder, FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 import { Question } from '../question';
 import { Router } from '@angular/router';
 import { ResultObject } from '../result-object';
@@ -11,8 +11,6 @@ import { Tag } from '../Tag';
 import { http } from '../http-header';
 import { ToastrService } from 'ngx-toastr';
 import { MyserviceService } from '../myservice.service';
-
-
 
 
 @Component({
@@ -31,39 +29,52 @@ export class CreateQuestionComponent implements OnInit {
   tagsFormApi: Tag[];
   categoriesFormApi: Category[];
   ctForm: FormGroup;
+
   //  submitted = false;
+
+  // tslint:disable-next-line:no-shadowed-variable
+  constructor(private http: HttpClient, private myservice: MyserviceService,
+              private fb: FormBuilder,
+              private router: Router,
+              private toastr: ToastrService) {
+    this.router.events.subscribe((event) => {
+      this.myservice.changeMessage('1');
+    });
+  }
 
   get QuestionType(): FormControl {
     return this.ctForm.get('QuestionType') as FormControl;
   }
+
   get Suggestion(): FormControl {
     return this.ctForm.get('Suggestion') as FormControl;
   }
+
   get Level(): FormControl {
     return this.ctForm.get('Level') as FormControl;
   }
+
   get Tags(): FormControl {
     return this.ctForm.get('Tags') as FormControl;
   }
+
   get Content(): FormControl {
     return this.ctForm.get('Content') as FormControl;
   }
+
   get ContentAnswer(): FormControl {
     return this.ctForm.get('ContentAnswer') as FormControl;
   }
+
   get Answers(): FormArray {
     return this.ctForm.get('Answers') as FormArray;
   }
-  constructor(private http: HttpClient,private myservice:MyserviceService, private fb: FormBuilder, private router: Router,private toastr:ToastrService) { 
-    this.router.events.subscribe((event) => {
-      this.myservice.changeMessage('1');
-   });
-  }
 
-  public onChange({ editor }: ChangeEvent) {
+  public onChange({editor}: ChangeEvent) {
     const data = editor.getData();
     console.log(data);
   }
+
   createAnswer(): FormGroup {
     return this.fb.group({
       Media: '',
@@ -71,59 +82,65 @@ export class CreateQuestionComponent implements OnInit {
       Content: ['', [Validators.required]],
       IsTrue: '',
     });
-  };
+  }
+
   addAnswer(): void {
     this.answers = this.ctForm.get('Answers') as FormArray;
     this.answers.push(this.createAnswer());
-  };
+  }
+
   removeAnswer(i) {
     this.answers = this.ctForm.get('Answers') as FormArray;
     this.answers.removeAt(i);
   }
 
   getApiTags() {
-    this.http.get<string>('http://localhost:65170/api/tag/',{ headers: http() }).subscribe(value => {
+    this.http.get<string>('http://localhost:65170/api/tag/', {headers: http()}).subscribe(value => {
       this.tagsFormApi = JSON.parse(value);
     });
   }
+
   getApiCategories() {
-    this.http.get<string>('http://localhost:65170/api/category/',{ headers: http() }).subscribe(value => {
+    this.http.get<string>('http://localhost:65170/api/category/', {headers: http()}).subscribe(value => {
       this.categoriesFormApi = JSON.parse(value);
     });
   }
+
   saveQuestion() {
-    this.ctForm.value.Content= this.EditorQuestion.getData();
+    this.ctForm.value.Content = this.EditorQuestion.getData();
     console.log(this.ctForm.value);
-    debugger;
-    console.log(this.ctForm.value.Content)
+    // debugger;
+    console.log(this.ctForm.value.Content);
     if (this.ctForm.valid) {
-      let valueQuestion = this.ctForm.value;
+      const valueQuestion = this.ctForm.value;
       const length = valueQuestion.TagId.length;
-      let idTags = valueQuestion.TagId;
+      const idTags = valueQuestion.TagId;
       let arrTags = [];
       for (let i = 0; i < length; i++) {
         console.log(idTags[i].Id);
-        let tag = this.tagsFormApi.filter(s => s.Id == idTags[i]);
+        // tslint:disable-next-line:triple-equals
+        const tag = this.tagsFormApi.filter(s => s.Id == idTags[i]);
         arrTags = [...arrTags, ...tag];
       }
       valueQuestion.Tags = arrTags;
-      valueQuestion.Category = this.categoriesFormApi.filter(s  => s.Id == valueQuestion.Category.Id);
+      // tslint:disable-next-line:triple-equals
+      valueQuestion.Category = this.categoriesFormApi.filter(s => s.Id == valueQuestion.Category.Id);
       valueQuestion.Category = valueQuestion.Category.length > 0 ? valueQuestion.Category[0] : {};
       valueQuestion.Answers.map(s => s.IsTrue = s.IsTrue ? 1 : 0);
       console.log(valueQuestion);
 
-      this.http.post<string>('http://localhost:65170/api/question/', JSON.stringify(valueQuestion), { headers: http() })
+      this.http.post<string>('http://localhost:65170/api/question/', JSON.stringify(valueQuestion), {headers: http()})
         .subscribe({
           next: (res) => {
             const result: ResultObject = JSON.parse(res);
-            this.http.get<string>('http://localhost:65170/api/question/',{ headers: http() }).subscribe(value => {
+            this.http.get<string>('http://localhost:65170/api/question/', {headers: http()}).subscribe(value => {
               this.Questions = JSON.parse(value);
             });
             if (result.Success >= 1) {
-              //confirm("Create success");
+              // confirm("Create success");
               this.toastr.success('Create success!', '');
             } else {
-              //confirm("Create Fail!");
+              // confirm("Create Fail!");
               this.toastr.error('Create Fail!', '');
             }
             this.ctForm.reset();
@@ -158,7 +175,7 @@ export class CreateQuestionComponent implements OnInit {
       }
     );
     this.initCkeditor(this.Content, '#creater-question');
-  };
+  }
 
   initCkeditor(data, selector) {
 
@@ -171,9 +188,8 @@ export class CreateQuestionComponent implements OnInit {
       this.EditorQuestion.setData(data);
     })
       .catch(error => {
-        console.log("error");
+        console.log('error');
       });
-    ;
 
   }
 }

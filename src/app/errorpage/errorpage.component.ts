@@ -13,6 +13,7 @@ export class ErrorpageComponent implements OnInit {
   message;
   description;
   checked = true;
+
   constructor(private myservice: MyserviceService, private router: Router) {
     this.router.events.subscribe((event) => {
       this.myservice.changeMessage('2');
@@ -22,32 +23,32 @@ export class ErrorpageComponent implements OnInit {
   ngOnInit() {
 
 
-    console.log(this.checked)
+    console.log(this.checked);
     this.myservice.currentError.subscribe(message => this.errors = message);
-    var ListErrors = this.errors.split(',');
+    const ListErrors = this.errors.split(',');
     console.log(ListErrors);
     this.status = ListErrors[0];
-    console.log(this.status)
+    console.log(this.status);
     // console.log('sdsf'+this.message);
-    if (this.status == 401) {
+    if (this.status === 401) {
       this.message = ListErrors[1];
-      this.description = " Contact admin to access this feature";
-    } else if (this.status == 500) {
+      this.description = ' Contact admin to access this feature';
+    } else if (this.status === 500) {
       this.message = ListErrors[1];
-      this.description = " Error! An error occurred. Please try again later";
-    } else if (this.status == 400) {
+      this.description = ' Error! An error occurred. Please try again later';
+    } else if (this.status === 400) {
       this.message = ListErrors[1];
-      this.description = " Something needs your attention";
-    }
-    else {
+      this.description = ' Something needs your attention';
+    } else {
       this.message = ListErrors[1];
-      this.description = " Error! An error occurred. Please try again later";
+      this.description = ' Error! An error occurred. Please try again later';
     }
 
-    if (this.status != "") {
-      this.checked = false
+    // tslint:disable-next-line:triple-equals
+    if (this.status != '') {
+      this.checked = false;
     } else {
-      this.checked = true
+      this.checked = true;
 
     }
   }

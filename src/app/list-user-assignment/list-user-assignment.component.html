@@ -2,146 +2,148 @@
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-  
-  
+
+
     </section>
-  
+
     <!-- Main content -->
     <section class="content">
       <!-- Small boxes (Stat box) -->
-  
+
       <!-- /.row -->
       <!-- Main row -->
       <div class="row">
         <!-- Left col -->
-  
+
         <!-- /.Left col -->
         <!-- right col (We are only adding the ID to make the widgets sortable)-->
-  
-  
-          <div class="container-fluid ">
-            <div class="clearfix">
+
+
+        <div class="container-fluid ">
+          <div class="clearfix">
             <div class="col-md-5">
-                <input [(ngModel)]="searchString" type="text" placeholder="Search content">
-                <button (click)="onSearch()" type="submit"><i class="fa fa-search"></i></button>
-  
-          </div>
-          <div class="col-md-7 header-right">
-  
-          <button  [routerLink]="['/test']" class="btn btn-danger">Go Back</button>
-          </div>
+              <input [(ngModel)]="searchString" placeholder="Search content" type="text">
+              <button (click)="onSearch()" type="submit"><i class="fa fa-search"></i></button>
+
+            </div>
+            <div class="col-md-7 header-right">
+
+              <button [routerLink]="['/test']" class="btn btn-danger">Go Back</button>
+            </div>
           </div>
           <br>
-  
-         
-            <button style="margin-left: 1.5%;margin-top:15px" [routerLink]="['/TestAssignment', Id]" class="btn btn-primary" data-dismiss="modal">Người được chấm thi
-              </button>
-  
-                  <div class="title">
-  
-                      <div class="col-md-3">
-  
-                      </div>
-                      <div class="col-md-6">
-                      <h1 style="text-align: center">Danh sách người chấm thi</h1>
-                        </div>
-                       <div class="col-md-3">
-                        <button class="btn btn-primary" (click)="AddMutiple()">Apply</button>
-                       </div>
-                      </div>
-                      <table mat-table [dataSource]="dataSource" matSort class="table table-hover">
-    
-                        <!-- Checkbox Column -->
-                        <ng-container matColumnDef="select">
-                          <th mat-header-cell *matHeaderCellDef>
-                            <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
-                              [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
-                            </mat-checkbox>
-                          </th>
-                          <td mat-cell *matCellDef="let row">
-                            <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
-                              [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
-                            </mat-checkbox>
-                          </td>
-                        </ng-container>
-                      
-                        <!-- UserName Column -->
-                        <ng-container matColumnDef="UserName">
-                          <th mat-header-cell *matHeaderCellDef mat-sort-header> UserName </th>
-                          <td mat-cell *matCellDef="let element"> {{element.UserName}} </td>
-                        </ng-container>
-                      
-                        <!-- FullName Column -->
-                        <ng-container matColumnDef="FullName">
-                          <th mat-header-cell *matHeaderCellDef mat-sort-header> FullName </th>
-                          <td mat-cell *matCellDef="let element"> {{element.FullName}} </td>
-                        </ng-container>
-                      
-                        <!-- Enail Column -->
-                        <ng-container matColumnDef="Phone">
-                          <th mat-header-cell *matHeaderCellDef mat-sort-header> Phone </th>
-                          <td mat-cell *matCellDef="let element"> {{element.Phone}} </td>
-                        </ng-container>
-                        <ng-container matColumnDef="UserId">
-                          <th mat-header-cell *matHeaderCellDef mat-sort-header> UserId </th>
-                          <td mat-cell *matCellDef="let element"> {{element.UserId}} </td>
-                        </ng-container>
-                        <!-- Department column-->
-                       
-                        <!-- Position column-->
-                        <ng-container matColumnDef="Email">
-                          <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
-                          <td mat-cell *matCellDef="let element"> {{element.Email}} </td>
-                        </ng-container>
-                        
-                        <ng-container matColumnDef="Address">
-                          <th mat-header-cell *matHeaderCellDef mat-sort-header> Address </th>
-                          <td mat-cell *matCellDef="let element"> {{element.Address}} </td>
-                        </ng-container>
-                       
-                        <ng-container matColumnDef="Status">
-                          <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
-                          <td mat-cell *matCellDef="let element"> {{element.Status?"Public":"Dark"}} </td>
-                        </ng-container>
-                
-                  
-                        <ng-container matColumnDef="Action">
-                          <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
-                          <td mat-cell *matCellDef="let element">
+
+
+          <button [routerLink]="['/TestAssignment', Id]" class="btn btn-primary"
+                  data-dismiss="modal" style="margin-left: 1.5%;margin-top:15px">Người được chấm thi
+          </button>
+
+          <div class="title">
+
+            <div class="col-md-3">
+
+            </div>
+            <div class="col-md-6">
+              <h1 style="text-align: center">Danh sách người chấm thi</h1>
+            </div>
+            <div class="col-md-3">
+              <button (click)="AddMutiple()" class="btn btn-primary">Apply</button>
+            </div>
+          </div>
+          <table [dataSource]="dataSource" class="table table-hover" mat-table matSort>
+
+            <!-- Checkbox Column -->
+            <ng-container matColumnDef="select">
+              <th *matHeaderCellDef mat-header-cell>
+                <mat-checkbox (change)="$event ? masterToggle() : null"
+                              [aria-label]="checkboxLabel()"
+                              [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()">
+                </mat-checkbox>
+              </th>
+              <td *matCellDef="let row" mat-cell>
+                <mat-checkbox (change)="$event ? selection.toggle(row) : null" (click)="$event.stopPropagation()"
+                              [aria-label]="checkboxLabel(row)" [checked]="selection.isSelected(row)">
+                </mat-checkbox>
+              </td>
+            </ng-container>
+
+            <!-- UserName Column -->
+            <ng-container matColumnDef="UserName">
+              <th *matHeaderCellDef mat-header-cell mat-sort-header> UserName</th>
+              <td *matCellDef="let element" mat-cell> {{element.UserName}} </td>
+            </ng-container>
+
+            <!-- FullName Column -->
+            <ng-container matColumnDef="FullName">
+              <th *matHeaderCellDef mat-header-cell mat-sort-header> FullName</th>
+              <td *matCellDef="let element" mat-cell> {{element.FullName}} </td>
+            </ng-container>
+
+            <!-- Enail Column -->
+            <ng-container matColumnDef="Phone">
+              <th *matHeaderCellDef mat-header-cell mat-sort-header> Phone</th>
+              <td *matCellDef="let element" mat-cell> {{element.Phone}} </td>
+            </ng-container>
+            <ng-container matColumnDef="UserId">
+              <th *matHeaderCellDef mat-header-cell mat-sort-header> UserId</th>
+              <td *matCellDef="let element" mat-cell> {{element.UserId}} </td>
+            </ng-container>
+            <!-- Department column-->
+
+            <!-- Position column-->
+            <ng-container matColumnDef="Email">
+              <th *matHeaderCellDef mat-header-cell mat-sort-header> Email</th>
+              <td *matCellDef="let element" mat-cell> {{element.Email}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Address">
+              <th *matHeaderCellDef mat-header-cell mat-sort-header> Address</th>
+              <td *matCellDef="let element" mat-cell> {{element.Address}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Status">
+              <th *matHeaderCellDef mat-header-cell mat-sort-header> Status</th>
+              <td *matCellDef="let element" mat-cell> {{element.Status ? "Public" : "Dark"}} </td>
+            </ng-container>
+
+
+            <ng-container matColumnDef="Action">
+              <th *matHeaderCellDef mat-header-cell mat-sort-header> Action</th>
+              <td *matCellDef="let element" mat-cell>
                             <span data-placement="top" data-toggle="tooltip" title="Delete">
-                              <button (click)="deleteTest(element.Id)"  class="btn btn-danger btn-xs"data-title="Delete" data-toggle="modal" data-target="#delete">
+                              <button (click)="deleteTest(element.Id)" class="btn btn-danger btn-xs" data-target="#delete"
+                                      data-title="Delete" data-toggle="modal">
                                 <span class="glyphicon glyphicon-trash"></span>
                               </button>
                             </span>
-                            <span data-placement="top" data-toggle="tooltip" title="Detail">
+                <span data-placement="top" data-toggle="tooltip" title="Detail">
                                 <button [routerLink]="['/test',element.Id]" class="btn btn-success btn-xs"
-                                data-title="Detail"   data-target="#detail"><span
-                                class="glyphicon glyphicon-list-alt"></span></button>
+                                        data-target="#detail" data-title="Detail"><span
+                                  class="glyphicon glyphicon-list-alt"></span></button>
                               </span>
-                              <span data-placement="top" (click)="navigateToEdit(element.Id)" data-toggle="tooltip" title="Update">
-                                <button   class="btn btn-primary btn-xs"
-                                     ><span
-                                class="glyphicon glyphicon-pencil"></span></button>
+                <span (click)="navigateToEdit(element.Id)" data-placement="top" data-toggle="tooltip" title="Update">
+                                <button class="btn btn-primary btn-xs"
+                                ><span
+                                  class="glyphicon glyphicon-pencil"></span></button>
                               </span>
-                          </td>
-                         
-                        </ng-container>
-                      
-                        <tr mat-header-row *matHeaderRowDef="displayedColumn"></tr>
-                        <tr mat-row *matRowDef="let row; columns: displayedColumn;"></tr>
-                      </table>
-                    <mat-paginator [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons></mat-paginator>
-  
-  
-          </div>
-  
-  
-  
+              </td>
+
+            </ng-container>
+
+            <tr *matHeaderRowDef="displayedColumn" mat-header-row></tr>
+            <tr *matRowDef="let row; columns: displayedColumn;" mat-row></tr>
+          </table>
+          <mat-paginator [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons></mat-paginator>
+
+
+        </div>
+
+
         <!-- right col -->
       </div>
       <!-- /.row (main row) -->
-  
+
     </section>
     <!-- /.content -->
   </div>
-  </div>
+</div>

@@ -8,9 +8,9 @@ describe('ViewListSemasterComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ViewListSemasterComponent ]
+      declarations: [ViewListSemasterComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

@@ -8,9 +8,9 @@ describe('ExamImportComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ExamImportComponent ]
+      declarations: [ExamImportComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

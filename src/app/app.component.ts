@@ -1,9 +1,7 @@
-import { Component, Input, HostListener, OnChanges, SimpleChanges } from '@angular/core';
+import { Component } from '@angular/core';
 import { AuthenticationService } from './_services/authentication.service';
-import { Subscription } from 'rxjs';
 import { User } from './user';
 import { HttpClient } from '@angular/common/http';
-import { http } from './http-header';
 import { MyserviceService } from './myservice.service';
 import { Router } from '@angular/router';
 

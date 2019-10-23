@@ -1,17 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import * as ClassicEditorBuild from '@ckeditor/ckeditor5-build-classic';
-import { FormBuilder, FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Question } from '../question';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ResultObject } from '../result-object';
 import { Tag } from '../Tag';
 import { Category } from '../ICategory';
 import { http } from '../http-header';
 import { ToastrService } from 'ngx-toastr';
 import { MyserviceService } from '../myservice.service';
+
 const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  headers: new HttpHeaders({'Content-Type': 'application/json'})
 };
 
 @Component({
@@ -32,21 +33,31 @@ export class EditQuestionComponent implements OnInit {
   tagsFormApi: Tag[];
   categoriesFormApi: Category[];
   ctForm: FormGroup;
+
   //  submitted = false;
+
+  // tslint:disable-next-line:no-shadowed-variable
+  constructor(private http: HttpClient,
+              private myservice: MyserviceService,
+              private toastr: ToastrService,
+              private fb: FormBuilder,
+              private router: Router,
+              private activedRoute: ActivatedRoute) {
+    this.router.events.subscribe((event) => {
+      this.myservice.changeMessage('1');
+    });
+  }
 
   get Content(): FormControl {
     return this.ctForm.get('Content') as FormControl;
   }
+
   get ContentAnswer(): FormControl {
     return this.ctForm.get('ContentAnswer') as FormControl;
   }
+
   get Answers(): FormArray {
     return this.ctForm.get('Answers') as FormArray;
-  }
-  constructor(private http: HttpClient,private myservice:MyserviceService, private toastr: ToastrService, private fb: FormBuilder, private router: Router, private activedRoute: ActivatedRoute) { 
-    this.router.events.subscribe((event) => {
-      this.myservice.changeMessage('1');
-   });
   }
 
   createAnswer(): FormGroup {
@@ -58,22 +69,25 @@ export class EditQuestionComponent implements OnInit {
       IsTrue: '',
     });
   }
+
   addAnswer(): void {
     this.answers = this.ctForm.get('Answers') as FormArray;
     this.answers.push(this.createAnswer());
   }
+
   removeAnswer(i) {
     this.answers = this.ctForm.get('Answers') as FormArray;
     this.answers.removeAt(i);
   }
 
   getApiTags() {
-    this.http.get<string>('http://localhost:65170/api/tag/', { headers: http() }).subscribe(value => {
+    this.http.get<string>('http://localhost:65170/api/tag/', {headers: http()}).subscribe(value => {
       this.tagsFormApi = JSON.parse(value);
     });
   }
+
   getApiCategories() {
-    this.http.get<string>('http://localhost:65170/api/category/', { headers: http() }).subscribe(value => {
+    this.http.get<string>('http://localhost:65170/api/category/', {headers: http()}).subscribe(value => {
       this.categoriesFormApi = JSON.parse(value);
     });
   }
@@ -87,33 +101,31 @@ export class EditQuestionComponent implements OnInit {
       let arrTags = [];
       for (let i = 0; i < length; i++) {
         console.log(idTags[i].Id);
-        const tag = this.tagsFormApi.filter(s => s.Id == idTags[i]);
+        const tag = this.tagsFormApi.filter(s => s.Id === idTags[i]);
         arrTags = [...arrTags, ...tag];
       }
       valueQuestion.Tags = arrTags;
-      valueQuestion.Category = this.categoriesFormApi.filter(s => s.Id == valueQuestion.CategoryId);
+      valueQuestion.Category = this.categoriesFormApi.filter(s => s.Id === valueQuestion.CategoryId);
       valueQuestion.Category = valueQuestion.Category.length > 0 ? valueQuestion.Category[0] : {};
       valueQuestion.Answers.map(s => s.IsTrue = s.IsTrue ? 1 : 0);
       valueQuestion.Content = this.EditorQuestion.getData();
       console.log(valueQuestion);
 
-      const IdQuestion = this.activedRoute.snapshot.paramMap.get('id')
-      this.http.put<string>('http://localhost:65170/api/question/' + IdQuestion, JSON.stringify(valueQuestion), { headers: http() })
+      const IdQuestion = this.activedRoute.snapshot.paramMap.get('id');
+      this.http.put<string>('http://localhost:65170/api/question/' + IdQuestion, JSON.stringify(valueQuestion), {headers: http()})
         .subscribe({
           next: (res) => {
             const result: ResultObject = JSON.parse(res);
             console.log(result);
-            this.http.get<string>('http://localhost:65170/api/question/', { headers: http() }).subscribe(value => {
+            this.http.get<string>('http://localhost:65170/api/question/', {headers: http()}).subscribe(value => {
               this.Questions = JSON.parse(value);
             });
             if (result.Success >= 1) {
-              //confirm('Update success!');
+              // confirm('Update success!');
               this.toastr.success('Update success!', '');
-            }
-            else if (result.Success == -9) {
+            } else if (result.Success === -9) {
               this.toastr.error('Câu hỏi đang có trong đề thi ', '');
-            }
-            else {
+            } else {
               this.toastr.error('Update fail! ', '');
 
             }
@@ -128,6 +140,7 @@ export class EditQuestionComponent implements OnInit {
     }
     this.router.navigate(['question']);
   }
+
   ngOnInit() {
     this.getApiTags();
     this.getApiCategories();
@@ -142,14 +155,12 @@ export class EditQuestionComponent implements OnInit {
         Content: ['', [Validators.required]],
         TagId: '',
         Answers: this.fb.array(
-          [
-
-          ]),
+          []),
       });
 
     //////
-    const IdQuestion = this.activedRoute.snapshot.paramMap.get('id')
-    this.http.get<string>('http://localhost:65170/api/question/' + IdQuestion, { headers: http() }).subscribe(value => {
+    const IdQuestion = this.activedRoute.snapshot.paramMap.get('id');
+    this.http.get<string>('http://localhost:65170/api/question/' + IdQuestion, {headers: http()}).subscribe(value => {
 
       const qs: Question = JSON.parse(value).Data;
       qs.CategoryId = qs.Category.Id;
@@ -160,7 +171,7 @@ export class EditQuestionComponent implements OnInit {
       if (qs.Answers && qs.Answers.length > 0) {
         for (let i = 0; i < qs.Answers.length; i++) {
           this.addAnswer();
-          let ansF = this.ctForm.get('Answers') as FormArray;
+          const ansF = this.ctForm.get('Answers') as FormArray;
           ansF.controls[i].patchValue(qs.Answers[i]);
         }
       }
@@ -181,10 +192,10 @@ export class EditQuestionComponent implements OnInit {
       this.EditorQuestion = newEditor;
       this.EditorQuestion.setData(data);
     })
-      // .catch(error => {
-      //   console.error(error);
-      // });
-      ;
+    // .catch(error => {
+    //   console.error(error);
+    // });
+    ;
 
   }
 }

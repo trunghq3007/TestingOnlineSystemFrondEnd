@@ -1,5 +1,5 @@
 export interface Roleaction {
-    ActionId: string;
-    ActionName: string;
-    Description: string;
+  ActionId: string;
+  ActionName: string;
+  Description: string;
 }

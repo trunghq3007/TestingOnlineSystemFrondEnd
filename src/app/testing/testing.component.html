@@ -1,7 +1,7 @@
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand"><img src="../../assets/image/logo.png" /></a>
+      <a class="navbar-brand"><img src="../../assets/image/logo.png"/></a>
     </div>
     <ul class="nav navbar-nav" style="width: 70%;font-size: 16px">
       <li class="active" style="font-size: 25px;margin-left: 255px;"><a>{{NameExam}}</a></li>
@@ -12,14 +12,14 @@
 </nav>
 
 
-
 <div class="content-wrapper" style="width: 100%;margin-left: 0px;background-color: white">
-  <div style="width: 25%;float: left;margin-top: 5%" *ngIf="testProcessings">
+  <div *ngIf="testProcessings" style="width: 25%;float: left;margin-top: 5%">
 
-    <button type="button" class="btn btn-primary" (click)="summit()"
-      style="margin-left: 23px;margin-right: 5px;width: 100px">Submit</button>
+    <button (click)="summit()" class="btn btn-primary" style="margin-left: 23px;margin-right: 5px;width: 100px"
+            type="button">Submit
+    </button>
     <button class="btn btn-danger" style="margin-left: 50px;width: 100px">
-      <span class="magin-right magin-left">{{second -(EndTest - startTest)  }}Phut</span>
+      <span class="magin-right magin-left">{{second - (EndTest - startTest)  }}Phut</span>
     </button>
     <div style="margin-left: 23px;margin-top: 6%">
 
@@ -29,19 +29,18 @@
       <span><i class="fa fa-clock-o"></i>Thời gian : {{second}} Phút </span>
     </div>
     <div style="margin-left: 23px;margin-top: 10px">
-      <button type="button" class="btn btn-success"></button>
+      <button class="btn btn-success" type="button"></button>
       <span>Câu hỏi đã trả lời</span>
     </div>
     <div style="margin-left: 23px;margin-bottom: 5%;margin-top: 10px">
-      <button type="button" class="btn btn-secondary"></button>
+      <button class="btn btn-secondary" type="button"></button>
       <span>Câu hỏi chưa trả lời</span>
     </div>
 
 
-
     <div *ngFor="let item of questions;let i=index" style="width: 80%;margin-left: 5%">
-      <button style="background: #bfbfbf;" (click)="scroll(item.Id)" type="button" id="btn{{item.Id}}"
-        style="width: 40px;float:left;margin-left: 10px;margin-top: 10px">{{i+1}}</button>
+      <button (click)="scroll(item.Id)" id="btn{{item.Id}}" style="background: #bfbfbf;" style="width: 40px;float:left;margin-left: 10px;margin-top: 10px"
+              type="button">{{i + 1}}</button>
 
     </div>
   </div>
@@ -52,27 +51,27 @@
       <table>
         <tr id="table{{item.Id}}">
           <th>
-            <h4 style="width: 65px;margin-top: 0px">Câu {{i+1}}</h4>
+            <h4 style="width: 65px;margin-top: 0px">Câu {{i + 1}}</h4>
           </th>
         </tr>
         <tr>
           <td>
-            <h4 [innerHtml]="item.Content" style="margin-top: 0px"> </h4>
+            <h4 [innerHtml]="item.Content" style="margin-top: 0px"></h4>
           </td>
         </tr>
       </table>
       <div *ngIf="item.Type==1; then thenBlock else elseBlock"></div>
       <ng-template #thenBlock>
-        <textarea style="width:90%;height: 100px;" [(ngModel)]="item.Answer" class="content"></textarea>
+        <textarea [(ngModel)]="item.Answer" class="content" style="width:90%;height: 100px;"></textarea>
       </ng-template>
       <ng-template #elseBlock>
         <div *ngFor="let items of item.Answers" style="width: 100%">
           <table>
             <tr>
-              <td><input type="checkbox" id="check{{items.Id}}" id-ans="items.Id" (click)="Onclick(items.Id,item.Id)" />
+              <td><input (click)="Onclick(items.Id,item.Id)" id="check{{items.Id}}" id-ans="items.Id" type="checkbox"/>
               </td>
               <td style="padding-top: 1%;padding-left: 10px">
-                <h5 [innerHtml]="items.Content" style="line-height: 0"> </h5>
+                <h5 [innerHtml]="items.Content" style="line-height: 0"></h5>
               </td>
             </tr>
           </table>

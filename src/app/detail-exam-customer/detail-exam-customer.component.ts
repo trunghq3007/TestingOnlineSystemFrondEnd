@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Isemaster } from '../isemaster';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DetailExam } from '../detailExams';
 import { http } from '../http-header';
 import { MyserviceService } from '../myservice.service';
+
 const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-}
+  headers: new HttpHeaders({'Content-Type': 'application/json'})
+};
+
 @Component({
   selector: 'app-detail-exam-customer',
   templateUrl: './detail-exam-customer.component.html',
@@ -16,25 +17,27 @@ const httpOptions = {
 export class DetailExamCustomerComponent implements OnInit {
   list: DetailExam;
 
-  notify: boolean = true;
+  notify = true;
   Users: string;
   LisUser;
   UserId: string;
   UserName: string;
-  constructor(private http: HttpClient, private myservice: MyserviceService, private router: Router, private activedRoute: ActivatedRoute) {
+  chuoi: string;
+
+  // tslint:disable-next-line:no-shadowed-variable
+  constructor(private http: HttpClient,
+              private myservice: MyserviceService,
+              private router: Router,
+              private activedRoute: ActivatedRoute) {
     this.router.events.subscribe((event) => {
       this.myservice.changeMessage('2');
     });
   }
 
-  chuoi: string;
-
-
-
   ngOnInit() {
 
-    const IdQuestion = this.activedRoute.snapshot.paramMap.get('id')
-    this.http.get<string>('http://localhost:65170/ExamDetails/' + IdQuestion, { headers: http() }).subscribe(
+    const IdQuestion = this.activedRoute.snapshot.paramMap.get('id');
+    this.http.get<string>('http://localhost:65170/ExamDetails/' + IdQuestion, {headers: http()}).subscribe(
       value => {
 
         this.list = JSON.parse(value);
@@ -42,7 +45,6 @@ export class DetailExamCustomerComponent implements OnInit {
         console.log(value);
         this.chuoi = '/thi/1/' + IdQuestion + '/thi';
       });
-
 
 
     if (sessionStorage.getItem('user')) {
@@ -57,6 +59,7 @@ export class DetailExamCustomerComponent implements OnInit {
     }
 
   }
+
   listExam(id) {
 
   }
@@ -71,12 +74,12 @@ export class DetailExamCustomerComponent implements OnInit {
 
 
   test() {
-    var checked = localStorage.getItem('SecondTest');
+    const checked = localStorage.getItem('SecondTest');
     if (checked == null) {
-      var time = new Date();
+      const time = new Date();
 
       console.log(time.getHours());
-      var getdate = time.getHours() * 60 + time.getMinutes();
+      const getdate = time.getHours() * 60 + time.getMinutes();
       localStorage.setItem('SecondTest', getdate.toString());
     }
 

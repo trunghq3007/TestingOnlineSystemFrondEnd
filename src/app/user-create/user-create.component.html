@@ -16,19 +16,19 @@
         </div>
         <div class="content">
 
-          <form novalidate (ngSubmit)="onSubmit(inputName.value)" [formGroup]="createForm">
+          <form (ngSubmit)="onSubmit(inputName.value)" [formGroup]="createForm" novalidate>
             <div class="row">
               <div class="col-md-12">
                 <div class="col-md-6">
                   <!-- UserName -->
                   <div class="form-group row">
-                    <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">UserName*</label>
+                    <label class="col-sm-2 col-form-label col-form-label-sm" for="colFormLabelSm">UserName*</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control form-control-sm" formControlName="UserName"
-                        placeholder="UserName" #inputName >
+                      <input #inputName class="form-control form-control-sm" formControlName="UserName"
+                             placeholder="UserName" type="text">
                     </div>
-                    <div *ngIf="!UserName.valid && UserName.touched " class="form-group" style="color:red;"
-                      role="alert">
+                    <div *ngIf="!UserName.valid && UserName.touched " class="form-group" role="alert"
+                         style="color:red;">
                       <div *ngIf="UserName.hasError('required')">
                         UserName is required
                       </div>
@@ -44,10 +44,10 @@
                   <!-- password -->
 
                   <div class="form-group row">
-                    <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Password*</label>
+                    <label class="col-sm-2 col-form-label col-form-label-sm" for="colFormLabelSm">Password*</label>
                     <div class="col-sm-10">
-                      <input type="password" class="form-control form-control-sm" formControlName="Password"
-                        placeholder="Password" [pattern]="passwordPattern">
+                      <input [pattern]="passwordPattern" class="form-control form-control-sm" formControlName="Password"
+                             placeholder="Password" type="password">
                     </div>
                     <div *ngIf="!Password.valid && Password.touched " style="color: red">
                       <div *ngIf="Password.hasError('required')">
@@ -66,12 +66,12 @@
                   </div>
                   <!-- Role -->
                   <div class="form-group row">
-                    <label for="inputPassword3" class="col-sm-2 control-label">Role*</label>
+                    <label class="col-sm-2 control-label" for="inputPassword3">Role*</label>
                     <div class="col-sm-10">
                       <fieldset formGroupName="Roles">
-                        <select formControlName="RoleId" class="form-control select2 select2-hidden-accessible"
-                          style="width: 100%;" tabindex="-1" aria-hidden="true">
-                          <option value="0" *ngFor="let item of RolesFormApi" value="{{item.RoleId}}">{{item.RoleName}}
+                        <select aria-hidden="true" class="form-control select2 select2-hidden-accessible"
+                                formControlName="RoleId" style="width: 100%;" tabindex="-1">
+                          <option *ngFor="let item of RolesFormApi" value="0" value="{{item.RoleId}}">{{item.RoleName}}
                         </select>
                       </fieldset>
                     </div>
@@ -79,14 +79,14 @@
                   <div *ngIf="!RoleName.valid && RoleName.touched " style="color: red">
                     <div *ngIf="RoleName.hasError('required')">
                       Role is required
-                    </div>                   
+                    </div>
                   </div>
                   <!-- FullName -->
                   <div class="form-group row">
-                    <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">FullName*</label>
+                    <label class="col-sm-2 col-form-label col-form-label-sm" for="colFormLabelSm">FullName*</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control form-control-sm" formControlName="FullName"
-                        placeholder="FullName">
+                      <input class="form-control form-control-sm" formControlName="FullName" placeholder="FullName"
+                             type="text">
                     </div>
                     <div *ngIf="!FullName.valid && FullName.touched " style="color: red">
                       <div *ngIf="FullName.hasError('required')">
@@ -103,11 +103,11 @@
 
                   <!-- Phone -->
                   <div class="form-group row">
-                    <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Phone*</label>
+                    <label class="col-sm-2 col-form-label col-form-label-sm" for="colFormLabelSm">Phone*</label>
 
                     <div class="col-sm-10">
-                      <input type="text" class="form-control form-control-sm" formControlName="Phone"
-                        placeholder="Phone number" [pattern]="phonenumber">
+                      <input [pattern]="phonenumber" class="form-control form-control-sm" formControlName="Phone"
+                             placeholder="Phone number" type="text">
                     </div>
                     <div *ngIf="!Phone.valid && Phone.touched " style="color: red">
                       <div *ngIf="Phone.hasError('required')">
@@ -122,10 +122,10 @@
                 <div class="col-md-6">
                   <!-- Email -->
                   <div class="form-group row">
-                    <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Email*</label>
+                    <label class="col-sm-2 col-form-label col-form-label-sm" for="colFormLabelSm">Email*</label>
                     <div class="col-md-10">
-                      <input class="form-control" type="email" name="email" [pattern]="emailPattern"
-                        id="example-email-input" formControlName="Email" placeholder="Email">
+                      <input [pattern]="emailPattern" class="form-control" formControlName="Email" id="example-email-input"
+                             name="email" placeholder="Email" type="email">
                     </div>
                     <div *ngIf="!Email.valid && Email.touched" style="color: red">
                       <div *ngIf="Email?.errors && Email.errors['required']">
@@ -138,10 +138,10 @@
                   </div>
                   <!-- Address -->
                   <div class="form-group row">
-                    <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Address*</label>
+                    <label class="col-sm-2 col-form-label col-form-label-sm" for="colFormLabelSm">Address*</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control form-control-sm" formControlName="Address"
-                        placeholder="Address">
+                      <input class="form-control form-control-sm" formControlName="Address" placeholder="Address"
+                             type="text">
                     </div>
                     <div *ngIf="!Address.valid && Address.touched " style="color: red">
                       <div *ngIf="Address.hasError('required')">
@@ -151,10 +151,10 @@
                   </div>
                   <!-- Department -->
                   <div class="form-group row">
-                    <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Department*</label>
+                    <label class="col-sm-2 col-form-label col-form-label-sm" for="colFormLabelSm">Department*</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control form-control-sm" formControlName="Department"
-                        placeholder="Department">
+                      <input class="form-control form-control-sm" formControlName="Department" placeholder="Department"
+                             type="text">
                     </div>
                     <div *ngIf="!Department.valid && Department.touched " style="color: red">
                       <div *ngIf="Department.hasError('required')">
@@ -171,10 +171,10 @@
 
                   <!-- Position -->
                   <div class="form-group row">
-                    <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Position*</label>
+                    <label class="col-sm-2 col-form-label col-form-label-sm" for="colFormLabelSm">Position*</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control form-control-sm" formControlName="Position"
-                        placeholder="Position">
+                      <input class="form-control form-control-sm" formControlName="Position" placeholder="Position"
+                             type="text">
                     </div>
                     <div *ngIf="!Position.valid && Position.touched " style="color: red">
                       <div *ngIf="Position.hasError('required')">
@@ -190,23 +190,23 @@
                   </div>
                   <!-- Avatar -->
                   <div class="form-group row">
-                    <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Avatar</label>
+                    <label class="col-sm-2 col-form-label col-form-label-sm" for="colFormLabelSm">Avatar</label>
                     <td>
                       <div class="input-group" style="width: 267px;height: 40px;">
                         <div class="custom-file col-sm-1">
-                          <input type="file" class="custom-file-input" id="inputGroupFile01"
-                            aria-describedby="inputGroupFileAddon01" formControlName="Avatar">
+                          <input aria-describedby="inputGroupFileAddon01" class="custom-file-input" formControlName="Avatar"
+                                 id="inputGroupFile01" type="file">
                         </div>
                       </div>
                     </td>
                   </div>
                   <!-- Status -->
                   <div class="form-group row">
-                    <label for="inputPassword3" class="col-sm-2 control-label">Status*</label>
+                    <label class="col-sm-2 control-label" for="inputPassword3">Status*</label>
                     <div class="col-sm-10">
-                      <select formControlName="Status"  class="form-control select2 select2-hidden-accessible"
-                        style="width: 100%;" tabindex="-1" aria-hidden="true">
-                        <option  value="true" >True</option>
+                      <select aria-hidden="true" class="form-control select2 select2-hidden-accessible"
+                              formControlName="Status" style="width: 100%;" tabindex="-1">
+                        <option value="true">True</option>
                         <option value="false">False</option>
                       </select>
                     </div>
@@ -214,19 +214,19 @@
                       <div *ngIf="Status.hasError('required')">
                         Status is required
                       </div>
-                      
+
                     </div>
                   </div>
                 </div>
               </div>
             </div>
 
-            <label for="iNote" class="col-md-2 control-label">Note</label>
+            <label class="col-md-2 control-label" for="iNote">Note</label>
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group">
                   <div class="col-md-12">
-                    <ckeditor [editor]="Editor" id="classic-editor" name="classic-editor" formControlName="Note">
+                    <ckeditor [editor]="Editor" formControlName="Note" id="classic-editor" name="classic-editor">
                     </ckeditor>
                   </div>
                 </div>
@@ -235,7 +235,7 @@
             </div>
             <div class="form-group row" style="margin-top: 3%">
               <div class="col-10 offset-2">
-                <button type="submit" class="btn btn-primary" (click)="validateForm()">Create</button>
+                <button (click)="validateForm()" class="btn btn-primary" type="submit">Create</button>
               </div>
             </div>
           </form>

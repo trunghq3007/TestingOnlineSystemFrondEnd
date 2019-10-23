@@ -19,6 +19,7 @@ export class AppheaderComponent implements OnInit {
   LisUser;
   UserId: string;
   UserName: string;
+
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService
@@ -46,20 +47,22 @@ export class AppheaderComponent implements OnInit {
     // } else {
     //   this.Users = null;
     // }
-    
+
   }
-  ngDoCheck(){
+
+  ngDoCheck() {
     if (sessionStorage.getItem('user')) {
       this.Users = sessionStorage.getItem('user');
       this.LisUser = this.Users.split(',');
       this.UserName = this.LisUser[1];
       this.UserId = this.LisUser[0];
-     
-     
+
+
     } else {
       this.Users = null;
     }
   }
+
   logout() {
     sessionStorage.removeItem('currentPermission');
     this.router.navigate(['']);

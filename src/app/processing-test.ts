@@ -1,7 +1,7 @@
 import { Question } from './question';
 
 export interface ProcessingTest {
-  Id: number ;
+  Id: number;
   TestName: string;
   TestTime: number;
   Questions: Question [ ];

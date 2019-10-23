@@ -1,16 +1,14 @@
-import { Component, OnInit, Input, OnDestroy, Pipe, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Pipe } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Question } from '../question';
-import { Router, ActivatedRoute } from '@angular/router';
-import { MatDialog, MatTableDataSource } from '@angular/material';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MatDialog } from '@angular/material';
 import { TestProcessing } from '../test-processing';
-import { ProcessingTest } from '../processing-test'
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { http } from '../http-header';
 import { MyserviceService } from '../myservice.service';
-import { forEach } from '@angular/router/src/utils/collection';
+
 const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  headers: new HttpHeaders({'Content-Type': 'application/json'})
 };
 
 // tslint:disable-next-line: use-pipe-transform-interface
@@ -27,11 +25,6 @@ export class TestingComponent implements OnInit {
   LisUser;
   UserId: string;
   UserName: string;
-  constructor(private myservice: MyserviceService, private semaster: FormBuilder, private fb: FormBuilder, private http: HttpClient, private router: Router, public dialog: MatDialog, public activateRoute: ActivatedRoute) {
-    this.router.events.subscribe((event) => {
-      this.myservice.changeMessage('2');
-    });
-  }
   testProcessings: TestProcessing;
   questions: Question[];
   i: number;
@@ -42,7 +35,6 @@ export class TestingComponent implements OnInit {
   answer = [];
   counting: number;
   remainingTime: number;
-  private intervalId = 0;
   message = '';
   arrayId = [];
   mang = [];
@@ -55,6 +47,22 @@ export class TestingComponent implements OnInit {
   NameExam: string;
   testCount: number;
   Idtest = this.activateRoute.snapshot.paramMap.get('TestId');
+  private intervalId = 0;
+
+  // tslint:disable-next-line:no-shadowed-variable
+  constructor(private myservice: MyserviceService,
+              private semaster: FormBuilder,
+              private fb: FormBuilder,
+              // tslint:disable-next-line:no-shadowed-variable
+              private http: HttpClient,
+              private router: Router,
+              public dialog: MatDialog,
+              public activateRoute: ActivatedRoute) {
+    this.router.events.subscribe((event) => {
+      this.myservice.changeMessage('2');
+    });
+  }
+
   ngOnInit() {
 
     this.http.get<string>('http://localhost:65170/api/SemesterExam/' + this.Idtest + '?IsgetTestProcessing', httpOptions).subscribe(
@@ -85,46 +93,55 @@ export class TestingComponent implements OnInit {
     }
 
   }
+
   Onclick(id, btnid) {
 
-    this.a = this.questions.findIndex(d => d.Id == btnid);
+    this.a = this.questions.findIndex(d => d.Id === btnid);
     this.answer = this.questions[this.a].Answers;
     let dem = 0;
-    for (var i = 0; i < this.questions[this.a].Answers.length; i++) {
+    // tslint:disable-next-line:prefer-for-of
+    for (let i = 0; i < this.questions[this.a].Answers.length; i++) {
 
-      if (document.getElementById("check" + this.questions[this.a].Answers[i].Id).checked) {
+      // if (document.getElementById('check' + this.questions[this.a].Answers[i].Id).checked) {
+      if (document.getElementById('check' + this.questions[this.a].Answers[i].Id)) {
         dem++;
-        if (this.arrayId.indexOf(this.questions[this.a].Answers[i].Id) == -1) {
+        if (this.arrayId.indexOf(this.questions[this.a].Answers[i].Id) === -1) {
           this.arrayId.push(this.questions[this.a].Answers[i].Id);
 
         }
         if (dem > 0) {
-          document.getElementById("btn" + btnid).classList.add("button-selected");
+          document.getElementById('btn' + btnid).classList.add('button-selected');
         }
       }
 
     }
 
-    if (!document.getElementById("check" + id).checked) {
+    // if (!document.getElementById('check' + id).checked) {
+    if (!document.getElementById('check' + id)) {
       dem--;
-      for (var n = 0; n < this.arrayId.length; n++) {
+      for (let n = 0; n < this.arrayId.length; n++) {
+        // tslint:disable-next-line:triple-equals
         if (this.arrayId[n] == id) {
           this.arrayId.splice(n, 1);
-          console.log(this.arrayId)
+          console.log(this.arrayId);
         }
       }
       if (dem === -1) {
-        document.getElementById("btn" + btnid).classList.remove("button-selected");
+        document.getElementById('btn' + btnid).classList.remove('button-selected');
       }
     }
   }
+
   scroll(btnid) {
-    var elmnt = document.getElementById("table" + btnid);
+    // tslint:disable-next-line:prefer-const
+    let elmnt = document.getElementById('table' + btnid);
     elmnt.scrollIntoView();
   }
+
   clearTimer() {
     clearInterval(this.intervalId);
   }
+
   start() {
     this.countDown();
     if (this.remainingTime <= 0) {
@@ -136,10 +153,34 @@ export class TestingComponent implements OnInit {
     this.clearTimer();
     this.message = `Holding at T-${this.remainingTime} seconds`;
   }
+
   reset() {
     this.clearTimer();
     this.remainingTime = this.counting;
     this.message = `Click start button to start the Countdown`;
+  }
+
+  summit() {
+    const arr = this.arrayId;
+
+    let contentsArr = [];
+    if (confirm('Bạn có muốn nộp bài')) {
+      this.http.post('http://localhost:65170/api/TestAssignment?testId=' + this.Idtest + '&userId=' + this.UserId
+        , JSON.stringify(this.questions), httpOptions).subscribe(
+        value => (console.log(value))
+      );
+      // tslint:disable-next-line:max-line-length
+      this.http.post('http://localhost:65170/SemesterExam/submid/' + this.Idtest + '?userID=' + this.UserId, JSON.stringify(arr), httpOptions).subscribe(
+        value => (console.log(value))
+      );
+      localStorage.clear();
+
+      this.router.navigate(['/thi/' + this.Idtest + '/' + this.Idtest + '/ketqua']);
+    } else {
+      contentsArr = [];
+    }
+
+
   }
 
   private countDown() {
@@ -147,14 +188,14 @@ export class TestingComponent implements OnInit {
     this.intervalId = window.setInterval(() => {
       this.remainingTime -= 1;
 
-      var session = null;
+      let session = null;
       if (localStorage.getItem('SecondTest')) {
         session = localStorage.getItem('SecondTest');
       } else {
         session = 0;
       }
 
-      var a = new Date();
+      const a = new Date();
       this.EndTest = a.getHours() * 60 + a.getMinutes();
 
       this.startTest = +session;
@@ -164,30 +205,6 @@ export class TestingComponent implements OnInit {
         this.router.navigate(['/thi/' + this.Idtest + '/' + this.Idtest + '/ketqua']);
       }
     }, 1000);
-
-  }
-
-  summit() {
-    var arr = this.arrayId;
-
-    var contentsArr = [];
-    if (confirm('Bạn có muốn nộp bài')) {
-      this.http.post('http://localhost:65170/api/TestAssignment?testId=' + this.Idtest + '&userId=' + this.UserId
-        , JSON.stringify(this.questions), httpOptions).subscribe(
-          value => (console.log(value))
-
-        )
-      this.http.post('http://localhost:65170/SemesterExam/submid/' + this.Idtest + '?userID=' + this.UserId, JSON.stringify(arr), httpOptions).subscribe(
-        value => (console.log(value))
-
-      )
-      localStorage.clear();
-
-      this.router.navigate(['/thi/' + this.Idtest + '/' + this.Idtest + '/ketqua']);
-    } else {
-      contentsArr = [];
-    }
-
 
   }
 }

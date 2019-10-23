@@ -1,17 +1,19 @@
-.header a{
-    
-    float: right;
-}
-.header {
-    text-align: center;
-   
+.header a {
+
+  float: right;
 }
 
-.clearfix:after{
-    clear: both;
-    content: "";
-    display: block;
+.header {
+  text-align: center;
+
 }
-.content{
-    text-align: center
+
+.clearfix:after {
+  clear: both;
+  content: "";
+  display: block;
+}
+
+.content {
+  text-align: center
 }

@@ -7,7 +7,7 @@
  * MIT Licensed
  */
 
-(function($) {
+(function ($) {
 
   // Cached vars
   var _iCheck = 'iCheck',
@@ -31,13 +31,13 @@
     _mobile = /ipad|iphone|ipod|android|blackberry|windows phone|opera mini|silk/i.test(navigator.userAgent);
 
   // Plugin init
-  $.fn[_iCheck] = function(options, fire) {
+  $.fn[_iCheck] = function (options, fire) {
 
     // Walker
     var handle = 'input[type="' + _checkbox + '"], input[type="' + _radio + '"]',
       stack = $(),
-      walker = function(object) {
-        object.each(function() {
+      walker = function (object) {
+        object.each(function () {
           var self = $(this);
 
           if (self.is(handle)) {
@@ -57,7 +57,7 @@
       // Find checkboxes and radio buttons
       walker(this);
 
-      return stack.each(function() {
+      return stack.each(function () {
         var self = $(this);
 
         if (options == 'destroy') {
@@ -65,13 +65,13 @@
         } else {
           operate(self, true, options);
         }
-          // Fire method's callback
+        // Fire method's callback
         if ($.isFunction(fire)) {
           fire();
         }
       });
 
-    // Customization
+      // Customization
     } else if (typeof options == 'object' || !options) {
 
       // Check if any options were passed
@@ -97,14 +97,14 @@
       if (selector == _checkbox || selector == _radio) {
         handle = 'input[type="' + selector + '"]';
       }
-        // Clickable area limit
+      // Clickable area limit
       if (area < -50) {
         area = -50;
       }
-        // Walk around the selector
+      // Walk around the selector
       walker(this);
 
-      return stack.each(function() {
+      return stack.each(function () {
         var self = $(this);
 
         // If already customized
@@ -157,7 +157,7 @@
 
         // Set ARIA "labelledby"
         if (label.length && aria) {
-          label.each(function() {
+          label.each(function () {
             parent += 'aria-labelledby="';
 
             if (this.id) {
@@ -170,7 +170,7 @@
             parent += '"';
           });
         }
-          // Wrap input
+        // Wrap input
         parent = self.wrap(parent + '/>')[_callback]('ifCreated').parent().append(settings.insert);
 
         // Layer addition
@@ -185,7 +185,7 @@
 
         // Label events
         if (label.length) {
-          label.on(_click + '.i mouseover.i mouseout.i ' + _touch, function(event) {
+          label.on(_click + '.i mouseover.i mouseout.i ' + _touch, function (event) {
             var type = event[_type],
               item = $(this);
 
@@ -199,7 +199,7 @@
                 }
                 operate(self, false, true);
 
-              // Hover state
+                // Hover state
               } else if (labelHover) {
 
                 // mouseout|touchend
@@ -211,7 +211,7 @@
                   item[_add](labelHoverClass);
                 }
               }
-                if (_mobile) {
+              if (_mobile) {
                 event.stopPropagation();
               } else {
                 return false;
@@ -219,8 +219,8 @@
             }
           });
         }
-          // Input events
-        self.on(_click + '.i focus.i blur.i keyup.i keydown.i keypress.i', function(event) {
+        // Input events
+        self.on(_click + '.i focus.i blur.i keyup.i keydown.i keypress.i', function (event) {
           var type = event[_type],
             key = event.keyCode;
 
@@ -228,7 +228,7 @@
           if (type == _click) {
             return false;
 
-          // Keydown
+            // Keydown
           } else if (type == 'keydown' && key == 32) {
             if (!(node[_type] == _radio && node[_checked])) {
               if (node[_checked]) {
@@ -237,20 +237,20 @@
                 on(self, _checked);
               }
             }
-              return false;
+            return false;
 
-          // Keyup
+            // Keyup
           } else if (type == 'keyup' && node[_type] == _radio) {
             !node[_checked] && on(self, _checked);
 
-          // Focus/blur
+            // Focus/blur
           } else if (/us|ur/.test(type)) {
             parent[type == 'blur' ? _remove : _add](focusClass);
           }
         });
 
         // Helper events
-        helper.on(_click + ' mousedown mouseup mouseover mouseout ' + _touch, function(event) {
+        helper.on(_click + ' mousedown mouseup mouseover mouseout ' + _touch, function (event) {
           var type = event[_type],
 
             // mousedown|mouseup
@@ -263,7 +263,7 @@
             if (type == _click) {
               operate(self, false, true);
 
-            // Active and hover states
+              // Active and hover states
             } else {
 
               // State is on
@@ -272,18 +272,18 @@
                 // mousedown|mouseover|touchbegin
                 parent[_add](toggle);
 
-              // State is off
+                // State is off
               } else {
                 parent[_remove](toggle + ' ' + activeClass);
               }
-                // Label hover
+              // Label hover
               if (label.length && labelHover && toggle == hoverClass) {
 
                 // mouseout|touchend
                 label[/ut|nd/.test(type) ? _remove : _add](labelHoverClass);
               }
             }
-              if (_mobile) {
+            if (_mobile) {
               event.stopPropagation();
             } else {
               return false;
@@ -310,11 +310,11 @@
     if (/^(ch|di|in)/.test(method) && !active) {
       on(input, state);
 
-    // Uncheck, enable or determinate
+      // Uncheck, enable or determinate
     } else if (/^(un|en|de)/.test(method) && active) {
       off(input, state);
 
-    // Update
+      // Update
     } else if (method == _update) {
 
       // Handle states
@@ -331,7 +331,7 @@
       if (!direct) {
         input[_callback]('ifClicked');
       }
-        // Toggle checked state
+      // Toggle checked state
       if (active) {
         if (node[_type] !== _radio) {
           off(input, state);
@@ -341,7 +341,8 @@
       }
     }
   }
-    // Add checked, disabled or indeterminate state
+
+  // Add checked, disabled or indeterminate state
   function on(input, state, keep) {
     var node = input[0],
       parent = input.parent(),
@@ -362,13 +363,13 @@
 
         inputs = form.length ? form.find(inputs) : $(inputs);
 
-        inputs.each(function() {
+        inputs.each(function () {
           if (this !== node && $(this).data(_iCheck)) {
             off($(this), state);
           }
         });
       }
-        // Indeterminate state
+      // Indeterminate state
       if (indeterminate) {
 
         // Add indeterminate state
@@ -378,26 +379,26 @@
         if (node[_checked]) {
           off(input, _checked, 'force');
         }
-          // Checked or disabled state
+        // Checked or disabled state
       } else {
 
         // Add checked or disabled state
         if (!keep) {
           node[state] = true;
         }
-          // Remove indeterminate state
+        // Remove indeterminate state
         if (checked && node[_indeterminate]) {
           off(input, _indeterminate, false);
         }
       }
-        // Trigger callbacks
+      // Trigger callbacks
       callbacks(input, checked, state, keep);
     }
-      // Add proper cursor
+    // Add proper cursor
     if (node[_disabled] && !!option(input, _cursor, true)) {
       parent.find('.' + _iCheckHelper).css(_cursor, 'default');
     }
-      // Add state class
+    // Add state class
     parent[_add](specific || option(input, state) || '');
 
     // Set ARIA attribute
@@ -406,7 +407,8 @@
     // Remove regular state class
     parent[_remove](regular || option(input, callback) || '');
   }
-    // Remove checked, disabled or indeterminate state
+
+  // Remove checked, disabled or indeterminate state
   function off(input, state, keep) {
     var node = input[0],
       parent = input.parent(),
@@ -424,14 +426,14 @@
       if (indeterminate || !keep || keep == 'force') {
         node[state] = false;
       }
-        // Trigger callbacks
+      // Trigger callbacks
       callbacks(input, checked, callback, keep);
     }
-      // Add proper cursor
+    // Add proper cursor
     if (!node[_disabled] && !!option(input, _cursor, true)) {
       parent.find('.' + _iCheckHelper).css(_cursor, 'pointer');
     }
-      // Remove state class
+    // Remove state class
     parent[_remove](specific || option(input, state) || '');
 
     // Set ARIA attribute
@@ -440,7 +442,8 @@
     // Add regular state class
     parent[_add](regular || option(input, callback) || '');
   }
-    // Remove all traces
+
+  // Remove all traces
   function tidy(input, callback) {
     if (input.data(_iCheck)) {
 
@@ -451,28 +454,31 @@
       if (callback) {
         input[_callback](callback);
       }
-        // Unbind events
+      // Unbind events
       input.off('.i').unwrap();
       $(_label + '[for="' + input[0].id + '"]').add(input.closest(_label)).off('.i');
     }
   }
-    // Get some option
+
+  // Get some option
   function option(input, state, regular) {
     if (input.data(_iCheck)) {
       return input.data(_iCheck).o[state + (regular ? '' : 'Class')];
     }
   }
-    // Capitalize some string
+
+  // Capitalize some string
   function capitalize(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
-    // Executable handlers
+
+  // Executable handlers
   function callbacks(input, checked, callback, keep) {
     if (!keep) {
       if (checked) {
         input[_callback]('ifToggled');
       }
-        input[_callback]('ifChanged')[_callback]('if' + capitalize(callback));
+      input[_callback]('ifChanged')[_callback]('if' + capitalize(callback));
     }
   }
 })(window.jQuery || window.Zepto);
