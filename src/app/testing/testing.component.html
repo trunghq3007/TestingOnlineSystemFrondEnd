@@ -4,7 +4,7 @@
       <a class="navbar-brand"><img src="../../assets/image/logo.png"/></a>
     </div>
     <ul class="nav navbar-nav" style="width: 70%;font-size: 16px">
-      <li class="active" style="font-size: 25px;margin-left: 255px;"><a>{{NameExam}}</a></li>
+      <li class="active" style="font-size: 25px;margin-left: 32%;"><a>Exam:{{NameExam}}</a></li>
 
 
     </ul>
@@ -12,8 +12,8 @@
 </nav>
 
 
-<div class="content-wrapper" style="width: 100%;margin-left: 0px;background-color: white">
-  <div *ngIf="testProcessings" style="width: 25%;float: left;margin-top: 5%">
+<div class="content-wrapper" style="width: 100%;margin-left: 0px;background-color: white ">
+  <div *ngIf="testProcessings" style="width: 25%;float: left;margin-top: 5%; position: fixed">
 
     <button (click)="summit()" class="btn btn-primary" style="margin-left: 23px;margin-right: 5px;width: 100px"
             type="button">Submit
@@ -44,7 +44,7 @@
 
     </div>
   </div>
-  <div style="width: 70%;height: 500px;float:left;overflow-y: scroll;margin-top: 3%">
+  <div class="content" >
 
     <div *ngFor="let item of questions;let i=index" style="margin-left: 5%">
 
@@ -79,4 +79,11 @@
       </ng-template>
     </div>
   </div>
+
+
 </div>
+<footer class="justify-content-c">
+  <br>
+  <hr>
+  <div class="text-center text-muted">Copyright &copy; {{date}} by C1709L</div>
+</footer>

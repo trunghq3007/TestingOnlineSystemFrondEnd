@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Exam } from '../exam';
 import { http } from '../http-header';
 import { MyserviceService } from '../myservice.service';
+import * as moment from 'moment';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -21,6 +22,7 @@ export class ListExamUserComponent implements OnInit {
   LisUser;
   UserId: string;
   UserName: string;
+  date: string;
 
   constructor(private http: HttpClient,
               private router: Router,
@@ -33,6 +35,7 @@ export class ListExamUserComponent implements OnInit {
 
   ngOnInit() {
     const IdQuestion = this.activedRoute.snapshot.paramMap.get('id');
+    this.date = moment(new Date()).format('YYYY');
     this.http.get<string>('http://localhost:65170/api/SemesterCustomer/' + IdQuestion, {headers: http()}).subscribe(
       value => {
 

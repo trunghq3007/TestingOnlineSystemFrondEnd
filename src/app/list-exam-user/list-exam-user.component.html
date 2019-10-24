@@ -66,7 +66,8 @@ flex-wrap: wrap;
     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 box-info-home"
          style="margin-top:  10px;margin-right: 15px; background: rgb(240,240,240);">
 
-      <div class="list-exam" data-original-title="Exam_Technical_BTNB_Final_18_01" data-placement="top" data-toggle="tooltip"
+      <div class="list-exam" data-original-title="Exam_Technical_BTNB_Final_18_01" data-placement="top"
+           data-toggle="tooltip"
            title="">
         <div class="col-md-3 no-padding " style="margin-top: 0">
           <div class="event-icon">
@@ -87,12 +88,8 @@ flex-wrap: wrap;
           <a routerLink="/DetailExamCustomer/{{st.Id}}">
             <span class="exam-title" style="text-transform: uppercase">
               {{st.TestName}}
-              <br>
-              <h6>{{st.SemesterExam.SemesterName}}</h6>
-
             </span>
-
-
+            <h6>{{st.SemesterExam.SemesterName}}</h6>
           </a>
 
           <div class="box-label-exam">
@@ -116,18 +113,26 @@ flex-wrap: wrap;
     </div>
 
   </div>
+
+
 </ng-template>
 
-<h1>
-  <span>Hướng</span>
+<!--<h1>-->
+<!--  <span>Hướng</span>-->
 
-  <span>tới </span>
+<!--  <span>tới </span>-->
 
-  <span>tương </span>
+<!--  <span>tương </span>-->
 
-  <span>lai </span>
+<!--  <span>lai </span>-->
 
-  <span>số </span>
+<!--  <span>số </span>-->
 
-  <span>! </span>
-</h1>
+<!--  <span>! </span>-->
+<!--</h1>-->
+<footer class="justify-content-c">
+  <br>
+  <hr>
+  <div class="text-center text-muted">Copyright &copy; {{date}} by C1709L</div>
+</footer>
+

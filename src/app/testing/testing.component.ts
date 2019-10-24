@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material';
 import { TestProcessing } from '../test-processing';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { MyserviceService } from '../myservice.service';
+import * as moment from 'moment';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -48,6 +49,7 @@ export class TestingComponent implements OnInit {
   testCount: number;
   Idtest = this.activateRoute.snapshot.paramMap.get('TestId');
   private intervalId = 0;
+  date: string;
 
   // tslint:disable-next-line:no-shadowed-variable
   constructor(private myservice: MyserviceService,
@@ -64,7 +66,7 @@ export class TestingComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    const date = this.date = moment(new Date()).format('YYYY');
     this.http.get<string>('http://localhost:65170/api/SemesterExam/' + this.Idtest + '?IsgetTestProcessing', httpOptions).subscribe(
       value => {
         this.testProcessings = JSON.parse(value);

@@ -102,4 +102,7 @@ export class ThiKetquathiComponent implements OnInit {
 
     sessionStorage.removeItem('user');
   }
+  back() {
+    this.router.navigateByUrl('');
+  }
 }

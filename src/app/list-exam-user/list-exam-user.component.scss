@@ -25,7 +25,6 @@
   width: 100%;
   font-weight: 500;
   font-size: 14px;
-  min-height: 43px;
   height: auto;
   overflow: hidden;
   display: flex;
@@ -191,5 +190,9 @@ h1 span:nth-child(6):before {
     height: 4px;
     bottom: 0;
   }
+}
+
+.justify-content-c {
+  margin-top: 79vh;
 }
 

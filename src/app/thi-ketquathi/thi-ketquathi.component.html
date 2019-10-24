@@ -106,8 +106,10 @@
   <table class="tb4">
     <tr>
       <!-- <td><button type="submit" class="apply"> Thi lại</button></td> -->
-      <td class="quaylai">
-        <button [routerLink]="['/']" class="apply" type="submit"> Quay lại</button>
+      <td class="back">
+       <button (click)= "back()" class="apply" type="submit">Back</button>
+
+        <!--        <button [routerLink]="['']" class="apply" type="submit"> Quay lại</button>-->
       </td>
     </tr>
   </table>

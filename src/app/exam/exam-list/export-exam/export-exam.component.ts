@@ -50,7 +50,7 @@ export class ExportExamComponent implements OnInit {
     });
     setTimeout(() => {
       window.print();
-    }, 3000);
+    }, 1000);
   }
 
 }

@@ -16,3 +16,26 @@ img {
   margin-top: -15px;
 
 }
+
+/deep/  .image {
+  width: 100vw;
+  //text-align: center;
+  img {
+    width: 30vw;
+    height: 30vh;
+  }
+}
+.content {
+  width: 70%;
+  height:auto;
+  float:left;
+  margin-top: 3%;
+  position: absolute;
+  left: 25%;
+  margin-bottom: 5%;
+}
+.justify-content-c {
+margin-top:100%;
+}
+
+
