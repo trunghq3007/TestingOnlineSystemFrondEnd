@@ -84,16 +84,11 @@ export class ThiKetquathiComponent implements OnInit {
       .subscribe(
         value => {
           this.list = JSON.parse(value);
-
           console.log(this.list);
-
-
           this.formApply.patchValue(this.list); // a tiep
         }
       );
-
   }
-
 
   Logout() {
     sessionStorage.removeItem('currentPermission');

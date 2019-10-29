@@ -6,13 +6,11 @@ import { MatDialog } from '@angular/material';
 import { TestProcessing } from '../test-processing';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { MyserviceService } from '../myservice.service';
-import * as moment from 'moment';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
 };
 
-// tslint:disable-next-line: use-pipe-transform-interface
 @Component({
   selector: 'app-testing',
   templateUrl: './testing.component.html',
@@ -26,6 +24,20 @@ export class TestingComponent implements OnInit {
   LisUser;
   UserId: string;
   UserName: string;
+  private contentsArr: any[];
+
+  constructor(private myservice: MyserviceService,
+              private semaster: FormBuilder,
+              private fb: FormBuilder,
+              private http: HttpClient,
+              private router: Router,
+              public dialog: MatDialog,
+              public activateRoute: ActivatedRoute) {
+    this.router.events.subscribe((event) => {
+      this.myservice.changeMessage('2');
+    });
+  }
+
   testProcessings: TestProcessing;
   questions: Question[];
   i: number;
@@ -36,10 +48,11 @@ export class TestingComponent implements OnInit {
   answer = [];
   counting: number;
   remainingTime: number;
+  private intervalId = 0;
   message = '';
   arrayId = [];
   mang = [];
-  checked = true;
+  checked: boolean;
   EndTest;
   startTest;
   time;
@@ -48,25 +61,9 @@ export class TestingComponent implements OnInit {
   NameExam: string;
   testCount: number;
   Idtest = this.activateRoute.snapshot.paramMap.get('TestId');
-  private intervalId = 0;
-  date: string;
-
-  // tslint:disable-next-line:no-shadowed-variable
-  constructor(private myservice: MyserviceService,
-              private semaster: FormBuilder,
-              private fb: FormBuilder,
-              // tslint:disable-next-line:no-shadowed-variable
-              private http: HttpClient,
-              private router: Router,
-              public dialog: MatDialog,
-              public activateRoute: ActivatedRoute) {
-    this.router.events.subscribe((event) => {
-      this.myservice.changeMessage('2');
-    });
-  }
 
   ngOnInit() {
-    const date = this.date = moment(new Date()).format('YYYY');
+
     this.http.get<string>('http://localhost:65170/api/SemesterExam/' + this.Idtest + '?IsgetTestProcessing', httpOptions).subscribe(
       value => {
         this.testProcessings = JSON.parse(value);
@@ -98,16 +95,17 @@ export class TestingComponent implements OnInit {
 
   Onclick(id, btnid) {
 
-    this.a = this.questions.findIndex(d => d.Id === btnid);
+    // tslint:disable-next-line:triple-equals
+    this.a = this.questions.findIndex(d => d.Id == btnid);
     this.answer = this.questions[this.a].Answers;
     let dem = 0;
     // tslint:disable-next-line:prefer-for-of
     for (let i = 0; i < this.questions[this.a].Answers.length; i++) {
 
-      // if (document.getElementById('check' + this.questions[this.a].Answers[i].Id).checked) {
-      if (document.getElementById('check' + this.questions[this.a].Answers[i].Id)) {
+      if (document.getElementById('check' + this.questions[this.a].Answers[i].Id).checked) {
         dem++;
-        if (this.arrayId.indexOf(this.questions[this.a].Answers[i].Id) === -1) {
+        // tslint:disable-next-line:triple-equals
+        if (this.arrayId.indexOf(this.questions[this.a].Answers[i].Id) == -1) {
           this.arrayId.push(this.questions[this.a].Answers[i].Id);
 
         }
@@ -118,8 +116,7 @@ export class TestingComponent implements OnInit {
 
     }
 
-    // if (!document.getElementById('check' + id).checked) {
-    if (!document.getElementById('check' + id)) {
+    if (!document.getElementById('check' + id).checked) {
       dem--;
       for (let n = 0; n < this.arrayId.length; n++) {
         // tslint:disable-next-line:triple-equals
@@ -135,8 +132,7 @@ export class TestingComponent implements OnInit {
   }
 
   scroll(btnid) {
-    // tslint:disable-next-line:prefer-const
-    let elmnt = document.getElementById('table' + btnid);
+    const elmnt = document.getElementById('table' + btnid);
     elmnt.scrollIntoView();
   }
 
@@ -162,29 +158,6 @@ export class TestingComponent implements OnInit {
     this.message = `Click start button to start the Countdown`;
   }
 
-  summit() {
-    const arr = this.arrayId;
-
-    let contentsArr = [];
-    if (confirm('Bạn có muốn nộp bài')) {
-      this.http.post('http://localhost:65170/api/TestAssignment?testId=' + this.Idtest + '&userId=' + this.UserId
-        , JSON.stringify(this.questions), httpOptions).subscribe(
-        value => (console.log(value))
-      );
-      // tslint:disable-next-line:max-line-length
-      this.http.post('http://localhost:65170/SemesterExam/submid/' + this.Idtest + '?userID=' + this.UserId, JSON.stringify(arr), httpOptions).subscribe(
-        value => (console.log(value))
-      );
-      localStorage.clear();
-
-      this.router.navigate(['/thi/' + this.Idtest + '/' + this.Idtest + '/ketqua']);
-    } else {
-      contentsArr = [];
-    }
-
-
-  }
-
   private countDown() {
     this.clearTimer();
     this.intervalId = window.setInterval(() => {
@@ -207,6 +180,29 @@ export class TestingComponent implements OnInit {
         this.router.navigate(['/thi/' + this.Idtest + '/' + this.Idtest + '/ketqua']);
       }
     }, 1000);
+
+  }
+
+  summit() {
+    const arr = this.arrayId;
+
+    const contentsArr = [];
+    if (confirm('Bạn có muốn nộp bài')) {
+      this.http.post('http://localhost:65170/api/TestAssignment?testId=' + this.Idtest + '&userId=' + this.UserId
+        , JSON.stringify(this.questions), httpOptions).subscribe(
+        value => (console.log(value))
+      )
+      // tslint:disable-next-line:max-line-length
+      this.http.post('http://localhost:65170/SemesterExam/submid/' + this.Idtest + '?userID=' + this.UserId, JSON.stringify(arr), httpOptions).subscribe(
+        value => (console.log(value))
+      )
+      localStorage.clear();
+
+      this.router.navigate(['/thi/' + this.Idtest + '/' + this.Idtest + '/ketqua']);
+    } else {
+      this.contentsArr = [];
+    }
+
 
   }
 }
