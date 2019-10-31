@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Exam } from 'src/app/exam';
@@ -8,7 +8,6 @@ import { ToastrService } from 'ngx-toastr';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { http } from 'src/app/http-header';
 import { MyserviceService } from 'src/app/myservice.service';
-
 @Component({
   selector: 'app-exam-list',
   templateUrl: './exam-list.component.html',
@@ -22,21 +21,12 @@ export class ExamListComponent implements OnInit {
   searchString: string;
   filter: [];
   examInfo: Exam[] = [];
-  displayedColumn: string[] = ['select', 'NameExam', 'CreateBy',
-    'QuestionNumber', 'SpaceQuestionNumber',
-    'NameCategory', 'Status', 'CreateAt',
-    'Note', 'Action'];
+  displayedColumn: string[] = ['select', 'NameExam', 'CreateBy', 'QuestionNumber', 'SpaceQuestionNumber', 'NameCategory', 'Status', 'CreateAt', 'Note', 'Action'];
   dataSource = new MatTableDataSource<Exam>(this.exams);
   selection = new SelectionModel<Exam>(true, []);
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-
-  constructor(private myservice: MyserviceService,
-              // tslint:disable-next-line:no-shadowed-variable
-              private http: HttpClient,
-              private router: Router,
-              private toasr: ToastrService,
-              private fb: FormBuilder) {
+  constructor(private myservice: MyserviceService, private http: HttpClient, private router: Router, private toasr: ToastrService, private fb: FormBuilder) {
 
     this.router.events.subscribe((event) => {
       this.myservice.changeMessage('1');
@@ -44,14 +34,18 @@ export class ExamListComponent implements OnInit {
   }
 
 
+
+
+
+
   onSubmit() {
     {
       const httpOptions = {
-        headers: new HttpHeaders({'Content-Type': 'application/json'})
+        headers: new HttpHeaders({ 'Content-Type': 'application/json' })
       };
       if (this.filterExam.valid) {
         const value = this.filterExam.value;
-        this.http.post<string>('http://localhost:65170/api/Exam?action=filter', JSON.stringify(value), {headers: http()}).subscribe({
+        this.http.post<string>('http://localhost:65170/api/Exam?action=filter', JSON.stringify(value), { headers: http() }).subscribe({
           next: (res) => {
 
 
@@ -60,7 +54,7 @@ export class ExamListComponent implements OnInit {
           error: (err) => {
 
             console.log('false');
-            const errors = err.status + ',' + err.message;
+            var errors = err.status + ',' + err.message;
             this.myservice.changeError(errors);
           }
 
@@ -71,10 +65,9 @@ export class ExamListComponent implements OnInit {
 
 
   listexams() {
-    this.http.get<string>('http://localhost:65170/api/Exam', {headers: http()}).subscribe(
+    this.http.get<string>('http://localhost:65170/api/Exam', { headers: http() }).subscribe(
       value => {
         this.exams = JSON.parse(value);
-        // tslint:disable-next-line:prefer-for-of
         for (let i = 0; i < this.exams.length; i++) {
           if (this.exams[i].Category != null) {
             // console.log(this.exams[i].Category);
@@ -87,31 +80,32 @@ export class ExamListComponent implements OnInit {
       },
       err => {
 
-        const errors = err.status + ',' + err.message;
+        var errors = err.status + ',' + err.message;
         this.myservice.changeError(errors);
       }
     );
   }
-
   updateQuestion(id) {
-    this.router.navigate(['/exam/examquestion', id]);
+    this.router.navigate(['/exam/examquestion', id])
     setInterval(() => {
-      location.reload();
+      location.reload()
     }, 10);
 
   }
 
 
+
   ngOnInit() {
-    this.http.post<string>('http://localhost:65170/api/Exam?action=getfilter', {}, {headers: http()}).subscribe(
+    this.http.post<string>('http://localhost:65170/api/Exam?action=getfilter', {}, { headers: http() }).subscribe(
       value => {
         this.listExam = JSON.parse(value);
       },
       err => {
 
 
-        const errors = err.status + ',' + err.message;
+        var errors = err.status + ',' + err.message;
         this.myservice.changeError(errors);
+
 
 
       });
@@ -130,7 +124,7 @@ export class ExamListComponent implements OnInit {
   }
 
   detail(examID) {
-    this.http.get<string>('http://localhost:65170/api/Exam/' + examID, {headers: http()}).subscribe
+    this.http.get<string>('http://localhost:65170/api/Exam/' + examID, { headers: http() }).subscribe
     (
       value => {
         this.examInfo = JSON.parse(value).Data;
@@ -138,17 +132,17 @@ export class ExamListComponent implements OnInit {
       },
       err => {
 
-        const errors = err.status + ',' + err.message;
+        var errors = err.status + ',' + err.message;
         this.myservice.changeError(errors);
+
 
 
       }
     );
   }
-
   detailQuestion(examID) {
 
-    this.http.get<string>('http://localhost:65170/api/ExamQuestions/' + examID, {headers: http()}).subscribe
+    this.http.get<string>('http://localhost:65170/api/ExamQuestions/' + examID, { headers: http() }).subscribe
     (
       value => {
         this.examInfo = JSON.parse(value);
@@ -157,25 +151,26 @@ export class ExamListComponent implements OnInit {
       err => {
 
 
-        const errors = err.status + ',' + err.message;
+        var errors = err.status + ',' + err.message;
         this.myservice.changeError(errors);
+
 
 
       }
     );
   }
-
   onFilter() {
     const value = this.filterExam.value;
-    this.http.post<string>('http://localhost:65170/api/Exam/?action=filter', JSON.stringify(value), {headers: http()}).subscribe(value => {
+    this.http.post<string>('http://localhost:65170/api/Exam/?action=filter', JSON.stringify(value), { headers: http() }).subscribe(value => {
         this.dataSource.data = JSON.parse(value);
         console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
       },
       err => {
 
 
-        const errors = err.status + ',' + err.message;
+        var errors = err.status + ',' + err.message;
         this.myservice.changeError(errors);
+
 
 
       });
@@ -185,17 +180,17 @@ export class ExamListComponent implements OnInit {
     //   this.dataSource.data = JSON.parse(value);
     // });
   }
-
   onSearch() {
-    this.http.get<string>('http://localhost:65170/api/Exam?searchString=' + this.searchString, {headers: http()}).subscribe(value => {
+    this.http.get<string>('http://localhost:65170/api/Exam?searchString=' + this.searchString, { headers: http() }).subscribe(value => {
         this.dataSource.data = JSON.parse(value);
         console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
       },
       err => {
 
 
-        const errors = err.status + ',' + err.message;
+        var errors = err.status + ',' + err.message;
         this.myservice.changeError(errors);
+
 
 
       });
@@ -214,7 +209,6 @@ export class ExamListComponent implements OnInit {
       this.selection.clear() :
       this.dataSource.data.forEach(row => this.selection.select(row));
   }
-
   navigateToEdit(examID: string) {
     this.router.navigate(['/exam', 'update', examID,]);
   }
@@ -222,7 +216,7 @@ export class ExamListComponent implements OnInit {
 
   exportExam(examID: number) {
     if (confirm('you want to export record')) {
-      this.http.get<string>('http://localhost:65170/api/Exam/' + examID + '?action=export', {headers: http()}).subscribe
+      this.http.get<string>('http://localhost:65170/api/Exam/' + examID + '?action=export', { headers: http() }).subscribe
       (
         res => {
           this.listexams();
@@ -232,8 +226,9 @@ export class ExamListComponent implements OnInit {
         err => {
 
 
-          const errors = err.status + ',' + err.message;
+          var errors = err.status + ',' + err.message;
           this.myservice.changeError(errors);
+
 
 
         });
@@ -242,13 +237,14 @@ export class ExamListComponent implements OnInit {
 
   deleteExam(examID: number) {
     if (confirm('you want to delete record')) {
-      this.http.delete('http://localhost:65170/api/Exam/' + examID, {headers: http()}).subscribe
+      this.http.delete('http://localhost:65170/api/Exam/' + examID, { headers: http() }).subscribe
       (
         res => {
-          if (res === 1) {
+          if (res == 1) {
             this.exams = this.exams.filter(ex => ex.Id !== examID);
             this.toasr.success('Delete Successfully', 'Exam Delete');
-          } else if (res === false) {
+          }
+          else if (res == false) {
             this.toasr.error('Delete Fail because exam has been public', 'Exam Delete');
           }
           this.listexams();
@@ -258,8 +254,9 @@ export class ExamListComponent implements OnInit {
         err => {
 
 
-          const errors = err.status + ',' + err.message;
+          var errors = err.status + ',' + err.message;
           this.myservice.changeError(errors);
+
 
 
         });

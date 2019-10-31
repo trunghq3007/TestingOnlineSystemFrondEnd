@@ -25,18 +25,13 @@ export class ExamUpdateComponent implements OnInit {
   exam: Exam[] = [];
 
   editForm: FormGroup;
-  number = '^([1-9][0-9]{0,3}|^2000)$';
-  // regex = "^[A-Za-z0-9\s _]+$";
+  number = "^([1-9][0-9]{0,3}|^2000)$";
+  //regex = "^[A-Za-z0-9\s _]+$";
   CategoryFormApi = [];
   categoryname: {};
 
 
-  constructor(private myservice: MyserviceService,
-              private fb: FormBuilder,
-              private toar: ToastrService,
-              // tslint:disable-next-line:no-shadowed-variable
-              private http: HttpClient,
-              private ac: ActivatedRoute,
+  constructor(private myservice: MyserviceService, private fb: FormBuilder, private toar: ToastrService, private http: HttpClient, private ac: ActivatedRoute,
               private router: Router) {
     this.router.events.subscribe((event) => {
       this.myservice.changeMessage('1');
@@ -87,7 +82,7 @@ export class ExamUpdateComponent implements OnInit {
       err => {
 
         // this.router.navigate(['group']);
-        const errors = err.status + ',' + err.message;
+        var errors = err.status + ',' + err.message;
         this.myservice.changeError(errors);
 
 
@@ -146,8 +141,7 @@ export class ExamUpdateComponent implements OnInit {
       this.editForm.get('NameExam').markAsTouched();
       this.editForm.get('CreateBy').markAsTouched();
       this.editForm.get('QuestionNumber').markAsTouched();
-      this.editForm.get('SpaceQuestionNumber').markAsTouched();
-      // this.editForm.get('CategoryId').markAsTouched();
+      this.editForm.get('SpaceQuestionNumber').markAsTouched()
       return;
 
     }
@@ -159,7 +153,7 @@ export class ExamUpdateComponent implements OnInit {
 
 
     // let temp=this.CategoryFormApi.filter(s => s.CategoryId == value.CategoryId);
-    const temp = this.CategoryFormApi.filter(s => s.Id === value.CategoryId);
+    const temp = this.CategoryFormApi.filter(s => s.Id == value.CategoryId);
 
     // value.Category = this.CategoryFormApi.filter(s => s.Id == value.CategoryId);
     value.Category = temp.length > 0 ? temp[0] : null;
@@ -172,11 +166,13 @@ export class ExamUpdateComponent implements OnInit {
       this.http.put('http://localhost:65170/api/Exam/' + formData.Id, formData, {headers: http()}).subscribe({
         next: (res) => {
 
-          if (res === 1) {
+          // tslint:disable-next-line:triple-equals
+          if (res == 1) {
             this.toar.success('Update Success', 'Update Exam');
             console.log(res);
-          } else if (res === 0) {
-            this.toar.warning('exam is public', 'Update Exam');
+            // tslint:disable-next-line:triple-equals
+          } else if (res == 0) {
+            this.toar.warning('exam is public', 'Update Exam')
           } else {
             const errors = 201 + ',' + JSON.parse(res.toString()).Message;
             this.myservice.changeError(errors);

@@ -9,11 +9,10 @@
     <div *ngIf="UserName; then thenBlock else elseBlock"></div>
     <ng-template #thenBlock>
       <ul class="nav navbar-nav pull-right" style="margin-right: 5%">
-        <li><a routerLink="/group"><i class="fa fa-lock"></i>Admin Manager</a></li>
+        <li><a routerLink="/group"><i class="fa fa-lock" style="margin-right: 5px"></i>Admin Manager</a></li>
 
         <li class="pointer"><a (click)="home()">
-          <i
-            class="fa fa-home"></i>
+          <i class="fa fa-home"></i>
           Home</a></li>
 
         <li class="pointer"><a (click)="Logout()">
@@ -66,7 +65,8 @@
   <div class="row">
     <div class="col-md-2"></div>
     <div class="input-group col-md-8">
-      <input (change)="change($event.target)" [value]="semesterExamCode" class="form-control" placeholder="Semester code"
+      <input (change)="change($event.target)" [value]="semesterExamCode" class="form-control"
+             placeholder="Semester code"
              type="text"/>
       <div class="input-group-btn">
         <button (click)="showSemesterTest()" class="btn btn-info" type="button">
@@ -74,7 +74,6 @@
         </button>
       </div>
     </div>
-
 
 
     <ng-container *ngIf="tests?.data.length > 0">
@@ -149,4 +148,4 @@
 </div>
 
 <!-- Footer -->
-<app-appfooter> </app-appfooter>
+<app-appfooter></app-appfooter>

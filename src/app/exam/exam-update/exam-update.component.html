@@ -2,10 +2,10 @@
   <a class="btn btn-danger" href="" routerLink="/exam" style="float: right;">Go Back</a>
   <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span
           class="glyphicon glyphicon-remove" aria-hidden="true"></span></button> -->
-  <h2 class="modal-title custom_align" id="Heading" style="margin-left: 40%">Update Exam</h2>
+  <h2 class="modal-title custom_align" id="Heading" style="margin-left: 47%">Update Exam</h2>
 </div>
 
-<div class="container" style="width: 70%;">
+<div class="container" style="width: 70%;margin-left: 47vh">
   <form (ngSubmit)="onSubmit()" [formGroup]="editForm" class="row justify-content-md-center" novalidate>
     <div class="col-md-8" style="margin-left: 10%;">
       <div *ngIf="categoryname" class="form-group row">
@@ -35,7 +35,7 @@
             <input class="form-control" type="" formControlName="createBy" id="example-email-input">
           </div> -->
         <div class="col-10">
-          <input [readonly]=true class="form-control" formControlName="CreateBy" id="example-text-input" type="text"
+          <input [readonly]=true class="form-control" formControlName="CreateBy" id="example-text-input-by" type="text"
                  value="{{CreateBy}}">
           <!-- <select class="bootstrap-select" style="width: 100%; height: 35px;" >
               <option value="admin" selected="selected">admin</option>
@@ -56,7 +56,7 @@
           Question number:
         </label>
         <div class="col-10">
-          <input [pattern]="number" class="form-control" formControlName="QuestionNumber" id="example-url-fb"
+          <input [pattern]="number" class="form-control" formControlName="QuestionNumber" id="example-fb"
                  type="text"
                  value="{{QuestionNumber}}">
         </div>
@@ -69,22 +69,12 @@
           Question number is not format!
         </div>
       </div>
-      <!-- <div class="form-group row">
-          <label >Status</label>
-          <select  [value]='false'  disabled="disabled"   class="form-control"  formControlName="status">
-            <option  value="false" selected>Dark</option>
 
-
-          </select>
-        </div> -->
       <div class="form-group row">
         <label class="col-2 col-form-label" for="example-email-input">
           Status:
         </label><br/>
-        <!-- <div class="col-10">
-            <input class="form-control" type="" formControlName="createBy" id="example-email-input">
-          </div> -->
-        <!-- value="{{categoryname.Status}}" -->
+
         <div class="col-10">
           <select class="bootstrap-select" formControlName="Status" style="width: 100%; height: 35px;">
             <option selected="selected" value="false">draft</option>
@@ -116,35 +106,15 @@
         <label class="col-2 col-form-label" for="example-email-input">
           Create At:
         </label><br/>
-        <!-- <div class="col-10">
-            <input class="form-control" type="" formControlName="createBy" id="example-email-input">
-          </div> -->
+
         <div class="col-10">
-          <input class="form-control" formControlName="CreateAt" id="example-text-input" readonly="true" type="text"
+          <input class="form-control" formControlName="CreateAt" id="example-text-input-date" readonly="true" type="text"
                  value="{{CreateAt }}">
-          <!-- <select class="bootstrap-select" style="width: 100%; height: 35px;" >
-              <option value="admin" selected="selected">admin</option>
-              <option value="manager">manager</option>
 
-            </select> -->
         </div>
 
       </div>
-      <!-- <div class="form-group row">
-        <label for="example-email-input" class="col-2 col-form-label">
-          Category:
-        </label>
 
-        <div class="col-10">
-          <fieldset formGroupName="Categorys">
-          <select class="bootstrap-select" style="width: 100%; height: 35px;" formControlName="CategoryId">
-            <option *ngFor="let item of CategoryFormApi" value="{{item.Id}}">{{item.Name}}</option>
-          </select>
-        </fieldset>
-        </div>
-
-      </div>
-      -->
       <div class="form-group row">
         <label class="col-2 col-form-label" for="example-email-input">
           Category:
@@ -170,16 +140,11 @@
         </div>
       </div>
 
-      <!-- <label for="example-tel-input" class="col-2 col-form-label">
-              Note:
-            </label>
-          <ckeditor [editor]="Editor" id="classic-editor" name="classic-editor">
-            </ckeditor> -->
+
       <div class="form-group row">
         <div class="col-10 offset-2">
-          <!-- <button class="btn btn-primary"
-              type="submit" (click)="onSubmit()">Create</button> -->
-          <button (click)="validateForm()" class="btn btn-primary" style="margin-left: 35%;" type="submit">Save</button>
+          <button (click)="validateForm()" class="btn btn-primary" style="margin-left: 45vh" type="submit">Save
+          </button>
         </div>
       </div>
     </div>
