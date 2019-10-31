@@ -3,7 +3,7 @@
   display: flex;
   flex-wrap: wrap;
   position: relative;
-  justify-content: center;
+  justify-content: flex-start;
   margin-top: -100px;
 
 }
@@ -144,3 +144,13 @@
 .pointer {
   cursor: pointer;
 }
+.page{
+  left: 100%;
+}
+.my-pagination /deep/ .ngx-pagination  {
+  margin-left: 155vh;
+}
+
+
+
+

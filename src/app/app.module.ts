@@ -90,6 +90,7 @@ import { UserHeaderComponent } from './user-header/user-header.component';
 // import { ThiTuLuanComponent } from './thi-tu-luan/thi-tu-luan.component';
 // import { TestAssignmentComponent } from './test-assignment/test-assignment.component';
 import { ListUserAssignmentComponent } from './list-user-assignment/list-user-assignment.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -184,6 +185,7 @@ import { ListUserAssignmentComponent } from './list-user-assignment/list-user-as
     ToastrModule.forRoot(),
     NgxTrimDirectiveModule,
     AppRoutingModule,
+    NgxPaginationModule
   ],
   providers: [
     AuthenticationService,

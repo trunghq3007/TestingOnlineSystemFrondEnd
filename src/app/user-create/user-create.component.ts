@@ -20,25 +20,6 @@ const httpOptions = {
 })
 export class UserCreateComponent implements OnInit {
 
-  user: User[] = [];
-  public Editor = ClassicEditorBuild;
-  createForm: FormGroup;
-  RolesFormApi: User[] = [];
-  check: string;
-  passwordPattern = '^[a-z0-9_@A-Z]*$';
-  phonenumber = '^[0-9]{1,12}$';
-  emailPattern = '^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$';
-
-  constructor(private myservice: MyserviceService,
-              private router: Router,
-              private fb: FormBuilder,
-              private http: HttpClient,
-              private toar: ToastrService) {
-    this.router.events.subscribe((event) => {
-      this.myservice.changeMessage('1');
-    });
-  }
-
   get UserName(): FormControl {
     return this.createForm.get('UserName') as FormControl;
   }
@@ -103,6 +84,26 @@ export class UserCreateComponent implements OnInit {
     return this.createForm.get('Note') as FormControl;
   }
 
+  constructor(private myservice: MyserviceService,
+              private router: Router,
+              private fb: FormBuilder,
+              // tslint:disable-next-line:no-shadowed-variable
+              private http: HttpClient,
+              private toar: ToastrService) {
+    this.router.events.subscribe((event) => {
+      this.myservice.changeMessage('1');
+    });
+  }
+  user: User[] = [];
+  public Editor = ClassicEditorBuild;
+  createForm: FormGroup;
+  RolesFormApi: User[] = [];
+  check: string;
+
+  passwordPattern = '^[a-z0-9_@A-Z]*$';
+  phonenumber = '^[0-9]{1,12}$';
+  emailPattern = '^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$';
+
   getApiRoles() {
     this.http.get<string>('http://localhost:65170/api/role/', {headers: http()}).subscribe(value => {
       this.RolesFormApi = JSON.parse(value);
@@ -137,7 +138,7 @@ export class UserCreateComponent implements OnInit {
 
     if (this.createForm.valid) {
       const value = this.createForm.value;
-      value.Roles = this.RolesFormApi.filter(s => s.RoleId === value.Roles.RoleId);
+      value.Roles = this.RolesFormApi.filter(s => s.RoleId == value.Roles.RoleId);
       value.Role = value.Roles.length > 0 ? value.Roles[0] : null;
       value.RoleId = value.Role.RoleId;
       console.log(value);
@@ -145,9 +146,8 @@ export class UserCreateComponent implements OnInit {
       this.http.get<string>('http://localhost:65170/api/User/?userName=' + userName, {headers: http()}).subscribe(res => {
         this.check = res;
         console.log(this.check);
-        if (this.check === 'False') {
+        if (this.check == 'False') {
           this.http.post<string>('http://localhost:65170/api/user', JSON.stringify(value), {headers: http()}).subscribe({
-            // tslint:disable-next-line:no-shadowed-variable
             next: (res) => {
               const result: ResultObject = JSON.parse(res);
               if (result.Success >= 1) {
@@ -181,6 +181,7 @@ export class UserCreateComponent implements OnInit {
       this.createForm.get('Password').markAsTouched();
       this.createForm.get('Roles.RoleId').markAsTouched();
       this.createForm.get('Status').markAsTouched();
+
       return;
     }
   }

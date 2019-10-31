@@ -76,17 +76,6 @@
     </div>
 
 
-    <!-- <div class="col-md-2 column productbox"  *ngFor="let item of semesters" >
-      <img src="http://placehold.it/460x250/e67e22/ffffff&text=HTML5" class="img-responsive">
-      <div class="producttitle">{{item.SemesterName}}</div>
-      <div class="productprice">
-        <div class="pull-right"><a routerLink="/semestercustomer/{{item.ID}}" class="btn btn-danger btn-sm" role="button">BUY</a></div>
-        <div class="pricetext">{{item.StartDay| date: 'dd/MM/yyyy'}}</div>
-      </div>
-    </div>
-
-  </div> -->
-
 
     <ng-container *ngIf="tests?.data.length > 0">
       <br/>
@@ -136,7 +125,7 @@
 
   <div style="display: flex; justify-content: center;">
     <div class="abc" style="width: 100%">
-      <div *ngFor="let item of semesters" class="box">
+      <div *ngFor="let item of semesters| paginate: { itemsPerPage: 7, currentPage: p }" class="box">
         <span class="boder"></span>
         <a routerLink="/semestercustomer/{{item.ID}}">
           <h1 style="font-size: 16px;"><h3
@@ -152,24 +141,12 @@
       </div>
     </div>
   </div>
+  <pagination-controls class="my-pagination" (pageChange)="p = $event"
+                       responsive="true"
+  ></pagination-controls>
 
 
 </div>
-<!-- <div class="col-md-2 column productbox">
-  <img src="http://placehold.it/460x250/e67e22/ffffff&text=HTML5" class="img-responsive">
-  <div class="producttitle">Product 3</div>
-  <div class="productprice"><div class="pull-right"><a href="#" class="btn btn-danger btn-sm" role="button">BUY</a></div><div class="pricetext">£8.95</div></div>
-</div>
-<div class="col-md-2 column productbox">
-  <img src="http://placehold.it/460x250/e67e22/ffffff&text=HTML5" class="img-responsive">
-  <div class="producttitle">Product 4</div>
-  <div class="productprice"><div class="pull-right"><a href="#" class="btn btn-danger btn-sm" role="button">BUY</a></div><div class="pricetext">£8.95</div></div>
-</div>  -->
-
 
 <!-- Footer -->
-<footer class="justify-content-c">
-  <br>
-  <hr>
-  <div class="text-center text-muted">Copyright &copy; {{date}} by C1709L</div>
-</footer>
+<app-appfooter> </app-appfooter>

@@ -11,3 +11,6 @@ pre.prettyprint { padding:15px; border:1px solid #eee; border-radius:5px; backgr
 #nav a { text-decoration:none; color:#000; }
 #nav a:hover { text-decoration: underline }
 #git-fork img { position:fixed; top:0; right:0; border:0; z-index:999; }
+.ngx-pagination {
+  margin-left: 200px;
+}

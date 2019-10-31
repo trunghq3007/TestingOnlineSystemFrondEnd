@@ -101,8 +101,8 @@ export class TestingComponent implements OnInit {
     let dem = 0;
     // tslint:disable-next-line:prefer-for-of
     for (let i = 0; i < this.questions[this.a].Answers.length; i++) {
-
-      if (document.getElementById('check' + this.questions[this.a].Answers[i].Id).checked) {
+      const getValue = document.getElementById('check' + this.questions[this.a].Answers[i].Id) as HTMLInputElement;
+      if (getValue.checked) {
         dem++;
         // tslint:disable-next-line:triple-equals
         if (this.arrayId.indexOf(this.questions[this.a].Answers[i].Id) == -1) {
@@ -115,8 +115,8 @@ export class TestingComponent implements OnInit {
       }
 
     }
-
-    if (!document.getElementById('check' + id).checked) {
+    const getValue1 = document.getElementById('check' + id) as HTMLInputElement;
+    if (!getValue1.checked) {
       dem--;
       for (let n = 0; n < this.arrayId.length; n++) {
         // tslint:disable-next-line:triple-equals
@@ -191,13 +191,12 @@ export class TestingComponent implements OnInit {
       this.http.post('http://localhost:65170/api/TestAssignment?testId=' + this.Idtest + '&userId=' + this.UserId
         , JSON.stringify(this.questions), httpOptions).subscribe(
         value => (console.log(value))
-      )
+      );
       // tslint:disable-next-line:max-line-length
       this.http.post('http://localhost:65170/SemesterExam/submid/' + this.Idtest + '?userID=' + this.UserId, JSON.stringify(arr), httpOptions).subscribe(
         value => (console.log(value))
       )
       localStorage.clear();
-
       this.router.navigate(['/thi/' + this.Idtest + '/' + this.Idtest + '/ketqua']);
     } else {
       this.contentsArr = [];
