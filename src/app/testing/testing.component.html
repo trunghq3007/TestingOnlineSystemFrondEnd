@@ -7,7 +7,6 @@
     <ul class="nav navbar-nav" style="width: 70%;font-size: 16px">
       <li class="active" style="font-size: 25px;margin-left: 32%;"><a>Exam:{{NameExam}}</a></li>
 
-
     </ul>
   </div>
 </nav>
@@ -20,7 +19,7 @@
             type="button">Submit
     </button>
     <button class="btn btn-danger" style="margin-left: 50px;width: 100px">
-      <span class="magin-right magin-left">{{second - (EndTest - startTest)}}Phut</span>
+      <span class="magin-right magin-left">{{second - (EndTest - startTest)}} minutes</span>
     </button>
     <div style="margin-left: 23px;margin-top: 6%">
 
@@ -52,7 +51,7 @@
       <table>
         <tr id="table{{item.Id}}">
           <th>
-            <h4 style="width: 65px;margin-top: 0px">Câu {{i + 1}}</h4>
+            <h4 style="width: 65px;margin-top: 0px">Câu {{i + 1}}:</h4>
           </th>
         </tr>
         <tr>
@@ -69,6 +68,7 @@
         <div *ngFor="let items of item.Answers" style="width: 100%">
           <table>
             <tr>
+
               <td><input (click)="Onclick(items.Id,item.Id)" id="check{{items.Id}}" id-ans="items.Id" type="checkbox"/>
               </td>
               <td style="padding-top: 1%;padding-left: 10px">

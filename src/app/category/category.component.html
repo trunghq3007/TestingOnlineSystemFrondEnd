@@ -1,4 +1,4 @@
-<div class="container" fxLayout style="margin-left: 20%;margin-top: 15px;width: 100%;margin-bottom:3%">
+<div class="container" fxLayout style="margin-left: 20%;margin-top: 60px;width: 100%;margin-bottom:3%">
   <input #input placeholder="Search " type="text">
   <button (click)="doFilter(input.value)" type="submit"><i class="fa fa-search"></i></button>
 
@@ -17,12 +17,12 @@
     </button>
   </div>
 </div>
-<div class="content" >
+<div class="content-Category" >
 <!--;background: #ecf0f5" -->
-  <div class=" mat-elevation-z8">
+  <div class=" mat-elevation-z8" style="margin-left: 27vh">
 
 
-<table [dataSource]="dataSource" class="mat-elevation-z8" mat-table matSort>
+<table [dataSource]="dataSource" class="mat-elevation-z8"  mat-table matSort>
   <ng-container matColumnDef="select">
     <th *matHeaderCellDef mat-header-cell>
 

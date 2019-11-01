@@ -6,11 +6,12 @@ import { MatDialog } from '@angular/material';
 import { TestProcessing } from '../test-processing';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { MyserviceService } from '../myservice.service';
-
+import {MatCheckboxModule} from '@angular/material/checkbox';
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
 };
 
+// tslint:disable-next-line: use-pipe-transform-interface
 @Component({
   selector: 'app-testing',
   templateUrl: './testing.component.html',
@@ -24,7 +25,6 @@ export class TestingComponent implements OnInit {
   LisUser;
   UserId: string;
   UserName: string;
-  private contentsArr: any[];
 
   constructor(private myservice: MyserviceService,
               private semaster: FormBuilder,
@@ -51,16 +51,15 @@ export class TestingComponent implements OnInit {
   private intervalId = 0;
   message = '';
   arrayId = [];
-  mang = [];
-  checked: boolean;
+  checked = true;
   EndTest;
   startTest;
   time;
-  CheckTime;
   second: number;
   NameExam: string;
   testCount: number;
   Idtest = this.activateRoute.snapshot.paramMap.get('TestId');
+  countDow: number;
 
   ngOnInit() {
 
@@ -80,6 +79,7 @@ export class TestingComponent implements OnInit {
         this.start();
 
       });
+
     if (sessionStorage.getItem('user')) {
       this.Users = sessionStorage.getItem('user');
       this.LisUser = this.Users.split(',');
@@ -95,16 +95,13 @@ export class TestingComponent implements OnInit {
 
   Onclick(id, btnid) {
 
-    // tslint:disable-next-line:triple-equals
     this.a = this.questions.findIndex(d => d.Id == btnid);
     this.answer = this.questions[this.a].Answers;
     let dem = 0;
-    // tslint:disable-next-line:prefer-for-of
     for (let i = 0; i < this.questions[this.a].Answers.length; i++) {
       const getValue = document.getElementById('check' + this.questions[this.a].Answers[i].Id) as HTMLInputElement;
       if (getValue.checked) {
         dem++;
-        // tslint:disable-next-line:triple-equals
         if (this.arrayId.indexOf(this.questions[this.a].Answers[i].Id) == -1) {
           this.arrayId.push(this.questions[this.a].Answers[i].Id);
 
@@ -119,7 +116,6 @@ export class TestingComponent implements OnInit {
     if (!getValue1.checked) {
       dem--;
       for (let n = 0; n < this.arrayId.length; n++) {
-        // tslint:disable-next-line:triple-equals
         if (this.arrayId[n] == id) {
           this.arrayId.splice(n, 1);
           console.log(this.arrayId);
@@ -132,7 +128,7 @@ export class TestingComponent implements OnInit {
   }
 
   scroll(btnid) {
-    const elmnt = document.getElementById('table' + btnid);
+    let elmnt = document.getElementById('table' + btnid);
     elmnt.scrollIntoView();
   }
 
@@ -186,22 +182,25 @@ export class TestingComponent implements OnInit {
   summit() {
     const arr = this.arrayId;
 
-    const contentsArr = [];
+    let contentsArr = [];
     if (confirm('Bạn có muốn nộp bài')) {
       this.http.post('http://localhost:65170/api/TestAssignment?testId=' + this.Idtest + '&userId=' + this.UserId
         , JSON.stringify(this.questions), httpOptions).subscribe(
         value => (console.log(value))
       );
-      // tslint:disable-next-line:max-line-length
-      this.http.post('http://localhost:65170/SemesterExam/submid/' + this.Idtest + '?userID=' + this.UserId, JSON.stringify(arr), httpOptions).subscribe(
+      this.http.post('http://localhost:65170/SemesterExam/submid/' +
+        this.Idtest + '?userID=' + this.UserId, JSON.stringify(arr), httpOptions).subscribe(
         value => (console.log(value))
-      )
+      );
       localStorage.clear();
+
       this.router.navigate(['/thi/' + this.Idtest + '/' + this.Idtest + '/ketqua']);
     } else {
-      this.contentsArr = [];
+      contentsArr = [];
     }
 
 
   }
+
+
 }
