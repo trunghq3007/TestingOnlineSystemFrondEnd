@@ -26,16 +26,6 @@ export class ThiKetquathiComponent implements OnInit {
   UserName: string;
   Id = this.activatedRoute.snapshot.paramMap.get('Id');
 
-  constructor(private myservice: MyserviceService,
-              private result: FormBuilder,
-              private activatedRoute: ActivatedRoute,
-              private http: HttpClient,
-              private router: Router) {
-    this.router.events.subscribe((event) => {
-      this.myservice.changeMessage('2');
-    });
-  }
-
   get TestName(): FormControl {
     return this.formApply.get('TestName') as FormControl;
   }
@@ -58,6 +48,18 @@ export class ThiKetquathiComponent implements OnInit {
 
   get Category(): FormControl {
     return this.formApply.get('Category') as FormControl;
+  }
+
+
+  constructor(private myservice: MyserviceService,
+              private result: FormBuilder,
+              private activatedRoute: ActivatedRoute,
+              // tslint:disable-next-line:no-shadowed-variable
+              private http: HttpClient,
+              private router: Router) {
+    this.router.events.subscribe((event) => {
+      this.myservice.changeMessage('2');
+    });
   }
 
   ngOnInit() {
@@ -84,11 +86,16 @@ export class ThiKetquathiComponent implements OnInit {
       .subscribe(
         value => {
           this.list = JSON.parse(value);
+
           console.log(this.list);
-          this.formApply.patchValue(this.list); // a tiep
+
+
+          this.formApply.patchValue(this.list);
         }
       );
+
   }
+
 
   Logout() {
     sessionStorage.removeItem('currentPermission');
@@ -96,8 +103,5 @@ export class ThiKetquathiComponent implements OnInit {
     location.reload();
 
     sessionStorage.removeItem('user');
-  }
-  back() {
-    this.router.navigateByUrl('');
   }
 }

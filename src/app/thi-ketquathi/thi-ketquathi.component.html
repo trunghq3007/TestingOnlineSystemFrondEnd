@@ -2,8 +2,8 @@
 <div class="navbar navbar-inverse navbar-fixed-top opaque-navbar">
   <div class="container-fluid">
     <div class="navbar-header logo" style="line-height: 45px">
-      <a [routerLink]="['']" routerLinkActive="active"><img height="35px"
-                                                            src="../../assets/image/logo_vn_white.png"/></a>
+      <a [routerLink]="['']" routerLinkActive="active"><img src="../../assets/image/logo_vn_white.png"
+                                                            height="35px"/></a>
     </div>
     <div *ngIf="UserName; then thenBlock else elseBlock"></div>
     <ng-template #thenBlock>
@@ -24,8 +24,8 @@
 </div>
 <div class="warapper">
   <div class="ketqua">
-    <h2 style="color:  #337ab7">KẾT QUẢ THI</h2>
-    <form [formGroup]="formApply" class="form-group">
+    <h2>KẾT QUẢ THI</h2>
+    <form class="form-group" [formGroup]="formApply">
 
 
       <table class="information">
@@ -56,11 +56,28 @@
 
 
         <tr>
-          <td style="color: #337ab7 ; text-transform: uppercase ">Kết quả thi:</td>
+          <td>Kết quả thi:</td>
           <td class="td2">
-            <mat-progress-bar mode="determinate" style="height: 20px" value=" {{list.Score*10}}"></mat-progress-bar>
+            <!-- <div class="progress">
+                    <div class="progress-bar"  role="progressbar" aria-valuenow="80"
+                    aria-valuemin="0" aria-valuemax="100" style="width:50%">
+                      {{list.Score*10}}%
+                    </div>
+                  </div> -->
+            <mat-progress-bar style="height: 20px" mode="determinate" value=" {{list.Score*10}}"></mat-progress-bar>
           </td>
         </tr>
+        <!-- <tr>
+            <td>Lần 2: </td>
+            <td class="td2">
+                    <div class="progress">
+                            <div class="progress-bar" role="progressbar" aria-valuenow="70"
+                            aria-valuemin="0" aria-valuemax="100" style="width:70%">
+                              70%
+                            </div>
+                          </div>
+            </td>
+        </tr> -->
       </table>
       <table class="tb3">
         <tr>
@@ -71,6 +88,7 @@
           <td>Trạng thái</td>
         </tr>
         <tr>
+          <!-- <td>1</td> -->
 
           <td>
             <label>{{list.Score}}</label>
@@ -80,14 +98,16 @@
           </td>
           <td>Ðã thi</td>
         </tr>
+
       </table>
     </form>
   </div>
 
   <table class="tb4">
     <tr>
-      <td class="back">
-        <button (click)="back()" class="apply" type="submit">Back</button>
+      <!-- <td><button type="submit" class="apply"> Thi lại</button></td> -->
+      <td class="quaylai">
+        <button type="submit" [routerLink]="['/']" class="apply"> Quay lại</button>
       </td>
     </tr>
   </table>

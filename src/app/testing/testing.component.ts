@@ -38,6 +38,14 @@ export class TestingComponent implements OnInit {
     });
   }
 
+  get totalMinutes() {
+    return this.second - (this.EndTest - this.startTest);
+  }
+
+  get totalSeconds() {
+    return '';
+  }
+
   testProcessings: TestProcessing;
   questions: Question[];
   i: number;
@@ -172,8 +180,14 @@ export class TestingComponent implements OnInit {
       this.startTest = +session;
 
       if (this.EndTest - this.startTest >= this.second) {
-        localStorage.clear();
-        this.router.navigate(['/thi/' + this.Idtest + '/' + this.Idtest + '/ketqua']);
+        const arr = this.arrayId;
+        this.http.post('http://localhost:65170/SemesterExam/submid/' +
+          this.Idtest + '?userID=' + this.UserId, JSON.stringify(arr), httpOptions).subscribe(
+          value => {
+            localStorage.clear();
+            this.router.navigate(['/thi/' + this.Idtest + '/' + this.Idtest + '/ketqua']);
+          }
+        );
       }
     }, 1000);
 
@@ -190,11 +204,11 @@ export class TestingComponent implements OnInit {
       );
       this.http.post('http://localhost:65170/SemesterExam/submid/' +
         this.Idtest + '?userID=' + this.UserId, JSON.stringify(arr), httpOptions).subscribe(
-        value => (console.log(value))
+        value => {
+          localStorage.clear();
+          this.router.navigate(['/thi/' + this.Idtest + '/' + this.Idtest + '/ketqua']);
+        }
       );
-      localStorage.clear();
-
-      this.router.navigate(['/thi/' + this.Idtest + '/' + this.Idtest + '/ketqua']);
     } else {
       contentsArr = [];
     }

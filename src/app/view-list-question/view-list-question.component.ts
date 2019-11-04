@@ -42,7 +42,10 @@ export class ViewListQuestionComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private myservice: MyserviceService, private http: HttpClient, private router: Router, private toastr: ToastrService) {
+  constructor(private myservice: MyserviceService,
+              private http: HttpClient,
+              private router: Router,
+              private toastr: ToastrService) {
     this.router.events.subscribe((event) => {
       this.myservice.changeMessage('1');
     });
