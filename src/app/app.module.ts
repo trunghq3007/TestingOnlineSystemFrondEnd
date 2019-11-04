@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { SelectModule } from 'ng2-select';
+import { CountdownTimerModule } from 'ngx-countdown-timer';
 import {
   MatButtonModule,
   MatCheckboxModule,
@@ -91,6 +92,7 @@ import { UserHeaderComponent } from './user-header/user-header.component';
 // import { TestAssignmentComponent } from './test-assignment/test-assignment.component';
 import { ListUserAssignmentComponent } from './list-user-assignment/list-user-assignment.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+
 
 @NgModule({
   declarations: [
@@ -185,7 +187,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     ToastrModule.forRoot(),
     NgxTrimDirectiveModule,
     AppRoutingModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    CountdownTimerModule.forRoot()
   ],
   providers: [
     AuthenticationService,

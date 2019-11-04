@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DetailExam } from '../detailExams';
 import { http } from '../http-header';
 import { MyserviceService } from '../myservice.service';
+import * as moment from 'moment';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -23,6 +24,7 @@ export class DetailExamCustomerComponent implements OnInit {
   UserId: string;
   UserName: string;
   chuoi: string;
+  date: string;
 
   // tslint:disable-next-line:no-shadowed-variable
   constructor(private http: HttpClient,
@@ -37,6 +39,7 @@ export class DetailExamCustomerComponent implements OnInit {
   ngOnInit() {
 
     const IdQuestion = this.activedRoute.snapshot.paramMap.get('id');
+    this.date = moment(new Date()).format('YYYY');
     this.http.get<string>('http://localhost:65170/ExamDetails/' + IdQuestion, {headers: http()}).subscribe(
       value => {
 

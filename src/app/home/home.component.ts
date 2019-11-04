@@ -126,11 +126,7 @@ export class HomeComponent implements OnInit {
     console.log(this.semesterExamCode);
   }
 
-  signIn() {
-    // this.sharedService.authentic(true);
-    // localStorage.setItem('isAuthen', 'true');
-    // this.route.navigate(['/exam']);
-  }
+
 
   login() {
     this.authenticationService.gotoLogin = true;

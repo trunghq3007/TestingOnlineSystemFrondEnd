@@ -6,7 +6,8 @@ import { MatDialog } from '@angular/material';
 import { TestProcessing } from '../test-processing';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { MyserviceService } from '../myservice.service';
-import {MatCheckboxModule} from '@angular/material/checkbox';
+import * as moment from 'moment';
+
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
 };
@@ -38,9 +39,12 @@ export class TestingComponent implements OnInit {
     });
   }
 
-  get totalMinutes() {
-    return this.second - (this.EndTest - this.startTest);
-  }
+  // get totalMinutes() {
+  //   const now = new Date();
+  //   now.setMinutes(now.getMinutes() + this.second);
+  //   console.log(moment(now).format('YYYY-MM-DD HH:mm:ss'));
+  //   return moment(now).format('YYYY-MM-DD HH:mm:ss').toString();
+  // }
 
   get totalSeconds() {
     return '';
@@ -66,8 +70,8 @@ export class TestingComponent implements OnInit {
   second: number;
   NameExam: string;
   testCount: number;
+  countdown: string;
   Idtest = this.activateRoute.snapshot.paramMap.get('TestId');
-  countDow: number;
 
   ngOnInit() {
 
@@ -80,6 +84,9 @@ export class TestingComponent implements OnInit {
         console.log(this.testProcessings);
         console.log(this.questions = this.testProcessings.Questions);
         this.second = this.testProcessings.TestTime;
+        const now = new Date();
+        now.setMinutes(now.getMinutes() + this.second);
+        this.countdown = moment(now).toString();
         console.log(this.second);
         this.NameExam = this.testProcessings.TestName;
         console.log(this.NameExam);
@@ -87,7 +94,6 @@ export class TestingComponent implements OnInit {
         this.start();
 
       });
-
     if (sessionStorage.getItem('user')) {
       this.Users = sessionStorage.getItem('user');
       this.LisUser = this.Users.split(',');

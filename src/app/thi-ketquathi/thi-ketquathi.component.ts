@@ -24,6 +24,7 @@ export class ThiKetquathiComponent implements OnInit {
   LisUser;
   UserId: string;
   UserName: string;
+  nameDemo: string;
   Id = this.activatedRoute.snapshot.paramMap.get('Id');
 
   get TestName(): FormControl {
@@ -76,8 +77,6 @@ export class ThiKetquathiComponent implements OnInit {
       this.LisUser = this.Users.split(',');
       this.UserName = this.LisUser[1];
       this.UserId = this.LisUser[0];
-
-
     } else {
       this.Users = null;
     }
@@ -86,22 +85,20 @@ export class ThiKetquathiComponent implements OnInit {
       .subscribe(
         value => {
           this.list = JSON.parse(value);
-
           console.log(this.list);
-
-
           this.formApply.patchValue(this.list);
         }
       );
-
   }
-
 
   Logout() {
     sessionStorage.removeItem('currentPermission');
     this.router.navigate(['']);
     location.reload();
-
+    localStorage.clear();
     sessionStorage.removeItem('user');
   }
+
+
 }
+
