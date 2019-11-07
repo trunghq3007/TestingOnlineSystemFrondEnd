@@ -44,7 +44,6 @@ export class HomeComponent implements OnInit {
       this.currentUser = user;
     });
     this.gotoLogin = this.authenticationService.gotoLogin;
-
     this.router.events.subscribe((event) => {
       this.myservice.changeMessage('2');
     });

@@ -94,9 +94,10 @@ export class ThiKetquathiComponent implements OnInit {
   Logout() {
     sessionStorage.removeItem('currentPermission');
     this.router.navigate(['']);
-    location.reload();
-    localStorage.clear();
     sessionStorage.removeItem('user');
+  }
+  back() {
+    this.router.navigateByUrl('');
   }
 
 

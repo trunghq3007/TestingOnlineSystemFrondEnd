@@ -37,7 +37,6 @@ export class UserHeaderComponent implements OnInit {
   Logout() {
     sessionStorage.removeItem('currentPermission');
     this.router.navigate(['']);
-    location.reload();
 
     sessionStorage.removeItem('user');
   }

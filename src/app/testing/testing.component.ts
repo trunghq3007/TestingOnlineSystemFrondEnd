@@ -39,16 +39,6 @@ export class TestingComponent implements OnInit {
     });
   }
 
-  // get totalMinutes() {
-  //   const now = new Date();
-  //   now.setMinutes(now.getMinutes() + this.second);
-  //   console.log(moment(now).format('YYYY-MM-DD HH:mm:ss'));
-  //   return moment(now).format('YYYY-MM-DD HH:mm:ss').toString();
-  // }
-
-  get totalSeconds() {
-    return '';
-  }
 
   testProcessings: TestProcessing;
   questions: Question[];
@@ -184,8 +174,8 @@ export class TestingComponent implements OnInit {
       this.EndTest = a.getHours() * 60 + a.getMinutes();
 
       this.startTest = +session;
-
-      if (this.EndTest - this.startTest >= this.second) {
+      const isOverTimeTest = this.EndTest - this.startTest >= this.second;
+      if (isOverTimeTest) {
         const arr = this.arrayId;
         this.http.post('http://localhost:65170/SemesterExam/submid/' +
           this.Idtest + '?userID=' + this.UserId, JSON.stringify(arr), httpOptions).subscribe(
@@ -213,6 +203,7 @@ export class TestingComponent implements OnInit {
         value => {
           localStorage.clear();
           this.router.navigate(['/thi/' + this.Idtest + '/' + this.Idtest + '/ketqua']);
+          window.clearInterval(this.intervalId);
         }
       );
     } else {

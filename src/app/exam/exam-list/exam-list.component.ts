@@ -21,12 +21,17 @@ export class ExamListComponent implements OnInit {
   searchString: string;
   filter: [];
   examInfo: Exam[] = [];
-  displayedColumn: string[] = ['select', 'NameExam', 'CreateBy', 'QuestionNumber', 'SpaceQuestionNumber', 'NameCategory', 'Status', 'CreateAt', 'Note', 'Action'];
+  displayedColumn: string[] = ['select', 'NameExam', 'CreateBy',
+    'QuestionNumber', 'SpaceQuestionNumber', 'NameCategory', 'Status', 'CreateAt', 'Note', 'Action'];
   dataSource = new MatTableDataSource<Exam>(this.exams);
   selection = new SelectionModel<Exam>(true, []);
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  constructor(private myservice: MyserviceService, private http: HttpClient, private router: Router, private toasr: ToastrService, private fb: FormBuilder) {
+  constructor(private myservice: MyserviceService,
+              private http: HttpClient,
+              private router: Router,
+              private toasr: ToastrService,
+              private fb: FormBuilder) {
 
     this.router.events.subscribe((event) => {
       this.myservice.changeMessage('1');
@@ -54,7 +59,7 @@ export class ExamListComponent implements OnInit {
           error: (err) => {
 
             console.log('false');
-            var errors = err.status + ',' + err.message;
+            const errors = err.status + ',' + err.message;
             this.myservice.changeError(errors);
           }
 
@@ -80,7 +85,7 @@ export class ExamListComponent implements OnInit {
       },
       err => {
 
-        var errors = err.status + ',' + err.message;
+        const errors = err.status + ',' + err.message;
         this.myservice.changeError(errors);
       }
     );
@@ -88,7 +93,7 @@ export class ExamListComponent implements OnInit {
   updateQuestion(id) {
     this.router.navigate(['/exam/examquestion', id])
     setInterval(() => {
-      location.reload()
+      location.reload();
     }, 10);
 
   }
@@ -103,18 +108,18 @@ export class ExamListComponent implements OnInit {
       err => {
 
 
-        var errors = err.status + ',' + err.message;
+        const errors = err.status + ',' + err.message;
         this.myservice.changeError(errors);
 
 
 
       });
     this.filterExam = this.fb.group({
-      Timetest: ['',],
-      CreateBy: ['',],
-      QuestionNumber: ['',],
+      Timetest: ['', ],
+      CreateBy: ['', ],
+      QuestionNumber: ['', ],
       Status: '',
-      CreateAt: ['',],
+      CreateAt: ['', ],
       TypeExam: ['']
     });
     this.listexams();
@@ -132,7 +137,7 @@ export class ExamListComponent implements OnInit {
       },
       err => {
 
-        var errors = err.status + ',' + err.message;
+        const errors = err.status + ',' + err.message;
         this.myservice.changeError(errors);
 
 
@@ -151,7 +156,7 @@ export class ExamListComponent implements OnInit {
       err => {
 
 
-        var errors = err.status + ',' + err.message;
+        const   errors = err.status + ',' + err.message;
         this.myservice.changeError(errors);
 
 
@@ -161,6 +166,7 @@ export class ExamListComponent implements OnInit {
   }
   onFilter() {
     const value = this.filterExam.value;
+    // tslint:disable-next-line:max-line-length
     this.http.post<string>('http://localhost:65170/api/Exam/?action=filter', JSON.stringify(value), { headers: http() }).subscribe(value => {
         this.dataSource.data = JSON.parse(value);
         console.log(this.dataSource.paginator = this.paginator, this.dataSource.sort = this.sort);
@@ -168,7 +174,7 @@ export class ExamListComponent implements OnInit {
       err => {
 
 
-        var errors = err.status + ',' + err.message;
+        const errors = err.status + ',' + err.message;
         this.myservice.changeError(errors);
 
 
@@ -188,7 +194,7 @@ export class ExamListComponent implements OnInit {
       err => {
 
 
-        var errors = err.status + ',' + err.message;
+        const errors = err.status + ',' + err.message;
         this.myservice.changeError(errors);
 
 
@@ -226,7 +232,7 @@ export class ExamListComponent implements OnInit {
         err => {
 
 
-          var errors = err.status + ',' + err.message;
+          const errors = err.status + ',' + err.message;
           this.myservice.changeError(errors);
 
 
@@ -254,7 +260,7 @@ export class ExamListComponent implements OnInit {
         err => {
 
 
-          var errors = err.status + ',' + err.message;
+          const errors = err.status + ',' + err.message;
           this.myservice.changeError(errors);
 
 

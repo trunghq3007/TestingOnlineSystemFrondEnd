@@ -49,25 +49,20 @@ import { ExamImportComponent } from './exam/exam-import/exam-import.component';
 // import { ListUserAssignmentComponent } from './list-user-assignment/list-user-assignment.component';
 // import { ThiTuLuanComponent } from './thi-tu-luan/thi-tu-luan.component';
 const routes: Routes = [
-
   {
     path: '',
-    children: [{
-      path: '',
-      component: HomeComponent,
-    },
-      {
-        path: 'semestercustomer/:id',
-        component: ListExamUserComponent,
-      },
-      {
-        path: 'DetailExamCustomer/:id',
-        component: DetailExamCustomerComponent,
-      }
-
-
-    ]
+    component: HomeComponent,
+    pathMatch: 'full'
   },
+  {
+    path: 'semestercustomer/:id',
+    component: ListExamUserComponent,
+  },
+  {
+    path: 'DetailExamCustomer/:id',
+    component: DetailExamCustomerComponent,
+  }
+  ,
   // { path: '**',
   //   redirectTo:'login',
   //   pathMatch: 'full'
@@ -75,10 +70,11 @@ const routes: Routes = [
   // { path: 'error', component: ErrorsComponent },
   {
     path: 'Role',
-    children: [{
-      path: '',
-      component: RoleComponent,
-    },
+    children: [
+      {
+        path: '',
+        component: RoleComponent,
+      },
       {
         path: ':RoleId',
         component: RoleActionComponent
@@ -107,10 +103,11 @@ const routes: Routes = [
   },
   {
     path: 'user',
-    children: [{
-      path: '',
-      component: UserComponent,
-    },
+    children: [
+      {
+        path: '',
+        component: UserComponent,
+      },
       {
         path: 'create',
         component: UserCreateComponent
@@ -213,26 +210,18 @@ const routes: Routes = [
   },
   {
     path: '',
-
-    children:
-      [
-        {
-          path: '',
-          component: ViewListSemasterComponent,
-          pathMatch: 'full'
-        }
-        ,
-
-        {
-          path: 'detail/:Id',
-
-          component: SemesterDetailComponent
-
-
-        }
-
-      ], canActivate: [AuthGuard]
+    component: ViewListSemasterComponent,
+    pathMatch: 'full',
+    canActivate: [AuthGuard]
   }
+  ,
+  {
+    path: 'detail/:Id',
+
+    component: SemesterDetailComponent,
+    canActivate: [AuthGuard]
+  }
+
   ,
   {
     path: 'thi',
@@ -328,36 +317,36 @@ const routes: Routes = [
       ], canActivate: [AuthGuard]
   }
   ,
-  {
-    path: 'question',
-    children: [
-      {
-        path: '',
-        component: ViewListQuestionComponent,
-        pathMatch: 'full'
-      },
-      {
-        path: 'create',
-        component: CreateQuestionComponent
-      },
-      {
-        path: ':id/detail',
-        component: DetailQuestionComponent
-      },
-      {
-        path: ':id/update',
-        component: EditQuestionComponent
-      },
-      {
-        path: 'import',
-        component: ImportQuestionComponent
-      }
+  // {
+  //   path: 'question',
+  //   children: [
+  //     {
+  //       path: '',
+  //       component: ViewListQuestionComponent,
+  //       pathMatch: 'full'
+  //     },
+  //     {
+  //       path: 'create',
+  //       component: CreateQuestionComponent
+  //     },
+  //     {
+  //       path: ':id/detail',
+  //       component: DetailQuestionComponent
+  //     },
+  //     {
+  //       path: ':id/update',
+  //       component: EditQuestionComponent
+  //     },
+  //     {
+  //       path: 'import',
+  //       component: ImportQuestionComponent
+  //     }
 
-    ],
-  },
+  //   ],
+  // },
 
-  {path: 'Error', component: ErrorpageComponent},
-  {path: '**', canActivate: [AuthGuard], component: ErrorpageComponent}
+  { path: 'Error', component: ErrorpageComponent },
+  { path: '**', canActivate: [AuthGuard], component: ErrorpageComponent }
 ];
 
 const fullRoutes = [...routes, ...QuestionRouting];
