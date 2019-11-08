@@ -64,7 +64,6 @@ export class TestingComponent implements OnInit {
   Idtest = this.activateRoute.snapshot.paramMap.get('TestId');
 
   ngOnInit() {
-
     this.http.get<string>('http://localhost:65170/api/SemesterExam/' + this.Idtest + '?IsgetTestProcessing', httpOptions).subscribe(
       value => {
         this.testProcessings = JSON.parse(value);
@@ -184,6 +183,7 @@ export class TestingComponent implements OnInit {
           value => {
             localStorage.clear();
             this.router.navigate(['/thi/' + this.Idtest + '/' + this.Idtest + '/ketqua']);
+            window.clearInterval(this.intervalId);
           }
         );
       }
