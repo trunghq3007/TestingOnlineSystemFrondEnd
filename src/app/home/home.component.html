@@ -1,5 +1,6 @@
 <!-- Navigation -->
 <div *ngIf="UserName; then thenBlock else elseBlock"></div>
+
 <div class="navbar navbar-inverse navbar-fixed-top opaque-navbar">
   <div class="container-fluid">
     <div class="navbar-header logo" style="line-height: 45px">
@@ -41,6 +42,7 @@
 </div>
 
 <!-- Slide -->
+
 <div>
   <div class="slide-container">
     <ng-container *ngFor="let img of image; index as i">

@@ -24,7 +24,6 @@ export class ThiKetquathiComponent implements OnInit {
   LisUser;
   UserId: string;
   UserName: string;
-  nameDemo: string;
   Id = this.activatedRoute.snapshot.paramMap.get('Id');
 
   get TestName(): FormControl {
@@ -50,6 +49,7 @@ export class ThiKetquathiComponent implements OnInit {
   get Category(): FormControl {
     return this.formApply.get('Category') as FormControl;
   }
+
 
 
   constructor(private myservice: MyserviceService,

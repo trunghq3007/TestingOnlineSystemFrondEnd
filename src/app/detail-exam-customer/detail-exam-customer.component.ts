@@ -80,10 +80,10 @@ export class DetailExamCustomerComponent implements OnInit {
     const checked = localStorage.getItem('SecondTest');
     if (checked == null) {
       const time = new Date();
-
       console.log(time.getHours());
       const getdate = time.getHours() * 60 + time.getMinutes();
       localStorage.setItem('SecondTest', getdate.toString());
+      localStorage.setItem('startTimeTest', time.getTime().toString());
     }
 
   }

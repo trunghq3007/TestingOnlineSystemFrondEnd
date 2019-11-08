@@ -317,33 +317,33 @@ const routes: Routes = [
       ], canActivate: [AuthGuard]
   }
   ,
-  // {
-  //   path: 'question',
-  //   children: [
-  //     {
-  //       path: '',
-  //       component: ViewListQuestionComponent,
-  //       pathMatch: 'full'
-  //     },
-  //     {
-  //       path: 'create',
-  //       component: CreateQuestionComponent
-  //     },
-  //     {
-  //       path: ':id/detail',
-  //       component: DetailQuestionComponent
-  //     },
-  //     {
-  //       path: ':id/update',
-  //       component: EditQuestionComponent
-  //     },
-  //     {
-  //       path: 'import',
-  //       component: ImportQuestionComponent
-  //     }
+  {
+    path: 'question',
+    children: [
+      {
+        path: '',
+        component: ViewListQuestionComponent,
+        pathMatch: 'full'
+      },
+      {
+        path: 'create',
+        component: CreateQuestionComponent
+      },
+      {
+        path: ':id/detail',
+        component: DetailQuestionComponent
+      },
+      {
+        path: ':id/update',
+        component: EditQuestionComponent
+      },
+      {
+        path: 'import',
+        component: ImportQuestionComponent
+      }
 
-  //   ],
-  // },
+    ],
+  },
 
   { path: 'Error', component: ErrorpageComponent },
   { path: '**', canActivate: [AuthGuard], component: ErrorpageComponent }

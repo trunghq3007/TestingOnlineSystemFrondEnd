@@ -75,8 +75,10 @@ export class TestingComponent implements OnInit {
         console.log(this.questions = this.testProcessings.Questions);
         this.second = this.testProcessings.TestTime;
         const now = new Date();
-        now.setMinutes(now.getMinutes() + this.second);
-        this.countdown = moment(now).toString();
+        const startTest = parseInt(localStorage.getItem('startTimeTest'), 10);
+        const endTest = now.getTime();
+        now.setMinutes(now.getMinutes() + this.second );
+        this.countdown = moment(now.getTime() - (endTest - startTest)).toString();
         console.log(this.second);
         this.NameExam = this.testProcessings.TestName;
         console.log(this.NameExam);
