@@ -76,9 +76,9 @@ export class TestingComponent implements OnInit {
         const now = new Date();
         const startTest = parseInt(localStorage.getItem('startTimeTest'), 10);
         const endTest = now.getTime();
-        now.setMinutes(now.getMinutes() + this.second );
-        this.countdown = moment(now.getTime() - (endTest - startTest)).toString();
-        console.log(this.second);
+        now.setMinutes(now.getMinutes() + this.second);
+        this.countdown = moment(now.getTime() - (endTest - startTest)).format('lll');
+        console.log(this.countdown);
         this.NameExam = this.testProcessings.TestName;
         console.log(this.NameExam);
         this.reset();
@@ -133,7 +133,7 @@ export class TestingComponent implements OnInit {
   }
 
   scroll(btnid) {
-    let elmnt = document.getElementById('table' + btnid);
+    const elmnt = document.getElementById('table' + btnid);
     elmnt.scrollIntoView();
   }
 

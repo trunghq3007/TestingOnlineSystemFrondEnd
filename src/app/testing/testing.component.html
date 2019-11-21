@@ -13,14 +13,14 @@
 
 
 <div class="content-wrapper" style="width: 100%;margin-left: 0px;background-color: white ">
-  <div *ngIf="testProcessings"  class="box-testing" >
+  <div *ngIf="testProcessings" class="box-testing">
 
     <button (click)="summit()" class="btn btn-primary" style="margin-left: 23px;margin-right: 5px;width: 100px"
             type="button">Submit
     </button>
     <button class="btn btn-danger" style="margin-left: 50px;width: 100px">
-      <span class="magin-right magin-left" >
-        <countdown-timer [end]="countdown"></countdown-timer>
+      <span class="magin-right magin-left">
+        <countdown units="Minutes | Seconds" end="{{countdown}}" [divider]="':'" [showZero]="true"></countdown>
       </span>
     </button>
     <div style="margin-left: 23px;margin-top: 6%">
@@ -40,13 +40,14 @@
     </div>
 
 
-    <div class="item-question" *ngFor="let item of questions;let i=index" >
-      <button (click)="scroll(item.Id)" id="btn{{item.Id}}" style="background: #bfbfbf;" style="width: 40px;float:left;margin-left: 10px;margin-top: 10px"
+    <div class="item-question" *ngFor="let item of questions;let i=index">
+      <button (click)="scroll(item.Id)" id="btn{{item.Id}}" style="background: #bfbfbf;"
+              style="width: 40px;float:left;margin-left: 10px;margin-top: 10px"
               type="button">{{i + 1}}</button>
 
     </div>
   </div>
-  <div class="content" >
+  <div class="content">
 
     <div *ngFor="let item of questions;let i=index" style="margin-left: 5%">
 

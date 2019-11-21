@@ -17,7 +17,7 @@ img {
 
 }
 
-/deep/  .image {
+/deep/ .image {
   width: 100vw;
   //text-align: center;
   img {
@@ -25,21 +25,24 @@ img {
     height: 30vh;
   }
 }
+
 .content {
   width: 70%;
-  height:auto;
-  float:left;
+  height: auto;
+  float: left;
   margin-top: 3%;
   position: absolute;
   left: 25%;
   margin-bottom: 5%;
 }
+
 .justify-content-c {
-margin-top:100%;
+  margin-top: 100%;
 }
+
 .item-question {
   width: 80%;
-  margin-left:1vh;
+  margin-left: 1vh;
 }
 
 
@@ -49,12 +52,20 @@ input {
   width: 15px;
   height: 15px;
 }
-.box-testing{
+
+.box-testing {
   width: 20%;
   float: left;
   margin-top: 5%;
   position: fixed;
-  border: 1px solid #0b58a2 ;
+  border: 1px solid #0b58a2;
   background-color: azure;
 }
-
+/deep/.measurements-text {
+  visibility: hidden !important;
+}
+///deep/.measurements-number{
+//  &:after:nth-child(0) {
+//    content: ":";
+//  }
+//}

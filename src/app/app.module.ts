@@ -92,6 +92,7 @@ import { UserHeaderComponent } from './user-header/user-header.component';
 // import { TestAssignmentComponent } from './test-assignment/test-assignment.component';
 import { ListUserAssignmentComponent } from './list-user-assignment/list-user-assignment.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { CountdownModule } from 'ng2-date-countdown';
 
 
 @NgModule({
@@ -157,8 +158,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     CandidatesComponent,
     ErrorpageComponent,
     UserHeaderComponent,
-    // ThiTuLuanComponent,
-    // TestAssignmentComponent,
+
     ListUserAssignmentComponent
   ],
   imports: [
@@ -188,7 +188,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     NgxTrimDirectiveModule,
     AppRoutingModule,
     NgxPaginationModule,
-    CountdownTimerModule.forRoot()
+    CountdownModule
   ],
   providers: [
     AuthenticationService,
