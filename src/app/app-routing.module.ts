@@ -45,6 +45,8 @@ import { DetailQuestionComponent } from './detail-question/detail-question.compo
 import { EditQuestionComponent } from './edit-question/edit-question.component';
 import { ImportQuestionComponent } from './import-question/import-question.component';
 import { ExamImportComponent } from './exam/exam-import/exam-import.component';
+import { ManagerSemesterExamReportComponent } from './manager-semester-exam-report/manager-semester-exam-report.component';
+import { ManagerSemesterExamTestComponent } from './manager-semester-exam-test/manager-semester-exam-test.component';
 // import { TestAssignmentComponent } from './test-assignment/test-assignment.component';
 // import { ListUserAssignmentComponent } from './list-user-assignment/list-user-assignment.component';
 // import { ThiTuLuanComponent } from './thi-tu-luan/thi-tu-luan.component';
@@ -175,7 +177,7 @@ const routes: Routes = [
         path: 'update/:Id',
         component: ListUpdateComponent
       }
-    ], //canActivate: [AuthGuard]
+    ],
   },
   {
     path: 'group',
@@ -340,11 +342,13 @@ const routes: Routes = [
       {
         path: 'import',
         component: ImportQuestionComponent
-      }
+      },
+
 
     ],
   },
-
+  { path: 'report/:id', component: ManagerSemesterExamReportComponent },
+  { path: 'report', component:   ManagerSemesterExamTestComponent },
   { path: 'Error', component: ErrorpageComponent },
   { path: '**', canActivate: [AuthGuard], component: ErrorpageComponent }
 ];

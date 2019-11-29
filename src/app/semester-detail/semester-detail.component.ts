@@ -94,7 +94,10 @@ export class SemesterDetailComponent implements OnInit {
       this.error = {isError: false, errorMessage: ''};
     }
   }
-
+  routeReport() {
+    const url = '/report/' + this.activatedRoute.snapshot.paramMap.get('Id');
+    this.router.navigate([url]);
+  }
   navigateToEdit() {
     console.log('code :' + this.list.Code);
     if (this.generate === true) {

@@ -88,12 +88,12 @@ import { CandidatesComponent } from './candidates/candidates.component';
 import { ExamImportComponent } from './exam/exam-import/exam-import.component';
 import { ErrorpageComponent } from './errorpage/errorpage.component';
 import { UserHeaderComponent } from './user-header/user-header.component';
-// import { ThiTuLuanComponent } from './thi-tu-luan/thi-tu-luan.component';
-// import { TestAssignmentComponent } from './test-assignment/test-assignment.component';
+
 import { ListUserAssignmentComponent } from './list-user-assignment/list-user-assignment.component';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { CountdownModule } from 'ng2-date-countdown';
-
+import { ManagerSemesterExamReportComponent } from './manager-semester-exam-report/manager-semester-exam-report.component';
+import { CountdownModule } from './shared/ng2-date-countdown-master';
+import { HighchartsChartModule } from 'highcharts-angular';
 
 @NgModule({
   declarations: [
@@ -141,8 +141,7 @@ import { CountdownModule } from 'ng2-date-countdown';
     RoleComponent,
     ListExamUserComponent,
     DetailExamCustomerComponent,
-    // ExamDetailQuestionComponent,
-    // ThiKetquathiComponent,
+
 
     ExamDetailQuestionComponent,
 
@@ -159,7 +158,8 @@ import { CountdownModule } from 'ng2-date-countdown';
     ErrorpageComponent,
     UserHeaderComponent,
 
-    ListUserAssignmentComponent
+    ListUserAssignmentComponent,
+    ManagerSemesterExamReportComponent,
   ],
   imports: [
     MatTabsModule,
@@ -188,7 +188,8 @@ import { CountdownModule } from 'ng2-date-countdown';
     NgxTrimDirectiveModule,
     AppRoutingModule,
     NgxPaginationModule,
-    CountdownModule
+    CountdownModule,
+    HighchartsChartModule
   ],
   providers: [
     AuthenticationService,

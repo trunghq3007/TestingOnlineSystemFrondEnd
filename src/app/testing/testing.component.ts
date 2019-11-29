@@ -63,6 +63,17 @@ export class TestingComponent implements OnInit {
   countdown: string;
   Idtest = this.activateRoute.snapshot.paramMap.get('TestId');
 
+  countDownText = {
+    Year: '',
+    Month: '',
+    Weeks: '',
+    Days: '',
+    Hours: '',
+    Minutes: '',
+    Seconds: '',
+    MilliSeconds: '',
+  };
+
   ngOnInit() {
     this.http.get<string>('http://localhost:65170/api/SemesterExam/' + this.Idtest + '?IsgetTestProcessing', httpOptions).subscribe(
       value => {

@@ -27,13 +27,15 @@ img {
 }
 
 .content {
-  width: 70%;
-  height: auto;
-  float: left;
-  margin-top: 3%;
-  position: absolute;
-  left: 25%;
-  margin-bottom: 5%;
+  width: 80%;
+  height: 78%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-top: 40px;
+  //margin-top: 3%;
+  //position: absolute;
+  //left: 25%;
+  //margin-bottom: 5%;
 }
 
 .justify-content-c {
@@ -56,9 +58,7 @@ input {
 .box-testing {
   width: 20%;
   float: left;
-  margin-top: 5%;
-  position: fixed;
-  border: 1px solid #0b58a2;
+  height: 94%;
   background-color: azure;
 }
 /deep/.measurements-text {
@@ -69,3 +69,16 @@ input {
 //    content: ":";
 //  }
 //}
+i {
+  margin-right: 5px;
+}
+/deep/.navbar {
+  margin-bottom: 0 ;
+}
+
+/deep/.content-wrapper {
+  min-height: auto !important;
+}
+.content-box-testing {
+  padding-top: 100px;
+}

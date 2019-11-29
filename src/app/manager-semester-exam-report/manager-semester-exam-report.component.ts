@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-
+import * as Highcharts from 'highcharts';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 // import { Exam } from '../exam';
 import { ReportSemester } from '../report-semester';
 import { MyserviceService } from '../myservice.service';
+import { http } from '../http-header';
+import * as moment from 'moment';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -16,25 +18,12 @@ const httpOptions = {
   styleUrls: ['./manager-semester-exam-report.component.scss']
 })
 export class ManagerSemesterExamReportComponent implements OnInit {
-
+  date: string;
   report: ReportSemester;
-  low = 0;
-  good = 0;
-  medium = 0;
-  count: string;
-  Id = this.activeRoute.snapshot.paramMap.get('Id');
-  public pieChartData: number[] = [12, 12, 10];
-  public pieChartType: string;
-  public pieChartOptions: any = {
-    backgroundColor: [
-      '#FF6384',
-      '#4BC0C0',
-      '#FFCE56',
-      // "#E7E9ED",
-      // "#36A2EB"
-    ]
-  };
-  public pieChartLabels: string[] = ['yếu', 'trung bình', 'giỏi'];
+  Highcharts = Highcharts;
+  chartOptions = null;
+  startDay: string;
+  endDay: string;
 
   constructor(private http: HttpClient,
               private router: Router,
@@ -47,68 +36,54 @@ export class ManagerSemesterExamReportComponent implements OnInit {
 
   ngOnInit() {
 
-
-    this.http.get<string>('http://localhost:65170/api/SemesterExam/' + this.Id).subscribe(
+    const reportExId = this.activeRoute.snapshot.paramMap.get('id');
+    this.http.get<string>(`http://localhost:65170/api/ExamReport/${reportExId}`, {headers: http()}).subscribe(
       value => {
-        const result = JSON.parse(value);
-        if (result.Success === 1) {
-          this.report = JSON.parse(value).Data;
-          this.low = this.low + this.report.Low;
-          this.medium = this.medium + this.report.Medium;
-          this.good = this.good + this.report.Good;
-          console.log('low:' + this.low);
-          console.log('medium:' + this.medium);
-          console.log('good:' + this.good);
-          console.log(this.report);
-
-
-          this.pieChartData = [this.low, this.medium, this.good];
-          console.log(this.pieChartData);
-          if (this.low === 0 && this.medium === 0 && this.good === 0) {
-            this.pieChartData = [1, 1, 1];
+        this.report = JSON.parse(value);
+        this.startDay = moment(this.report.SemesterExam.StartDay).format('LL');
+        this.endDay = moment(this.report.SemesterExam.EndDay).format('LL');
+        this.chartOptions = {
+          series: [{
+            data: [
+              {
+                name: 'EasyQuestionNumber',
+                y: this.report.EasyQuestionNumber,
+                sliced: true,
+                selected: true
+              },
+              {
+                name: 'MediumQuestionNumber',
+                y: this.report.MediumQuestionNumber,
+              },
+              {
+                name: 'HardQuestionNumber',
+                y: this.report.HardQuestionNumber,
+              },
+            ],
+            type: 'pie',
           }
-        } else {
-          confirm('lỗi');
-        }
-      }
-    );
-
-
-    this.pieChartType = 'pie';
-    console.log(this.pieChartData);
+          ],
+          tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+          },
+          plotOptions: {
+            pie: {
+              allowPointSelect: true,
+              cursor: 'pointer',
+              dataLabels: {
+                enabled: true,
+                format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+              }
+            }
+          },
+          title: {
+            text: 'Question In Semester'
+          },
+        };
+        console.log(value);
+      });
+    this.date = moment(new Date()).format('YYYY');
   }
 
-
-  // events on slice click
-  public chartClicked(e: any): void {
-    console.log(e);
-  }
-
-  // event on pie chart slice hover
-  public chartHovered(e: any): void {
-    console.log(e);
-  }
 
 }
-
-// public chartType: string = 'pie';
-
-// public chartDatasets: Array<any> = [
-//   { data: [300, 50, 100, 40, 120], label: 'My First dataset' }
-// ];
-
-// public chartLabels: Array<any> = ['Red', 'Green', 'Yellow', 'Grey', 'Dark Grey'];
-
-// public chartColors: Array<any> = [
-//   {
-//     backgroundColor: ['#F7464A', '#46BFBD', '#FDB45C', '#949FB1', '#4D5360'],
-//     hoverBackgroundColor: ['#FF5A5E', '#5AD3D1', '#FFC870', '#A8B3C5', '#616774'],
-//     borderWidth: 2,
-//   }
-// ];
-
-// public chartOptions: any = {
-//   responsive: true
-// };
-// public chartClicked(e: any): void { }
-// public chartHovered(e: any): void {
