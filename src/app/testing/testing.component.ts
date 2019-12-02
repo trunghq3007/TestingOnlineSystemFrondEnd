@@ -82,7 +82,7 @@ export class TestingComponent implements OnInit {
         console.log(this.testCount);
         this.questions = this.testProcessings.Questions;
         console.log(this.testProcessings);
-        console.log(this.questions = this.testProcessings.Questions);
+        console.warn(this.questions);
         this.second = this.testProcessings.TestTime;
         const now = new Date();
         const startTest = parseInt(localStorage.getItem('startTimeTest'), 10);
