@@ -31,6 +31,7 @@ export class ListUserAssignmentComponent implements OnInit {
   displayedColumn: string[] = ['select', 'UserId', 'UserName', 'FullName', 'Phone', 'Email', 'Address', 'Status', 'Action'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+  searchString: any;
 
   constructor(private myservice: MyserviceService,
               // tslint:disable-next-line:no-shadowed-variable
@@ -111,4 +112,15 @@ export class ListUserAssignmentComponent implements OnInit {
       this.dataSource.data.forEach(row => this.selection.select(row));
   }
 
+  onSearch() {
+    
+  }
+
+  navigateToEdit(Id: any) {
+    
+  }
+
+  deleteTest(Id: any) {
+    
+  }
 }

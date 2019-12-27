@@ -47,9 +47,7 @@ import { ImportQuestionComponent } from './import-question/import-question.compo
 import { ExamImportComponent } from './exam/exam-import/exam-import.component';
 import { ManagerSemesterExamReportComponent } from './manager-semester-exam-report/manager-semester-exam-report.component';
 import { ManagerSemesterExamTestComponent } from './manager-semester-exam-test/manager-semester-exam-test.component';
-// import { TestAssignmentComponent } from './test-assignment/test-assignment.component';
-// import { ListUserAssignmentComponent } from './list-user-assignment/list-user-assignment.component';
-// import { ThiTuLuanComponent } from './thi-tu-luan/thi-tu-luan.component';
+
 const routes: Routes = [
   {
     path: '',
@@ -91,6 +89,7 @@ const routes: Routes = [
     path: 'login',
     component: LoginComponent
   },
+
   {
     path: 'tag',
     component: TagsComponent, canActivate: [AuthGuard]
@@ -350,7 +349,8 @@ const routes: Routes = [
   { path: 'report/:id', component: ManagerSemesterExamReportComponent },
   { path: 'report', component:   ManagerSemesterExamTestComponent },
   { path: 'Error', component: ErrorpageComponent },
-  { path: '**', canActivate: [AuthGuard], component: ErrorpageComponent }
+  { path: '**', canActivate: [AuthGuard], component: ErrorpageComponent },
+
 ];
 
 const fullRoutes = [...routes, ...QuestionRouting];

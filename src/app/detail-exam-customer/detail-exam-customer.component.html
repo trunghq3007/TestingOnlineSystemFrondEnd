@@ -5,38 +5,31 @@
 
 <!-- MENU-->
 
-<div *ngIf="!currentUser" class="navbar navbar-inverse navbar-fixed-top opaque-navbar" style="height: 52px">
+<div  class="navbar navbar-inverse navbar-fixed-top opaque-navbar" style="height: 52px">
   <div class="container-fluid">
     <div class="navbar-header logo" style="line-height: 45px">
       <a [routerLink]="['']" routerLinkActive="active"><img height="35px"
                                                             src="../../assets/image/logo_vn_white.png"/></a>
     </div>
-    <div *ngIf="UserName; then thenBlock else elseBlock"></div>
-    <ng-template #thenBlock>
+    <div *ngIf="authenticationService.user">
       <ul class="nav navbar-nav pull-right" style="margin-right: 5%;line-height: 50px">
-        <li><a routerLink="/group"><i class="fa fa-lock" style="margin-right: 5px"></i>Admin Manager</a></li>
-        <li class="pointer"><a (click)="home()">
-          <i class="fa fa-home"></i>
-          Home</a></li>
-
-        <li class="pointer"><a (click)="Logout()">
-          <i class="fa fa-sign-out" style="margin-right: 3px"></i>Sign out</a></li>
-
+        <li *ngIf="!isMember"><a routerLink="/group"><i class="fa fa-lock" style="margin-right: 5px"></i>Admin Manager</a></li>
+        <li class="pointer"><a routerLink=""> <i class="fa fa-home"></i> Home</a></li>
+        <li class="pointer"><a (click)="Logout()"> <i class="fa fa-sign-out" style="margin-right: 3px"></i>Sign out</a></li>
         <li>
-          <a class="btn" routerLinkActive="active"><i class="fa fa-user fa-fw"></i><span></span>{{UserName}}</a>
+          <a class="btn" routerLinkActive="active"><i class="fa fa-user fa-fw"></i><span></span>{{authenticationService.user.UserName}}</a>
         </li>
       </ul>
-    </ng-template>
-    <ng-template #elseBlock>
+    </div>
+    <div *ngIf="!authenticationService.user">
       <ul class="nav navbar-nav pull-right" style="margin-right: 5%">
-
-        <li><a>Register</a></li>
         <li>
           <a [routerLink]="['login']" class="btn" routerLinkActive="active"><span><i
             class="fa fa-user fa-fw"></i></span>Sign In</a>
         </li>
       </ul>
-    </ng-template>
+    </div>
+
 
     <ul class="nav navbar-nav pull-right">
 
@@ -53,7 +46,7 @@
   <!--END-->
 
 
-  <div class="container" style="padding-top: 15vh">
+  <div class="container" style="padding-top: 15vh" *ngIf="list">
 
 
     <div class="col-md-7 well" style="float: left; ">

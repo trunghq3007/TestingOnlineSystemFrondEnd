@@ -7,63 +7,160 @@
       <a [routerLink]="['']" routerLinkActive="active"><img height="35px"
                                                             src="../../assets/image/logo_vn_white.png"/></a>
     </div>
-    <div *ngIf="UserName; then thenBlock else elseBlock"></div>
-    <ng-template #thenBlock>
-      <ul class="nav navbar-nav pull-right" style="margin-right: 5%">
-        <li><a routerLink="/group"><i class="fa fa-lock" style="margin-right: 5px"></i>Admin Manager</a></li>
 
-        <li class="pointer"><a (click)="home()">
-          <i class="fa fa-home"></i>
-          Home</a></li>
-
-        <li class="pointer"><a (click)="Logout()">
-          <i class="fa fa-sign-out"></i>
-          Sign out</a></li>
-
+    <div *ngIf="authenticationService.user">
+      <ul class="nav navbar-nav pull-right" style="margin-right: 5%;line-height: 50px">
+        <li *ngIf="!hasMember()"><a routerLink="/group"><i class="fa fa-lock" style="margin-right: 5px"></i>Admin Manager</a></li>
+        <li class="pointer"><a routerLink=""> <i class="fa fa-home"></i> Home</a></li>
+        <li class="pointer"><a (click)="Logout()"> <i class="fa fa-sign-out" style="margin-right: 3px"></i>Sign out</a></li>
         <li>
-          <a class="btn" routerLinkActive="active"><span><i
-            class="fa fa-user fa-fw"></i></span>{{UserName}}</a>
+          <a class="btn" routerLinkActive="active"><i class="fa fa-user fa-fw"></i><span></span>{{authenticationService.user.UserName}}</a>
         </li>
       </ul>
-
-    </ng-template>
-    <ng-template #elseBlock>
+    </div>
+    <div *ngIf="!authenticationService.user">
       <ul class="nav navbar-nav pull-right" style="margin-right: 5%">
 
-        <li><a>Register</a></li>
+
+        <!-- <li *ngIf="!currentUser">
+          <a [routerLink]="['login']" class="btn" routerLinkActive="active"><span><i
+            class="fa fa-user fa-fw"></i></span>Sign In</a>
+        </li>
+        <li *ngIf="currentUser">
+          <a  class="btn" routerLinkActive="active"><span><i
+            class="fa fa-user fa-fw"></i></span>{{currentUser.UserName}}</a>
+        </li> -->
         <li>
           <a [routerLink]="['login']" class="btn" routerLinkActive="active"><span><i
             class="fa fa-user fa-fw"></i></span>Sign In</a>
         </li>
       </ul>
-    </ng-template>
+    </div>
+
+
+
 
   </div>
 </div>
 
 <!-- Slide -->
 
-<div>
-  <div class="slide-container">
-    <ng-container *ngFor="let img of image; index as i">
-      <div [ngStyle]="{ display: currentSlide === i + 1 ? 'block' : 'none' }" class="mySlides">
-        <div class="numbertext">{{ i + 1 }} / 3</div>
-        <img [src]="img" style="width:100%"/>
-      </div>
-    </ng-container>
-  </div>
-  <br/>
-  <div style="text-align:center">
-    <span [ngClass]="{ active: currentSlide === 1 }" class="dot" onclick="currentSlide(1)"></span>
-    <span [ngClass]="{ active: currentSlide === 2 }" class="dot" onclick="currentSlide(1)"></span>
-    <span [ngClass]="{ active: currentSlide === 3 }" class="dot" onclick="currentSlide(1)"></span>
+<!--<div>-->
+<!--  <div class="slide-container">-->
+<!--    <ng-container *ngFor="let img of image; index as i">-->
+<!--      <div [ngStyle]="{ display: currentSlide === i + 1 ? 'block' : 'none' }" class="mySlides">-->
+<!--        <div class="numbertext">{{ i + 1 }} / 3</div>-->
+<!--        <img [src]="img" style="width:100%"/>-->
+<!--      </div>-->
+<!--    </ng-container>-->
+<!--  </div>-->
+<!--  <br/>-->
+<!--  <div style="text-align:center">-->
+<!--    <span [ngClass]="{ active: currentSlide === 1 }" class="dot" onclick="currentSlide(1)"></span>-->
+<!--    <span [ngClass]="{ active: currentSlide === 2 }" class="dot" onclick="currentSlide(1)"></span>-->
+<!--    <span [ngClass]="{ active: currentSlide === 3 }" class="dot" onclick="currentSlide(1)"></span>-->
+<!--  </div>-->
+<!--</div>-->
+
+<div class="container">
+  <div class="full-view"></div>
+  <div class="preview-list">
+    <ul>
+      <li>
+        <input type="radio" id="tab-1" name="gallery-group">
+        <label for="tab-1">
+          <div class="tab">
+            <img
+              src="../../assets/dist/img/credit/ap3.png" />
+          </div>
+        </label>
+        <div class="content">
+          <img
+            src="../../assets/dist/img/credit/ap3.png" />
+        </div>
+      </li>
+      <li>
+        <input type="radio" id="tab-2" name="gallery-group">
+        <label for="tab-2">
+          <div class="tab">
+            <img
+              src="https://images.pexels.com/photos/688660/pexels-photo-688660.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" />
+          </div>
+        </label>
+        <div class="content">
+          <img
+            src="https://images.pexels.com/photos/688660/pexels-photo-688660.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" />
+        </div>
+      </li>
+      <li>
+        <input type="radio" id="tab-3" name="gallery-group">
+        <label for="tab-3">
+          <div class="tab">
+            <img
+              src="https://images.pexels.com/photos/730256/pexels-photo-730256.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" />
+          </div>
+        </label>
+        <div class="content">
+          <img
+            src="https://images.pexels.com/photos/730256/pexels-photo-730256.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" />
+        </div>
+      </li>
+      <li>
+        <input type="radio" id="tab-4" name="gallery-group" checked>
+        <label for="tab-4">
+          <div class="tab">
+            <img
+              src="https://images.pexels.com/photos/22427/pexels-photo.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" />
+          </div>
+        </label>
+        <div class="content">
+          <img src="https://images.pexels.com/photos/22427/pexels-photo.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" />
+        </div>
+      </li>
+      <li>
+        <input type="radio" id="tab-5" name="gallery-group">
+        <label for="tab-5">
+          <div class="tab">
+            <img
+              src="https://images.pexels.com/photos/789380/pexels-photo-789380.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" />
+          </div>
+        </label>
+        <div class="content">
+          <img src="https://images.pexels.com/photos/789380/pexels-photo-789380.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" />
+        </div>
+      </li>
+      <li>
+        <input type="radio" id="tab-6" name="gallery-group">
+        <label for="tab-6">
+          <div class="tab">
+            <img
+              src="https://images.pexels.com/photos/355411/pexels-photo-355411.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" />
+          </div>
+        </label>
+        <div class="content">
+          <img src="https://images.pexels.com/photos/355411/pexels-photo-355411.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" />
+        </div>
+      </li>
+      <li>
+        <input type="radio" id="tab-7" name="gallery-group">
+        <label for="tab-7">
+          <div class="tab">
+            <img
+              src="https://images.pexels.com/photos/1424246/pexels-photo-1424246.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" />
+          </div>
+        </label>
+        <div class="content">
+          <img src="https://images.pexels.com/photos/1424246/pexels-photo-1424246.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" />
+        </div>
+      </li>
+    </ul>
   </div>
 </div>
 
 <!-- End Slide -->
 <br/>
 
-<div class="container" style="margin-top: 50px; width: 100%;color: silver;">
+<div class="container-search" style="margin-top: 50px; width: 100%;color: silver;" *ngIf="authenticationService.user">
   <div class="row">
     <div class="col-md-2"></div>
     <div class="input-group col-md-8">
@@ -155,5 +252,5 @@
 <footer class="justify-content-c">
   <br>
   <hr>
-  <div class="text-center text-muted">Copyright &copy; {{date}} by C1709L</div>
+  <div class="text-center text-muted">Copyright &copy; {{date}}</div>
 </footer>

@@ -5,6 +5,8 @@ import { DetailExam } from '../detailExams';
 import { http } from '../http-header';
 import { MyserviceService } from '../myservice.service';
 import * as moment from 'moment';
+import { User } from '../user';
+import { AuthenticationService } from '../_services/authentication.service';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -16,25 +18,37 @@ const httpOptions = {
   styleUrls: ['./detail-exam-customer.component.scss']
 })
 export class DetailExamCustomerComponent implements OnInit {
-  list: DetailExam;
+  list: DetailExam ;
 
   notify = true;
   Users: string;
+  currentUser: User;
   LisUser;
   UserId: string;
   UserName: string;
   chuoi: string;
   date: string;
+  isMember=true;
 
   // tslint:disable-next-line:no-shadowed-variable
   constructor(private http: HttpClient,
               private myservice: MyserviceService,
               private router: Router,
+              private authenticationService: AuthenticationService,
               private activedRoute: ActivatedRoute) {
     this.router.events.subscribe((event) => {
       this.myservice.changeMessage('2');
     });
+
+    //const user = localStorage.getItem('currentUser');
+    if(authenticationService.user)
+    {
+    //this.currentUser = JSON.parse(user);
+    this.UserName = authenticationService.user.UserName;
+    this.UserId = authenticationService.user.UserId;
+    this.isMember = authenticationService.user.RoleId == '7' || false;
   }
+}
 
   ngOnInit() {
 
@@ -52,9 +66,9 @@ export class DetailExamCustomerComponent implements OnInit {
 
     if (sessionStorage.getItem('user')) {
       this.Users = sessionStorage.getItem('user');
-      this.LisUser = this.Users.split(',');
-      this.UserName = this.LisUser[1];
-      this.UserId = this.LisUser[0];
+      // this.LisUser = this.Users.split(',');
+      // this.UserName = this.LisUser[1];
+      // this.UserId = this.LisUser[0];
 
 
     } else {
@@ -68,11 +82,12 @@ export class DetailExamCustomerComponent implements OnInit {
   }
 
   Logout() {
-    sessionStorage.removeItem('currentPermission');
-    this.router.navigate(['/']);
-
-
-    sessionStorage.removeItem('user');
+    // sessionStorage.removeItem('currentPermission');
+    // this.router.navigate(['/']);
+    //
+    //
+    // sessionStorage.removeItem('user');
+    this.authenticationService.logout();
   }
 
 

@@ -64,9 +64,13 @@ export class AppheaderComponent implements OnInit {
   }
 
   logout() {
-    sessionStorage.removeItem('currentPermission');
-    this.router.navigate(['']);
-    sessionStorage.removeItem('user');
+    // sessionStorage.removeItem('currentPermission');
+    // this.router.navigate(['']);
+    // sessionStorage.removeItem('user');
+    this.authenticationService.logout();
+  }
+  home() {
+    this.router.navigateByUrl('');
   }
 
 }

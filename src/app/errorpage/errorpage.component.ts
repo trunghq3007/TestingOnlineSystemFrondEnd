@@ -51,6 +51,12 @@ export class ErrorpageComponent implements OnInit {
       this.checked = true;
 
     }
+
   }
+  clickBackHome(){
+    this.router.navigateByUrl("");
+  }
+
+
 
 }

@@ -25,23 +25,23 @@ export class AppmenuComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private authenticationService: AuthenticationService
   ) {
-    // this.currentUserSubscription = this.authenticationService.currentUser.subscribe(user => {
-    //     this.currentUser = JSON.parse(user);
-    // });
-    // if(this.currentUser.RoleId == '1')
-    // {
-    //   this.isAdmin = true;
-    // }
-    // if(this.currentUser.RoleId == '2')
-    // {
-    //   this.isManager = true;
-    // }
-    // if(this.currentUser.RoleId == '3')
-    // {
-    //   this.isMember = true;
-    // }
+    const user = localStorage.getItem('currentUser');
+    if(user){
+      this.currentUser =  JSON.parse(user);
+      if(this.currentUser.RoleId == '1')
+      {
+        this.isAdmin = true;
+      }
+      if(this.currentUser.RoleId == '6')
+      {
+        this.isManager = true;
+      }
+      if(this.currentUser.RoleId == '7')
+      {
+        this.isMember = true;
+      }
+    }
   }
 
   ngDoCheck() {

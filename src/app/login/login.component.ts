@@ -21,6 +21,7 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   loading = false;
   submitted = false;
+  role = '';
   userId: string;
   currentUser: string;
   passwordPattern = '^[a-z0-9_@A-Z]*$';
@@ -45,7 +46,7 @@ export class LoginComponent implements OnInit {
               private myservice: MyserviceService,
               private authenticationService: AuthenticationService,
               private cookieService: CookieService) {
-    if (sessionStorage.getItem('currentPermission')) {
+    if (authenticationService.user) {
       this.router.navigate(['']);
     }
     this.router.events.subscribe((event) => {
@@ -91,28 +92,21 @@ export class LoginComponent implements OnInit {
 
   }
 
-  // onSubmit() {
-  //   this.submitted = true;
-  //   this.loading = true;
-  //   console.log(this.loginForm);
-  //   if (this.loginForm.invalid) {
-  //     return;
-  //   } else {
-  //     this.authenticationService.login(this.username.value, this.password.value, this.rememberMe.value)
-  //       .pipe(first())
-  //       .subscribe(
-  //         value => {
-  //           if (value == 'null') {
-  //             this.loading = false;
-  //           } else this.router.navigate(['']);
-  //         });
-  //   }
-  //   console.log(this.loading);
-  // }
+  public hasMember(): boolean {
+    let user = localStorage.getItem('currentUser');
+    if (user) {
+      var currentUser = JSON.parse(user);
+      var isMember = currentUser.RoleId == '7' || false;
+      return isMember;
+    }
+    return true;
+  }
+
 
   onSubmit() {
     this.submitted = true;
     this.loading = true;
+
     if (this.loginForm.valid) {
 
       const value = this.loginForm.value;
@@ -127,8 +121,7 @@ export class LoginComponent implements OnInit {
                 this.currentUser = JSON.parse(value).UserName;
                 const userName = this.userId + ',' + this.currentUser;
                 sessionStorage.setItem('user', userName);
-
-                console.log(userName);
+                localStorage.setItem('currentUser',value)
               });
 
             sessionStorage.setItem('currentPermission', res.Data);
@@ -139,7 +132,6 @@ export class LoginComponent implements OnInit {
             };
             this.http.get<string>('http://localhost:65170/api/group', httpOptions1).subscribe((val) => {
               // debugger;
-              console.log(JSON.parse(val));
             });
             // add cookie
             if (this.rememberMe.value === true) {
@@ -149,11 +141,12 @@ export class LoginComponent implements OnInit {
               this.cookieService.delete('username');
               this.cookieService.delete('password');
             }
-            //
-            this.router.navigate(['']);
-
+            // if(!this.hasMember()) {
+              this.router.navigate(['']);
+            // }else {
+            //   this.router.navigate(['question']);
+            // }
           } else {
-            // check looix
             this.loading = false;
           }
         },
@@ -164,4 +157,6 @@ export class LoginComponent implements OnInit {
     }
 
   }
+
+
 }

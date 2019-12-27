@@ -3,7 +3,7 @@ import { AuthenticationService } from './_services/authentication.service';
 import { User } from './user';
 import { HttpClient } from '@angular/common/http';
 import { MyserviceService } from './myservice.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -16,14 +16,13 @@ export class AppComponent {
   checked: boolean;
   Users: string;
   changeDetected = true;
-  // initUser(value: User) {
-  //   this.currentUser = value;
-  // }
-  // currentUserSubscription: Subscription;
 
   constructor(
-    private authenticationService: AuthenticationService, private http: HttpClient, private myservice: MyserviceService, private router: Router
-  ) {
+    private authenticationService: AuthenticationService,
+    private http: HttpClient,
+    private myservice: MyserviceService,
+    private router: Router,
+    ) {
     this.router.events.subscribe((event) => {
       this.changeDetected = false;
     });
@@ -51,6 +50,9 @@ export class AppComponent {
   ngOnInit() {
     this.myservice.currentMessage.subscribe(message => this.message = message);
 
+  }
+  get isHomePage():boolean{
+    return this.router.url === '/';
   }
 }
 

@@ -22,7 +22,7 @@ export class ExamListComponent implements OnInit {
   filter: [];
   examInfo: Exam[] = [];
   displayedColumn: string[] = ['select', 'NameExam', 'CreateBy',
-    'QuestionNumber', 'SpaceQuestionNumber', 'NameCategory', 'Status', 'CreateAt', 'Note', 'Action'];
+    'QuestionNumber', 'NameCategory', 'Status', 'CreateAt', 'Action'];
   dataSource = new MatTableDataSource<Exam>(this.exams);
   selection = new SelectionModel<Exam>(true, []);
   @ViewChild(MatPaginator) paginator: MatPaginator;

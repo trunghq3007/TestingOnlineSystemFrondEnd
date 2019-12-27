@@ -1,0 +1,114 @@
+* {
+  text-rendering:optimizeLegibility;
+  -webkit-font-smoothing:antialiased;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  //align-items: center;
+  //justify-content: center;
+  font-family:'Pimlico Glow';
+  background-color: white;
+  background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/209981/frosty.jpg);
+  background-size: cover;
+}
+
+h1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+  text-align: center;
+  font-weight: 400;
+  //width: 100%;
+  text-align: center;
+  font-size: 23vw;
+  color: rgba(255,255,255,0.5);
+  font-family:'Cheee';
+  font-variation-settings: 'YEST' 877, 'gvty' 500;
+  animation: gravity 50s linear forwards;
+
+  &::before {
+    content: attr(data-text);
+    position: absolute;
+    z-index:2;
+    text-shadow:
+      8px 10px 10px rgba(255, 255, 255, 0.25), 10px 10px 6px rgba(203, 232, 236, 0.2), 8px 6px 6px rgba(255, 255, 255, 0.2), 4px 4px 6px rgba(30, 54, 64, 0.22), 0 0 6px rgba(0, 213, 255, 0.18);
+
+    mix-blend-mode: multiply;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/209981/snow.png), url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/209981/snow3.png);
+    background-repeat: repeat;
+    background-size: 50%;
+
+    animation: Login 5s linear infinite;
+  }
+
+  &::after {
+    content: attr(data-text);
+    position: absolute;
+    z-index:3;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/209981/snowdrift.png);
+    background-size: 100% 50%;
+    background-repeat: no-repeat;
+    background-position: 0 130%;
+    will-change: background;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    animation: snowdrift 120s linear forwards;
+    mix-blend-mode: soft-light;
+
+  }
+}
+
+@keyframes Login {
+  0% {
+    background-position: 0
+  }
+  100% {
+    background-position:
+      //50% 800px,
+      20% 500px;
+  }
+}
+
+@keyframes gravity {
+  0% {
+    font-variation-settings: 'YEST' 877, 'gvty' 0;
+
+  }
+  100% {
+    font-variation-settings: 'YEST' 877, 'gvty' 800;
+
+  }
+}
+
+
+@keyframes snowdrift {
+  0% { background-position: 0 130%;}
+  100% {
+    background-position: 0 100%;}
+}
+
+
+
+.terms {
+  position: absolute;
+  font-family: arial, sans-serif;
+  bottom: 0;
+  text-align: center;
+  color: black;
+  font-weight: bold;
+  a {
+    color: black;
+  }
+}

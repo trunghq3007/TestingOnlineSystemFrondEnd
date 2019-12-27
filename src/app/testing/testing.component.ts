@@ -192,7 +192,8 @@ export class TestingComponent implements OnInit {
         this.http.post('http://localhost:65170/SemesterExam/submid/' +
           this.Idtest + '?userID=' + this.UserId, JSON.stringify(arr), httpOptions).subscribe(
           value => {
-            localStorage.clear();
+            localStorage.removeItem('SecondTest');
+            localStorage.removeItem('startTimeTest');
             this.router.navigate(['/thi/' + this.Idtest + '/' + this.Idtest + '/ketqua']);
             window.clearInterval(this.intervalId);
           }
@@ -214,7 +215,8 @@ export class TestingComponent implements OnInit {
       this.http.post('http://localhost:65170/SemesterExam/submid/' +
         this.Idtest + '?userID=' + this.UserId, JSON.stringify(arr), httpOptions).subscribe(
         value => {
-          localStorage.clear();
+          localStorage.removeItem('SecondTest');
+          localStorage.removeItem('startTimeTest');
           this.router.navigate(['/thi/' + this.Idtest + '/' + this.Idtest + '/ketqua']);
           window.clearInterval(this.intervalId);
         }

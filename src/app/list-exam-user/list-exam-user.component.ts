@@ -5,6 +5,8 @@ import { Exam } from '../exam';
 import { http } from '../http-header';
 import { MyserviceService } from '../myservice.service';
 import * as moment from 'moment';
+import { User } from '../user';
+import { AuthenticationService } from '../_services/authentication.service';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -17,20 +19,31 @@ const httpOptions = {
 })
 export class ListExamUserComponent implements OnInit {
   semester: Exam[] = [];
+  currentUser: User;
   notify = true;
   Users: string;
   LisUser;
   UserId: string;
   UserName: string;
   date: string;
-
+  isMember:boolean = true;
   constructor(private http: HttpClient,
               private router: Router,
               private myservice: MyserviceService,
-              private activedRoute: ActivatedRoute) {
+              private activedRoute: ActivatedRoute,
+              private authenticationService: AuthenticationService,) {
     this.router.events.subscribe((event) => {
       this.myservice.changeMessage('2');
+
     });
+    const user = localStorage.getItem('currentUser');
+    if(user)
+    {
+    this.currentUser = JSON.parse(user);
+    this.UserName = this.currentUser.UserName;
+    this.UserId = this.currentUser.UserId;
+    this.isMember = this.currentUser.RoleId == '7' || false;
+  }
   }
 
   ngOnInit() {
@@ -54,9 +67,9 @@ export class ListExamUserComponent implements OnInit {
 
     if (sessionStorage.getItem('user')) {
       this.Users = sessionStorage.getItem('user');
-      this.LisUser = this.Users.split(',');
-      this.UserName = this.LisUser[1];
-      this.UserId = this.LisUser[0];
+      // this.LisUser = this.Users.split(',');
+      // this.UserName = this.LisUser[1];
+      // this.UserId = this.LisUser[0];
 
 
     } else {
@@ -70,11 +83,10 @@ export class ListExamUserComponent implements OnInit {
   }
 
   Logout() {
-    sessionStorage.removeItem('currentPermission');
-    this.router.navigate(['/']);
-
-
-    sessionStorage.removeItem('user');
+    // sessionStorage.removeItem('currentPermission');
+    // this.router.navigate(['/']);
+    // sessionStorage.removeItem('user');
+    this.authenticationService.logout();
   }
 
 }

@@ -5,6 +5,7 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { http } from '../http-header';
 import { MyserviceService } from '../myservice.service';
+import { AuthenticationService } from '../_services/authentication.service';
 
 
 const httpOptions = {
@@ -57,7 +58,8 @@ export class ThiKetquathiComponent implements OnInit {
               private activatedRoute: ActivatedRoute,
               // tslint:disable-next-line:no-shadowed-variable
               private http: HttpClient,
-              private router: Router) {
+              private router: Router,
+              private authenticationService: AuthenticationService) {
     this.router.events.subscribe((event) => {
       this.myservice.changeMessage('2');
     });
@@ -92,11 +94,16 @@ export class ThiKetquathiComponent implements OnInit {
   }
 
   Logout() {
-    sessionStorage.removeItem('currentPermission');
-    this.router.navigate(['']);
-    sessionStorage.removeItem('user');
+    // sessionStorage.removeItem('currentPermission');
+    // this.router.navigate(['']);
+    // sessionStorage.removeItem('user');
+    this.authenticationService.logout();
+
   }
-  back() {
+  // back() {
+  //   this.router.navigateByUrl('');
+  // }
+  home() {
     this.router.navigateByUrl('');
   }
 

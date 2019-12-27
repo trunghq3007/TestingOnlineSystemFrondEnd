@@ -29,7 +29,6 @@ import { AppComponent } from './app.component';
 import { AppheaderComponent } from './appheader/appheader.component';
 import { AppmenuComponent } from './appmenu/appmenu.component';
 import { AppfooterComponent } from './appfooter/appfooter.component';
-import { AppsettingComponent } from './appsetting/appsetting.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ViewListQuestionComponent } from './view-list-question/view-list-question.component';
 import { CreateQuestionComponent } from './create-question/create-question.component';
@@ -84,7 +83,6 @@ import { CookieService } from 'ngx-cookie-service';
 import { ExportExamComponent } from './exam/exam-list/export-exam/export-exam.component';
 import { TestingComponent } from './testing/testing.component';
 
-import { CandidatesComponent } from './candidates/candidates.component';
 import { ExamImportComponent } from './exam/exam-import/exam-import.component';
 import { ErrorpageComponent } from './errorpage/errorpage.component';
 import { UserHeaderComponent } from './user-header/user-header.component';
@@ -94,6 +92,9 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { ManagerSemesterExamReportComponent } from './manager-semester-exam-report/manager-semester-exam-report.component';
 import { CountdownModule } from './shared/ng2-date-countdown-master';
 import { HighchartsChartModule } from 'highcharts-angular';
+import { CreateAnswerComponent } from './create-answer/create-answer.component';
+import { TestComponent } from './test/test.component';
+
 
 @NgModule({
   declarations: [
@@ -109,7 +110,6 @@ import { HighchartsChartModule } from 'highcharts-angular';
     AppheaderComponent,
     AppmenuComponent,
     AppfooterComponent,
-    AppsettingComponent,
     DashboardComponent,
     ViewListQuestionComponent,
     CreateQuestionComponent,
@@ -141,6 +141,8 @@ import { HighchartsChartModule } from 'highcharts-angular';
     RoleComponent,
     ListExamUserComponent,
     DetailExamCustomerComponent,
+    CreateAnswerComponent,
+    TestComponent,
 
 
     ExamDetailQuestionComponent,
@@ -154,7 +156,6 @@ import { HighchartsChartModule } from 'highcharts-angular';
     ExportExamComponent,
 
     TestingComponent,
-    CandidatesComponent,
     ErrorpageComponent,
     UserHeaderComponent,
 

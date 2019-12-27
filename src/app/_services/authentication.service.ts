@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { User } from '../user';
+import { Router } from '@angular/router';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -17,15 +18,21 @@ export class AuthenticationService {
   public currentUser: Observable<User>;
   public gotoLogin: boolean;
   private currentUserSubject: BehaviorSubject<User>;
+  private AppUser: Subject<User> = new Subject<User>();
+  // public user:User;
+  public LoginStatus$: Observable<User> = this.AppUser.asObservable();
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+              private router: Router) {
+    //this.user = JSON.parse(localStorage.getItem('currentUser'));
     this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
     this.currentUser = this.currentUserSubject.asObservable();
     this.gotoLogin = false;
+
   }
 
-  public get currentUserValue(): User {
-    return this.currentUserSubject.value;
+  public get user(): User {
+    return JSON.parse(localStorage.getItem('currentUser'));
   }
 
   login(username: string, password: string, rememberme: boolean) {
@@ -34,17 +41,21 @@ export class AuthenticationService {
       .pipe(map(user => {
         if (user != 'null') {
           localStorage.setItem('currentUser', JSON.stringify(user));
+          this.AppUser.next(user);
+          //this.user = user;
           this.currentUserSubject.next(user);
-          console.log(user);
         }
         return user;
       }));
   }
 
   logout() {
-    // remove user from local storage to log user out
+    // remove user from local storage to log user out\
     localStorage.removeItem('currentUser');
+    this.AppUser.next(null);
+    // this.user = null;
     this.currentUserSubject.next(null);
+    this.router.navigateByUrl('login');
   }
 
 }
