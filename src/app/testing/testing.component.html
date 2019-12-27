@@ -44,48 +44,48 @@
           <button (click)="scroll(item.Id)" id="btn{{item.Id}}" style="background: #bfbfbf;"
                   style="width: 40px;float:left;margin-left: 10px;margin-top: 10px"
                   type="button">{{i + 1}}</button>
-      </div>
-
-
-    </div>
-  </div>
-  <div class="content">
-
-    <div *ngFor="let item of questions;let i=index" style="margin-left: 5%">
-
-      <table>
-        <tr id="table{{item.Id}}">
-          <th>
-            <h4 style="width: 65px;margin-top: 0px">Câu {{i + 1}}:</h4>
-          </th>
-        </tr>
-        <tr>
-          <td>
-            <h4 [innerHtml]="item.Content" style="margin-top: 0px"></h4>
-          </td>
-        </tr>
-      </table>
-      <div *ngIf="item.Type==1; then thenBlock else elseBlock"></div>
-      <ng-template #thenBlock>
-        <textarea [(ngModel)]="item.Answer" class="content" style="width:90%;height: 100px;"></textarea>
-      </ng-template>
-      <ng-template #elseBlock>
-        <div *ngFor="let items of item.Answers" style="width: 100%">
-          <table>
-            <tr>
-
-              <td><input (click)="Onclick(items.Id,item.Id)" id="check{{items.Id}}" id-ans="items.Id"
-                         type="checkbox"/>
-              </td>
-              <td style="padding-top: 1%;padding-left: 10px">
-                <h5 [innerHtml]="items.Content" style="line-height: 0"></h5>
-              </td>
-            </tr>
-          </table>
         </div>
-      </ng-template>
+
+
+      </div>
+    </div>
+    <div class="content">
+
+      <div *ngFor="let item of questions;let i=index" style="margin-left: 5%">
+
+        <table>
+          <tr id="table{{item.Id}}">
+            <th>
+              <h4 style="width: 65px;margin-top: 0px">Câu {{i + 1}}:</h4>
+            </th>
+          </tr>
+          <tr>
+            <td>
+              <div [innerHtml]="item.Content" style="margin-top: 0px"></div>
+            </td>
+          </tr>
+        </table>
+        <div *ngIf="item.Type==1; then thenBlock else elseBlock"></div>
+        <ng-template #thenBlock>
+          <textarea [(ngModel)]="item.Answer" class="content" style="width:90%;height: 100px;"></textarea>
+        </ng-template>
+        <ng-template #elseBlock>
+          <div *ngFor="let items of item.Answers" style="width: 100%">
+            <table>
+              <tr>
+
+                <td><input (click)="Onclick(items.Id,item.Id)" id="check{{items.Id}}" id-ans="items.Id"
+                           type="checkbox"/>
+                </td>
+                <td style="padding-top: 1%;padding-left: 10px">
+                  <h5 [innerHtml]="items.Content" style="line-height: 0"></h5>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </ng-template>
+      </div>
     </div>
   </div>
-</div>
 </div>
 
